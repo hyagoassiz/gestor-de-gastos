@@ -4,6 +4,7 @@ import { TitlePage } from "./app/shared/components/TitlePage/TItlePage";
 import { ToolPainel } from "./app/shared/components/ToolPanel/ToolPanel";
 import { Button } from "@mui/material";
 import { DataTable } from "./app/shared/components/DataTable/DataTable";
+import { Modal } from "./app/shared/components/Modal/Modal";
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
         ]}
         textForEmptyData="teste"
       />
+      <Modal
+        buttons={<Button>Fechar</Button>}
+        open={false}
+        style={{ width: 800 }}
+        title="Esse é o título"
+      >
+        Teste
+      </Modal>
     </>
   );
 }
