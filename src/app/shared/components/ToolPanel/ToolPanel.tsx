@@ -26,30 +26,32 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({ buttons, searchBar }) => {
         <BoxContainer>
           <StyledBox>{buttons}</StyledBox>
           <Box />
-          <Box sx={{ display: "flex" }}>
-            <TextField
-              fullWidth
-              id="outlined-search"
-              variant="outlined"
-              color="primary"
-              placeholder={searchBar?.placeholder}
-              value={searchBar?.value}
-              onChange={searchBar?.onChange}
-              InputProps={{
-                style: {
-                  paddingLeft: theme.spacing(1),
-                  paddingRight: theme.spacing(1),
-                  height: theme.spacing(4),
-                  width: "100%",
-                },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon color="info" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
+          {searchBar && (
+            <Box sx={{ display: "flex" }}>
+              <TextField
+                fullWidth
+                id="outlined-search"
+                variant="outlined"
+                color="primary"
+                placeholder={searchBar.placeholder}
+                value={searchBar.value}
+                onChange={searchBar.onChange}
+                InputProps={{
+                  style: {
+                    paddingLeft: theme.spacing(1),
+                    paddingRight: theme.spacing(1),
+                    height: theme.spacing(4),
+                    width: "100%",
+                  },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon color="info" />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+          )}
         </BoxContainer>
       </StyledContainer>
     </>
