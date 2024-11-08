@@ -10,6 +10,13 @@ function App() {
   return (
     <>
       <AppBar />
+      {/* <Drawer
+        applyFilter={() => alert("")}
+        closeFilter={() => alert("")}
+        open={true}
+      >
+        <Box>Teses</Box>
+      </Drawer> */}
       <TitlePage title="Título" subTitle="Sub-Título" />
       <ToolPainel buttons={<Button>Adicionar</Button>} />
       <DataTable
