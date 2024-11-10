@@ -1,12 +1,20 @@
 import MoreOptions from "../../../../../../shared/components/MoreOptions/MoreOptions";
 import { ICategoria } from "../../../../../../shared/interfaces";
+import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
 
 interface IMountData {
   categorias: ICategoria[];
   handleInativar: (categoria: ICategoria) => void;
+  handleEditar: (categoria: ICategoria) => void;
+  handleAtivar: (categoria: ICategoria) => void;
 }
 
-export function mountData({ categorias, handleInativar }: IMountData) {
+export function mountData({
+  categorias,
+  handleInativar,
+  handleEditar,
+  handleAtivar,
+}: IMountData) {
   if (categorias.length) {
     return categorias.map((categoria) => ({
       ...categoria,
@@ -15,12 +23,18 @@ export function mountData({ categorias, handleInativar }: IMountData) {
       tipo: categoria.tipo,
       situacao: categoria.ativo ? "Ativo" : "Inativo",
       options: (
-        <MoreOptions
-          options={[
-            { label: "Editar", action: () => console.log("teste") },
-            { label: "Inativar", action: () => handleInativar(categoria) },
-          ]}
-        />
+        <>
+          {categoria.ativo ? (
+            <MoreOptions
+              options={[
+                { label: "Editar", action: () => handleEditar(categoria) },
+                { label: "Inativar", action: () => handleInativar(categoria) },
+              ]}
+            />
+          ) : (
+            <PowerIcon onClick={() => handleAtivar(categoria)} />
+          )}
+        </>
       ),
     }));
   }

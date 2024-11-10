@@ -7,6 +7,8 @@ interface IUseCategoriasTable {
   handleToggleFiltro: () => void;
   handleInativar: (categoria: ICategoria) => void;
   handleAdicionar: () => void;
+  handleEditar: (categoria: ICategoria) => void;
+  handleAtivar: (categoria: ICategoria) => void;
 }
 
 const useCategoriasTable = (): IUseCategoriasTable => {
@@ -18,8 +20,17 @@ const useCategoriasTable = (): IUseCategoriasTable => {
     setToggleModalCategoria,
   } = useContext(CategoriasContext);
 
+  function handleAtivar(categoria: ICategoria) {
+    console.log(categoria);
+  }
+
   function handleAdicionar() {
     setToggleModalCategoria((prevState) => !prevState);
+  }
+
+  function handleEditar(categoria: ICategoria) {
+    setToggleModalCategoria((prevState) => !prevState);
+    setCategoria(categoria);
   }
 
   function handleInativar(categoria: ICategoria) {
@@ -31,7 +42,14 @@ const useCategoriasTable = (): IUseCategoriasTable => {
     setToggleFiltro((prevToggle) => !prevToggle);
   }
 
-  return { categorias, handleToggleFiltro, handleInativar, handleAdicionar };
+  return {
+    categorias,
+    handleToggleFiltro,
+    handleInativar,
+    handleAdicionar,
+    handleEditar,
+    handleAtivar,
+  };
 };
 
 export default useCategoriasTable;

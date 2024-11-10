@@ -8,8 +8,14 @@ import { FilterIcon } from "../../../../../shared/components/FilterIcon";
 import { useTranslation } from "react-i18next";
 
 export const CategoriasTable: React.FC = () => {
-  const { categorias, handleToggleFiltro, handleInativar, handleAdicionar } =
-    useCategoriasTable();
+  const {
+    categorias,
+    handleToggleFiltro,
+    handleInativar,
+    handleAdicionar,
+    handleEditar,
+    handleAtivar,
+  } = useCategoriasTable();
 
   const { t } = useTranslation();
 
@@ -28,7 +34,12 @@ export const CategoriasTable: React.FC = () => {
 
       <DataTable
         columns={DataColumns}
-        data={mountData({ categorias, handleInativar })}
+        data={mountData({
+          categorias,
+          handleInativar,
+          handleEditar,
+          handleAtivar,
+        })}
         textForEmptyData={t("categorias.dataTable.textForEmptyData")}
       />
     </>

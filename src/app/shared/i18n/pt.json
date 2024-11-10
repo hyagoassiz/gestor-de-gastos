@@ -23,7 +23,8 @@
   "tooltips": {
     "back": "Voltar",
     "filter": "Filtrar",
-    "close": "Fechar"
+    "close": "Fechar",
+    "activate": "Ativar"
   },
 
   "categorias": {
@@ -35,6 +36,9 @@
     "modalCategoria": {
       "add": "Adicionar Categoria",
       "edit": "Editar Categoria"
+    },
+    "modalInativar": {
+      "description": "Ao clicar em Inativar, a categoria será desativada. Para visualizá-la novamente, filtre por categorias inativas"
     }
   }
 }
