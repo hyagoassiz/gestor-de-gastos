@@ -1,9 +1,23 @@
+import { useTranslation } from "react-i18next";
+import { TitlePage } from "../../../shared/components/TitlePage/TItlePage";
+import { ModalCategoria } from "./components/ModalCategoria";
+import { CategoriasTable } from "./components/CategoriasTable";
+import { Filtro } from "./components/Filtro";
+import { ModalInativar } from "./components/ModalInativar";
+
 export const Listagem: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum quod eum
-      repellendus delectus repudiandae? Soluta animi iste, quia quibusdam nobis
-      fuga beatae quas nemo vel deserunt enim quae repudiandae et!
+      <TitlePage
+        title={t("categorias.title")}
+        subTitle={t("categorias.subtitle")}
+      />
+      <CategoriasTable />
+      <ModalCategoria />
+      <ModalInativar />
+      <Filtro />
     </>
   );
 };

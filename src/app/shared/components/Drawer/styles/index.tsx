@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const HeaderBox = styled(Box)(({ theme }) => ({
   height: theme.spacing(7),
-  backgroundColor: theme.palette.primary.dark,
+  backgroundColor: "#1976d2",
   display: "flex",
   alignItems: "center",
 }));
@@ -12,7 +12,6 @@ export const HeaderBox = styled(Box)(({ theme }) => ({
 export const StyledBox = styled(Box)(({ theme }) => ({
   width: theme.spacing(45),
   height: "100vw",
-  backgroundColor: theme.palette.primary.main,
 }));
 
 export const BoxButtons = styled(Box)(({ theme }) => ({
@@ -23,9 +22,8 @@ export const BoxButtons = styled(Box)(({ theme }) => ({
   marginRight: theme.spacing(1),
 }));
 
-export const BackIcon = styled(ArrowBackIosNewIcon)(({ theme }) => ({
+export const Icon = styled(CloseIcon)(() => ({
   color: "white",
-  height: theme.spacing(2.3),
 }));
 
 export const BoxChildren = styled(Box)(({ theme }) => ({
@@ -37,7 +35,6 @@ export const BoxApply = styled(Box)(() => ({
   justifyContent: "flex-end",
   width: "100%",
 }));
-
 export const StyledTypography = styled(Typography)(() => ({
   color: "white",
 }));

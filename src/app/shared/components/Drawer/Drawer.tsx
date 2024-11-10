@@ -1,12 +1,12 @@
 import {
   Button,
-  Drawer as MuiDrawer,
   IconButton,
+  Drawer as MuiDrawer,
   Tooltip,
 } from "@mui/material";
 import { ReactNode } from "react";
 import {
-  BackIcon,
+  Icon,
   BoxApply,
   BoxButtons,
   BoxChildren,
@@ -14,6 +14,7 @@ import {
   StyledBox,
   StyledTypography,
 } from "./styles";
+import { useTranslation } from "react-i18next";
 
 interface IDrawer {
   open: boolean;
@@ -23,24 +24,28 @@ interface IDrawer {
 }
 
 const Drawer = ({ open, children, closeFilter, applyFilter }: IDrawer) => {
+  const { t } = useTranslation();
+
   return (
-    <MuiDrawer open={open} anchor="right">
+    <MuiDrawer open={open} anchor="right" onClose={closeFilter}>
       <StyledBox>
         <HeaderBox>
           <BoxButtons>
-            <Tooltip title="Voltar" placement="bottom">
+            <Tooltip title={t("tooltips.close")} placement="bottom">
               <IconButton onClick={closeFilter}>
-                <BackIcon />
+                <Icon />
               </IconButton>
             </Tooltip>
-            <StyledTypography variant="h6">Filtrar</StyledTypography>
+            <StyledTypography variant="h6">
+              {t("buttons.close")}
+            </StyledTypography>
             <BoxApply>
               <Button
                 color="secondary"
                 variant="contained"
                 onClick={applyFilter}
               >
-                Aplicar
+                {t("buttons.apply")}
               </Button>
             </BoxApply>
           </BoxButtons>
