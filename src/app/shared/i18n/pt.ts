@@ -1,11 +1,13 @@
 import { ITranslation } from "./interfaces";
 import BUTTONS from "./pt/buttons";
+import INFO from "./pt/info";
 import CATEGORIAS from "./pt/pages/Categorias";
 import TOOLTIPS from "./pt/tooltips";
 
 const pt: ITranslation = {
-  BUTTONS: BUTTONS,
-  TOOLTIPS: TOOLTIPS,
+  BUTTONS,
+  TOOLTIPS,
+  INFO,
   PAGES: { CATEGORIAS },
 };
 

@@ -39,9 +39,9 @@ export function CategoriasProvider({
     useState<boolean>(false);
 
   const categorias: ICategoria[] = [
-    { id: 1, nome: "Alimentação", tipo: "Entrada", ativo: true },
-    { id: 2, nome: "Saúde", tipo: "Entrada", ativo: true },
-    { id: 3, nome: "Lazer", tipo: "Entrada", ativo: true },
+    { id: 1, nome: "Alimentação", tipo: "Entrada", ativo: false },
+    { id: 2, nome: "Saúde", tipo: "Entrada", ativo: false },
+    { id: 3, nome: "Lazer", tipo: "Entrada", ativo: false },
   ];
 
   return (
