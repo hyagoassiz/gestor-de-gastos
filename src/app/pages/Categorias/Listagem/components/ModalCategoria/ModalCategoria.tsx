@@ -21,20 +21,20 @@ export const ModalCategoria: React.FC = () => {
       open={toggleModalCategoria}
       title={
         !categoria?.id
-          ? t("categorias.modalCategoria.add")
-          : t("categorias.modalCategoria.edit")
+          ? t("PAGES.CATEGORIAS.MODALS.MODAL_CREATE.ADD")
+          : t("PAGES.CATEGORIAS.MODALS.MODAL_CREATE.EDIT")
       }
       style={{ width: "600px" }}
       buttons={
         <>
           <Button variant="text" onClick={handleToggleModalCategoria}>
-            {t("buttons.close")}
+            {t("BUTTONS.CLOSE")}
           </Button>
           <Button
             variant="contained"
             onClick={categoriaForm.handleSubmit(handleSubmit)}
           >
-            {t("buttons.save")}
+            {t("BUTTONS.SAVE")}
           </Button>
         </>
       }

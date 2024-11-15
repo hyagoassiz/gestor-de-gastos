@@ -11,8 +11,8 @@ export const Listagem: React.FC = () => {
   return (
     <>
       <TitlePage
-        title={t("categorias.title")}
-        subTitle={t("categorias.subtitle")}
+        title={t("PAGES.CATEGORIAS.TITLE")}
+        subTitle={t("PAGES.CATEGORIAS.SUBTITLE")}
       />
       <CategoriasTable />
       <ModalCategoria />

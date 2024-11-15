@@ -31,13 +31,13 @@ const Drawer = ({ open, children, closeFilter, applyFilter }: IDrawer) => {
       <StyledBox>
         <HeaderBox>
           <BoxButtons>
-            <Tooltip title={t("tooltips.close")} placement="bottom">
+            <Tooltip title={t("TOOLTIPS.CLOSE")} placement="bottom">
               <IconButton onClick={closeFilter}>
                 <Icon />
               </IconButton>
             </Tooltip>
             <StyledTypography variant="h6">
-              {t("buttons.close")}
+              {t("BUTTONS.CLOSE")}
             </StyledTypography>
             <BoxApply>
               <Button
@@ -45,7 +45,7 @@ const Drawer = ({ open, children, closeFilter, applyFilter }: IDrawer) => {
                 variant="contained"
                 onClick={applyFilter}
               >
-                {t("buttons.apply")}
+                {t("BUTTONS.APPLY")}
               </Button>
             </BoxApply>
           </BoxButtons>

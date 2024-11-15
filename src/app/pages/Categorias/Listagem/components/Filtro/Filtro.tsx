@@ -29,8 +29,7 @@ export const Filtro: React.FC = () => {
         <Controller
           name="tipo"
           control={filtroForm.control}
-          defaultValue={["Entrada", "Saída"]}
-          rules={{ required: true }}
+          rules={{ required: false }}
           render={({ field, fieldState }) => (
             <Autocomplete
               {...field}
@@ -38,6 +37,7 @@ export const Filtro: React.FC = () => {
               id="tipo"
               color="secondary"
               options={options}
+              noOptionsText="Nenhum resultado encontrado."
               onChange={(_, value) => field.onChange(value)}
               renderInput={(params) => (
                 <TextField
@@ -46,8 +46,6 @@ export const Filtro: React.FC = () => {
                   color="secondary"
                   sx={{ width: "330px" }}
                   label="Tipo"
-                  placeholder="Selecionar"
-                  required
                   error={!!fieldState.error}
                 />
               )}

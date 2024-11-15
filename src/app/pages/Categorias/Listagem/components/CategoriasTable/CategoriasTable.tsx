@@ -25,7 +25,7 @@ export const CategoriasTable: React.FC = () => {
         buttons={
           <>
             <Button variant="contained" onClick={handleAdicionar}>
-              {t("buttons.add")}
+              {t("BUTTONS.ADD")}
             </Button>
             <FilterIcon onClick={handleToggleFiltro} badgeContent={1} />
           </>
@@ -40,7 +40,7 @@ export const CategoriasTable: React.FC = () => {
           handleEditar,
           handleAtivar,
         })}
-        textForEmptyData={t("categorias.dataTable.textForEmptyData")}
+        textForEmptyData={t("PAGES.CATEGORIAS.DATA_TABLE.TEXT_FOR_EMPTY_DATA")}
       />
     </>
   );
