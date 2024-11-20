@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { ICategoria } from "../../../../../../shared/interfaces";
 import { CategoriasContext } from "../../../context";
+import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 
 interface IUseCategoriasTable {
-  categorias: ICategoria[];
+  categorias: IResponseCategoria[] | undefined;
   handleToggleFiltro: () => void;
   handleInativar: (categoria: ICategoria) => void;
   handleAdicionar: () => void;

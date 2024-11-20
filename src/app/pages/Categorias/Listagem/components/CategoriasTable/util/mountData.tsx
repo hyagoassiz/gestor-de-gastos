@@ -1,9 +1,10 @@
 import MoreOptions from "../../../../../../shared/components/MoreOptions/MoreOptions";
 import { ICategoria } from "../../../../../../shared/interfaces";
 import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
+import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 
 interface IMountData {
-  categorias: ICategoria[];
+  categorias: IResponseCategoria[] | undefined;
   handleInativar: (categoria: ICategoria) => void;
   handleEditar: (categoria: ICategoria) => void;
   handleAtivar: (categoria: ICategoria) => void;
@@ -15,7 +16,7 @@ export function mountData({
   handleEditar,
   handleAtivar,
 }: IMountData) {
-  if (categorias.length) {
+  if (categorias?.length) {
     return categorias.map((categoria) => ({
       ...categoria,
       id: categoria.id,

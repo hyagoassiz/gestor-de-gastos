@@ -6,13 +6,16 @@ import {
   useState,
 } from "react";
 import { ICategoria } from "../../../../shared/interfaces";
+import { useQuery } from "@tanstack/react-query";
+import { IResponseCategoria } from "../../../../shared/services/categorias/interfaces";
+import { categoriasService } from "../../../../shared/services/categorias";
 
 interface ICategoriasContextProps {
   children: ReactNode;
 }
 
 interface IListagemCategoriasContextData {
-  categorias: ICategoria[];
+  categorias: IResponseCategoria[] | undefined;
   categoria: ICategoria | undefined;
   setCategoria: Dispatch<SetStateAction<ICategoria | undefined>>;
   toggleModalCategoria: boolean;
@@ -38,10 +41,39 @@ export function CategoriasProvider({
   const [toggleModalInativar, setToggleModalInativar] =
     useState<boolean>(false);
 
-  const categorias: ICategoria[] = [
-    { id: 1, nome: "Alimentação", tipo: "Entrada", ativo: false },
-    { id: 2, nome: "Saúde", tipo: "Entrada", ativo: false },
-    { id: 3, nome: "Lazer", tipo: "Entrada", ativo: false },
+  const { data } = useQuery({
+    refetchOnWindowFocus: true,
+    enabled: true,
+    ...categoriasService.useQueryListarCategorias({
+      ativo: [true],
+      tipo: ["Entrada"],
+    }),
+  });
+
+  console.log(data);
+
+  const categorias: IResponseCategoria[] = [
+    {
+      id: "1",
+      usuario: "BGhDwReOUNVyxLJ9QVIBNGVzHYc2",
+      nome: "Alimentação",
+      tipo: "Entrada",
+      ativo: false,
+    },
+    {
+      id: "2",
+      usuario: "BGhDwReOUNVyxLJ9QVIBNGVzHYc2",
+      nome: "Saúde",
+      tipo: "Entrada",
+      ativo: false,
+    },
+    {
+      id: "3",
+      usuario: "BGhDwReOUNVyxLJ9QVIBNGVzHYc2",
+      nome: "Lazer",
+      tipo: "Entrada",
+      ativo: false,
+    },
   ];
 
   return (
