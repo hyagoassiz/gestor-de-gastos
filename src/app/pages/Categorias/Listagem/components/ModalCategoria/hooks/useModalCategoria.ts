@@ -2,14 +2,20 @@ import { useContext, useEffect } from "react";
 import { CategoriasContext } from "../../../context";
 import { ICategoria, TypeCategoria } from "../../../../../../shared/interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
+import { categoriasService } from "../../../../../../shared/services/categorias";
+import {
+  ICategoriaForm,
+  IPayloadPersistirCategoria,
+} from "../../../interfaces";
+import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 
 interface IModalCategoria {
-  categoriaForm: UseFormReturn<ICategoria>;
-  categoria: ICategoria | undefined;
+  categoriaForm: UseFormReturn<ICategoriaForm>;
+  categoria: IResponseCategoria | undefined;
   options: TypeCategoria[];
   toggleModalCategoria: boolean;
   handleToggleModalCategoria: () => void;
-  handleSubmit: () => void;
+  onSubmit(): void;
 }
 const useModalCategoria = (): IModalCategoria => {
   const {
@@ -19,9 +25,12 @@ const useModalCategoria = (): IModalCategoria => {
     categoria,
   } = useContext(CategoriasContext);
 
-  const categoriaForm = useForm<ICategoria>();
+  const categoriaForm = useForm<ICategoriaForm>();
 
   const options: TypeCategoria[] = ["Entrada", "Saída"];
+
+  const { mutate: mutatePersistirCategoria } =
+    categoriasService.useMutationPersistirCategoria();
 
   useEffect(() => {
     if (categoria?.id && toggleModalCategoria) {
@@ -34,11 +43,26 @@ const useModalCategoria = (): IModalCategoria => {
     }
   }, [toggleModalCategoria, categoria, categoriaForm]);
 
-  function handleSubmit() {
-    categoriaForm.handleSubmit((data) => {
-      console.log(data);
-    });
-    handleToggleModalCategoria();
+  function onSubmit() {
+    categoriaForm.handleSubmit(async (data) => {
+      const payload: IPayloadPersistirCategoria = {
+        id: data.id ?? undefined,
+        nome: data.nome,
+        tipo: data.tipo,
+        ativo: true,
+      };
+      mutatePersistirCategoria(
+        { payload },
+        {
+          onSuccess: () => {
+            handleToggleModalCategoria();
+          },
+          onError: (error) => {
+            console.error("Erro ao persistir categoria:", error);
+          },
+        }
+      );
+    })();
   }
 
   function handleToggleModalCategoria() {
@@ -53,7 +77,7 @@ const useModalCategoria = (): IModalCategoria => {
     options,
     toggleModalCategoria,
     handleToggleModalCategoria,
-    handleSubmit,
+    onSubmit,
   };
 };
 

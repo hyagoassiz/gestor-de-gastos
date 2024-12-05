@@ -3,12 +3,13 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useMemo,
   useState,
 } from "react";
-import { ICategoria } from "../../../../shared/interfaces";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { IResponseCategoria } from "../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../shared/services/categorias";
+import { IPayloadListarCategorias } from "../interfaces";
 
 interface ICategoriasContextProps {
   children: ReactNode;
@@ -16,14 +17,17 @@ interface ICategoriasContextProps {
 
 interface IListagemCategoriasContextData {
   categorias: IResponseCategoria[] | undefined;
-  categoria: ICategoria | undefined;
-  setCategoria: Dispatch<SetStateAction<ICategoria | undefined>>;
+  categoria: IResponseCategoria | undefined;
+  setCategoria: Dispatch<SetStateAction<IResponseCategoria | undefined>>;
   toggleModalCategoria: boolean;
   setToggleModalCategoria: Dispatch<SetStateAction<boolean>>;
   toggleFiltro: boolean;
   setToggleFiltro: Dispatch<SetStateAction<boolean>>;
   toggleModalInativar: boolean;
   setToggleModalInativar: Dispatch<SetStateAction<boolean>>;
+  filtroData: IPayloadListarCategorias;
+  setFiltroData: Dispatch<SetStateAction<IPayloadListarCategorias>>;
+  queryGetCategorias: UseQueryResult;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -34,47 +38,28 @@ export const CategoriasContext = createContext(
 export function CategoriasProvider({
   children,
 }: ICategoriasContextProps): JSX.Element {
-  const [categoria, setCategoria] = useState<ICategoria | undefined>(undefined);
+  const [categoria, setCategoria] = useState<IResponseCategoria | undefined>(
+    undefined
+  );
   const [toggleModalCategoria, setToggleModalCategoria] =
     useState<boolean>(false);
   const [toggleFiltro, setToggleFiltro] = useState<boolean>(false);
   const [toggleModalInativar, setToggleModalInativar] =
     useState<boolean>(false);
-
-  const { data } = useQuery({
-    refetchOnWindowFocus: true,
-    enabled: true,
-    ...categoriasService.useQueryListarCategorias({
-      ativo: [true],
-      tipo: ["Entrada"],
-    }),
+  const [filtroData, setFiltroData] = useState<IPayloadListarCategorias>({
+    ativo: [true],
+    tipo: [],
   });
 
-  console.log(data);
+  const queryGetCategorias = useQuery({
+    refetchOnWindowFocus: false,
+    enabled: true,
+    ...categoriasService.useQueryGetCategorias(filtroData),
+  });
 
-  const categorias: IResponseCategoria[] = [
-    {
-      id: "1",
-      usuario: "BGhDwReOUNVyxLJ9QVIBNGVzHYc2",
-      nome: "Alimentação",
-      tipo: "Entrada",
-      ativo: false,
-    },
-    {
-      id: "2",
-      usuario: "BGhDwReOUNVyxLJ9QVIBNGVzHYc2",
-      nome: "Saúde",
-      tipo: "Entrada",
-      ativo: false,
-    },
-    {
-      id: "3",
-      usuario: "BGhDwReOUNVyxLJ9QVIBNGVzHYc2",
-      nome: "Lazer",
-      tipo: "Entrada",
-      ativo: false,
-    },
-  ];
+  const categorias: IResponseCategoria[] | undefined = useMemo(() => {
+    return queryGetCategorias.data;
+  }, [queryGetCategorias.data]);
 
   return (
     <CategoriasContext.Provider
@@ -88,6 +73,9 @@ export function CategoriasProvider({
         setToggleFiltro,
         toggleModalInativar,
         setToggleModalInativar,
+        filtroData,
+        setFiltroData,
+        queryGetCategorias,
       }}
     >
       {children}

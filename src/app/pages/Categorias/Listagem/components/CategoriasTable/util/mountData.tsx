@@ -1,13 +1,12 @@
 import MoreOptions from "../../../../../../shared/components/MoreOptions/MoreOptions";
-import { ICategoria } from "../../../../../../shared/interfaces";
 import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
 import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 
 interface IMountData {
   categorias: IResponseCategoria[] | undefined;
-  handleInativar: (categoria: ICategoria) => void;
-  handleEditar: (categoria: ICategoria) => void;
-  handleAtivar: (categoria: ICategoria) => void;
+  handleInativar: (categoria: IResponseCategoria) => void;
+  handleEditar: (categoria: IResponseCategoria) => void;
+  handleAtivar: (categoria: IResponseCategoria) => void;
 }
 
 export function mountData({

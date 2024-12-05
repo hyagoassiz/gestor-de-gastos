@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import * as PATHS from "./paths";
 import { ReactNode } from "react";
 import { CategoriasListagemRoute } from "../pages/Categorias";
@@ -38,6 +38,10 @@ export const AppRoutes = () => {
                   <Route
                     path={PATHS.CATEGORIAS.LIST}
                     element={<CategoriasListagemRoute />}
+                  />
+                  <Route
+                    path="*"
+                    element={<Navigate to={PATHS.CATEGORIAS.LIST} />}
                   />
                 </Routes>
               </Layout>

@@ -1,9 +1,7 @@
 import { IInfo } from "../../interfaces";
 
 const INFO: IInfo = {
-  INFO: {
-    DEACTIVATE: "Inativar",
-  },
+  DEACTIVATE: "Inativar",
 };
 
 export default INFO;

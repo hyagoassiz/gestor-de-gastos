@@ -13,21 +13,23 @@ interface IUseFiltro {
 }
 
 const useFiltro = (): IUseFiltro => {
-  const { toggleFiltro, setToggleFiltro } = useContext(CategoriasContext);
+  const { toggleFiltro, setToggleFiltro, setFiltroData, filtroData } =
+    useContext(CategoriasContext);
 
   const filtroForm = useForm<IFiltroForm>();
 
   const options: TypeCategoria[] = ["Entrada", "Saída"];
 
   function handleSubmit() {
-    filtroForm.handleSubmit((data) => {
-      console.log(data);
+    filtroForm.handleSubmit(async (data) => {
+      setFiltroData({ ativo: [!data.situacao], tipo: data.tipo });
     })();
     setToggleFiltro((prevToggle) => !prevToggle);
   }
 
   function handleToggleFiltro() {
     setToggleFiltro((prevToggle) => !prevToggle);
+    filtroForm.reset(filtroData);
   }
 
   return {

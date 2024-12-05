@@ -10,7 +10,7 @@ export const ModalCategoria: React.FC = () => {
     handleToggleModalCategoria,
     options,
     categoriaForm,
-    handleSubmit,
+    onSubmit,
     categoria,
   } = useModalCategoria();
 
@@ -32,7 +32,7 @@ export const ModalCategoria: React.FC = () => {
           </Button>
           <Button
             variant="contained"
-            onClick={categoriaForm.handleSubmit(handleSubmit)}
+            onClick={categoriaForm.handleSubmit(onSubmit)}
           >
             {t("BUTTONS.SAVE")}
           </Button>

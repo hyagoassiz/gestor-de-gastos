@@ -3,24 +3,23 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../FirebaseConnection";
 import { IPayloadListarCategorias, IResponseCategoria } from "./interfaces";
 
-export const KEY_LISTAR_CATEGORIAS = "key-listar-categorias" as const;
+export const KEY_GET_CATEGORIAS = "key-get-categorias" as const;
 
-export function useQueryListarCategorias(
+export function useQueryGetCategorias(
   payload: IPayloadListarCategorias
 ): UseQueryOptions<IResponseCategoria[]> {
-  // const user = useSelector((state: RootState) => state.user);
+  const user: string = "macBMcEnfrOM3ugwOCgbtUt5uAS2";
   const validPayload = payload;
 
   const categorias: UseQueryOptions<IResponseCategoria[]> = {
-    queryKey: [KEY_LISTAR_CATEGORIAS, validPayload],
-    queryFn: () =>
-      queryListarCategorias("BGhDwReOUNVyxLJ9QVIBNGVzHYc2", payload),
+    queryKey: [KEY_GET_CATEGORIAS, validPayload],
+    queryFn: () => queryGetCategorias(user, payload),
   };
 
   return categorias;
 }
 
-const queryListarCategorias = async function (
+const queryGetCategorias = async function (
   usuario: string,
   payload: IPayloadListarCategorias
 ): Promise<IResponseCategoria[]> {

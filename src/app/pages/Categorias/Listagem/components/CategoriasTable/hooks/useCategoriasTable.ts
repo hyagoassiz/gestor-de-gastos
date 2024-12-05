@@ -1,15 +1,15 @@
 import { useContext } from "react";
-import { ICategoria } from "../../../../../../shared/interfaces";
 import { CategoriasContext } from "../../../context";
 import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
+import { categoriasService } from "../../../../../../shared/services/categorias";
 
 interface IUseCategoriasTable {
   categorias: IResponseCategoria[] | undefined;
   handleToggleFiltro: () => void;
-  handleInativar: (categoria: ICategoria) => void;
+  handleInativar: (categoria: IResponseCategoria) => void;
   handleAdicionar: () => void;
-  handleEditar: (categoria: ICategoria) => void;
-  handleAtivar: (categoria: ICategoria) => void;
+  handleEditar: (categoria: IResponseCategoria) => void;
+  handleAtivar: (categoria: IResponseCategoria) => void;
 }
 
 const useCategoriasTable = (): IUseCategoriasTable => {
@@ -19,22 +19,31 @@ const useCategoriasTable = (): IUseCategoriasTable => {
     setCategoria,
     setToggleModalInativar,
     setToggleModalCategoria,
+    queryGetCategorias,
   } = useContext(CategoriasContext);
 
-  function handleAtivar(categoria: ICategoria) {
-    console.log(categoria);
+  const { mutate: mutateAlterarSituacaoCategoria } =
+    categoriasService.useMutationAlterarSituacaoCategoria();
+
+  function handleAtivar(categoria: IResponseCategoria) {
+    mutateAlterarSituacaoCategoria(
+      {
+        payload: { id: categoria.id, ativo: true },
+      },
+      { onSuccess: () => queryGetCategorias.refetch() }
+    );
   }
 
   function handleAdicionar() {
     setToggleModalCategoria((prevState) => !prevState);
   }
 
-  function handleEditar(categoria: ICategoria) {
+  function handleEditar(categoria: IResponseCategoria) {
     setToggleModalCategoria((prevState) => !prevState);
     setCategoria(categoria);
   }
 
-  function handleInativar(categoria: ICategoria) {
+  function handleInativar(categoria: IResponseCategoria) {
     setCategoria(categoria);
     setToggleModalInativar((prevState) => !prevState);
   }

@@ -3,13 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBa3qsXRypCiP8iWFji575kd_53VzI_BaA",
-  authDomain: "cashcontrol-65d7c.firebaseapp.com",
-  projectId: "cashcontrol-65d7c",
-  storageBucket: "cashcontrol-65d7c.appspot.com",
-  messagingSenderId: "1055946286332",
-  appId: "1:1055946286332:web:d3c97307e7099efd042379",
-  measurementId: "G-9BRE55DD2P",
+  apiKey: "AIzaSyC5mYs5qhmL5RFWtJtsGquyjhITCfGpAIY",
+  authDomain: "gestor-de-gastos-a3d1b.firebaseapp.com",
+  projectId: "gestor-de-gastos-a3d1b",
+  storageBucket: "gestor-de-gastos-a3d1b.firebasestorage.app",
+  messagingSenderId: "1095188906435",
+  appId: "1:1095188906435:web:ccc985f172613c44b33d76",
+  measurementId: "G-SHW55T718X",
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

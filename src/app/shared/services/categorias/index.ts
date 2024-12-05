@@ -1,5 +1,9 @@
-import { useQueryListarCategorias } from "./useQueryListarCategorias";
+import { useQueryGetCategorias } from "./useQueryGetCategorias";
+import { useMutationPersistirCategoria } from "./useMutationPersistirCategoria";
+import { useMutationAlterarSituacaoCategoria } from "./useMutationAlterarSituacaoCategoria";
 
 export const categoriasService = {
-  useQueryListarCategorias,
+  useQueryGetCategorias,
+  useMutationPersistirCategoria,
+  useMutationAlterarSituacaoCategoria,
 };
