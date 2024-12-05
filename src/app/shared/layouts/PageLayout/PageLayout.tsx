@@ -1,4 +1,5 @@
 import { AppBar } from "../../components/AppBar/AppBar";
+import { LoadingProgress } from "../../components/LoadingProgress";
 import { BoxContainer, StyledBox } from "./styles";
 
 interface IPageLayout {
@@ -10,7 +11,7 @@ export const PageLayout: React.FC<IPageLayout> = ({ children }) => {
     <BoxContainer>
       <AppBar />
       <StyledBox>
-        {/* <LoadingProgress /> */}
+        <LoadingProgress />
         {children}
       </StyledBox>
     </BoxContainer>

@@ -3,6 +3,7 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -10,6 +11,8 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { IResponseCategoria } from "../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../shared/services/categorias";
 import { IPayloadListarCategorias } from "../interfaces";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../../../shared/redux/loading/actions";
 
 interface ICategoriasContextProps {
   children: ReactNode;
@@ -51,6 +54,8 @@ export function CategoriasProvider({
     tipo: [],
   });
 
+  const dispatch = useDispatch();
+
   const queryGetCategorias = useQuery({
     refetchOnWindowFocus: false,
     enabled: true,
@@ -60,6 +65,10 @@ export function CategoriasProvider({
   const categorias: IResponseCategoria[] | undefined = useMemo(() => {
     return queryGetCategorias.data;
   }, [queryGetCategorias.data]);
+
+  useEffect(() => {
+    dispatch(setLoading(queryGetCategorias.isLoading));
+  }, [queryGetCategorias.isLoading]);
 
   return (
     <CategoriasContext.Provider
