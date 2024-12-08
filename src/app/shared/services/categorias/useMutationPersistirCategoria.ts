@@ -47,16 +47,17 @@ const queryPersistirCategoria = async function (
     throw new Error("Categoria já cadastrada.");
   }
 
+  const { id, ...updateData } = payload;
+
   try {
-    if (payload.id) {
-      const { id, ...updateData } = payload;
+    if (id) {
       const contaRef = doc(db, "categoria", id);
 
       await updateDoc(contaRef, updateData);
       return contaRef;
     } else {
       const newDocRef = await addDoc(collection(db, "categoria"), {
-        ...payload,
+        ...updateData,
         usuario,
       });
       return newDocRef;

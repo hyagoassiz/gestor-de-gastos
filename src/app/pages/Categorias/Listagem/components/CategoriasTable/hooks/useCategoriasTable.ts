@@ -2,6 +2,9 @@ import { useContext } from "react";
 import { CategoriasContext } from "../../../context";
 import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../../../shared/services/categorias";
+import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 interface IUseCategoriasTable {
   categorias: IResponseCategoria[] | undefined;
@@ -22,6 +25,10 @@ const useCategoriasTable = (): IUseCategoriasTable => {
     queryGetCategorias,
   } = useContext(CategoriasContext);
 
+  const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
   const { mutate: mutateAlterarSituacaoCategoria } =
     categoriasService.useMutationAlterarSituacaoCategoria();
 
@@ -30,7 +37,17 @@ const useCategoriasTable = (): IUseCategoriasTable => {
       {
         payload: { id: categoria.id, ativo: true },
       },
-      { onSuccess: () => queryGetCategorias.refetch() }
+      {
+        onSuccess: () => {
+          queryGetCategorias.refetch();
+          dispatch(
+            showSnackbar(
+              t("PAGES.CATEGORIAS.SNACK_BARS.CATEGORIA_ACTIVATE"),
+              "success"
+            )
+          );
+        },
+      }
     );
   }
 

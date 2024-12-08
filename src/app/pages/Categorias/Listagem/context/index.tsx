@@ -57,8 +57,6 @@ export function CategoriasProvider({
   const dispatch = useDispatch();
 
   const queryGetCategorias = useQuery({
-    refetchOnWindowFocus: false,
-    enabled: true,
     ...categoriasService.useQueryGetCategorias(filtroData),
   });
 

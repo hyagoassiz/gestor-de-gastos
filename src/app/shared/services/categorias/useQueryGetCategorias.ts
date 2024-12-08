@@ -14,6 +14,7 @@ export function useQueryGetCategorias(
   const categorias: UseQueryOptions<IResponseCategoria[]> = {
     queryKey: [KEY_GET_CATEGORIAS, validPayload],
     queryFn: () => queryGetCategorias(user, payload),
+    refetchOnWindowFocus: false,
   };
 
   return categorias;

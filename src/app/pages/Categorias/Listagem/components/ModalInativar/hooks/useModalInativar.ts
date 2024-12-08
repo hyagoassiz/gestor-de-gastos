@@ -2,6 +2,9 @@ import { useContext } from "react";
 import { CategoriasContext } from "../../../context";
 import { ICategoria } from "../../../../../../shared/interfaces";
 import { categoriasService } from "../../../../../../shared/services/categorias";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
+import { useTranslation } from "react-i18next";
 
 interface IUseModalInativar {
   categoria: ICategoria | undefined;
@@ -19,6 +22,10 @@ const useModalInativar = (): IUseModalInativar => {
     queryGetCategorias,
   } = useContext(CategoriasContext);
 
+  const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
   const { mutate: mutateAlterarSituacaoCategoria } =
     categoriasService.useMutationAlterarSituacaoCategoria();
 
@@ -28,7 +35,17 @@ const useModalInativar = (): IUseModalInativar => {
         {
           payload: { id: categoria.id, ativo: false },
         },
-        { onSuccess: () => queryGetCategorias.refetch() }
+        {
+          onSuccess: () => {
+            queryGetCategorias.refetch();
+            dispatch(
+              showSnackbar(
+                t("PAGES.CATEGORIAS.SNACK_BARS.CATEGORIA_DEACTIVATE"),
+                "success"
+              )
+            );
+          },
+        }
       );
     }
     handleToggleModalInativar();

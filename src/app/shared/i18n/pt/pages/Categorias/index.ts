@@ -13,8 +13,14 @@ const CATEGORIAS: IPage = {
     },
     MODAL_DEACTIVATE: {
       DESCRIPTION:
-        "Ao clicar em Inativar, a categoria será desativada. Para visualizá-la novamente, filtre por categorias inativas.",
+        "Ao clicar em Inativar, a categoria será inativada. Para visualizá-la novamente, filtre por categorias inativas.",
     },
+  },
+  SNACK_BARS: {
+    CATEGORIA_DEACTIVATE: "Categoria inativada com sucesso!",
+    CATEGORIA_ACTIVATE: "Categoria ativada com sucesso!",
+    CATEGORIA_CREATE: "Categoria criada com sucesso!",
+    CATEGORIA_EDIT: "Categoria editada sucesso!",
   },
 };
 

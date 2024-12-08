@@ -8,6 +8,9 @@ import {
   IPayloadPersistirCategoria,
 } from "../../../interfaces";
 import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 
 interface IModalCategoria {
   categoriaForm: UseFormReturn<ICategoriaForm>;
@@ -23,9 +26,14 @@ const useModalCategoria = (): IModalCategoria => {
     setToggleModalCategoria,
     setCategoria,
     categoria,
+    queryGetCategorias,
   } = useContext(CategoriasContext);
 
   const categoriaForm = useForm<ICategoriaForm>();
+
+  const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   const options: TypeCategoria[] = ["Entrada", "Saída"];
 
@@ -55,10 +63,16 @@ const useModalCategoria = (): IModalCategoria => {
         { payload },
         {
           onSuccess: () => {
+            queryGetCategorias.refetch();
             handleToggleModalCategoria();
-          },
-          onError: (error) => {
-            console.error("Erro ao persistir categoria:", error);
+            dispatch(
+              showSnackbar(
+                !payload.id
+                  ? t("PAGES.CATEGORIAS.SNACK_BARS.CATEGORIA_CREATE")
+                  : t("PAGES.CATEGORIAS.SNACK_BARS.CATEGORIA_EDIT"),
+                "success"
+              )
+            );
           },
         }
       );
