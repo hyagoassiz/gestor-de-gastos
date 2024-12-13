@@ -78,6 +78,7 @@ export const ModalCategoria: React.FC = () => {
                   field.onChange(newValue);
                 }}
                 value={field.value ?? null}
+                disabled={Boolean(categoriaForm.getValues("id"))}
                 renderInput={(params) => (
                   <TextField
                     {...params}

@@ -59,12 +59,12 @@ const useModalCategoria = (): IModalCategoria => {
         tipo: data.tipo,
         ativo: true,
       };
+      handleToggleModalCategoria();
       mutatePersistirCategoria(
-        { payload },
+        { payload: payload },
         {
           onSuccess: () => {
             queryGetCategorias.refetch();
-            handleToggleModalCategoria();
             dispatch(
               showSnackbar(
                 !payload.id

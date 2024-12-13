@@ -11,6 +11,8 @@ import {
   where,
 } from "firebase/firestore";
 import { IPayloadPersistirCategoria } from "./interfaces";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../redux/snackBar/actions";
 
 interface IMutationProps {
   payload: IPayloadPersistirCategoria;
@@ -22,9 +24,13 @@ export const useMutationPersistirCategoria = (): UseMutationResult<
   IMutationProps
 > => {
   const user: string = "macBMcEnfrOM3ugwOCgbtUt5uAS2";
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: ({ payload }: IMutationProps) =>
       queryPersistirCategoria(user, payload),
+    onError: (error) => {
+      dispatch(showSnackbar(String(error), "error"));
+    },
   });
 };
 
