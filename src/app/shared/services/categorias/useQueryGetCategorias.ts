@@ -30,8 +30,8 @@ const queryGetCategorias = async function (
     if (payload.ativo && payload.ativo.length > 0) {
       conditions.push(where("ativo", "in", payload.ativo));
     }
-    if (payload.tipo && payload.tipo.length > 0) {
-      conditions.push(where("tipo", "in", payload.tipo));
+    if (payload.entrada && payload.entrada.length > 0) {
+      conditions.push(where("entrada", "in", payload.entrada));
     }
 
     const categoriasQuery = query(collection(db, "categoria"), ...conditions);
@@ -40,12 +40,13 @@ const queryGetCategorias = async function (
     const categorias: IResponseCategoria[] = [];
 
     querySnapshot.forEach((doc) => {
-      const categoriaData = doc.data();
+      const categoriaData: IResponseCategoria =
+        doc.data() as IResponseCategoria;
       const categoria: IResponseCategoria = {
         id: doc.id,
         usuario: categoriaData.usuario,
         nome: categoriaData.nome,
-        tipo: categoriaData.tipo,
+        entrada: categoriaData.entrada,
         ativo: categoriaData.ativo,
       };
       categorias.push(categoria);

@@ -44,7 +44,7 @@ const queryPersistirCategoria = async function (
     categoriaRef,
     where("usuario", "==", usuario),
     where("nome", "==", payload.nome),
-    where("tipo", "==", payload.tipo)
+    where("entrada", "==", payload.entrada)
   );
 
   const querySnapshot = await getDocs(q);

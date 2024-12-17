@@ -4,4 +4,4 @@ export * from "./ISnackBar";
 export * from "./ILoading";
 export * from "./IUsuario";
 export * from "./ICategoria";
-export * from "./TypeCategoria";
+export * from "./ITypeCategoria";

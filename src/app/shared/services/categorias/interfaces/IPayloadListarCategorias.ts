@@ -1,6 +1,4 @@
-import { TypeCategoria } from "../../../interfaces";
-
 export interface IPayloadListarCategorias {
-  tipo?: TypeCategoria[];
+  entrada?: boolean[];
   ativo?: boolean[];
 }

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { CategoriasContext } from "../../../context";
-import { ICategoria, TypeCategoria } from "../../../../../../shared/interfaces";
+import { ICategoria } from "../../../../../../shared/interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { categoriasService } from "../../../../../../shared/services/categorias";
 import {
@@ -15,7 +15,6 @@ import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 interface IModalCategoria {
   categoriaForm: UseFormReturn<ICategoriaForm>;
   categoria: IResponseCategoria | undefined;
-  options: TypeCategoria[];
   toggleModalCategoria: boolean;
   handleToggleModalCategoria: () => void;
   onSubmit(): void;
@@ -34,8 +33,6 @@ const useModalCategoria = (): IModalCategoria => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
-
-  const options: TypeCategoria[] = ["Entrada", "Saída"];
 
   const { mutate: mutatePersistirCategoria } =
     categoriasService.useMutationPersistirCategoria();
@@ -56,7 +53,7 @@ const useModalCategoria = (): IModalCategoria => {
       const payload: IPayloadPersistirCategoria = {
         id: data.id ?? undefined,
         nome: data.nome,
-        tipo: data.tipo,
+        entrada: data.entrada,
         ativo: true,
       };
       handleToggleModalCategoria();
@@ -88,7 +85,6 @@ const useModalCategoria = (): IModalCategoria => {
   return {
     categoriaForm,
     categoria,
-    options,
     toggleModalCategoria,
     handleToggleModalCategoria,
     onSubmit,

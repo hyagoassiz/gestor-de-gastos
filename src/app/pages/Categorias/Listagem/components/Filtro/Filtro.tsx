@@ -27,28 +27,33 @@ export const Filtro: React.FC = () => {
     >
       <Box>
         <Controller
-          name="tipo"
+          name="entrada"
           control={filtroForm.control}
           rules={{ required: false }}
           render={({ field, fieldState }) => (
             <Autocomplete
-              {...field}
               multiple
-              id="tipo"
-              color="secondary"
-              options={options}
-              noOptionsText="Nenhum resultado encontrado."
-              onChange={(_, value) => field.onChange(value)}
+              disablePortal
+              id="entrada"
+              options={options ?? []}
+              getOptionLabel={(option) => option.nome || ""}
+              onChange={(_, newValue) => {
+                field.onChange(newValue.map((item) => item.id));
+              }}
+              value={
+                options?.filter((option) => field.value?.includes(option.id)) ||
+                []
+              }
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="standard"
                   color="secondary"
-                  sx={{ width: "330px" }}
                   label="Tipo"
                   error={!!fieldState.error}
                 />
               )}
+              fullWidth
             />
           )}
         />

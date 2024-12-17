@@ -20,7 +20,7 @@ export function mountData({
       ...categoria,
       id: categoria.id,
       nome: categoria.nome,
-      tipo: categoria.tipo,
+      tipo: categoria.entrada ? "Entrada" : "Saída",
       situacao: categoria.ativo ? "Ativo" : "Inativo",
       options: (
         <>

@@ -51,7 +51,7 @@ export function CategoriasProvider({
     useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarCategorias>({
     ativo: [true],
-    tipo: [],
+    entrada: [],
   });
 
   const dispatch = useDispatch();

@@ -3,12 +3,12 @@ import { Modal } from "../../../../../shared/components/Modal/Modal";
 import useModalCategoria from "./hooks/useModalCategoria";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
+import { tipoCategorias } from "../../../../../shared/constants/tipoCategorias";
 
 export const ModalCategoria: React.FC = () => {
   const {
     toggleModalCategoria,
     handleToggleModalCategoria,
-    options,
     categoriaForm,
     onSubmit,
     categoria,
@@ -65,19 +65,22 @@ export const ModalCategoria: React.FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Controller
-            name="tipo"
+            name="entrada"
             control={categoriaForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
-                id="tipo"
+                id="entrada"
                 color="secondary"
-                options={options || []}
+                options={tipoCategorias || []}
+                getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
-                  field.onChange(newValue);
+                  field.onChange(newValue?.id);
                 }}
-                value={field.value ?? null}
+                value={
+                  tipoCategorias?.find((c) => c.id === field.value) || null
+                }
                 disabled={Boolean(categoriaForm.getValues("id"))}
                 renderInput={(params) => (
                   <TextField

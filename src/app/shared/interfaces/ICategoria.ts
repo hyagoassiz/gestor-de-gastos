@@ -1,7 +1,5 @@
-import { TypeCategoria } from "./TypeCategoria";
-
 export interface ICategoria {
   nome: string;
-  tipo: TypeCategoria;
+  entrada: boolean;
   ativo: boolean;
 }
