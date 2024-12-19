@@ -1,4 +1,6 @@
+import { TypeCategoria } from "./TypeCategoria";
+
 export interface ITypeCategoria {
-  id: boolean;
+  id: TypeCategoria;
   nome: string;
 }

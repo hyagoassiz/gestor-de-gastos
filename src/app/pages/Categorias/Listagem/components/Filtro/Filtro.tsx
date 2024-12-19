@@ -9,15 +9,11 @@ import {
   FormGroup,
   TextField,
 } from "@mui/material";
+import { tipoCategorias } from "../../../../../shared/constants/tipoCategorias";
 
 export const Filtro: React.FC = () => {
-  const {
-    toggleFiltro,
-    handleToggleFiltro,
-    filtroForm,
-    handleSubmit,
-    options,
-  } = useFiltro();
+  const { toggleFiltro, handleToggleFiltro, filtroForm, handleSubmit } =
+    useFiltro();
 
   return (
     <Drawer
@@ -27,22 +23,23 @@ export const Filtro: React.FC = () => {
     >
       <Box>
         <Controller
-          name="entrada"
+          name="tipo"
           control={filtroForm.control}
           rules={{ required: false }}
           render={({ field, fieldState }) => (
             <Autocomplete
               multiple
               disablePortal
-              id="entrada"
-              options={options ?? []}
+              id="tipo"
+              options={tipoCategorias ?? []}
               getOptionLabel={(option) => option.nome || ""}
               onChange={(_, newValue) => {
                 field.onChange(newValue.map((item) => item.id));
               }}
               value={
-                options?.filter((option) => field.value?.includes(option.id)) ||
-                []
+                tipoCategorias?.filter((option) =>
+                  field.value?.includes(option.id)
+                ) || []
               }
               renderInput={(params) => (
                 <TextField
@@ -61,13 +58,15 @@ export const Filtro: React.FC = () => {
 
       <Box paddingTop={2}>
         <Controller
-          name="situacao"
+          name="ativo"
           control={filtroForm.control}
           defaultValue={false}
           render={({ field }) => (
             <FormGroup>
               <FormControlLabel
-                control={<Checkbox {...field} checked={field.value} />}
+                control={
+                  <Checkbox checked={field.value} onChange={field.onChange} />
+                }
                 label="Exibir somente inativos"
               />
             </FormGroup>

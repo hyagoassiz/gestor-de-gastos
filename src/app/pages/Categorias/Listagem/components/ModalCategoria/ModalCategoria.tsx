@@ -65,13 +65,13 @@ export const ModalCategoria: React.FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Controller
-            name="entrada"
+            name="tipo"
             control={categoriaForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
-                id="entrada"
+                id="tipo"
                 color="secondary"
                 options={tipoCategorias || []}
                 getOptionLabel={(option) => option.nome || ""}

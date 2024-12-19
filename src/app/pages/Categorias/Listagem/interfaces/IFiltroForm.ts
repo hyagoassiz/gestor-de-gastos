@@ -1,4 +1,6 @@
+import { TypeCategoria } from "../../../../shared/interfaces";
+
 export interface IFiltroForm {
-  entrada: boolean[];
-  situacao: boolean;
+  tipo: TypeCategoria[];
+  ativo: boolean;
 }

@@ -11,8 +11,9 @@ import {
   where,
 } from "firebase/firestore";
 import { IPayloadPersistirCategoria } from "./interfaces";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showSnackbar } from "../../redux/snackBar/actions";
+import { IRootState } from "../../interfaces";
 
 interface IMutationProps {
   payload: IPayloadPersistirCategoria;
@@ -23,11 +24,11 @@ export const useMutationPersistirCategoria = (): UseMutationResult<
   unknown,
   IMutationProps
 > => {
-  const user: string = "macBMcEnfrOM3ugwOCgbtUt5uAS2";
   const dispatch = useDispatch();
+  const { uid } = useSelector((state: IRootState) => state.user);
   return useMutation({
     mutationFn: ({ payload }: IMutationProps) =>
-      queryPersistirCategoria(user, payload),
+      queryPersistirCategoria(uid, payload),
     onError: (error) => {
       dispatch(showSnackbar(String(error), "error"));
     },
@@ -44,7 +45,7 @@ const queryPersistirCategoria = async function (
     categoriaRef,
     where("usuario", "==", usuario),
     where("nome", "==", payload.nome),
-    where("entrada", "==", payload.entrada)
+    where("tipo", "==", payload.tipo)
   );
 
   const querySnapshot = await getDocs(q);

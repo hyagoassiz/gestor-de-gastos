@@ -2,6 +2,8 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { db } from "../../../../FirebaseConnection";
 import { doc, DocumentReference, getDoc, updateDoc } from "firebase/firestore";
 import { IPayloadAlterarSituacaoCategoria } from "./interfaces";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../interfaces";
 
 interface IMutationProps {
   payload: IPayloadAlterarSituacaoCategoria;
@@ -12,10 +14,10 @@ export const useMutationAlterarSituacaoCategoria = (): UseMutationResult<
   unknown,
   IMutationProps
 > => {
-  const user: string = "macBMcEnfrOM3ugwOCgbtUt5uAS2";
+  const { uid } = useSelector((state: IRootState) => state.user);
   return useMutation({
     mutationFn: ({ payload }: IMutationProps) =>
-      queryAlterarSituacaoCategoria(user, payload),
+      queryAlterarSituacaoCategoria(uid, payload),
   });
 };
 

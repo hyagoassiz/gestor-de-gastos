@@ -1,14 +1,11 @@
 import { useContext } from "react";
 import { CategoriasContext } from "../../../context";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { IFiltroForm } from "../../../interfaces";
-import { tipoCategorias } from "../../../../../../shared/constants/tipoCategorias";
-import { ITypeCategoria } from "../../../../../../shared/interfaces";
+import { IFiltroForm, IPayloadListarCategorias } from "../../../interfaces";
 
 interface IUseFiltro {
   filtroForm: UseFormReturn<IFiltroForm>;
   toggleFiltro: boolean;
-  options: ITypeCategoria[];
   handleToggleFiltro: () => void;
   handleSubmit: () => void;
 }
@@ -19,25 +16,29 @@ const useFiltro = (): IUseFiltro => {
 
   const filtroForm = useForm<IFiltroForm>();
 
-  const options: ITypeCategoria[] = tipoCategorias;
-
   function handleSubmit() {
     filtroForm.handleSubmit(async (data) => {
-      setFiltroData({ ativo: [!data.situacao], entrada: data.entrada });
+      const formData: IPayloadListarCategorias = {
+        ativo: !data.ativo ? [true] : [false],
+        tipo: data.tipo,
+      };
+      setFiltroData(formData);
     })();
     setToggleFiltro((prevToggle) => !prevToggle);
   }
 
   function handleToggleFiltro() {
     setToggleFiltro((prevToggle) => !prevToggle);
-    filtroForm.reset(filtroData);
+    filtroForm.reset({
+      tipo: filtroData.tipo,
+      ativo: !filtroData.ativo[0],
+    });
   }
 
   return {
     handleSubmit,
     filtroForm,
     toggleFiltro,
-    options,
     handleToggleFiltro,
   };
 };

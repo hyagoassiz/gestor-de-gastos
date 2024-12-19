@@ -2,18 +2,20 @@ import { UseQueryOptions } from "@tanstack/react-query";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../FirebaseConnection";
 import { IPayloadListarCategorias, IResponseCategoria } from "./interfaces";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../interfaces";
 
 export const KEY_GET_CATEGORIAS = "key-get-categorias" as const;
 
 export function useQueryGetCategorias(
   payload: IPayloadListarCategorias
 ): UseQueryOptions<IResponseCategoria[]> {
-  const user: string = "macBMcEnfrOM3ugwOCgbtUt5uAS2";
+  const { uid } = useSelector((state: IRootState) => state.user);
   const validPayload = payload;
 
   const categorias: UseQueryOptions<IResponseCategoria[]> = {
     queryKey: [KEY_GET_CATEGORIAS, validPayload],
-    queryFn: () => queryGetCategorias(user, payload),
+    queryFn: () => queryGetCategorias(uid, payload),
     refetchOnWindowFocus: false,
   };
 
@@ -30,8 +32,8 @@ const queryGetCategorias = async function (
     if (payload.ativo && payload.ativo.length > 0) {
       conditions.push(where("ativo", "in", payload.ativo));
     }
-    if (payload.entrada && payload.entrada.length > 0) {
-      conditions.push(where("entrada", "in", payload.entrada));
+    if (payload.tipo && payload.tipo.length > 0) {
+      conditions.push(where("tipo", "in", payload.tipo));
     }
 
     const categoriasQuery = query(collection(db, "categoria"), ...conditions);
@@ -46,7 +48,7 @@ const queryGetCategorias = async function (
         id: doc.id,
         usuario: categoriaData.usuario,
         nome: categoriaData.nome,
-        entrada: categoriaData.entrada,
+        tipo: categoriaData.tipo,
         ativo: categoriaData.ativo,
       };
       categorias.push(categoria);

@@ -1,6 +1,6 @@
 import { ITypeCategoria } from "../interfaces";
 
 export const tipoCategorias: ITypeCategoria[] = [
-  { id: true, nome: "Entrada" },
-  { id: false, nome: "Saída" },
+  { id: "ENTRADA", nome: "Entrada" },
+  { id: "SAIDA", nome: "Saída" },
 ];

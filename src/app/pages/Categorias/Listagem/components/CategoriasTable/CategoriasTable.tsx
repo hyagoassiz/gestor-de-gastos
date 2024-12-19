@@ -15,6 +15,7 @@ export const CategoriasTable: React.FC = () => {
     handleAdicionar,
     handleEditar,
     handleAtivar,
+    badgeCount,
   } = useCategoriasTable();
 
   const { t } = useTranslation();
@@ -27,7 +28,10 @@ export const CategoriasTable: React.FC = () => {
             <Button variant="contained" onClick={handleAdicionar}>
               {t("BUTTONS.ADD")}
             </Button>
-            <FilterIcon onClick={handleToggleFiltro} badgeContent={1} />
+            <FilterIcon
+              onClick={handleToggleFiltro}
+              badgeContent={badgeCount}
+            />
           </>
         }
       />

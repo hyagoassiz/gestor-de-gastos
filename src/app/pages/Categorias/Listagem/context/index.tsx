@@ -50,8 +50,8 @@ export function CategoriasProvider({
   const [toggleModalInativar, setToggleModalInativar] =
     useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarCategorias>({
-    ativo: [true],
-    entrada: [],
+    ativo: [],
+    tipo: [],
   });
 
   const dispatch = useDispatch();

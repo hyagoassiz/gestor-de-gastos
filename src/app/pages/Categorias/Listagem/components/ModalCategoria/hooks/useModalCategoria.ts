@@ -53,7 +53,7 @@ const useModalCategoria = (): IModalCategoria => {
       const payload: IPayloadPersistirCategoria = {
         id: data.id ?? undefined,
         nome: data.nome,
-        entrada: data.entrada,
+        tipo: data.tipo,
         ativo: true,
       };
       handleToggleModalCategoria();

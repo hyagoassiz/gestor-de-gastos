@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { CategoriasContext } from "../../../context";
 import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../../../shared/services/categorias";
@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 
 interface IUseCategoriasTable {
   categorias: IResponseCategoria[] | undefined;
+  badgeCount: number;
   handleToggleFiltro: () => void;
   handleInativar: (categoria: IResponseCategoria) => void;
   handleAdicionar: () => void;
@@ -23,6 +24,7 @@ const useCategoriasTable = (): IUseCategoriasTable => {
     setToggleModalInativar,
     setToggleModalCategoria,
     queryGetCategorias,
+    filtroData,
   } = useContext(CategoriasContext);
 
   const dispatch = useDispatch();
@@ -31,6 +33,12 @@ const useCategoriasTable = (): IUseCategoriasTable => {
 
   const { mutate: mutateAlterarSituacaoCategoria } =
     categoriasService.useMutationAlterarSituacaoCategoria();
+
+  const badgeCount: number = useMemo(() => {
+    const tipo = filtroData.tipo?.length || 0;
+    const ativo = filtroData.ativo.some((_ativo) => _ativo === false) ? 1 : 0;
+    return tipo + ativo;
+  }, [JSON.stringify(filtroData)]);
 
   function handleAtivar(categoria: IResponseCategoria) {
     mutateAlterarSituacaoCategoria(
@@ -71,6 +79,7 @@ const useCategoriasTable = (): IUseCategoriasTable => {
 
   return {
     categorias,
+    badgeCount,
     handleToggleFiltro,
     handleInativar,
     handleAdicionar,
