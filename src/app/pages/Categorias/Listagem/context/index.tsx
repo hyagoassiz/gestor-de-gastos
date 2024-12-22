@@ -66,7 +66,7 @@ export function CategoriasProvider({
 
   useEffect(() => {
     dispatch(setLoading(queryGetCategorias.isLoading));
-  }, [queryGetCategorias.isLoading]);
+  }, [queryGetCategorias.isLoading, dispatch]);
 
   return (
     <CategoriasContext.Provider

@@ -1,11 +1,17 @@
 import { useTranslation } from "react-i18next";
 import { TitlePage } from "../../../shared/components/TitlePage/TItlePage";
 import { ModalCategoria } from "./components/ModalCategoria";
-import { CategoriasTable } from "./components/CategoriasTable";
 import { Filtro } from "./components/Filtro";
 import { ModalInativar } from "./components/ModalInativar";
+import { ToolPainel } from "../../../shared/components/ToolPanel/ToolPanel";
+import { Button } from "@mui/material";
+import { FilterIcon } from "../../../shared/components/FilterIcon";
+import useListagem from "./hooks/useListagem";
+import { Tabela } from "./components/Tabela";
 
 export const Listagem: React.FC = () => {
+  const { handleToggleFiltro, handleAdicionar, badgeCount } = useListagem();
+
   const { t } = useTranslation();
 
   return (
@@ -14,7 +20,20 @@ export const Listagem: React.FC = () => {
         title={t("PAGES.CATEGORIAS.TITLE")}
         subTitle={t("PAGES.CATEGORIAS.SUBTITLE")}
       />
-      <CategoriasTable />
+      <ToolPainel
+        buttons={
+          <>
+            <Button variant="contained" onClick={handleAdicionar}>
+              {t("BUTTONS.ADD")}
+            </Button>
+            <FilterIcon
+              onClick={handleToggleFiltro}
+              badgeContent={badgeCount}
+            />
+          </>
+        }
+      />
+      <Tabela />
       <ModalCategoria />
       <ModalInativar />
       <Filtro />
