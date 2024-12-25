@@ -10,7 +10,8 @@ import useListagem from "./hooks/useListagem";
 import { Tabela } from "./components/Tabela";
 
 export const Listagem: React.FC = () => {
-  const { handleToggleFiltro, handleAdicionar, badgeCount } = useListagem();
+  const { handleToggleFiltro, handleAdicionar, badgeCount, searchBar } =
+    useListagem();
 
   const { t } = useTranslation();
 
@@ -32,6 +33,7 @@ export const Listagem: React.FC = () => {
             />
           </>
         }
+        searchBar={searchBar}
       />
       <Tabela />
       <ModalCategoria />

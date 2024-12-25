@@ -6,3 +6,4 @@ export * from "./IUsuario";
 export * from "./ICategoria";
 export * from "./ITypeCategoria";
 export * from "./TypeCategoria";
+export * from "./ISearchBar";

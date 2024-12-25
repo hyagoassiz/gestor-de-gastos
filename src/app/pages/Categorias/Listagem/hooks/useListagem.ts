@@ -1,14 +1,16 @@
 import { useContext, useMemo } from "react";
 import { CategoriasContext } from "../context";
+import { ISeachBar } from "../../../../shared/interfaces";
 
 interface IListagem {
   badgeCount: number;
+  searchBar: ISeachBar;
   handleToggleFiltro: () => void;
   handleAdicionar: () => void;
 }
 
 const useListagem = (): IListagem => {
-  const { setToggleFiltro, setToggleModalCategoria, filtroData } =
+  const { setToggleFiltro, setToggleModalCategoria, filtroData, searchBar } =
     useContext(CategoriasContext);
 
   const badgeCount: number = useMemo(() => {
@@ -25,7 +27,7 @@ const useListagem = (): IListagem => {
     setToggleFiltro((prevToggle) => !prevToggle);
   }
 
-  return { badgeCount, handleToggleFiltro, handleAdicionar };
+  return { badgeCount, searchBar, handleToggleFiltro, handleAdicionar };
 };
 
 export default useListagem;

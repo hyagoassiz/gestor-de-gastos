@@ -13,6 +13,8 @@ import { categoriasService } from "../../../../shared/services/categorias";
 import { IPayloadListarCategorias } from "../interfaces";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
+import useSearchBar from "../../../../shared/hooks/useSearchBar";
+import { ISeachBar } from "../../../../shared/interfaces";
 
 interface ICategoriasContextProps {
   children: ReactNode;
@@ -21,6 +23,7 @@ interface ICategoriasContextProps {
 interface IListagemCategoriasContextData {
   categorias: IResponseCategoria[] | undefined;
   categoria: IResponseCategoria | undefined;
+  searchBar: ISeachBar;
   setCategoria: Dispatch<SetStateAction<IResponseCategoria | undefined>>;
   toggleModalCategoria: boolean;
   setToggleModalCategoria: Dispatch<SetStateAction<boolean>>;
@@ -50,11 +53,16 @@ export function CategoriasProvider({
   const [toggleModalInativar, setToggleModalInativar] =
     useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarCategorias>({
-    ativo: [],
+    ativo: [true],
     tipo: [],
+    nome: "",
   });
 
   const dispatch = useDispatch();
+
+  const { searchBar, textoBusca } = useSearchBar({
+    placeHolder: "Pesquisar Categorias",
+  });
 
   const queryGetCategorias = useQuery({
     ...categoriasService.useQueryGetCategorias(filtroData),
@@ -68,11 +76,16 @@ export function CategoriasProvider({
     dispatch(setLoading(queryGetCategorias.isLoading));
   }, [queryGetCategorias.isLoading, dispatch]);
 
+  useEffect(() => {
+    setFiltroData((prevState) => ({ ...prevState, nome: textoBusca }));
+  }, [textoBusca]);
+
   return (
     <CategoriasContext.Provider
       value={{
         categorias,
         categoria,
+        searchBar,
         setCategoria,
         toggleModalCategoria,
         setToggleModalCategoria,
