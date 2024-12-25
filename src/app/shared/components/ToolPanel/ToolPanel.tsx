@@ -1,16 +1,9 @@
 import { InputAdornment, TextField, useTheme } from "@mui/material";
 import { Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { ChangeEventHandler, ReactNode } from "react";
+import { ReactNode } from "react";
 import { BoxContainer, StyledBox, StyledContainer } from "./styles";
-
-interface ISeachBar {
-  placeholder: string;
-  value: string | number;
-  onChange:
-    | ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
-    | undefined;
-}
+import { ISeachBar } from "../../interfaces";
 
 interface MuiFrameProps {
   buttons?: ReactNode;

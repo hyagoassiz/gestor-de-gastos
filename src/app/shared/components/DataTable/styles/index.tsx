@@ -5,9 +5,11 @@ export const StyledTableHead = styled(TableHead)(({ theme }) => ({
   height: theme.spacing(5),
 }));
 
-export const StyledTableCellHead = styled(TableCell)(() => ({
+export const StyledTableCellHead = styled(TableCell)(({ theme }) => ({
   fontWeight: 600,
   borderBottom: `none`,
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
 }));
 
 export const StyledTableCellBody = styled(TableCell)(({ theme }) => ({
