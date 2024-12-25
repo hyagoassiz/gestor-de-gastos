@@ -11,7 +11,7 @@ interface SnackBarAction {
   type: string;
   payload?: {
     message: string;
-    type: "error" | "info" | "success" | "warning";
+    type: ISnackBar["type"];
   };
 }
 

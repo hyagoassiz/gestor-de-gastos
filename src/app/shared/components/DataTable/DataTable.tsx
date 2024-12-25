@@ -1,6 +1,5 @@
 import { TableBody, TableContainer, TableRow, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
-import { ITableColumn } from "../../interfaces";
 import {
   Icon,
   StyledBox,
@@ -8,9 +7,10 @@ import {
   StyledTableCellHead,
   StyledTableHead,
 } from "./styles";
+import { IDataColumns } from "../../interfaces";
 
 interface IDataTable {
-  columns: ITableColumn[];
+  columns: IDataColumns[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   textForEmptyData: string;
@@ -42,7 +42,10 @@ export const DataTable: React.FC<IDataTable> = ({
                   <StyledTableCellBody
                     size="small"
                     key={column.key}
-                    style={{ ...column?.style }}
+                    style={{
+                      ...column?.style,
+                      backgroundColor: index % 2 === 0 ? "#F8F9FA" : "#FFFFFF",
+                    }}
                   >
                     {row[column.key]}
                   </StyledTableCellBody>

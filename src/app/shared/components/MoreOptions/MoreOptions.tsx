@@ -1,6 +1,7 @@
 import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import useMoreOptions from "./hooks/useMoreOptions";
+import { useTranslation } from "react-i18next";
 
 interface IMoreOptions {
   options: {
@@ -12,9 +13,11 @@ interface IMoreOptions {
 const MoreOptions = ({ options }: IMoreOptions) => {
   const { handleClick, anchorEl, handleClose } = useMoreOptions();
 
+  const { t } = useTranslation();
+
   return (
     <>
-      <Tooltip placement="top" title="Opções">
+      <Tooltip placement="top" title={t("TOOLTIPS.OPTIONS")}>
         <IconButton
           color="info"
           aria-controls="options-menu"
