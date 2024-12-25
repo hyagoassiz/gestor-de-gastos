@@ -2,7 +2,7 @@ import { IUsuario } from "../../interfaces";
 import userActionTypes from "./action-types";
 
 const initialState: IUsuario = {
-  uid: "",
+  uid: "macBMcEnfrOM3ugwOCgbtUt5uAS2",
   displayName: "",
   email: "",
   emailVerified: false,
