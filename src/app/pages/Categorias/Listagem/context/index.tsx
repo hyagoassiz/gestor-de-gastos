@@ -55,7 +55,6 @@ export function CategoriasProvider({
   const [filtroData, setFiltroData] = useState<IPayloadListarCategorias>({
     ativo: [true],
     tipo: [],
-    nome: "",
   });
 
   const dispatch = useDispatch();
@@ -69,16 +68,18 @@ export function CategoriasProvider({
   });
 
   const categorias: IResponseCategoria[] | undefined = useMemo(() => {
-    return queryGetCategorias.data;
-  }, [queryGetCategorias.data]);
+    if (textoBusca !== "") {
+      return queryGetCategorias.data?.filter((categoria) =>
+        categoria.nome.toLowerCase().includes(textoBusca.toLowerCase())
+      );
+    } else {
+      return queryGetCategorias.data;
+    }
+  }, [queryGetCategorias.data, textoBusca]);
 
   useEffect(() => {
     dispatch(setLoading(queryGetCategorias.isLoading));
   }, [queryGetCategorias.isLoading, dispatch]);
-
-  useEffect(() => {
-    setFiltroData((prevState) => ({ ...prevState, nome: textoBusca }));
-  }, [textoBusca]);
 
   return (
     <CategoriasContext.Provider
