@@ -1,5 +1,6 @@
 import MoreOptions from "../../../../../../shared/components/MoreOptions/MoreOptions";
 import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
+import { TipoMovimentacao } from "../../../../../../shared/components/TipoMovimentacao";
 import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 
 interface IMountData {
@@ -20,7 +21,7 @@ export function mountData({
       ...categoria,
       id: categoria.id,
       nome: categoria.nome,
-      tipo: categoria.tipo === "ENTRADA" ? "Entrada" : "Saída",
+      tipo: <TipoMovimentacao tipo={categoria.tipo} />,
       situacao: categoria.ativo ? "Ativo" : "Inativo",
       options: (
         <>

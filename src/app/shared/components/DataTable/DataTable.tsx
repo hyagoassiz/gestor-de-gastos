@@ -79,15 +79,17 @@ export const DataTable: React.FC<IDataTable> = ({
           )}
         </Table>
       </TableContainer>
-      <Footer spacing={2}>
-        <Pagination
-          color="primary"
-          count={totalPages}
-          page={page}
-          onChange={(_, value) => setPage(value)}
-          shape="rounded"
-        />
-      </Footer>
+      {paginatedData.length > 0 && (
+        <Footer spacing={2}>
+          <Pagination
+            color="primary"
+            count={totalPages}
+            page={page}
+            onChange={(_, value) => setPage(value)}
+            shape="rounded"
+          />
+        </Footer>
+      )}
     </>
   );
 };
