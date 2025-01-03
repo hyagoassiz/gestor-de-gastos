@@ -44,10 +44,7 @@ const useTabela = (): IUseTabela => {
         onSuccess: () => {
           queryGetCategorias.refetch();
           dispatch(
-            showSnackbar(
-              t("PAGES.CATEGORIAS.SNACK_BARS.CATEGORIA_ACTIVATE"),
-              "success"
-            )
+            showSnackbar(t("PAGES.CATEGORIAS.SNACK_BARS.ACTIVATE"), "success")
           );
         },
       }

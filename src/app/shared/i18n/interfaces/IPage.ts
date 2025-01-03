@@ -14,9 +14,9 @@ export interface IPage {
     };
   };
   SNACK_BARS: {
-    CATEGORIA_DEACTIVATE: string;
-    CATEGORIA_ACTIVATE: string;
-    CATEGORIA_CREATE: string;
-    CATEGORIA_EDIT: string;
+    DEACTIVATE: string;
+    ACTIVATE: string;
+    CREATE: string;
+    EDIT: string;
   };
 }
