@@ -19,7 +19,6 @@ export function mountData({
   if (categorias?.length) {
     return categorias.map((categoria) => ({
       ...categoria,
-      id: categoria.id,
       nome: categoria.nome,
       tipo: <TipoMovimentacao tipo={categoria.tipo} />,
       situacao: categoria.ativo ? "Ativo" : "Inativo",

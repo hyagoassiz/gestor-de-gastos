@@ -1,3 +1,3 @@
 export interface IInfo {
-  DEACTIVATE: "Inativar";
+  DEACTIVATE: string;
 }
