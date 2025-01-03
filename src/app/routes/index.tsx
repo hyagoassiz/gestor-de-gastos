@@ -3,6 +3,7 @@ import * as PATHS from "./paths";
 import { ReactNode } from "react";
 import { CategoriasListagemRoute } from "../pages/Categorias";
 import { PageLayout } from "../shared/layouts/PageLayout/PageLayout";
+import { ContasListagemRoute } from "../pages/Contas";
 
 interface LayoutProps {
   children: ReactNode;
@@ -38,6 +39,10 @@ export const AppRoutes = () => {
                   <Route
                     path={PATHS.CATEGORIAS.LIST}
                     element={<CategoriasListagemRoute />}
+                  />
+                  <Route
+                    path={PATHS.CONTAS.LIST}
+                    element={<ContasListagemRoute />}
                   />
                   <Route
                     path="*"

@@ -54,6 +54,8 @@ const queryGetCategorias = async function (
       categorias.push(categoria);
     });
 
+    categorias.sort((a, b) => a.nome.localeCompare(b.nome));
+
     return categorias;
   } catch (error) {
     console.error("Erro ao obter categorias do usuário:", error);
