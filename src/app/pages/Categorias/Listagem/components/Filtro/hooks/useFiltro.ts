@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { CategoriasContext } from "../../../context";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { IFiltroForm, IPayloadListarCategorias } from "../../../interfaces";
+import { IFiltroForm } from "../../../interfaces";
+import { IPayloadListarCategorias } from "../../../../../../shared/services/categorias/interfaces";
 
 interface IUseFiltro {
   filtroForm: UseFormReturn<IFiltroForm>;
