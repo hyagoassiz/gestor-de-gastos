@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CategoriasContext } from "../../../context";
 import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../../../shared/services/categorias";
 import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { setLoading } from "../../../../../../shared/redux/loading/actions";
 
 interface IUseTabela {
   categorias: IResponseCategoria[] | undefined;
@@ -26,8 +27,13 @@ const useTabela = (): IUseTabela => {
 
   const { t } = useTranslation();
 
-  const { mutate: mutateAlterarSituacaoCategoria } =
+  const { mutate: mutateAlterarSituacaoCategoria, isPending } =
     categoriasService.useMutationAlterarSituacaoCategoria();
+
+  useEffect(() => {
+    dispatch(setLoading(isPending));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPending]);
 
   function handleAtivar(categoria: IResponseCategoria) {
     mutateAlterarSituacaoCategoria(

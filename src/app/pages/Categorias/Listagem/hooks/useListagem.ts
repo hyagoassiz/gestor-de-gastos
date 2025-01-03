@@ -17,6 +17,7 @@ const useListagem = (): IListagem => {
     const tipo = filtroData.tipo?.length || 0;
     const ativo = filtroData.ativo.some((_ativo) => _ativo === false) ? 1 : 0;
     return tipo + ativo;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(filtroData)]);
 
   function handleAdicionar() {

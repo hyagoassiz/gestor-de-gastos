@@ -8,9 +8,11 @@ import {
   useState,
 } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { IResponseCategoria } from "../../../../shared/services/categorias/interfaces";
+import {
+  IPayloadListarCategorias,
+  IResponseCategoria,
+} from "../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../shared/services/categorias";
-import { IPayloadListarCategorias } from "../interfaces";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
 import useSearchBar from "../../../../shared/hooks/useSearchBar";
@@ -24,16 +26,16 @@ interface IListagemCategoriasContextData {
   categorias: IResponseCategoria[] | undefined;
   categoria: IResponseCategoria | undefined;
   searchBar: ISeachBar;
-  setCategoria: Dispatch<SetStateAction<IResponseCategoria | undefined>>;
   toggleModalCategoria: boolean;
-  setToggleModalCategoria: Dispatch<SetStateAction<boolean>>;
   toggleFiltro: boolean;
-  setToggleFiltro: Dispatch<SetStateAction<boolean>>;
   toggleModalInativar: boolean;
-  setToggleModalInativar: Dispatch<SetStateAction<boolean>>;
   filtroData: IPayloadListarCategorias;
-  setFiltroData: Dispatch<SetStateAction<IPayloadListarCategorias>>;
   queryGetCategorias: UseQueryResult;
+  setCategoria: Dispatch<SetStateAction<IResponseCategoria | undefined>>;
+  setToggleModalCategoria: Dispatch<SetStateAction<boolean>>;
+  setToggleFiltro: Dispatch<SetStateAction<boolean>>;
+  setToggleModalInativar: Dispatch<SetStateAction<boolean>>;
+  setFiltroData: Dispatch<SetStateAction<IPayloadListarCategorias>>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -55,7 +57,6 @@ export function CategoriasProvider({
   const [filtroData, setFiltroData] = useState<IPayloadListarCategorias>({
     ativo: [true],
     tipo: [],
-    nome: "",
   });
 
   const dispatch = useDispatch();
@@ -69,16 +70,18 @@ export function CategoriasProvider({
   });
 
   const categorias: IResponseCategoria[] | undefined = useMemo(() => {
-    return queryGetCategorias.data;
-  }, [queryGetCategorias.data]);
+    if (textoBusca !== "") {
+      return queryGetCategorias.data?.filter((categoria) =>
+        categoria.nome.toLowerCase().includes(textoBusca.toLowerCase())
+      );
+    } else {
+      return queryGetCategorias.data;
+    }
+  }, [queryGetCategorias.data, textoBusca]);
 
   useEffect(() => {
     dispatch(setLoading(queryGetCategorias.isLoading));
   }, [queryGetCategorias.isLoading, dispatch]);
-
-  useEffect(() => {
-    setFiltroData((prevState) => ({ ...prevState, nome: textoBusca }));
-  }, [textoBusca]);
 
   return (
     <CategoriasContext.Provider
@@ -86,16 +89,16 @@ export function CategoriasProvider({
         categorias,
         categoria,
         searchBar,
-        setCategoria,
         toggleModalCategoria,
-        setToggleModalCategoria,
         toggleFiltro,
-        setToggleFiltro,
         toggleModalInativar,
-        setToggleModalInativar,
         filtroData,
-        setFiltroData,
         queryGetCategorias,
+        setCategoria,
+        setToggleModalCategoria,
+        setToggleFiltro,
+        setToggleModalInativar,
+        setFiltroData,
       }}
     >
       {children}

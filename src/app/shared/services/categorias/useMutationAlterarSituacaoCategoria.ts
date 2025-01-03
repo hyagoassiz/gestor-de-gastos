@@ -17,11 +17,11 @@ export const useMutationAlterarSituacaoCategoria = (): UseMutationResult<
   const { uid } = useSelector((state: IRootState) => state.user);
   return useMutation({
     mutationFn: ({ payload }: IMutationProps) =>
-      queryAlterarSituacaoCategoria(uid, payload),
+      mutateAlterarSituacaoCategoria(uid, payload),
   });
 };
 
-const queryAlterarSituacaoCategoria = async function (
+export const mutateAlterarSituacaoCategoria = async function (
   usuario: string,
   payload: IPayloadAlterarSituacaoCategoria
 ): Promise<DocumentReference> {

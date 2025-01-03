@@ -29,7 +29,14 @@ export const Modal: React.FC<IMuiModalProps> = ({
             {title}
           </Title>
           <Box sx={{ mt: 4, textAlign: "justify" }}>{children}</Box>
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 5 }}>
+          <Box
+            sx={{
+              gap: "16px",
+              display: "flex",
+              justifyContent: "flex-end",
+              mt: 5,
+            }}
+          >
             {buttons}
           </Box>
         </StyledBox>

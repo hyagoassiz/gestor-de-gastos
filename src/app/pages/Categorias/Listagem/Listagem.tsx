@@ -21,6 +21,7 @@ export const Listagem: React.FC = () => {
         title={t("PAGES.CATEGORIAS.TITLE")}
         subTitle={t("PAGES.CATEGORIAS.SUBTITLE")}
       />
+
       <ToolPainel
         buttons={
           <>
@@ -35,9 +36,13 @@ export const Listagem: React.FC = () => {
         }
         searchBar={searchBar}
       />
+
       <Tabela />
+
       <ModalCategoria />
+
       <ModalInativar />
+
       <Filtro />
     </>
   );

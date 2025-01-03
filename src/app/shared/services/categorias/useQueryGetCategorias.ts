@@ -35,9 +35,6 @@ const queryGetCategorias = async function (
     if (payload.tipo && payload.tipo.length > 0) {
       conditions.push(where("tipo", "in", payload.tipo));
     }
-    if (payload.nome && payload.nome.trim().length > 0) {
-      conditions.push(where("nome", "==", payload.nome.trim()));
-    }
 
     const categoriasQuery = query(collection(db, "categoria"), ...conditions);
 

@@ -3,11 +3,11 @@ import { CategoriasContext } from "../../../context";
 import { ICategoria } from "../../../../../../shared/interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { categoriasService } from "../../../../../../shared/services/categorias";
+import { ICategoriaForm } from "../../../interfaces";
 import {
-  ICategoriaForm,
   IPayloadPersistirCategoria,
-} from "../../../interfaces";
-import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
+  IResponseCategoria,
+} from "../../../../../../shared/services/categorias/interfaces";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
@@ -46,7 +46,8 @@ const useModalCategoria = (): IModalCategoria => {
         );
       });
     }
-  }, [toggleModalCategoria, categoria, categoriaForm]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toggleModalCategoria, categoria]);
 
   function onSubmit() {
     categoriaForm.handleSubmit(async (data) => {
