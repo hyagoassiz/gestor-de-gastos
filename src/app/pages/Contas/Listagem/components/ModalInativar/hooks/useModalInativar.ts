@@ -1,14 +1,14 @@
 import { useContext, useEffect } from "react";
-import { CategoriasContext } from "../../../context";
-import { ICategoria } from "../../../../../../shared/interfaces";
-import { categoriasService } from "../../../../../../shared/services/categorias";
+import { ContasContext } from "../../../context";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 import { useTranslation } from "react-i18next";
 import { setLoading } from "../../../../../../shared/redux/loading/actions";
+import { contasService } from "../../../../../../shared/services/contas";
+import { IConta } from "../../../../../../shared/interfaces";
 
 interface IUseModalInativar {
-  categoria: ICategoria | undefined;
+  conta: IConta | undefined;
   toggleModalInativar: boolean;
   handleToggleModalInativar: () => void;
   handleInativar: () => void;
@@ -17,18 +17,18 @@ interface IUseModalInativar {
 const useModalInativar = (): IUseModalInativar => {
   const {
     toggleModalInativar,
-    setCategoria,
+    setConta,
     setToggleModalInativar,
-    categoria,
-    queryGetCategorias,
-  } = useContext(CategoriasContext);
+    conta,
+    queryGetContas,
+  } = useContext(ContasContext);
 
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
 
   const { mutate: mutateAlterarSituacaoCategoria, isPending } =
-    categoriasService.useMutationAlterarSituacaoCategoria();
+    contasService.useMutationAlterarSituacaoConta();
 
   useEffect(() => {
     dispatch(setLoading(isPending));
@@ -36,19 +36,16 @@ const useModalInativar = (): IUseModalInativar => {
   }, [isPending]);
 
   function handleInativar() {
-    if (categoria) {
+    if (conta) {
       mutateAlterarSituacaoCategoria(
         {
-          payload: { id: categoria.id, ativo: false },
+          payload: { id: conta.id, ativo: false },
         },
         {
           onSuccess: () => {
-            queryGetCategorias.refetch();
+            queryGetContas.refetch();
             dispatch(
-              showSnackbar(
-                t("PAGES.CATEGORIAS.SNACK_BARS.DEACTIVATE"),
-                "success"
-              )
+              showSnackbar(t("PAGES.CONTAS.SNACK_BARS.DEACTIVATE"), "success")
             );
           },
         }
@@ -58,12 +55,12 @@ const useModalInativar = (): IUseModalInativar => {
   }
 
   function handleToggleModalInativar() {
-    setCategoria(undefined);
+    setConta(undefined);
     setToggleModalInativar((prevState) => !prevState);
   }
 
   return {
-    categoria,
+    conta,
     toggleModalInativar,
     handleToggleModalInativar,
     handleInativar,
