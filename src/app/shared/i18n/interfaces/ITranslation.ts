@@ -7,5 +7,5 @@ export interface ITranslation {
   BUTTONS: IButton;
   TOOLTIPS: ITooltips;
   INFO: IInfo;
-  PAGES: { CATEGORIAS: IPage };
+  PAGES: { CATEGORIAS: IPage; CONTAS: IPage };
 }

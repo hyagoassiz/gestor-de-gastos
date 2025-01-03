@@ -17,10 +17,10 @@ const CATEGORIAS: IPage = {
     },
   },
   SNACK_BARS: {
-    CATEGORIA_DEACTIVATE: "Categoria inativada com sucesso!",
-    CATEGORIA_ACTIVATE: "Categoria ativada com sucesso!",
-    CATEGORIA_CREATE: "Categoria criada com sucesso!",
-    CATEGORIA_EDIT: "Categoria editada sucesso!",
+    DEACTIVATE: "Categoria inativada com sucesso!",
+    ACTIVATE: "Categoria ativada com sucesso!",
+    CREATE: "Categoria criada com sucesso!",
+    EDIT: "Categoria editada sucesso!",
   },
 };
 

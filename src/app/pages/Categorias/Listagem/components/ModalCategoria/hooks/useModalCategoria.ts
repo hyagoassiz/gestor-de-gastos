@@ -66,8 +66,8 @@ const useModalCategoria = (): IModalCategoria => {
             dispatch(
               showSnackbar(
                 !payload.id
-                  ? t("PAGES.CATEGORIAS.SNACK_BARS.CATEGORIA_CREATE")
-                  : t("PAGES.CATEGORIAS.SNACK_BARS.CATEGORIA_EDIT"),
+                  ? t("PAGES.CATEGORIAS.SNACK_BARS.CREATE")
+                  : t("PAGES.CATEGORIAS.SNACK_BARS.EDIT"),
                 "success"
               )
             );
