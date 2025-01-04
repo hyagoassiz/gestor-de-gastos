@@ -10,3 +10,4 @@ export * from "./ISearchBar";
 export * from "./IConta";
 export * from "./TypeConta";
 export * from "./ITypeConta";
+export * from "./IAutenticacao";
