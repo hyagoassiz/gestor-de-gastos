@@ -1,14 +1,14 @@
 import { Grid } from "@mui/material";
-import { BoxContainer, BoxMain, TitleStyled } from "./styles/style";
 import { ReactNode } from "react";
+import { BoxContainer, BoxMain, TitleStyled } from "./styles";
 
-interface IPageContainer {
+interface IAutenticacaoLayout {
   children: ReactNode;
   titleRoute: string;
   onKeyDown?(event: React.KeyboardEvent<HTMLDivElement>): void;
 }
 
-export const PageContainer: React.FC<IPageContainer> = ({
+export const AutenticacaoLayout: React.FC<IAutenticacaoLayout> = ({
   children,
   titleRoute,
   onKeyDown,

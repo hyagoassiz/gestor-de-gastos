@@ -1,4 +1,4 @@
-import { Control, useForm, UseFormHandleSubmit } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../../routes/paths";
 import { auth } from "../../../../../FirebaseConnection";
@@ -8,16 +8,15 @@ import { showSnackbar } from "../../../../shared/redux/snackBar/actions";
 import { useDispatch } from "react-redux";
 
 interface IUseLogin {
-  control: Control<IAutenticacao>;
-  onSubmit: () => void;
-  handleSubmit: UseFormHandleSubmit<IAutenticacao>;
-  handleNavigate: () => void;
+  loginForm: UseFormReturn<IAutenticacao>;
   isPending: boolean;
+  onSubmit: () => void;
+  handleNavigate: () => void;
   handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void;
 }
 
 export const useLogin = (): IUseLogin => {
-  const { control, handleSubmit, reset } = useForm<IAutenticacao>();
+  const loginForm = useForm<IAutenticacao>();
 
   const navigate = useNavigate();
 
@@ -26,7 +25,7 @@ export const useLogin = (): IUseLogin => {
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    handleSubmit((data) => {
+    loginForm.handleSubmit((data) => {
       const payload: IAutenticacao = {
         auth: auth,
         email: data.email,
@@ -37,7 +36,7 @@ export const useLogin = (): IUseLogin => {
         {
           onSuccess: () => navigate(PATHS.CATEGORIAS.LIST),
           onError: (error) => {
-            reset();
+            loginForm.reset();
             dispatch(showSnackbar(`${error}`, "error"));
           },
         }
@@ -47,7 +46,7 @@ export const useLogin = (): IUseLogin => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
-      handleSubmit(onSubmit)();
+      loginForm.handleSubmit(onSubmit)();
     }
   };
 
@@ -56,11 +55,10 @@ export const useLogin = (): IUseLogin => {
   };
 
   return {
-    control,
-    handleSubmit,
+    loginForm,
+    isPending,
     onSubmit,
     handleNavigate,
-    isPending,
     handleKeyDown,
   };
 };

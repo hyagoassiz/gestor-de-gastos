@@ -2,20 +2,20 @@ import { ReactNode } from "react";
 import { StyledButton } from "./styles/style";
 import { CircularProgress } from "@mui/material";
 
-interface IConfirmButton {
+interface ILargeButton {
   children: ReactNode;
-  onClick: () => void;
   loading?: boolean;
+  onClick: () => void;
 }
 
-export const ConfirmButton: React.FC<IConfirmButton> = ({
+export const LargeButton: React.FC<ILargeButton> = ({
   children,
-  onClick,
   loading = false,
+  onClick,
 }) => {
   return (
     <StyledButton
-      color="secondary"
+      color="primary"
       onClick={loading ? undefined : onClick}
       variant="contained"
     >
