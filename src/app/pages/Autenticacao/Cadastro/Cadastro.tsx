@@ -17,7 +17,6 @@ export const Cadastro: React.FC = () => {
           control={cadastroForm.control}
           rules={{
             required: true,
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           }}
           render={({ field, fieldState }) => (
             <StyledTextField
@@ -34,6 +33,7 @@ export const Cadastro: React.FC = () => {
               disabled={isPending}
               fullWidth
               error={!!fieldState.error}
+              helperText={fieldState.error?.message}
             />
           )}
         />
@@ -45,7 +45,7 @@ export const Cadastro: React.FC = () => {
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
             <StyledTextField
-              label="Senha (min: 6, max: 30)"
+              label="Senha"
               type="password"
               variant="outlined"
               color="secondary"
@@ -61,8 +61,9 @@ export const Cadastro: React.FC = () => {
               }}
               required
               disabled={isPending}
-              error={!!fieldState.error}
               fullWidth
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
             />
           )}
         />
@@ -90,8 +91,9 @@ export const Cadastro: React.FC = () => {
               }}
               required
               disabled={isPending}
-              error={!!fieldState.error}
               fullWidth
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
             />
           )}
         />

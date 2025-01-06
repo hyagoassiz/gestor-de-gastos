@@ -7,6 +7,8 @@ import { showSnackbar } from "../../../../shared/redux/snackBar/actions";
 import { auth } from "../../../../../FirebaseConnection";
 import { IAutenticacao } from "../../../../shared/interfaces";
 import { autenticacaoService } from "../../../../shared/services/autenticacao";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { cadastroSchema } from "../schema/cadastroSchema";
 
 interface IUseCadastro {
   cadastroForm: UseFormReturn<ICadastro>;
@@ -17,7 +19,9 @@ interface IUseCadastro {
 }
 
 export const useCadastro = (): IUseCadastro => {
-  const cadastroForm = useForm<ICadastro>();
+  const cadastroForm = useForm<ICadastro>({
+    resolver: zodResolver(cadastroSchema),
+  });
 
   const navigate = useNavigate();
 

@@ -1,5 +1,4 @@
-export interface ICadastro {
-  email: string;
-  password: string;
-  confirmPassword?: string;
-}
+import { z } from "zod";
+import { cadastroSchema } from "../schema/cadastroSchema";
+
+export type ICadastro = z.infer<typeof cadastroSchema>;
