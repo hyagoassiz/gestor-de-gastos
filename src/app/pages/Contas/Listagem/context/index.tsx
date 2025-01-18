@@ -11,11 +11,8 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
 import useSearchBar from "../../../../shared/hooks/useSearchBar";
-import { ISeachBar } from "../../../../shared/interfaces";
-import {
-  IPayloadListarContas,
-  IResponseConta,
-} from "../../../../shared/services/contas/interfaces";
+import { IConta, ISeachBar } from "../../../../shared/interfaces";
+import { IPayloadListarContas } from "../../../../shared/services/contas/interfaces";
 import { contasService } from "../../../../shared/services/contas";
 
 interface IContasContextProps {
@@ -23,15 +20,15 @@ interface IContasContextProps {
 }
 
 interface IListagemContasContextData {
-  contas: IResponseConta[] | undefined;
-  conta: IResponseConta | undefined;
+  contas: IConta[] | undefined;
+  conta: IConta | undefined;
   searchBar: ISeachBar;
   toggleModalConta: boolean;
   toggleFiltro: boolean;
   toggleModalInativar: boolean;
   filtroData: IPayloadListarContas;
   queryGetContas: UseQueryResult;
-  setConta: Dispatch<SetStateAction<IResponseConta | undefined>>;
+  setConta: Dispatch<SetStateAction<IConta | undefined>>;
   setToggleModalConta: Dispatch<SetStateAction<boolean>>;
   setToggleFiltro: Dispatch<SetStateAction<boolean>>;
   setToggleModalInativar: Dispatch<SetStateAction<boolean>>;
@@ -42,7 +39,7 @@ interface IListagemContasContextData {
 export const ContasContext = createContext({} as IListagemContasContextData);
 
 export function ContasProvider({ children }: IContasContextProps): JSX.Element {
-  const [conta, setConta] = useState<IResponseConta | undefined>(undefined);
+  const [conta, setConta] = useState<IConta | undefined>(undefined);
   const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
   const [toggleFiltro, setToggleFiltro] = useState<boolean>(false);
   const [toggleModalInativar, setToggleModalInativar] =
@@ -62,7 +59,7 @@ export function ContasProvider({ children }: IContasContextProps): JSX.Element {
     ...contasService.useQueryGetContas(filtroData),
   });
 
-  const contas: IResponseConta[] | undefined = useMemo(() => {
+  const contas: IConta[] | undefined = useMemo(() => {
     if (textoBusca !== "") {
       return queryGetContas.data?.filter((categoria) =>
         categoria.nome.toLowerCase().includes(textoBusca.toLowerCase())

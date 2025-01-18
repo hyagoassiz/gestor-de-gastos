@@ -4,7 +4,13 @@ import { ReactNode } from "react";
 import { CategoriasListagemRoute } from "../pages/Categorias";
 import { PageLayout } from "../shared/layouts/PageLayout/PageLayout";
 import { ContasListagemRoute } from "../pages/Contas";
-
+import {
+  CadastroRoute,
+  LoginRoute,
+  VerificacaoRoute,
+} from "../pages/Autenticacao";
+import { Private } from "../shared/components/Private";
+import { RegistrarNomeRoute } from "../pages/Autenticacao/RegistrarNome";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -19,7 +25,7 @@ export const AppRoutes = () => {
   return (
     <HashRouter>
       <Routes>
-        {/* <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
+        <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
         <Route path={PATHS.AUTENTICACAO.CREATE} element={<CadastroRoute />} />
         <Route
           path={PATHS.AUTENTICACAO.CHECK}
@@ -28,7 +34,15 @@ export const AppRoutes = () => {
               <VerificacaoRoute />
             </Private>
           }
-        /> */}
+        />
+        <Route
+          path={PATHS.AUTENTICACAO.CREATE_NAME}
+          element={
+            <Private>
+              <RegistrarNomeRoute />
+            </Private>
+          }
+        />
         <Route
           path="*"
           element={
@@ -38,11 +52,19 @@ export const AppRoutes = () => {
                 <Routes>
                   <Route
                     path={PATHS.CATEGORIAS.LIST}
-                    element={<CategoriasListagemRoute />}
+                    element={
+                      <Private>
+                        <CategoriasListagemRoute />
+                      </Private>
+                    }
                   />
                   <Route
                     path={PATHS.CONTAS.LIST}
-                    element={<ContasListagemRoute />}
+                    element={
+                      <Private>
+                        <ContasListagemRoute />
+                      </Private>
+                    }
                   />
                   <Route
                     path="*"

@@ -8,30 +8,27 @@ import {
   useState,
 } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import {
-  IPayloadListarCategorias,
-  IResponseCategoria,
-} from "../../../../shared/services/categorias/interfaces";
+import { IPayloadListarCategorias } from "../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../shared/services/categorias";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../../shared/redux/loading/actions";
 import useSearchBar from "../../../../shared/hooks/useSearchBar";
-import { ISeachBar } from "../../../../shared/interfaces";
+import { ICategoria, ISeachBar } from "../../../../shared/interfaces";
 
 interface ICategoriasContextProps {
   children: ReactNode;
 }
 
 interface IListagemCategoriasContextData {
-  categorias: IResponseCategoria[] | undefined;
-  categoria: IResponseCategoria | undefined;
+  categorias: ICategoria[] | undefined;
+  categoria: ICategoria | undefined;
   searchBar: ISeachBar;
   toggleModalCategoria: boolean;
   toggleFiltro: boolean;
   toggleModalInativar: boolean;
   filtroData: IPayloadListarCategorias;
   queryGetCategorias: UseQueryResult;
-  setCategoria: Dispatch<SetStateAction<IResponseCategoria | undefined>>;
+  setCategoria: Dispatch<SetStateAction<ICategoria | undefined>>;
   setToggleModalCategoria: Dispatch<SetStateAction<boolean>>;
   setToggleFiltro: Dispatch<SetStateAction<boolean>>;
   setToggleModalInativar: Dispatch<SetStateAction<boolean>>;
@@ -46,9 +43,7 @@ export const CategoriasContext = createContext(
 export function CategoriasProvider({
   children,
 }: ICategoriasContextProps): JSX.Element {
-  const [categoria, setCategoria] = useState<IResponseCategoria | undefined>(
-    undefined
-  );
+  const [categoria, setCategoria] = useState<ICategoria | undefined>(undefined);
   const [toggleModalCategoria, setToggleModalCategoria] =
     useState<boolean>(false);
   const [toggleFiltro, setToggleFiltro] = useState<boolean>(false);
@@ -69,7 +64,7 @@ export function CategoriasProvider({
     ...categoriasService.useQueryGetCategorias(filtroData),
   });
 
-  const categorias: IResponseCategoria[] | undefined = useMemo(() => {
+  const categorias: ICategoria[] | undefined = useMemo(() => {
     if (textoBusca !== "") {
       return queryGetCategorias.data?.filter((categoria) =>
         categoria.nome.toLowerCase().includes(textoBusca.toLowerCase())

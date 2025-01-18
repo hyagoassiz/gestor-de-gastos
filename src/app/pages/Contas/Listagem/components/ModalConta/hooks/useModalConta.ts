@@ -6,15 +6,12 @@ import { IContaForm } from "../../../interfaces";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
-import {
-  IPayloadPersistirConta,
-  IResponseConta,
-} from "../../../../../../shared/services/contas/interfaces";
+import { IPayloadPersistirConta } from "../../../../../../shared/services/contas/interfaces";
 import { contasService } from "../../../../../../shared/services/contas";
 
 interface IUseModalConta {
   contaForm: UseFormReturn<IContaForm>;
-  conta: IResponseConta | undefined;
+  conta: IConta | undefined;
   toggleModalConta: boolean;
   handleToggleModalConta: () => void;
   onSubmit(): void;

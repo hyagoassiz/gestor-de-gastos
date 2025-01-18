@@ -1,14 +1,14 @@
 import { ListItemText, Tooltip } from "@mui/material";
 import MoreOptions from "../../../../../../shared/components/MoreOptions/MoreOptions";
 import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
-import { IResponseConta } from "../../../../../../shared/services/contas/interfaces";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import { IConta } from "../../../../../../shared/interfaces";
 
 interface IMountData {
-  contas: IResponseConta[] | undefined;
-  handleInativar: (conta: IResponseConta) => void;
-  handleEditar: (conta: IResponseConta) => void;
-  handleAtivar: (conta: IResponseConta) => void;
+  contas: IConta[] | undefined;
+  handleInativar: (conta: IConta) => void;
+  handleEditar: (conta: IConta) => void;
+  handleAtivar: (conta: IConta) => void;
 }
 
 export function mountData({

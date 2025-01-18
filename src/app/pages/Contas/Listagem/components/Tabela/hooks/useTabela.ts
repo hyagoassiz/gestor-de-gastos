@@ -4,14 +4,14 @@ import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { setLoading } from "../../../../../../shared/redux/loading/actions";
-import { IResponseConta } from "../../../../../../shared/services/contas/interfaces";
 import { contasService } from "../../../../../../shared/services/contas";
+import { IConta } from "../../../../../../shared/interfaces";
 
 interface IUseTabela {
-  contas: IResponseConta[] | undefined;
-  handleInativar: (conta: IResponseConta) => void;
-  handleEditar: (conta: IResponseConta) => void;
-  handleAtivar: (conta: IResponseConta) => void;
+  contas: IConta[] | undefined;
+  handleInativar: (conta: IConta) => void;
+  handleEditar: (conta: IConta) => void;
+  handleAtivar: (conta: IConta) => void;
 }
 
 const useTabela = (): IUseTabela => {
@@ -35,7 +35,7 @@ const useTabela = (): IUseTabela => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleAtivar(categoria: IResponseConta) {
+  function handleAtivar(categoria: IConta) {
     mutateAlterarSituacaoConta(
       {
         payload: { id: categoria.id, ativo: true },
@@ -51,12 +51,12 @@ const useTabela = (): IUseTabela => {
     );
   }
 
-  function handleEditar(conta: IResponseConta) {
+  function handleEditar(conta: IConta) {
     setToggleModalConta((prevState) => !prevState);
     setConta(conta);
   }
 
-  function handleInativar(conta: IResponseConta) {
+  function handleInativar(conta: IConta) {
     setConta(conta);
     setToggleModalInativar((prevState) => !prevState);
   }

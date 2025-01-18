@@ -4,17 +4,14 @@ import { ICategoria } from "../../../../../../shared/interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { categoriasService } from "../../../../../../shared/services/categorias";
 import { ICategoriaForm } from "../../../interfaces";
-import {
-  IPayloadPersistirCategoria,
-  IResponseCategoria,
-} from "../../../../../../shared/services/categorias/interfaces";
+import { IPayloadPersistirCategoria } from "../../../../../../shared/services/categorias/interfaces";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 
 interface IModalCategoria {
   categoriaForm: UseFormReturn<ICategoriaForm>;
-  categoria: IResponseCategoria | undefined;
+  categoria: ICategoria | undefined;
   toggleModalCategoria: boolean;
   handleToggleModalCategoria: () => void;
   onSubmit(): void;
