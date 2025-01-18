@@ -1,19 +1,19 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../FirebaseConnection";
-import { IPayloadListarContas, IResponseConta } from "./interfaces";
+import { IPayloadListarContas } from "./interfaces";
 import { useSelector } from "react-redux";
-import { IRootState } from "../../interfaces";
+import { IConta, IRootState } from "../../interfaces";
 
 export const KEY_GET_CONTAS = "key-get-contas" as const;
 
 export function useQueryGetContas(
   payload: IPayloadListarContas
-): UseQueryOptions<IResponseConta[]> {
+): UseQueryOptions<IConta[]> {
   const { uid } = useSelector((state: IRootState) => state.user);
   const validPayload = payload;
 
-  const contas: UseQueryOptions<IResponseConta[]> = {
+  const contas: UseQueryOptions<IConta[]> = {
     queryKey: [KEY_GET_CONTAS, validPayload],
     queryFn: () => queryGetContas(uid, payload),
     refetchOnWindowFocus: false,
@@ -25,7 +25,7 @@ export function useQueryGetContas(
 const queryGetContas = async function (
   usuario: string,
   payload: IPayloadListarContas
-): Promise<IResponseConta[]> {
+): Promise<IConta[]> {
   try {
     const conditions = [where("usuario", "==", usuario)];
 
@@ -39,11 +39,11 @@ const queryGetContas = async function (
     const contasQuery = query(collection(db, "conta"), ...conditions);
 
     const querySnapshot = await getDocs(contasQuery);
-    const contas: IResponseConta[] = [];
+    const contas: IConta[] = [];
 
     querySnapshot.forEach((doc) => {
-      const contaData: IResponseConta = doc.data() as IResponseConta;
-      const conta: IResponseConta = {
+      const contaData: IConta = doc.data() as IConta;
+      const conta: IConta = {
         id: doc.id,
         usuario: contaData.usuario,
         nome: contaData.nome,

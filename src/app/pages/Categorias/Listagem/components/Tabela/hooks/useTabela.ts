@@ -1,17 +1,17 @@
 import { useContext, useEffect } from "react";
 import { CategoriasContext } from "../../../context";
-import { IResponseCategoria } from "../../../../../../shared/services/categorias/interfaces";
 import { categoriasService } from "../../../../../../shared/services/categorias";
 import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { setLoading } from "../../../../../../shared/redux/loading/actions";
+import { ICategoria } from "../../../../../../shared/interfaces";
 
 interface IUseTabela {
-  categorias: IResponseCategoria[] | undefined;
-  handleInativar: (categoria: IResponseCategoria) => void;
-  handleEditar: (categoria: IResponseCategoria) => void;
-  handleAtivar: (categoria: IResponseCategoria) => void;
+  categorias: ICategoria[] | undefined;
+  handleInativar: (categoria: ICategoria) => void;
+  handleEditar: (categoria: ICategoria) => void;
+  handleAtivar: (categoria: ICategoria) => void;
 }
 
 const useTabela = (): IUseTabela => {
@@ -35,7 +35,7 @@ const useTabela = (): IUseTabela => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleAtivar(categoria: IResponseCategoria) {
+  function handleAtivar(categoria: ICategoria) {
     mutateAlterarSituacaoCategoria(
       {
         payload: { id: categoria.id, ativo: true },
@@ -51,12 +51,12 @@ const useTabela = (): IUseTabela => {
     );
   }
 
-  function handleEditar(categoria: IResponseCategoria) {
+  function handleEditar(categoria: ICategoria) {
     setToggleModalCategoria((prevState) => !prevState);
     setCategoria(categoria);
   }
 
-  function handleInativar(categoria: IResponseCategoria) {
+  function handleInativar(categoria: ICategoria) {
     setCategoria(categoria);
     setToggleModalInativar((prevState) => !prevState);
   }
