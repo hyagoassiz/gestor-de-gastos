@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IRootState, IUsuario } from "../../../interfaces";
+import { IRootState } from "../../../interfaces";
 import { setLoading } from "../../../redux/loading/actions";
 import {
   adicionarUserData,
@@ -29,19 +29,19 @@ const usePrivate = (): IUsePrivate => {
     const unsub = onAuthStateChanged(auth, (user) => {
       dispatch(setLoading(true));
       if (user) {
-        const userData: IUsuario = {
-          uid: user.uid,
-          email: user.email ?? "",
-          emailVerified: user.emailVerified,
-          displayName: user.displayName ?? null,
-        };
-
-        dispatch(adicionarUserData(userData));
+        dispatch(adicionarUserData(user));
 
         if (!user.emailVerified) {
           navigate(PATHS.AUTENTICACAO.CHECK);
         } else {
-          if (location.pathname === PATHS.AUTENTICACAO.CHECK) {
+          if (!user.displayName) {
+            navigate(PATHS.AUTENTICACAO.CREATE_NAME);
+          }
+          if (
+            (location.pathname === PATHS.AUTENTICACAO.CHECK ||
+              location.pathname === PATHS.AUTENTICACAO.CREATE_NAME) &&
+            user.displayName
+          ) {
             navigate(PATHS.CATEGORIAS.LIST);
           }
         }

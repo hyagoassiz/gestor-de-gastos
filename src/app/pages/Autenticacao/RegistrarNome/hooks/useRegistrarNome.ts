@@ -27,7 +27,11 @@ export const useRegistrarNome = (): IUseRegistrarNome => {
     registrarNomeForm.handleSubmit(async (data) => {
       mutate(
         { displayName: data.nome },
-        { onSuccess: () => navigate(PATHS.CATEGORIAS.LIST) }
+        {
+          onSuccess: () => {
+            navigate(PATHS.CATEGORIAS.LIST);
+          },
+        }
       );
     })();
   };

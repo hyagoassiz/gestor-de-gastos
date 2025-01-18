@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../../routes/paths";
-import { IRootState, IUsuario } from "../../../../shared/interfaces";
+import { IRootState } from "../../../../shared/interfaces";
 import { useSelector } from "react-redux";
+import { User } from "firebase/auth";
 
 interface IUseVerificacao {
-  userReducer: IUsuario | null;
+  userReducer: User | null;
   handleNavigate: () => void;
 }
 

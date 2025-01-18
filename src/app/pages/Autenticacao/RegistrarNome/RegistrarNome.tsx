@@ -46,7 +46,7 @@ export const RegistrarNome: React.FC = () => {
               disabled={isPending}
               fullWidth
               error={!!fieldState.error}
-              helperText={`${field.value.length}/50`}
+              helperText={(field.value ?? "")?.length + "/50"}
             />
           )}
         />

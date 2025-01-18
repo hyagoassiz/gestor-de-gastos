@@ -6,6 +6,8 @@ import { IAutenticacao } from "../../../../shared/interfaces";
 import { autenticacaoService } from "../../../../shared/services/autenticacao";
 import { showSnackbar } from "../../../../shared/redux/snackBar/actions";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 interface IUseLogin {
   loginForm: UseFormReturn<IAutenticacao>;
@@ -20,9 +22,18 @@ export const useLogin = (): IUseLogin => {
 
   const navigate = useNavigate();
 
+  const queryLogOut = useQuery({
+    enabled: false,
+    ...autenticacaoService.useQueryLogOut(),
+  });
+
   const { mutate, isPending } = autenticacaoService.useMutationLogin();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    queryLogOut.refetch();
+  }, []);
 
   const onSubmit = () => {
     loginForm.handleSubmit((data) => {

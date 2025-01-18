@@ -1,7 +1,5 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { updateProfile, User } from "firebase/auth";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../interfaces";
+import { getAuth, updateProfile } from "firebase/auth";
 
 interface IMutationProps {
   displayName: string;
@@ -12,16 +10,21 @@ export const useMutationPersistirNome = (): UseMutationResult<
   unknown,
   IMutationProps
 > => {
-  const user = useSelector((state: IRootState) => state.user);
   return useMutation({
     mutationFn: ({ displayName }: IMutationProps) =>
-      queryAlterarNome(user, displayName),
+      queryAlterarNome(displayName),
   });
 };
 
-const queryAlterarNome = async function (
-  user: User,
-  displayName: string
-): Promise<void> {
-  return await updateProfile(user, { displayName });
+const queryAlterarNome = async function (displayName: string): Promise<void> {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("Usuário não autenticado.");
+  }
+
+  if (displayName) {
+    await updateProfile(user, { displayName });
+  }
 };
