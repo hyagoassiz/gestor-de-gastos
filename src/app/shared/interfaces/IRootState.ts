@@ -1,9 +1,9 @@
+import { User } from "firebase/auth";
 import { ILoading } from "./ILoading";
 import { ISnackBar } from "./ISnackBar";
-import { IUsuario } from "./IUsuario";
 
 export interface IRootState {
-  user: IUsuario;
+  user: User;
   snackBar: ISnackBar;
   loading: ILoading;
 }

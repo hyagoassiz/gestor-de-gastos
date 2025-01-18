@@ -10,6 +10,7 @@ import {
   VerificacaoRoute,
 } from "../pages/Autenticacao";
 import { Private } from "../shared/components/Private";
+import { RegistrarNomeRoute } from "../pages/Autenticacao/RegistrarNome";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -31,6 +32,14 @@ export const AppRoutes = () => {
           element={
             <Private>
               <VerificacaoRoute />
+            </Private>
+          }
+        />
+        <Route
+          path={PATHS.AUTENTICACAO.CREATE_NAME}
+          element={
+            <Private>
+              <RegistrarNomeRoute />
             </Private>
           }
         />
