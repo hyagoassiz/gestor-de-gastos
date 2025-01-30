@@ -1,6 +1,7 @@
-import { ListItemText } from "@mui/material";
+import { ListItemText, Typography } from "@mui/material";
 import { ITransacao } from "../../../../shared/interfaces";
 import { TipoMovimentacao } from "../../../../shared/components/TipoMovimentacao";
+import { NumericFormat } from "react-number-format";
 
 interface IMountData {
   transacoes: ITransacao[] | undefined;
@@ -24,6 +25,19 @@ export function mountData({ transacoes }: IMountData) {
           }
           secondaryTypographyProps={{ fontSize: "12px" }}
         />
+      ),
+      valor: (
+        <Typography variant="body2">
+          <NumericFormat
+            value={transacao.valor}
+            prefix={"R$ "}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            decimalSeparator=","
+            thousandSeparator={"."}
+            displayType="text"
+          />
+        </Typography>
       ),
     }));
   }

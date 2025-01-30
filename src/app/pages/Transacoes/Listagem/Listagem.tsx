@@ -7,15 +7,12 @@ import { FilterIcon } from "../../../shared/components/FilterIcon";
 import { DataTable } from "../../../shared/components/DataTable/DataTable";
 import { DataColumns } from "./util/constants";
 import { mountData } from "./util/mountData";
+import { ModalTransacao } from "./components/ModalTransacao";
+import { Filtro } from "./components/Filtro";
 
 export const Listagem: React.FC = () => {
-  const {
-    transacoes,
-    searchBar,
-    badgeCount,
-    handleAdicionar,
-    handleToggleFiltro,
-  } = useListagem();
+  const { transacoes, badgeCount, handleAdicionar, handleToggleFiltro } =
+    useListagem();
 
   const { t } = useTranslation();
 
@@ -38,7 +35,6 @@ export const Listagem: React.FC = () => {
             />
           </>
         }
-        searchBar={searchBar}
       />
 
       <DataTable
@@ -48,6 +44,10 @@ export const Listagem: React.FC = () => {
         })}
         textForEmptyData={t("PAGES.CONTAS.DATA_TABLE.TEXT_FOR_EMPTY_DATA")}
       />
+
+      <ModalTransacao />
+
+      <Filtro />
     </>
   );
 };

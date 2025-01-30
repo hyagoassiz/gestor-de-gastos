@@ -1,23 +1,17 @@
 import { useContext, useMemo } from "react";
 import { TransacoesContext } from "../context";
-import { ISeachBar, ITransacao } from "../../../../shared/interfaces";
+import { ITransacao } from "../../../../shared/interfaces";
 
 interface IUseListagem {
   transacoes: ITransacao[] | undefined;
   badgeCount: number;
-  searchBar: ISeachBar;
   handleToggleFiltro: () => void;
   handleAdicionar: () => void;
 }
 
 const useListagem = (): IUseListagem => {
-  const {
-    transacoes,
-    searchBar,
-    filtroData,
-    setToggleModalTransacao,
-    setToggleFiltro,
-  } = useContext(TransacoesContext);
+  const { transacoes, filtroData, setToggleModalTransacao, setToggleFiltro } =
+    useContext(TransacoesContext);
 
   const badgeCount: number = useMemo(() => {
     const ativo = filtroData.concluido.some((_ativo) => _ativo === false)
@@ -38,7 +32,6 @@ const useListagem = (): IUseListagem => {
   return {
     transacoes,
     badgeCount,
-    searchBar,
     handleToggleFiltro,
     handleAdicionar,
   };

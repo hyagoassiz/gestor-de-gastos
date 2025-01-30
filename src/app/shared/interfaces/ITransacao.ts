@@ -13,5 +13,6 @@ export interface ITransacao {
   agencia: string;
   valor: number;
   concluido: boolean;
+  observacao: string;
   incluirSoma: boolean;
 }

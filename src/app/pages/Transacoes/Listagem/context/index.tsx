@@ -7,8 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import useSearchBar from "../../../../shared/hooks/useSearchBar";
-import { ISeachBar, ITransacao } from "../../../../shared/interfaces";
+import { ITransacao } from "../../../../shared/interfaces";
 import { IPayloadListarTransacoes } from "../../../../shared/services/transacoes/interfaces";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
@@ -22,7 +21,6 @@ interface ITransacoesContextProps {
 interface IListagemTransacoesContextData {
   transacoes: ITransacao[] | undefined;
   transacao: ITransacao | undefined;
-  searchBar: ISeachBar;
   toggleModalTransacao: boolean;
   toggleFiltro: boolean;
   toggleModalExcluir: boolean;
@@ -49,28 +47,19 @@ export function TransacoesProvider({
   const [toggleFiltro, setToggleFiltro] = useState<boolean>(false);
   const [toggleModalExcluir, setToggleModalExcluir] = useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarTransacoes>({
-    concluido: [true],
+    concluido: [true, false],
+    tipo: ["ENTRADA", "SAIDA"],
   });
 
   const dispatch = useDispatch();
-
-  const { searchBar, textoBusca } = useSearchBar({
-    placeHolder: "Pesquisar Contas",
-  });
 
   const queryGetTransacoes = useQuery({
     ...transacoesService.useQueryGetTransacoes(filtroData),
   });
 
   const transacoes: ITransacao[] | undefined = useMemo(() => {
-    if (textoBusca !== "") {
-      return queryGetTransacoes.data?.filter((categoria) =>
-        categoria.nomeConta.toLowerCase().includes(textoBusca.toLowerCase())
-      );
-    } else {
-      return queryGetTransacoes.data;
-    }
-  }, [queryGetTransacoes.data, textoBusca]);
+    return queryGetTransacoes.data;
+  }, [queryGetTransacoes.data]);
 
   useEffect(() => {
     dispatch(setLoading(queryGetTransacoes.isLoading));
@@ -81,7 +70,6 @@ export function TransacoesProvider({
       value={{
         transacoes,
         transacao,
-        searchBar,
         toggleModalTransacao,
         toggleFiltro,
         toggleModalExcluir,
