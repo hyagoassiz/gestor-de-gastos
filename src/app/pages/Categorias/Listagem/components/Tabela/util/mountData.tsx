@@ -1,4 +1,4 @@
-import MoreOptions from "../../../../../../shared/components/MoreOptions/MoreOptions";
+import { MoreOptions } from "../../../../../../shared/components/MoreOptions";
 import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
 import { TipoMovimentacao } from "../../../../../../shared/components/TipoMovimentacao";
 import { ICategoria } from "../../../../../../shared/interfaces";
