@@ -4,7 +4,6 @@ import { db } from "../../../../FirebaseConnection";
 import { useSelector } from "react-redux";
 import { IRootState, ITransacao } from "../../interfaces";
 import { IPayloadListarTransacoes } from "./interfaces";
-import dayjs from "dayjs";
 
 export const KEY_GET_TRANSACOES = "key-get-categorias" as const;
 
@@ -28,7 +27,6 @@ const queryGetTransacoes = async function (
   payload: IPayloadListarTransacoes
 ): Promise<ITransacao[]> {
   try {
-    console.log("teste", payload);
     const conditions = [where("usuario", "==", usuario)];
 
     if (payload.concluido) {
@@ -48,10 +46,10 @@ const queryGetTransacoes = async function (
       const transacao: ITransacao = {
         id: doc.id,
         usuario: transacaoData.usuario,
-        data: dayjs(transacaoData.data, "DD-MM-YYYY").format("DD/MM/YYYY"),
+        data: transacaoData.data,
         tipo: transacaoData.tipo,
         idCategoria: transacaoData.idCategoria,
-        nomeCategoria: transacaoData.nomeCategoria,
+        nomeCategoria: "",
         idConta: transacaoData.idConta,
         nomeConta: "",
         conta: "",
@@ -64,6 +62,7 @@ const queryGetTransacoes = async function (
       transacoes.push(transacao);
     });
 
+    // Mapear contas
     const contasSnapshot = await getDocs(collection(db, "conta"));
     const contaMap = new Map<
       string,
@@ -83,11 +82,22 @@ const queryGetTransacoes = async function (
       });
     });
 
+    const categoriasSnapshot = await getDocs(collection(db, "categoria"));
+    const categoriaMap = new Map<string, string>();
+
+    categoriasSnapshot.forEach((doc) => {
+      const categoriaData = doc.data() as { nome: string };
+      categoriaMap.set(doc.id, categoriaData.nome || "Categoria Desconhecida");
+    });
+
     transacoes.forEach((transacao) => {
       const contaInfo = contaMap.get(transacao.idConta);
       transacao.nomeConta = contaInfo?.nomeConta ?? "";
       transacao.conta = contaInfo?.conta ?? "";
       transacao.agencia = contaInfo?.agencia ?? "";
+
+      transacao.nomeCategoria =
+        categoriaMap.get(transacao.idCategoria) ?? "Sem Categoria";
     });
 
     transacoes.sort((b, a) => a.data.localeCompare(b.data));

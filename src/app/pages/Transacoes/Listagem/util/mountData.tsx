@@ -2,16 +2,24 @@ import { ListItemText, Typography } from "@mui/material";
 import { ITransacao } from "../../../../shared/interfaces";
 import { TipoMovimentacao } from "../../../../shared/components/TipoMovimentacao";
 import { NumericFormat } from "react-number-format";
+import { MoreOptions } from "../../../../shared/components/MoreOptions";
+import dayjs from "dayjs";
 
 interface IMountData {
   transacoes: ITransacao[] | undefined;
+  handleEditarTransacao(transacao: ITransacao): void;
+  handleExcluirTransacao(transacao: ITransacao): void;
 }
 
-export function mountData({ transacoes }: IMountData) {
+export function mountData({
+  transacoes,
+  handleEditarTransacao,
+  handleExcluirTransacao,
+}: IMountData) {
   if (transacoes?.length) {
     return transacoes.map((transacao) => ({
       ...transacao,
-      nome: transacao.data,
+      data: dayjs(transacao.data, "DD-MM-YYYY").format("DD/MM/YYYY"),
       tipo: <TipoMovimentacao tipo={transacao.tipo} />,
       categoria: transacao.nomeCategoria,
       conta: (
@@ -38,6 +46,26 @@ export function mountData({ transacoes }: IMountData) {
             displayType="text"
           />
         </Typography>
+      ),
+      situacao:
+        transacao.tipo === "ENTRADA" && transacao.concluido
+          ? "Recebido"
+          : transacao.tipo === "ENTRADA"
+          ? "Pendente"
+          : transacao.tipo === "SAIDA" && transacao.concluido
+          ? "Pago"
+          : "Em aberto",
+
+      options: (
+        <MoreOptions
+          options={[
+            { label: "Editar", action: () => handleEditarTransacao(transacao) },
+            {
+              label: "Excluir",
+              action: () => handleExcluirTransacao(transacao),
+            },
+          ]}
+        />
       ),
     }));
   }

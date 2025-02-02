@@ -9,10 +9,17 @@ import { DataColumns } from "./util/constants";
 import { mountData } from "./util/mountData";
 import { ModalTransacao } from "./components/ModalTransacao";
 import { Filtro } from "./components/Filtro";
+import { ModalExcluir } from "./components/ModalExcluir";
 
 export const Listagem: React.FC = () => {
-  const { transacoes, badgeCount, handleAdicionar, handleToggleFiltro } =
-    useListagem();
+  const {
+    transacoes,
+    badgeCount,
+    handleAdicionar,
+    handleToggleFiltro,
+    handleEditarTransacao,
+    handleExcluirTransacao,
+  } = useListagem();
 
   const { t } = useTranslation();
 
@@ -41,11 +48,15 @@ export const Listagem: React.FC = () => {
         columns={DataColumns}
         data={mountData({
           transacoes,
+          handleEditarTransacao,
+          handleExcluirTransacao,
         })}
         textForEmptyData={t("PAGES.CONTAS.DATA_TABLE.TEXT_FOR_EMPTY_DATA")}
       />
 
       <ModalTransacao />
+
+      <ModalExcluir />
 
       <Filtro />
     </>

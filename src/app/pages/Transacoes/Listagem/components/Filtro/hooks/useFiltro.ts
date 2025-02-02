@@ -21,9 +21,8 @@ const useFiltro = (): IUseFiltro => {
     filtroForm.handleSubmit(async (data) => {
       const formData: IPayloadListarTransacoes = {
         tipo: data.tipo,
-        concluido: !data.concluido ? [true] : [false],
+        concluido: !data.concluido ? [true, false] : [false],
       };
-      console.log(formData);
       setFiltroData(formData);
     })();
     setToggleFiltro((prevToggle) => !prevToggle);

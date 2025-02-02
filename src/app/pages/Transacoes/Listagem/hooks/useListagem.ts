@@ -7,17 +7,23 @@ interface IUseListagem {
   badgeCount: number;
   handleToggleFiltro: () => void;
   handleAdicionar: () => void;
+  handleEditarTransacao(transacao: ITransacao): void;
+  handleExcluirTransacao(transacao: ITransacao): void;
 }
 
 const useListagem = (): IUseListagem => {
-  const { transacoes, filtroData, setToggleModalTransacao, setToggleFiltro } =
-    useContext(TransacoesContext);
+  const {
+    transacoes,
+    setTrasacao,
+    filtroData,
+    setToggleModalTransacao,
+    setToggleFiltro,
+    setToggleModalExcluir,
+  } = useContext(TransacoesContext);
 
   const badgeCount: number = useMemo(() => {
-    const ativo = filtroData.concluido.some((_ativo) => _ativo === false)
-      ? 1
-      : 0;
-    return ativo;
+    const concluido = filtroData.concluido.length === 1 ? 1 : 0;
+    return concluido;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(filtroData)]);
 
@@ -29,11 +35,23 @@ const useListagem = (): IUseListagem => {
     setToggleFiltro((prevToggle) => !prevToggle);
   }
 
+  function handleEditarTransacao(transacao: ITransacao) {
+    setToggleModalTransacao((prevState) => !prevState);
+    setTrasacao(transacao);
+  }
+
+  function handleExcluirTransacao(transacao: ITransacao) {
+    setToggleModalExcluir((prevState) => !prevState);
+    setTrasacao(transacao);
+  }
+
   return {
     transacoes,
     badgeCount,
     handleToggleFiltro,
     handleAdicionar,
+    handleEditarTransacao,
+    handleExcluirTransacao,
   };
 };
 
