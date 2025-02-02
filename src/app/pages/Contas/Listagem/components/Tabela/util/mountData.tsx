@@ -1,8 +1,8 @@
 import { ListItemText, Tooltip } from "@mui/material";
-import MoreOptions from "../../../../../../shared/components/MoreOptions/MoreOptions";
 import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import { IConta } from "../../../../../../shared/interfaces";
+import { MoreOptions } from "../../../../../../shared/components/MoreOptions";
 
 interface IMountData {
   contas: IConta[] | undefined;

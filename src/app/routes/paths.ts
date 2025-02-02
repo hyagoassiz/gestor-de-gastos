@@ -19,3 +19,8 @@ export const CATEGORIAS = {
 export const CONTAS = {
   LIST: `${REPOSITORIO.LIST}/contas`,
 };
+
+// TRANSACOES
+export const TRANSACOES = {
+  LIST: `${REPOSITORIO.LIST}/transacoes`,
+};

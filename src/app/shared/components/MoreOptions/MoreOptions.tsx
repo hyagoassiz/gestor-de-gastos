@@ -10,7 +10,7 @@ interface IMoreOptions {
   }[];
 }
 
-const MoreOptions = ({ options }: IMoreOptions) => {
+export const MoreOptions = ({ options }: IMoreOptions) => {
   const { handleClick, anchorEl, handleClose } = useMoreOptions();
 
   const { t } = useTranslation();
@@ -54,5 +54,3 @@ const MoreOptions = ({ options }: IMoreOptions) => {
     </>
   );
 };
-
-export default MoreOptions;

@@ -11,6 +11,7 @@ import {
 } from "../pages/Autenticacao";
 import { Private } from "../shared/components/Private";
 import { RegistrarNomeRoute } from "../pages/Autenticacao/RegistrarNome";
+import { TransacoesListagemRoute } from "../pages/Transacoes";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -63,6 +64,14 @@ export const AppRoutes = () => {
                     element={
                       <Private>
                         <ContasListagemRoute />
+                      </Private>
+                    }
+                  />
+                  <Route
+                    path={PATHS.TRANSACOES.LIST}
+                    element={
+                      <Private>
+                        <TransacoesListagemRoute />
                       </Private>
                     }
                   />
