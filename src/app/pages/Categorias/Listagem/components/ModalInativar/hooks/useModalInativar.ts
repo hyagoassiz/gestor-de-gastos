@@ -9,18 +9,18 @@ import { setLoading } from "../../../../../../shared/redux/loading/actions";
 
 interface IUseModalInativar {
   categoria: ICategoria | undefined;
-  toggleModalInativar: boolean;
-  handleToggleModalInativar: () => void;
+  openModalInativar: boolean;
+  toggleModalInativar: () => void;
   handleInativar: () => void;
 }
 
 const useModalInativar = (): IUseModalInativar => {
   const {
-    toggleModalInativar,
-    setCategoria,
-    setToggleModalInativar,
     categoria,
     queryGetCategorias,
+    openModalInativar,
+    setCategoria,
+    setOpenModalInativar,
   } = useContext(CategoriasContext);
 
   const dispatch = useDispatch();
@@ -54,18 +54,18 @@ const useModalInativar = (): IUseModalInativar => {
         }
       );
     }
-    handleToggleModalInativar();
+    toggleModalInativar();
   }
 
-  function handleToggleModalInativar() {
+  function toggleModalInativar() {
     setCategoria(undefined);
-    setToggleModalInativar((prevState) => !prevState);
+    setOpenModalInativar((prevState) => !prevState);
   }
 
   return {
     categoria,
+    openModalInativar,
     toggleModalInativar,
-    handleToggleModalInativar,
     handleInativar,
   };
 };

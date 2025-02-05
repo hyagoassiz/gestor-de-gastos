@@ -3,22 +3,22 @@ import { Modal } from "../../../../../shared/components/Modal/Modal";
 import useModalCategoria from "./hooks/useModalCategoria";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
-import { tipoCategorias } from "../../../../../shared/constants/tipoCategorias";
+import { tiposTransacoes } from "../../../../../shared/constants/tiposTransacoes";
 
 export const ModalCategoria: React.FC = () => {
   const {
-    toggleModalCategoria,
-    handleToggleModalCategoria,
     categoriaForm,
-    onSubmit,
     categoria,
+    openModalCategoria,
+    toggleModalCategoria,
+    onSubmit,
   } = useModalCategoria();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalCategoria}
+      open={openModalCategoria}
       title={
         !categoria?.id
           ? t("PAGES.CATEGORIAS.MODALS.MODAL_CREATE.ADD")
@@ -27,7 +27,7 @@ export const ModalCategoria: React.FC = () => {
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalCategoria}>
+          <Button variant="text" onClick={toggleModalCategoria}>
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button
@@ -54,7 +54,7 @@ export const ModalCategoria: React.FC = () => {
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 50,
                 }}
                 required
                 error={!!fieldState.error}
@@ -73,13 +73,13 @@ export const ModalCategoria: React.FC = () => {
                 disablePortal
                 id="tipo"
                 color="secondary"
-                options={tipoCategorias || []}
+                options={tiposTransacoes || []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue?.id);
                 }}
                 value={
-                  tipoCategorias?.find((c) => c.id === field.value) || null
+                  tiposTransacoes?.find((c) => c.id === field.value) || null
                 }
                 disabled={Boolean(categoriaForm.getValues("id"))}
                 renderInput={(params) => (

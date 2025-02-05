@@ -9,7 +9,7 @@ import {
   FormGroup,
   TextField,
 } from "@mui/material";
-import { tipoCategorias } from "../../../../../shared/constants/tipoCategorias";
+import { tiposTransacoes } from "../../../../../shared/constants/tiposTransacoes";
 
 export const Filtro: React.FC = () => {
   const { toggleFiltro, handleToggleFiltro, filtroForm, handleSubmit } =
@@ -30,14 +30,14 @@ export const Filtro: React.FC = () => {
             <Autocomplete
               multiple
               disablePortal
-              id="tipoConta"
-              options={tipoCategorias ?? []}
+              id="tipo"
+              options={tiposTransacoes ?? []}
               getOptionLabel={(option) => option.nome || ""}
               onChange={(_, newValue) => {
                 field.onChange(newValue.map((item) => item.id));
               }}
               value={
-                tipoCategorias?.filter((option) =>
+                tiposTransacoes?.filter((option) =>
                   field.value?.includes(option.id)
                 ) || []
               }

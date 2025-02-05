@@ -9,17 +9,16 @@ import {
   FormGroup,
   TextField,
 } from "@mui/material";
-import { tipoCategorias } from "../../../../../shared/constants/tipoCategorias";
+import { tiposTransacoes } from "../../../../../shared/constants/tiposTransacoes";
 
 export const Filtro: React.FC = () => {
-  const { toggleFiltro, handleToggleFiltro, filtroForm, handleSubmit } =
-    useFiltro();
+  const { filtroForm, openFiltro, toggleFiltro, handleSubmit } = useFiltro();
 
   return (
     <Drawer
-      open={toggleFiltro}
+      open={openFiltro}
       applyFilter={filtroForm.handleSubmit(handleSubmit)}
-      closeFilter={handleToggleFiltro}
+      closeFilter={toggleFiltro}
     >
       <Box>
         <Controller
@@ -31,13 +30,13 @@ export const Filtro: React.FC = () => {
               multiple
               disablePortal
               id="tipo"
-              options={tipoCategorias ?? []}
+              options={tiposTransacoes ?? []}
               getOptionLabel={(option) => option.nome || ""}
               onChange={(_, newValue) => {
                 field.onChange(newValue.map((item) => item.id));
               }}
               value={
-                tipoCategorias?.filter((option) =>
+                tiposTransacoes?.filter((option) =>
                   field.value?.includes(option.id)
                 ) || []
               }

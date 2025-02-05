@@ -11,7 +11,7 @@ import { Modal } from "../../../../../shared/components/Modal/Modal";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 import useModalTransacao from "./hooks/useModalTransacao";
-import { tipoCategorias } from "../../../../../shared/constants/tipoCategorias";
+import { tiposTransacoes } from "../../../../../shared/constants/tiposTransacoes";
 import { NumericFormat } from "react-number-format";
 
 export const ModalTransacao: React.FC = () => {
@@ -61,13 +61,13 @@ export const ModalTransacao: React.FC = () => {
                 disablePortal
                 id="tipo"
                 color="secondary"
-                options={tipoCategorias || []}
+                options={tiposTransacoes || []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue?.id);
                 }}
                 value={
-                  tipoCategorias?.find((c) => c.id === field.value) || null
+                  tiposTransacoes?.find((c) => c.id === field.value) || null
                 }
                 renderInput={(params) => (
                   <TextField
