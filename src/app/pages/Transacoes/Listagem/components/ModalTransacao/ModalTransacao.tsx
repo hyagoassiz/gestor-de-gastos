@@ -4,6 +4,8 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
+  ListItem,
+  ListItemText,
   Switch,
   TextField,
 } from "@mui/material";
@@ -13,6 +15,7 @@ import { Controller } from "react-hook-form";
 import useModalTransacao from "./hooks/useModalTransacao";
 import { tiposTransacoes } from "../../../../../shared/constants/tiposTransacoes";
 import { NumericFormat } from "react-number-format";
+import { TypeTransacao } from "../../../../../shared/interfaces";
 
 export const ModalTransacao: React.FC = () => {
   const {
@@ -21,6 +24,8 @@ export const ModalTransacao: React.FC = () => {
     categorias,
     contas,
     openModalTransacao,
+    isFetchingCategorias,
+    onChangeTipoTransacao,
     onSubmit,
     toggleModalTransacao,
   } = useModalTransacao();
@@ -30,11 +35,7 @@ export const ModalTransacao: React.FC = () => {
   return (
     <Modal
       open={openModalTransacao}
-      title={
-        !transacao?.id
-          ? t("PAGES.CONTAS.MODALS.MODAL_CREATE.ADD")
-          : t("PAGES.CONTAS.MODALS.MODAL_CREATE.EDIT")
-      }
+      title={!transacao?.id ? "Adicionar" : "Editar"}
       style={{ width: "600px" }}
       buttons={
         <>
@@ -64,11 +65,12 @@ export const ModalTransacao: React.FC = () => {
                 options={tiposTransacoes || []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
-                  field.onChange(newValue?.id);
+                  onChangeTipoTransacao(newValue?.id as TypeTransacao);
                 }}
                 value={
                   tiposTransacoes?.find((c) => c.id === field.value) || null
                 }
+                noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -114,7 +116,10 @@ export const ModalTransacao: React.FC = () => {
           <Controller
             name="valor"
             control={transacaoForm.control}
-            rules={{ required: true }}
+            rules={{
+              required: true,
+              validate: (value) => value > 0,
+            }}
             render={({ field, fieldState }) => (
               <NumericFormat
                 label="Valor"
@@ -154,7 +159,10 @@ export const ModalTransacao: React.FC = () => {
                 onChange={(_, newValue) => {
                   field.onChange(newValue ? newValue.id : null);
                 }}
+                loading={isFetchingCategorias}
+                loadingText="Carregando..."
                 value={categorias?.find((c) => c.id === field.value) || null}
+                noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -185,6 +193,20 @@ export const ModalTransacao: React.FC = () => {
                   field.onChange(newValue ? newValue.id : null);
                 }}
                 value={contas?.find((c) => c.id === field.value) || null}
+                noOptionsText="Nenhum resultado encontrado."
+                renderOption={(props, option) => (
+                  <ListItem {...props} key={option.id}>
+                    <ListItemText
+                      primary={option.nome}
+                      secondary={
+                        option.agencia && option.conta
+                          ? `Agência ${option.agencia} / Conta ${option.conta}`
+                          : ""
+                      }
+                      secondaryTypographyProps={{ fontSize: "12px" }}
+                    />
+                  </ListItem>
+                )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -223,6 +245,7 @@ export const ModalTransacao: React.FC = () => {
             )}
           />
         </Grid>
+
         <Grid item xs={12}>
           <Controller
             name="concluido"
@@ -238,7 +261,14 @@ export const ModalTransacao: React.FC = () => {
                       size="medium"
                     />
                   }
-                  label="Pago"
+                  disabled={!transacaoForm.getValues("tipo")}
+                  label={
+                    transacaoForm.getValues("tipo") === "ENTRADA"
+                      ? "Recebido?"
+                      : transacaoForm.getValues("tipo") === "SAIDA"
+                      ? "Pago?"
+                      : ""
+                  }
                 />
               </FormGroup>
             )}

@@ -12,7 +12,7 @@ export const ModalExcluir: React.FC = () => {
   return (
     <Modal
       open={openModalExcluir}
-      title={`${t("INFO.DEACTIVATE")}?`}
+      title={`${t("INFO.DELETE")}?`}
       style={{ width: "300px" }}
       buttons={
         <>
@@ -20,13 +20,14 @@ export const ModalExcluir: React.FC = () => {
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button variant="contained" onClick={handleExcluirTransacao}>
-            {t("BUTTONS.DEACTIVATE")}
+            {t("BUTTONS.DELETE")}
           </Button>
         </>
       }
     >
       <Typography align="justify">
-        {t("PAGES.CONTAS.MODALS.MODAL_DEACTIVATE.DESCRIPTION")}
+        "Ao clicar em "Excluir", a transação será excluída e não poderá ser
+        recuperada."
       </Typography>
     </Modal>
   );

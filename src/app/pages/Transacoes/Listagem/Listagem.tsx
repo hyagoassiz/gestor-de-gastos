@@ -25,10 +25,7 @@ export const Listagem: React.FC = () => {
 
   return (
     <>
-      <TitlePage
-        title={t("PAGES.CONTAS.TITLE")}
-        subTitle={t("PAGES.CONTAS.SUBTITLE")}
-      />
+      <TitlePage title={"Transações"} subTitle={"Registre entradas e saídas"} />
 
       <ToolPainel
         buttons={
@@ -48,7 +45,7 @@ export const Listagem: React.FC = () => {
           handleEditarTransacao,
           handleExcluirTransacao,
         })}
-        textForEmptyData={t("PAGES.CONTAS.DATA_TABLE.TEXT_FOR_EMPTY_DATA")}
+        textForEmptyData={t("Nenhuma transação encontrada.")}
       />
 
       <ModalTransacao />

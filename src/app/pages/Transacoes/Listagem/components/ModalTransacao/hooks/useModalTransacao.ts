@@ -1,9 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TransacoesContext } from "../../../context";
 import {
   ICategoria,
   IConta,
   ITransacao,
+  TypeTransacao,
 } from "../../../../../../shared/interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -14,13 +15,17 @@ import { useQuery } from "@tanstack/react-query";
 import { categoriasService } from "../../../../../../shared/services/categorias";
 import { transacoesService } from "../../../../../../shared/services/transacoes";
 import { IPayloadPersistirTransacao } from "../../../../../../shared/services/transacoes/interfaces";
+import { ITransacaoForm } from "../../../interfaces";
+import { initialTransacaoForm } from "../constants/constants";
 
 interface IUseModalTransacao {
-  transacaoForm: UseFormReturn<ITransacao>;
+  transacaoForm: UseFormReturn<ITransacaoForm>;
   transacao: ITransacao | undefined;
   categorias: ICategoria[] | undefined;
   contas: IConta[] | undefined;
   openModalTransacao: boolean;
+  isFetchingCategorias: boolean;
+  onChangeTipoTransacao(tipo: TypeTransacao): void;
   onSubmit(): void;
   toggleModalTransacao: () => void;
 }
@@ -33,7 +38,11 @@ const useModalTransacao = (): IUseModalTransacao => {
     setOpenModalTransacao,
   } = useContext(TransacoesContext);
 
-  const transacaoForm = useForm<ITransacao>();
+  const transacaoForm = useForm<ITransacaoForm>();
+
+  const [tipoTransacao, setTipoTransacao] = useState<TypeTransacao[]>([
+    "ENTRADA",
+  ]);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -41,10 +50,10 @@ const useModalTransacao = (): IUseModalTransacao => {
   const { mutate: mutatePersistirTransacao } =
     transacoesService.useMutationPersistirTransacao();
 
-  const { data: categorias } = useQuery({
+  const { data: categorias, isFetching: isFetchingCategorias } = useQuery({
     refetchOnWindowFocus: true,
     ...categoriasService.useQueryGetCategorias({
-      tipo: ["ENTRADA", "SAIDA"],
+      tipo: tipoTransacao,
       ativo: [true],
     }),
   });
@@ -60,13 +69,27 @@ const useModalTransacao = (): IUseModalTransacao => {
     if (transacao?.id && openModalTransacao) {
       (Object.keys(transacao) as (keyof ITransacao)[]).forEach((key) => {
         transacaoForm.setValue(
-          key as keyof ITransacao,
+          key as keyof ITransacaoForm,
           transacao[key] as ITransacao[keyof ITransacao]
         );
       });
+      return;
     }
+    transacaoForm.reset(initialTransacaoForm);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModalTransacao, transacao]);
+
+  function onChangeTipoTransacao(tipo: TypeTransacao) {
+    if (tipo) {
+      setTipoTransacao([tipo]);
+    }
+    transacaoForm.reset({
+      ...transacaoForm.getValues(),
+      tipo,
+      idCategoria: undefined,
+    });
+  }
 
   function onSubmit() {
     transacaoForm.handleSubmit(async (data) => {
@@ -77,9 +100,7 @@ const useModalTransacao = (): IUseModalTransacao => {
         valor: data.valor,
         idCategoria: data.idCategoria,
         idConta: data.idConta,
-        incluirSoma: data.incluirSoma ?? true,
         concluido: data.concluido ?? true,
-        agencia: data.agencia ?? "",
         observacao: data.observacao ?? "",
       };
       console.log(payload);
@@ -106,7 +127,6 @@ const useModalTransacao = (): IUseModalTransacao => {
   function toggleModalTransacao() {
     setOpenModalTransacao((prevState) => !prevState);
     setTrasacao(undefined);
-    transacaoForm.reset();
   }
 
   return {
@@ -115,6 +135,8 @@ const useModalTransacao = (): IUseModalTransacao => {
     categorias,
     contas,
     openModalTransacao,
+    isFetchingCategorias,
+    onChangeTipoTransacao,
     onSubmit,
     toggleModalTransacao,
   };

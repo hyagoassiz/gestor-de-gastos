@@ -82,6 +82,7 @@ export const ModalConta: React.FC = () => {
                   field.onChange(newValue?.id);
                 }}
                 value={tipoContas?.find((c) => c.id === field.value) || null}
+                noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -112,7 +113,7 @@ export const ModalConta: React.FC = () => {
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 6,
                 }}
                 fullWidth
                 error={!!fieldState.error}
@@ -135,7 +136,7 @@ export const ModalConta: React.FC = () => {
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 17,
                 }}
                 fullWidth
                 error={!!fieldState.error}

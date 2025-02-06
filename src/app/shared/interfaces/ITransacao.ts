@@ -1,7 +1,7 @@
 import { TypeTransacao } from "./TypeTransacao";
 
 export interface ITransacao {
-  id: string;
+  id?: string;
   usuario: string;
   data: string;
   tipo: TypeTransacao;
