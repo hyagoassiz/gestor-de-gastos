@@ -14,19 +14,14 @@ import { Controller } from "react-hook-form";
 import { tipoContas } from "../../../../../shared/constants/tipoContas";
 
 export const ModalConta: React.FC = () => {
-  const {
-    toggleModalConta,
-    handleToggleModalConta,
-    contaForm,
-    onSubmit,
-    conta,
-  } = useModalConta();
+  const { contaForm, conta, openModalConta, onSubmit, toggleModalConta } =
+    useModalConta();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalConta}
+      open={openModalConta}
       title={
         !conta?.id
           ? t("PAGES.CONTAS.MODALS.MODAL_CREATE.ADD")
@@ -35,7 +30,7 @@ export const ModalConta: React.FC = () => {
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalConta}>
+          <Button variant="text" onClick={toggleModalConta}>
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button
@@ -87,6 +82,7 @@ export const ModalConta: React.FC = () => {
                   field.onChange(newValue?.id);
                 }}
                 value={tipoContas?.find((c) => c.id === field.value) || null}
+                noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -117,7 +113,7 @@ export const ModalConta: React.FC = () => {
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 6,
                 }}
                 fullWidth
                 error={!!fieldState.error}
@@ -140,7 +136,7 @@ export const ModalConta: React.FC = () => {
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 17,
                 }}
                 fullWidth
                 error={!!fieldState.error}

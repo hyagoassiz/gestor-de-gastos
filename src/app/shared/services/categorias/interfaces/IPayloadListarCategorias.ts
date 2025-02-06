@@ -1,6 +1,6 @@
-import { TypeCategoria } from "../../../interfaces";
+import { TypeTransacao } from "../../../interfaces";
 
 export interface IPayloadListarCategorias {
-  tipo: TypeCategoria[];
+  tipo: TypeTransacao[];
   ativo: boolean[];
 }

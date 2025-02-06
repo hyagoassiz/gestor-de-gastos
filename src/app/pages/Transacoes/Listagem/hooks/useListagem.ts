@@ -5,20 +5,20 @@ import { ITransacao } from "../../../../shared/interfaces";
 interface IUseListagem {
   transacoes: ITransacao[] | undefined;
   badgeCount: number;
-  handleToggleFiltro: () => void;
-  handleAdicionar: () => void;
+  handleAdicionarTransacao: () => void;
   handleEditarTransacao(transacao: ITransacao): void;
   handleExcluirTransacao(transacao: ITransacao): void;
+  toggleFiltro: () => void;
 }
 
 const useListagem = (): IUseListagem => {
   const {
     transacoes,
-    setTrasacao,
     filtroData,
-    setToggleModalTransacao,
-    setToggleFiltro,
-    setToggleModalExcluir,
+    setTrasacao,
+    setOpenFiltro,
+    setOpenModalTransacao,
+    setOpenModalExcluir,
   } = useContext(TransacoesContext);
 
   const badgeCount: number = useMemo(() => {
@@ -27,31 +27,31 @@ const useListagem = (): IUseListagem => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(filtroData)]);
 
-  function handleAdicionar() {
-    setToggleModalTransacao((prevState) => !prevState);
-  }
-
-  function handleToggleFiltro() {
-    setToggleFiltro((prevToggle) => !prevToggle);
+  function handleAdicionarTransacao() {
+    setOpenModalTransacao((prevState) => !prevState);
   }
 
   function handleEditarTransacao(transacao: ITransacao) {
-    setToggleModalTransacao((prevState) => !prevState);
+    setOpenModalTransacao((prevState) => !prevState);
     setTrasacao(transacao);
   }
 
   function handleExcluirTransacao(transacao: ITransacao) {
-    setToggleModalExcluir((prevState) => !prevState);
+    setOpenModalExcluir((prevState) => !prevState);
     setTrasacao(transacao);
+  }
+
+  function toggleFiltro() {
+    setOpenFiltro((prevToggle) => !prevToggle);
   }
 
   return {
     transacoes,
     badgeCount,
-    handleToggleFiltro,
-    handleAdicionar,
+    handleAdicionarTransacao,
     handleEditarTransacao,
     handleExcluirTransacao,
+    toggleFiltro,
   };
 };
 
