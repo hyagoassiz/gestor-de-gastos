@@ -11,11 +11,11 @@ interface IListagem {
   categorias: ICategoria[] | undefined;
   searchBar: ISeachBar;
   badgeCount: number;
-  handleAdicionarCategoria: () => void;
-  handleAtivarCategoria: (categoria: ICategoria) => void;
-  handleEditarCategoria: (categoria: ICategoria) => void;
-  handleInativarCategoria: (categoria: ICategoria) => void;
-  handleToggleFiltro: () => void;
+  handleAdicionarCategoria(): void;
+  handleAtivarCategoria(categoria: ICategoria): void;
+  handleEditarCategoria(categoria: ICategoria): void;
+  handleInativarCategoria(categoria: ICategoria): void;
+  toggleFiltro(): void;
 }
 
 const useListagem = (): IListagem => {
@@ -79,7 +79,7 @@ const useListagem = (): IListagem => {
     setOpenModalInativar((prevState) => !prevState);
   }
 
-  function handleToggleFiltro() {
+  function toggleFiltro() {
     setOpenFiltro((prevToggle) => !prevToggle);
   }
 
@@ -91,7 +91,7 @@ const useListagem = (): IListagem => {
     handleAtivarCategoria,
     handleEditarCategoria,
     handleInativarCategoria,
-    handleToggleFiltro,
+    toggleFiltro,
   };
 };
 

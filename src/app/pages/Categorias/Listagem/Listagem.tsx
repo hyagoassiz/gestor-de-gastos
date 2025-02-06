@@ -20,7 +20,7 @@ export const Listagem: React.FC = () => {
     handleAtivarCategoria,
     handleEditarCategoria,
     handleInativarCategoria,
-    handleToggleFiltro,
+    toggleFiltro,
   } = useListagem();
 
   const { t } = useTranslation();
@@ -39,10 +39,7 @@ export const Listagem: React.FC = () => {
               {t("BUTTONS.ADD")}
             </Button>
 
-            <FilterIcon
-              onClick={handleToggleFiltro}
-              badgeContent={badgeCount}
-            />
+            <FilterIcon onClick={toggleFiltro} badgeContent={badgeCount} />
           </>
         }
         searchBar={searchBar}

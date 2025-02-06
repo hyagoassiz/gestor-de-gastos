@@ -12,7 +12,7 @@ import {
 import { tiposTransacoes } from "../../../../../shared/constants/tiposTransacoes";
 
 export const Filtro: React.FC = () => {
-  const { filtroForm, openFiltro, toggleFiltro, handleSubmit } = useFiltro();
+  const { filtroForm, openFiltro, handleSubmit, toggleFiltro } = useFiltro();
 
   return (
     <Drawer

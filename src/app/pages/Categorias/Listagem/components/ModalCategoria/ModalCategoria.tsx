@@ -10,8 +10,8 @@ export const ModalCategoria: React.FC = () => {
     categoriaForm,
     categoria,
     openModalCategoria,
-    toggleModalCategoria,
     onSubmit,
+    toggleModalCategoria,
   } = useModalCategoria();
 
   const { t } = useTranslation();

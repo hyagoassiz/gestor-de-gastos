@@ -12,18 +12,13 @@ import { contasService } from "../../../../../../shared/services/contas";
 interface IUseModalConta {
   contaForm: UseFormReturn<IContaForm>;
   conta: IConta | undefined;
-  toggleModalConta: boolean;
-  handleToggleModalConta: () => void;
+  openModalConta: boolean;
   onSubmit(): void;
+  toggleModalConta(): void;
 }
 const useModalConta = (): IUseModalConta => {
-  const {
-    toggleModalConta,
-    setToggleModalConta,
-    setConta,
-    conta,
-    queryGetContas,
-  } = useContext(ContasContext);
+  const { conta, openModalConta, queryGetContas, setConta, setOpenModalConta } =
+    useContext(ContasContext);
 
   const contaForm = useForm<IContaForm>();
 
@@ -35,16 +30,16 @@ const useModalConta = (): IUseModalConta => {
     contasService.useMutationPersistirConta();
 
   useEffect(() => {
-    if (conta?.id && toggleModalConta) {
+    if (conta?.id && openModalConta) {
       (Object.keys(conta) as (keyof IConta)[]).forEach((key) => {
         contaForm.setValue(
-          key as keyof IConta,
+          key as keyof IContaForm,
           conta[key] as IConta[keyof IConta]
         );
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toggleModalConta, conta]);
+  }, [openModalConta, conta]);
 
   function onSubmit() {
     contaForm.handleSubmit(async (data) => {
@@ -58,7 +53,7 @@ const useModalConta = (): IUseModalConta => {
         observacao: data.observacao ?? "",
         ativo: true,
       };
-      handleToggleModalConta();
+      toggleModalConta();
       mutatePersistirCategoria(
         { payload: payload },
         {
@@ -78,8 +73,8 @@ const useModalConta = (): IUseModalConta => {
     })();
   }
 
-  function handleToggleModalConta() {
-    setToggleModalConta((prevState) => !prevState);
+  function toggleModalConta() {
+    setOpenModalConta((prevState) => !prevState);
     setConta(undefined);
     contaForm.reset();
   }
@@ -87,9 +82,9 @@ const useModalConta = (): IUseModalConta => {
   return {
     contaForm,
     conta,
-    toggleModalConta,
-    handleToggleModalConta,
+    openModalConta,
     onSubmit,
+    toggleModalConta,
   };
 };
 

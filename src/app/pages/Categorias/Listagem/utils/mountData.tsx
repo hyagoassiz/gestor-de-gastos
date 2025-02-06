@@ -5,9 +5,9 @@ import { ICategoria } from "../../../../shared/interfaces";
 
 interface IMountData {
   categorias: ICategoria[] | undefined;
-  handleInativarCategoria: (categoria: ICategoria) => void;
-  handleEditarCategoria: (categoria: ICategoria) => void;
-  handleAtivarCategoria: (categoria: ICategoria) => void;
+  handleInativarCategoria(categoria: ICategoria): void;
+  handleEditarCategoria(categoria: ICategoria): void;
+  handleAtivarCategoria(categoria: ICategoria): void;
 }
 
 export function mountData({

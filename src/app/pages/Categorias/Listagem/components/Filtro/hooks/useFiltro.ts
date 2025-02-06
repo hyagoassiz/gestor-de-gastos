@@ -7,8 +7,8 @@ import { IPayloadListarCategorias } from "../../../../../../shared/services/cate
 interface IUseFiltro {
   filtroForm: UseFormReturn<IFiltroForm>;
   openFiltro: boolean;
-  toggleFiltro: () => void;
-  handleSubmit: () => void;
+  handleSubmit(): void;
+  toggleFiltro(): void;
 }
 
 const useFiltro = (): IUseFiltro => {
@@ -39,8 +39,8 @@ const useFiltro = (): IUseFiltro => {
   return {
     filtroForm,
     openFiltro,
-    toggleFiltro,
     handleSubmit,
+    toggleFiltro,
   };
 };
 export default useFiltro;

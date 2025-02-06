@@ -14,19 +14,14 @@ import { Controller } from "react-hook-form";
 import { tipoContas } from "../../../../../shared/constants/tipoContas";
 
 export const ModalConta: React.FC = () => {
-  const {
-    toggleModalConta,
-    handleToggleModalConta,
-    contaForm,
-    onSubmit,
-    conta,
-  } = useModalConta();
+  const { contaForm, conta, openModalConta, onSubmit, toggleModalConta } =
+    useModalConta();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalConta}
+      open={openModalConta}
       title={
         !conta?.id
           ? t("PAGES.CONTAS.MODALS.MODAL_CREATE.ADD")
@@ -35,7 +30,7 @@ export const ModalConta: React.FC = () => {
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalConta}>
+          <Button variant="text" onClick={toggleModalConta}>
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button

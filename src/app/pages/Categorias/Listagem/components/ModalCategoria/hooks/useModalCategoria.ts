@@ -13,8 +13,8 @@ interface IModalCategoria {
   categoriaForm: UseFormReturn<ICategoriaForm>;
   categoria: ICategoria | undefined;
   openModalCategoria: boolean;
-  toggleModalCategoria: () => void;
   onSubmit(): void;
+  toggleModalCategoria(): void;
 }
 const useModalCategoria = (): IModalCategoria => {
   const {
@@ -84,8 +84,8 @@ const useModalCategoria = (): IModalCategoria => {
     categoriaForm,
     categoria,
     openModalCategoria,
-    toggleModalCategoria,
     onSubmit,
+    toggleModalCategoria,
   };
 };
 
