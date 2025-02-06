@@ -6,13 +6,13 @@ import { IPayloadListarContas } from "../../../../../../shared/services/contas/i
 
 interface IUseFiltro {
   filtroForm: UseFormReturn<IFiltroForm>;
-  toggleFiltro: boolean;
-  handleToggleFiltro: () => void;
-  handleSubmit: () => void;
+  openFiltro: boolean;
+  toggleFiltro(): void;
+  handleSubmit(): void;
 }
 
 const useFiltro = (): IUseFiltro => {
-  const { toggleFiltro, setToggleFiltro, setFiltroData, filtroData } =
+  const { openFiltro, filtroData, setOpenFiltro, setFiltroData } =
     useContext(ContasContext);
 
   const filtroForm = useForm<IFiltroForm>();
@@ -25,11 +25,11 @@ const useFiltro = (): IUseFiltro => {
       };
       setFiltroData(formData);
     })();
-    setToggleFiltro((prevToggle) => !prevToggle);
+    setOpenFiltro((prevToggle) => !prevToggle);
   }
 
-  function handleToggleFiltro() {
-    setToggleFiltro((prevToggle) => !prevToggle);
+  function toggleFiltro() {
+    setOpenFiltro((prevToggle) => !prevToggle);
     filtroForm.reset({
       tipoConta: filtroData.tipoConta,
       ativo: !filtroData.ativo[0],
@@ -38,9 +38,9 @@ const useFiltro = (): IUseFiltro => {
 
   return {
     filtroForm,
+    openFiltro,
     toggleFiltro,
     handleSubmit,
-    handleToggleFiltro,
   };
 };
 export default useFiltro;

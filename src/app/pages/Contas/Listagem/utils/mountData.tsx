@@ -1,21 +1,21 @@
 import { ListItemText, Tooltip } from "@mui/material";
-import { PowerIcon } from "../../../../../../shared/components/PowerIcon";
+import { PowerIcon } from "../../../../shared/components/PowerIcon";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
-import { IConta } from "../../../../../../shared/interfaces";
-import { MoreOptions } from "../../../../../../shared/components/MoreOptions";
+import { IConta } from "../../../../shared/interfaces";
+import { MoreOptions } from "../../../../shared/components/MoreOptions";
 
 interface IMountData {
   contas: IConta[] | undefined;
-  handleInativar: (conta: IConta) => void;
-  handleEditar: (conta: IConta) => void;
-  handleAtivar: (conta: IConta) => void;
+  handleAtivarConta(conta: IConta): void;
+  handleEditarConta(conta: IConta): void;
+  handleInativarConta(conta: IConta): void;
 }
 
 export function mountData({
   contas,
-  handleInativar,
-  handleEditar,
-  handleAtivar,
+  handleAtivarConta,
+  handleEditarConta,
+  handleInativarConta,
 }: IMountData) {
   if (contas?.length) {
     return contas.map((conta) => ({
@@ -37,18 +37,17 @@ export function mountData({
           <DoneOutlineIcon color={conta.incluirSoma ? "success" : "disabled"} />
         </Tooltip>
       ),
-      situacao: conta.ativo ? "Ativo" : "Inativo",
       options: (
         <>
           {conta.ativo ? (
             <MoreOptions
               options={[
-                { label: "Editar", action: () => handleEditar(conta) },
-                { label: "Inativar", action: () => handleInativar(conta) },
+                { label: "Editar", action: () => handleEditarConta(conta) },
+                { label: "Inativar", action: () => handleInativarConta(conta) },
               ]}
             />
           ) : (
-            <PowerIcon onClick={() => handleAtivar(conta)} />
+            <PowerIcon onClick={() => handleAtivarConta(conta)} />
           )}
         </>
       ),
