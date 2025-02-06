@@ -6,6 +6,7 @@ const BUTTONS: IButton = {
   CLOSE: "Fechar",
   SAVE: "Salvar",
   DEACTIVATE: "Inativar",
+  DELETE: "Excluir",
 };
 
 export default BUTTONS;

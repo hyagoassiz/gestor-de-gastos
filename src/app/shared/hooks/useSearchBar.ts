@@ -3,6 +3,7 @@ import { ISeachBar } from "../interfaces";
 
 interface IUseSearchBarProps {
   placeHolder: string;
+  debounceTime?: number;
 }
 
 interface IUseSearchBar {
@@ -10,7 +11,10 @@ interface IUseSearchBar {
   textoBusca: string;
 }
 
-const useSearchBar = ({ placeHolder }: IUseSearchBarProps): IUseSearchBar => {
+const useSearchBar = ({
+  placeHolder,
+  debounceTime = 500,
+}: IUseSearchBarProps): IUseSearchBar => {
   const [value, setValue] = useState<string>("");
   const [textoBusca, setTextoBusca] = useState<string>("");
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -24,7 +28,7 @@ const useSearchBar = ({ placeHolder }: IUseSearchBarProps): IUseSearchBar => {
 
     debounceTimeout.current = setTimeout(() => {
       setTextoBusca(event.target.value);
-    }, 500);
+    }, debounceTime);
   };
 
   return {

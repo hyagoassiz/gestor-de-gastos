@@ -4,4 +4,5 @@ export interface IButton {
   CLOSE: string;
   SAVE: string;
   DEACTIVATE: string;
+  DELETE: string;
 }

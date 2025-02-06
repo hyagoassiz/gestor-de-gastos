@@ -4,22 +4,22 @@ import useModalInativar from "./hooks/useModalInativar";
 import { useTranslation } from "react-i18next";
 
 export const ModalInativar: React.FC = () => {
-  const { toggleModalInativar, handleToggleModalInativar, handleInativar } =
+  const { openModalInativar, handleInativarCategoria, toggleModalInativar } =
     useModalInativar();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalInativar}
+      open={openModalInativar}
       title={`${t("INFO.DEACTIVATE")}?`}
       style={{ width: "300px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalInativar}>
+          <Button variant="text" onClick={toggleModalInativar}>
             {t("BUTTONS.CLOSE")}
           </Button>
-          <Button variant="contained" onClick={handleInativar}>
+          <Button variant="contained" onClick={handleInativarCategoria}>
             {t("BUTTONS.DEACTIVATE")}
           </Button>
         </>

@@ -5,22 +5,20 @@ import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 import { useTranslation } from "react-i18next";
 import { setLoading } from "../../../../../../shared/redux/loading/actions";
 import { contasService } from "../../../../../../shared/services/contas";
-import { IConta } from "../../../../../../shared/interfaces";
 
 interface IUseModalInativar {
-  conta: IConta | undefined;
-  toggleModalInativar: boolean;
-  handleToggleModalInativar: () => void;
-  handleInativar: () => void;
+  openModalInativar: boolean;
+  handleInativarConta(): void;
+  toggleModalInativar(): void;
 }
 
 const useModalInativar = (): IUseModalInativar => {
   const {
-    toggleModalInativar,
-    setConta,
-    setToggleModalInativar,
     conta,
+    openModalInativar,
     queryGetContas,
+    setConta,
+    setOpenModalInativar,
   } = useContext(ContasContext);
 
   const dispatch = useDispatch();
@@ -35,7 +33,7 @@ const useModalInativar = (): IUseModalInativar => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleInativar() {
+  function handleInativarConta() {
     if (conta) {
       mutateAlterarSituacaoCategoria(
         {
@@ -51,19 +49,18 @@ const useModalInativar = (): IUseModalInativar => {
         }
       );
     }
-    handleToggleModalInativar();
+    toggleModalInativar();
   }
 
-  function handleToggleModalInativar() {
+  function toggleModalInativar() {
     setConta(undefined);
-    setToggleModalInativar((prevState) => !prevState);
+    setOpenModalInativar((prevState) => !prevState);
   }
 
   return {
-    conta,
+    openModalInativar,
+    handleInativarConta,
     toggleModalInativar,
-    handleToggleModalInativar,
-    handleInativar,
   };
 };
 

@@ -7,18 +7,18 @@ import { TransacoesContext } from "../../../context";
 import { transacoesService } from "../../../../../../shared/services/transacoes";
 
 interface IUseModalExcluir {
-  toggleModalExcluir: boolean;
-  handleToggleModalExcluir: () => void;
-  handleExcluir: () => void;
+  openModalExcluir: boolean;
+  handleExcluirTransacao: () => void;
+  toggleModalExcluir: () => void;
 }
 
 const useModalExcluir = (): IUseModalExcluir => {
   const {
     transacao,
-    toggleModalExcluir,
-    setToggleModalExcluir,
-    setTrasacao,
+    openModalExcluir,
     queryGetTransacoes,
+    setTrasacao,
+    setOpenModalExcluir,
   } = useContext(TransacoesContext);
 
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const useModalExcluir = (): IUseModalExcluir => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleExcluir() {
+  function handleExcluirTransacao() {
     if (transacao) {
       mutate(
         {
@@ -48,18 +48,18 @@ const useModalExcluir = (): IUseModalExcluir => {
         }
       );
     }
-    handleToggleModalExcluir();
+    toggleModalExcluir();
   }
 
-  function handleToggleModalExcluir() {
+  function toggleModalExcluir() {
     setTrasacao(undefined);
-    setToggleModalExcluir((prevState) => !prevState);
+    setOpenModalExcluir((prevState) => !prevState);
   }
 
   return {
+    openModalExcluir,
+    handleExcluirTransacao,
     toggleModalExcluir,
-    handleToggleModalExcluir,
-    handleExcluir,
   };
 };
 

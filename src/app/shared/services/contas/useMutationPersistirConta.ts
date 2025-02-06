@@ -5,10 +5,7 @@ import {
   collection,
   doc,
   DocumentReference,
-  getDocs,
-  query,
   updateDoc,
-  where,
 } from "firebase/firestore";
 import { IPayloadPersistirConta } from "./interfaces";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,20 +36,20 @@ const mutatePersistirConta = async function (
   usuario: string,
   payload: IPayloadPersistirConta
 ): Promise<DocumentReference> {
-  const contaRef = collection(db, "conta");
+  // const contaRef = collection(db, "conta");
 
-  const q = query(
-    contaRef,
-    where("usuario", "==", usuario),
-    where("nome", "==", payload.nome),
-    where("tipoConta", "==", payload.tipoConta)
-  );
+  // const q = query(
+  //   contaRef,
+  //   where("usuario", "==", usuario),
+  //   where("nome", "==", payload.nome),
+  //   where("tipoConta", "==", payload.tipoConta)
+  // );
 
-  const querySnapshot = await getDocs(q);
+  // const querySnapshot = await getDocs(q);
 
-  if (!querySnapshot.empty) {
-    throw new Error("Conta já cadastrada.");
-  }
+  // if (!querySnapshot.empty) {
+  //   throw new Error("Conta já cadastrada.");
+  // }
 
   const { id, ...updateData } = payload;
 

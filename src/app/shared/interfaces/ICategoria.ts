@@ -1,9 +1,9 @@
-import { TypeCategoria } from "./TypeCategoria";
+import { TypeTransacao } from "./TypeTransacao";
 
 export interface ICategoria {
   id: string;
   usuario: string;
   nome: string;
-  tipo: TypeCategoria;
+  tipo: TypeTransacao;
   ativo: boolean;
 }

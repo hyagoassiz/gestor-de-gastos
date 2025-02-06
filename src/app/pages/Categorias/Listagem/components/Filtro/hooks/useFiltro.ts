@@ -6,13 +6,13 @@ import { IPayloadListarCategorias } from "../../../../../../shared/services/cate
 
 interface IUseFiltro {
   filtroForm: UseFormReturn<IFiltroForm>;
-  toggleFiltro: boolean;
-  handleToggleFiltro: () => void;
-  handleSubmit: () => void;
+  openFiltro: boolean;
+  handleSubmit(): void;
+  toggleFiltro(): void;
 }
 
 const useFiltro = (): IUseFiltro => {
-  const { toggleFiltro, setToggleFiltro, setFiltroData, filtroData } =
+  const { openFiltro, setOpenFiltro, setFiltroData, filtroData } =
     useContext(CategoriasContext);
 
   const filtroForm = useForm<IFiltroForm>();
@@ -25,11 +25,11 @@ const useFiltro = (): IUseFiltro => {
       };
       setFiltroData(formData);
     })();
-    setToggleFiltro((prevToggle) => !prevToggle);
+    setOpenFiltro((prevToggle) => !prevToggle);
   }
 
-  function handleToggleFiltro() {
-    setToggleFiltro((prevToggle) => !prevToggle);
+  function toggleFiltro() {
+    setOpenFiltro((prevToggle) => !prevToggle);
     filtroForm.reset({
       tipo: filtroData.tipo,
       ativo: !filtroData.ativo[0],
@@ -37,10 +37,10 @@ const useFiltro = (): IUseFiltro => {
   }
 
   return {
-    handleSubmit,
     filtroForm,
+    openFiltro,
+    handleSubmit,
     toggleFiltro,
-    handleToggleFiltro,
   };
 };
 export default useFiltro;

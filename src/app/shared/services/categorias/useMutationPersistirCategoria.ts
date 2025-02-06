@@ -5,10 +5,7 @@ import {
   collection,
   doc,
   DocumentReference,
-  getDocs,
-  query,
   updateDoc,
-  where,
 } from "firebase/firestore";
 import { IPayloadPersistirCategoria } from "./interfaces";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,20 +36,20 @@ const queryPersistirCategoria = async function (
   usuario: string,
   payload: IPayloadPersistirCategoria
 ): Promise<DocumentReference> {
-  const categoriaRef = collection(db, "categoria");
+  // const categoriaRef = collection(db, "categoria");
 
-  const q = query(
-    categoriaRef,
-    where("usuario", "==", usuario),
-    where("nome", "==", payload.nome),
-    where("tipo", "==", payload.tipo)
-  );
+  // const q = query(
+  //   categoriaRef,
+  //   where("usuario", "==", usuario),
+  //   where("nome", "==", payload.nome),
+  //   where("tipo", "==", payload.tipo)
+  // );
 
-  const querySnapshot = await getDocs(q);
+  // const querySnapshot = await getDocs(q);
 
-  if (!querySnapshot.empty) {
-    throw new Error("Categoria já cadastrada.");
-  }
+  // if (!querySnapshot.empty) {
+  //   throw new Error("Categoria já cadastrada.");
+  // }
 
   const { id, ...updateData } = payload;
 

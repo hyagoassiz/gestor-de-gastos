@@ -22,17 +22,17 @@ interface ICategoriasContextProps {
 interface IListagemCategoriasContextData {
   categorias: ICategoria[] | undefined;
   categoria: ICategoria | undefined;
-  searchBar: ISeachBar;
-  toggleModalCategoria: boolean;
-  toggleFiltro: boolean;
-  toggleModalInativar: boolean;
   filtroData: IPayloadListarCategorias;
   queryGetCategorias: UseQueryResult;
+  searchBar: ISeachBar;
+  openFiltro: boolean;
+  openModalCategoria: boolean;
+  openModalInativar: boolean;
   setCategoria: Dispatch<SetStateAction<ICategoria | undefined>>;
-  setToggleModalCategoria: Dispatch<SetStateAction<boolean>>;
-  setToggleFiltro: Dispatch<SetStateAction<boolean>>;
-  setToggleModalInativar: Dispatch<SetStateAction<boolean>>;
   setFiltroData: Dispatch<SetStateAction<IPayloadListarCategorias>>;
+  setOpenFiltro: Dispatch<SetStateAction<boolean>>;
+  setOpenModalCategoria: Dispatch<SetStateAction<boolean>>;
+  setOpenModalInativar: Dispatch<SetStateAction<boolean>>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -44,20 +44,18 @@ export function CategoriasProvider({
   children,
 }: ICategoriasContextProps): JSX.Element {
   const [categoria, setCategoria] = useState<ICategoria | undefined>(undefined);
-  const [toggleModalCategoria, setToggleModalCategoria] =
-    useState<boolean>(false);
-  const [toggleFiltro, setToggleFiltro] = useState<boolean>(false);
-  const [toggleModalInativar, setToggleModalInativar] =
-    useState<boolean>(false);
+  const [openModalCategoria, setOpenModalCategoria] = useState<boolean>(false);
+  const [openFiltro, setOpenFiltro] = useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarCategorias>({
     ativo: [true],
     tipo: [],
   });
+  const [openModalInativar, setOpenModalInativar] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
   const { searchBar, textoBusca } = useSearchBar({
-    placeHolder: "Pesquisar Categorias",
+    placeHolder: "Pesquisar Categoria",
   });
 
   const queryGetCategorias = useQuery({
@@ -83,17 +81,17 @@ export function CategoriasProvider({
       value={{
         categorias,
         categoria,
-        searchBar,
-        toggleModalCategoria,
-        toggleFiltro,
-        toggleModalInativar,
         filtroData,
         queryGetCategorias,
+        searchBar,
+        openFiltro,
+        openModalCategoria,
+        openModalInativar,
         setCategoria,
-        setToggleModalCategoria,
-        setToggleFiltro,
-        setToggleModalInativar,
         setFiltroData,
+        setOpenFiltro,
+        setOpenModalCategoria,
+        setOpenModalInativar,
       }}
     >
       {children}

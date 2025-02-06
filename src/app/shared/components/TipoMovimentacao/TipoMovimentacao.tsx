@@ -1,20 +1,16 @@
 import { Typography } from "@mui/material";
-import { TypeCategoria } from "../../interfaces";
+import { TypeTransacao } from "../../interfaces";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { StyledBox } from "./styles";
 
 interface ITipoMovimentacao {
-  tipo: TypeCategoria;
+  tipo: TypeTransacao;
 }
 
 export const TipoMovimentacao: React.FC<ITipoMovimentacao> = ({ tipo }) => {
   return (
-    <StyledBox
-      sx={{
-        border: `1px solid ${tipo === "ENTRADA" ? "limegreen" : "crimson"}`,
-      }}
-    >
+    <StyledBox>
       {tipo === "ENTRADA" ? (
         <ArrowDropUpIcon
           sx={{
@@ -28,7 +24,10 @@ export const TipoMovimentacao: React.FC<ITipoMovimentacao> = ({ tipo }) => {
 
       <Typography
         variant="body2"
-        sx={{ color: tipo === "ENTRADA" ? "limegreen" : "crimson" }}
+        sx={{
+          color: tipo === "ENTRADA" ? "limegreen" : "crimson",
+          fontWeight: 600,
+        }}
       >
         {tipo === "ENTRADA" ? "Entrada" : "Saída"}
       </Typography>
