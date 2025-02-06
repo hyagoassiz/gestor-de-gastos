@@ -21,15 +21,15 @@ interface ITransacoesContextProps {
 interface IListagemTransacoesContextData {
   transacoes: ITransacao[] | undefined;
   transacao: ITransacao | undefined;
-  toggleModalTransacao: boolean;
-  toggleFiltro: boolean;
-  toggleModalExcluir: boolean;
+  openFiltro: boolean;
+  openModalExcluir: boolean;
+  openModalTransacao: boolean;
   filtroData: IPayloadListarTransacoes;
   queryGetTransacoes: UseQueryResult;
   setTrasacao: Dispatch<SetStateAction<ITransacao | undefined>>;
-  setToggleModalTransacao: Dispatch<SetStateAction<boolean>>;
-  setToggleFiltro: Dispatch<SetStateAction<boolean>>;
-  setToggleModalExcluir: Dispatch<SetStateAction<boolean>>;
+  setOpenFiltro: Dispatch<SetStateAction<boolean>>;
+  setOpenModalExcluir: Dispatch<SetStateAction<boolean>>;
+  setOpenModalTransacao: Dispatch<SetStateAction<boolean>>;
   setFiltroData: Dispatch<SetStateAction<IPayloadListarTransacoes>>;
 }
 
@@ -42,10 +42,9 @@ export function TransacoesProvider({
   children,
 }: ITransacoesContextProps): JSX.Element {
   const [transacao, setTrasacao] = useState<ITransacao | undefined>(undefined);
-  const [toggleModalTransacao, setToggleModalTransacao] =
-    useState<boolean>(false);
-  const [toggleFiltro, setToggleFiltro] = useState<boolean>(false);
-  const [toggleModalExcluir, setToggleModalExcluir] = useState<boolean>(false);
+  const [openFiltro, setOpenFiltro] = useState<boolean>(false);
+  const [openModalExcluir, setOpenModalExcluir] = useState<boolean>(false);
+  const [openModalTransacao, setOpenModalTransacao] = useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarTransacoes>({
     concluido: [true, false],
     tipo: ["ENTRADA", "SAIDA"],
@@ -70,15 +69,15 @@ export function TransacoesProvider({
       value={{
         transacoes,
         transacao,
-        toggleModalTransacao,
-        toggleFiltro,
-        toggleModalExcluir,
+        openFiltro,
+        openModalExcluir,
+        openModalTransacao,
         filtroData,
         queryGetTransacoes,
         setTrasacao,
-        setToggleModalTransacao,
-        setToggleFiltro,
-        setToggleModalExcluir,
+        setOpenFiltro,
+        setOpenModalTransacao,
+        setOpenModalExcluir,
         setFiltroData,
       }}
     >

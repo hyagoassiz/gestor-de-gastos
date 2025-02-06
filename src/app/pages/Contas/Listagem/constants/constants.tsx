@@ -4,6 +4,5 @@ export const contasColumns: IDataColumns[] = [
   { key: "nome", label: "Nome" },
   { key: "tipoConta", label: "Tipo de Conta" },
   { key: "incluirSoma", label: "Incluir em Somas" },
-  { key: "situacao", label: "Situação" },
   { key: "options", label: "", style: { width: "10px" } },
 ];

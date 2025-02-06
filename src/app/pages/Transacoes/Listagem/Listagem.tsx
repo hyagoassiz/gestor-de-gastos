@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import useListagem from "./hooks/useListagem";
 import { FilterIcon } from "../../../shared/components/FilterIcon";
 import { DataTable } from "../../../shared/components/DataTable/DataTable";
-import { DataColumns } from "./util/constants";
+import { transacoesColumns } from "./constants/constants";
 import { mountData } from "./util/mountData";
 import { ModalTransacao } from "./components/ModalTransacao";
 import { Filtro } from "./components/Filtro";
@@ -15,10 +15,10 @@ export const Listagem: React.FC = () => {
   const {
     transacoes,
     badgeCount,
-    handleAdicionar,
-    handleToggleFiltro,
+    handleAdicionarTransacao,
     handleEditarTransacao,
     handleExcluirTransacao,
+    toggleFiltro,
   } = useListagem();
 
   const { t } = useTranslation();
@@ -33,19 +33,16 @@ export const Listagem: React.FC = () => {
       <ToolPainel
         buttons={
           <>
-            <Button variant="contained" onClick={handleAdicionar}>
+            <Button variant="contained" onClick={handleAdicionarTransacao}>
               {t("BUTTONS.ADD")}
             </Button>
-            <FilterIcon
-              onClick={handleToggleFiltro}
-              badgeContent={badgeCount}
-            />
+            <FilterIcon onClick={toggleFiltro} badgeContent={badgeCount} />
           </>
         }
       />
 
       <DataTable
-        columns={DataColumns}
+        columns={transacoesColumns}
         data={mountData({
           transacoes,
           handleEditarTransacao,

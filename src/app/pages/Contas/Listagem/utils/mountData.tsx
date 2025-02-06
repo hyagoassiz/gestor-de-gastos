@@ -37,7 +37,6 @@ export function mountData({
           <DoneOutlineIcon color={conta.incluirSoma ? "success" : "disabled"} />
         </Tooltip>
       ),
-      situacao: conta.ativo ? "Ativo" : "Inativo",
       options: (
         <>
           {conta.ativo ? (

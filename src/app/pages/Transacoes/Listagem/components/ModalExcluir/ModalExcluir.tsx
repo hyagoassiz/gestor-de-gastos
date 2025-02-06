@@ -4,22 +4,22 @@ import useModalInativar from "./hooks/useModalExcluir";
 import { useTranslation } from "react-i18next";
 
 export const ModalExcluir: React.FC = () => {
-  const { toggleModalExcluir, handleToggleModalExcluir, handleExcluir } =
+  const { openModalExcluir, handleExcluirTransacao, toggleModalExcluir } =
     useModalInativar();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalExcluir}
+      open={openModalExcluir}
       title={`${t("INFO.DEACTIVATE")}?`}
       style={{ width: "300px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalExcluir}>
+          <Button variant="text" onClick={toggleModalExcluir}>
             {t("BUTTONS.CLOSE")}
           </Button>
-          <Button variant="contained" onClick={handleExcluir}>
+          <Button variant="contained" onClick={handleExcluirTransacao}>
             {t("BUTTONS.DEACTIVATE")}
           </Button>
         </>

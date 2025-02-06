@@ -20,17 +20,17 @@ interface IUseModalTransacao {
   transacao: ITransacao | undefined;
   categorias: ICategoria[] | undefined;
   contas: IConta[] | undefined;
-  toggleModalTransacao: boolean;
-  handleToggleModalTransacao: () => void;
+  openModalTransacao: boolean;
   onSubmit(): void;
+  toggleModalTransacao: () => void;
 }
 const useModalTransacao = (): IUseModalTransacao => {
   const {
-    toggleModalTransacao,
-    setToggleModalTransacao,
-    setTrasacao,
     transacao,
+    openModalTransacao,
     queryGetTransacoes,
+    setTrasacao,
+    setOpenModalTransacao,
   } = useContext(TransacoesContext);
 
   const transacaoForm = useForm<ITransacao>();
@@ -57,7 +57,7 @@ const useModalTransacao = (): IUseModalTransacao => {
   });
 
   useEffect(() => {
-    if (transacao?.id && toggleModalTransacao) {
+    if (transacao?.id && openModalTransacao) {
       (Object.keys(transacao) as (keyof ITransacao)[]).forEach((key) => {
         transacaoForm.setValue(
           key as keyof ITransacao,
@@ -66,7 +66,7 @@ const useModalTransacao = (): IUseModalTransacao => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toggleModalTransacao, transacao]);
+  }, [openModalTransacao, transacao]);
 
   function onSubmit() {
     transacaoForm.handleSubmit(async (data) => {
@@ -87,7 +87,7 @@ const useModalTransacao = (): IUseModalTransacao => {
         { payload: payload },
         {
           onSuccess: () => {
-            handleToggleModalTransacao();
+            toggleModalTransacao();
             queryGetTransacoes.refetch();
             dispatch(
               showSnackbar(
@@ -103,8 +103,8 @@ const useModalTransacao = (): IUseModalTransacao => {
     })();
   }
 
-  function handleToggleModalTransacao() {
-    setToggleModalTransacao((prevState) => !prevState);
+  function toggleModalTransacao() {
+    setOpenModalTransacao((prevState) => !prevState);
     setTrasacao(undefined);
     transacaoForm.reset();
   }
@@ -114,9 +114,9 @@ const useModalTransacao = (): IUseModalTransacao => {
     transacao,
     categorias,
     contas,
-    toggleModalTransacao,
-    handleToggleModalTransacao,
+    openModalTransacao,
     onSubmit,
+    toggleModalTransacao,
   };
 };
 

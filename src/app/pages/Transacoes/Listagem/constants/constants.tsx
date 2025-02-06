@@ -1,6 +1,6 @@
 import { IDataColumns } from "../../../../shared/interfaces";
 
-export const DataColumns: IDataColumns[] = [
+export const transacoesColumns: IDataColumns[] = [
   { key: "data", label: "Data" },
   { key: "tipo", label: "Tipo" },
   { key: "categoria", label: "Categoria" },

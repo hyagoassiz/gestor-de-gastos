@@ -16,20 +16,20 @@ import { NumericFormat } from "react-number-format";
 
 export const ModalTransacao: React.FC = () => {
   const {
-    toggleModalTransacao,
-    handleToggleModalTransacao,
     transacaoForm,
-    onSubmit,
     transacao,
     categorias,
     contas,
+    openModalTransacao,
+    onSubmit,
+    toggleModalTransacao,
   } = useModalTransacao();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalTransacao}
+      open={openModalTransacao}
       title={
         !transacao?.id
           ? t("PAGES.CONTAS.MODALS.MODAL_CREATE.ADD")
@@ -38,7 +38,7 @@ export const ModalTransacao: React.FC = () => {
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalTransacao}>
+          <Button variant="text" onClick={toggleModalTransacao}>
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button
