@@ -24,3 +24,8 @@ export const CONTAS = {
 export const TRANSACOES = {
   LIST: `${REPOSITORIO.LIST}/transacoes`,
 };
+
+// SALDOS
+export const SALDOS = {
+  LIST: `${REPOSITORIO.LIST}/saldos`,
+};

@@ -37,11 +37,11 @@ const useListagem = (): IUseListagem => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(filtroData)]);
 
-  function handleAdicionarConta() {
+  function handleAdicionarConta(): void {
     setOpenModalConta((prevState) => !prevState);
   }
 
-  function toggleFiltro() {
+  function toggleFiltro(): void {
     setOpenFiltro((prevToggle) => !prevToggle);
   }
 
@@ -57,7 +57,7 @@ const useListagem = (): IUseListagem => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleAtivarConta(categoria: IConta) {
+  function handleAtivarConta(categoria: IConta): void {
     mutateAlterarSituacaoConta(
       {
         payload: { id: categoria.id, ativo: true },
@@ -73,12 +73,12 @@ const useListagem = (): IUseListagem => {
     );
   }
 
-  function handleEditarConta(conta: IConta) {
+  function handleEditarConta(conta: IConta): void {
     setOpenModalConta((prevState) => !prevState);
     setConta(conta);
   }
 
-  function handleInativarConta(conta: IConta) {
+  function handleInativarConta(conta: IConta): void {
     setConta(conta);
     setOpenModalInativar((prevState) => !prevState);
   }

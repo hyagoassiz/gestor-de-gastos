@@ -41,7 +41,7 @@ const useModalConta = (): IUseModalConta => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModalConta, conta]);
 
-  function onSubmit() {
+  function onSubmit(): void {
     contaForm.handleSubmit(async (data) => {
       const payload: IPayloadPersistirConta = {
         id: data.id ?? undefined,
@@ -73,7 +73,7 @@ const useModalConta = (): IUseModalConta => {
     })();
   }
 
-  function toggleModalConta() {
+  function toggleModalConta(): void {
     setOpenModalConta((prevState) => !prevState);
     setConta(undefined);
     contaForm.reset();

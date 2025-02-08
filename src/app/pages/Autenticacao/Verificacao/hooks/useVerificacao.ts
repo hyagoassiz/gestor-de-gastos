@@ -6,7 +6,7 @@ import { User } from "firebase/auth";
 
 interface IUseVerificacao {
   userReducer: User | null;
-  handleNavigate: () => void;
+  handleNavigate(): void;
 }
 
 export const useVerificacao = (): IUseVerificacao => {
@@ -14,7 +14,7 @@ export const useVerificacao = (): IUseVerificacao => {
 
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleNavigate = (): void => {
     navigate(PATHS.AUTENTICACAO.LOGIN);
   };
 

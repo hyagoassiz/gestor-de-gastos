@@ -46,7 +46,7 @@ const useModalCategoria = (): IModalCategoria => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModalCategoria, categoria]);
 
-  function onSubmit() {
+  function onSubmit(): void {
     categoriaForm.handleSubmit(async (data) => {
       const payload: IPayloadPersistirCategoria = {
         id: data.id ?? undefined,
@@ -74,7 +74,7 @@ const useModalCategoria = (): IModalCategoria => {
     })();
   }
 
-  function toggleModalCategoria() {
+  function toggleModalCategoria(): void {
     setOpenModalCategoria((prevState) => !prevState);
     setCategoria(undefined);
     categoriaForm.reset();

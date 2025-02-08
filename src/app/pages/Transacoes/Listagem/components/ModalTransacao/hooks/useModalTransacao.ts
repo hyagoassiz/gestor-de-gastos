@@ -27,7 +27,7 @@ interface IUseModalTransacao {
   isFetchingCategorias: boolean;
   onChangeTipoTransacao(tipo: TypeTransacao): void;
   onSubmit(): void;
-  toggleModalTransacao: () => void;
+  toggleModalTransacao(): void;
 }
 const useModalTransacao = (): IUseModalTransacao => {
   const {
@@ -80,7 +80,7 @@ const useModalTransacao = (): IUseModalTransacao => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModalTransacao, transacao]);
 
-  function onChangeTipoTransacao(tipo: TypeTransacao) {
+  function onChangeTipoTransacao(tipo: TypeTransacao): void {
     if (tipo) {
       setTipoTransacao([tipo]);
     }
@@ -91,7 +91,7 @@ const useModalTransacao = (): IUseModalTransacao => {
     });
   }
 
-  function onSubmit() {
+  function onSubmit(): void {
     transacaoForm.handleSubmit(async (data) => {
       const payload: IPayloadPersistirTransacao = {
         id: data.id ?? undefined,
@@ -124,7 +124,7 @@ const useModalTransacao = (): IUseModalTransacao => {
     })();
   }
 
-  function toggleModalTransacao() {
+  function toggleModalTransacao(): void {
     setOpenModalTransacao((prevState) => !prevState);
     setTrasacao(undefined);
   }

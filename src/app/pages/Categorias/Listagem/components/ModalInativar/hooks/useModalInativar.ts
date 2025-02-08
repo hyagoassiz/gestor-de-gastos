@@ -33,7 +33,7 @@ const useModalInativar = (): IUseModalInativar => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleInativarCategoria() {
+  function handleInativarCategoria(): void {
     if (categoria) {
       mutateAlterarSituacaoCategoria(
         {
@@ -55,7 +55,7 @@ const useModalInativar = (): IUseModalInativar => {
     toggleModalInativar();
   }
 
-  function toggleModalInativar() {
+  function toggleModalInativar(): void {
     setCategoria(undefined);
     setOpenModalInativar((prevState) => !prevState);
   }
