@@ -10,7 +10,7 @@ interface IUseRegistrarNome {
   registrarNomeForm: UseFormReturn<INome>;
   isPending: boolean;
   handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void;
-  handleNavigate: () => void;
+  handleNavigate(): void;
   onSubmit(): void;
 }
 
@@ -23,7 +23,7 @@ export const useRegistrarNome = (): IUseRegistrarNome => {
 
   const { mutate, isPending } = autenticacaoService.useMutationPersistirNome();
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     registrarNomeForm.handleSubmit(async (data) => {
       mutate(
         { displayName: data.nome },
@@ -36,13 +36,13 @@ export const useRegistrarNome = (): IUseRegistrarNome => {
     })();
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === "Enter") {
       registrarNomeForm.handleSubmit(onSubmit)();
     }
   };
 
-  const handleNavigate = () => {
+  const handleNavigate = (): void => {
     navigate(PATHS.AUTENTICACAO.LOGIN);
   };
 
