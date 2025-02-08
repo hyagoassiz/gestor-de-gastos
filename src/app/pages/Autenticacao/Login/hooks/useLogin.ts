@@ -12,8 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 interface IUseLogin {
   loginForm: UseFormReturn<IAutenticacao>;
   isPending: boolean;
-  onSubmit: () => void;
-  handleNavigate: () => void;
+  onSubmit(): void;
+  handleNavigate(): void;
   handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void;
 }
 
@@ -35,7 +35,7 @@ export const useLogin = (): IUseLogin => {
     queryLogOut.refetch();
   }, []);
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     loginForm.handleSubmit((data) => {
       const payload: IAutenticacao = {
         auth: auth,
@@ -55,13 +55,13 @@ export const useLogin = (): IUseLogin => {
     })();
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === "Enter") {
       loginForm.handleSubmit(onSubmit)();
     }
   };
 
-  const handleNavigate = () => {
+  const handleNavigate = (): void => {
     navigate(PATHS.AUTENTICACAO.CREATE);
   };
 
