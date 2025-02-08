@@ -12,6 +12,7 @@ import {
 import { Private } from "../shared/components/Private";
 import { RegistrarNomeRoute } from "../pages/Autenticacao/RegistrarNome";
 import { TransacoesListagemRoute } from "../pages/Transacoes";
+import { SaldosListagemRoute } from "../pages/Saldos";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -72,6 +73,14 @@ export const AppRoutes = () => {
                     element={
                       <Private>
                         <TransacoesListagemRoute />
+                      </Private>
+                    }
+                  />
+                  <Route
+                    path={PATHS.SALDOS.LIST}
+                    element={
+                      <Private>
+                        <SaldosListagemRoute />
                       </Private>
                     }
                   />

@@ -11,3 +11,4 @@ export * from "./TypeConta";
 export * from "./ITypeConta";
 export * from "./IAutenticacao";
 export * from "./ITransacao";
+export * from "./ISaldo";

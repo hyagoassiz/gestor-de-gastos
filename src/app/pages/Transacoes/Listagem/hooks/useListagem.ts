@@ -8,7 +8,7 @@ interface IUseListagem {
   handleAdicionarTransacao: () => void;
   handleEditarTransacao(transacao: ITransacao): void;
   handleExcluirTransacao(transacao: ITransacao): void;
-  toggleFiltro: () => void;
+  toggleFiltro(): void;
 }
 
 const useListagem = (): IUseListagem => {
@@ -27,21 +27,21 @@ const useListagem = (): IUseListagem => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(filtroData)]);
 
-  function handleAdicionarTransacao() {
+  function handleAdicionarTransacao(): void {
     setOpenModalTransacao((prevState) => !prevState);
   }
 
-  function handleEditarTransacao(transacao: ITransacao) {
+  function handleEditarTransacao(transacao: ITransacao): void {
     setOpenModalTransacao((prevState) => !prevState);
     setTrasacao(transacao);
   }
 
-  function handleExcluirTransacao(transacao: ITransacao) {
+  function handleExcluirTransacao(transacao: ITransacao): void {
     setOpenModalExcluir((prevState) => !prevState);
     setTrasacao(transacao);
   }
 
-  function toggleFiltro() {
+  function toggleFiltro(): void {
     setOpenFiltro((prevToggle) => !prevToggle);
   }
 

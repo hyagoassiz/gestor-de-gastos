@@ -7,8 +7,8 @@ import { IPayloadListarTransacoes } from "../../../../../../shared/services/tran
 interface IUseFiltro {
   filtroForm: UseFormReturn<IFiltroForm>;
   openFiltro: boolean;
-  handleSubmit: () => void;
-  toggleFiltro: () => void;
+  handleSubmit(): void;
+  toggleFiltro(): void;
 }
 
 const useFiltro = (): IUseFiltro => {
@@ -17,7 +17,7 @@ const useFiltro = (): IUseFiltro => {
 
   const filtroForm = useForm<IFiltroForm>();
 
-  function handleSubmit() {
+  function handleSubmit(): void {
     filtroForm.handleSubmit(async (data) => {
       const formData: IPayloadListarTransacoes = {
         tipo: data.tipo,
@@ -28,7 +28,7 @@ const useFiltro = (): IUseFiltro => {
     setOpenFiltro((prevToggle) => !prevToggle);
   }
 
-  function toggleFiltro() {
+  function toggleFiltro(): void {
     setOpenFiltro((prevToggle) => !prevToggle);
     filtroForm.reset({
       tipo: filtroData.tipo,

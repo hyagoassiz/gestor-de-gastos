@@ -8,8 +8,8 @@ import { transacoesService } from "../../../../../../shared/services/transacoes"
 
 interface IUseModalExcluir {
   openModalExcluir: boolean;
-  handleExcluirTransacao: () => void;
-  toggleModalExcluir: () => void;
+  handleExcluirTransacao(): void;
+  toggleModalExcluir(): void;
 }
 
 const useModalExcluir = (): IUseModalExcluir => {
@@ -32,7 +32,7 @@ const useModalExcluir = (): IUseModalExcluir => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleExcluirTransacao() {
+  function handleExcluirTransacao(): void {
     if (transacao) {
       mutate(
         {
@@ -51,7 +51,7 @@ const useModalExcluir = (): IUseModalExcluir => {
     toggleModalExcluir();
   }
 
-  function toggleModalExcluir() {
+  function toggleModalExcluir(): void {
     setTrasacao(undefined);
     setOpenModalExcluir((prevState) => !prevState);
   }

@@ -49,11 +49,11 @@ const useListagem = (): IListagem => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
-  function handleAdicionarCategoria() {
+  function handleAdicionarCategoria(): void {
     setOpenModalCategoria((prevState) => !prevState);
   }
 
-  function handleAtivarCategoria(categoria: ICategoria) {
+  function handleAtivarCategoria(categoria: ICategoria): void {
     mutateAlterarSituacaoCategoria(
       {
         payload: { id: categoria.id, ativo: true },
@@ -69,17 +69,17 @@ const useListagem = (): IListagem => {
     );
   }
 
-  function handleEditarCategoria(categoria: ICategoria) {
+  function handleEditarCategoria(categoria: ICategoria): void {
     setOpenModalCategoria((prevState) => !prevState);
     setCategoria(categoria);
   }
 
-  function handleInativarCategoria(categoria: ICategoria) {
+  function handleInativarCategoria(categoria: ICategoria): void {
     setCategoria(categoria);
     setOpenModalInativar((prevState) => !prevState);
   }
 
-  function toggleFiltro() {
+  function toggleFiltro(): void {
     setOpenFiltro((prevToggle) => !prevToggle);
   }
 

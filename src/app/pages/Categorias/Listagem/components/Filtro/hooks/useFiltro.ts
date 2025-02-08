@@ -17,7 +17,7 @@ const useFiltro = (): IUseFiltro => {
 
   const filtroForm = useForm<IFiltroForm>();
 
-  function handleSubmit() {
+  function handleSubmit(): void {
     filtroForm.handleSubmit(async (data) => {
       const formData: IPayloadListarCategorias = {
         ativo: !data.ativo ? [true] : [false],
@@ -28,7 +28,7 @@ const useFiltro = (): IUseFiltro => {
     setOpenFiltro((prevToggle) => !prevToggle);
   }
 
-  function toggleFiltro() {
+  function toggleFiltro(): void {
     setOpenFiltro((prevToggle) => !prevToggle);
     filtroForm.reset({
       tipo: filtroData.tipo,
