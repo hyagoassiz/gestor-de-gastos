@@ -4,6 +4,7 @@ export const BoxContainer = styled(Box)(() => ({
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",
+  backgroundColor: "#EEEEEE",
 }));
 
 export const StyledBox = styled(Box)(({ theme }) => ({
