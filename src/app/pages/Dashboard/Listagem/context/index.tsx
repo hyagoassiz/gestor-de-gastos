@@ -47,8 +47,6 @@ export function DashboardProvider({
     return calcularSaldosMesAno(queryGetTransacoes.data ?? []);
   }, [queryGetTransacoes.data]);
 
-  console.log(saldosMesAno);
-
   useEffect(() => {
     dispatch(setLoading(queryGetTransacoes.isLoading));
   }, [queryGetTransacoes.isLoading]);

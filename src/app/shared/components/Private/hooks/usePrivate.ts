@@ -42,7 +42,7 @@ const usePrivate = (): IUsePrivate => {
               location.pathname === PATHS.AUTENTICACAO.CREATE_NAME) &&
             user.displayName
           ) {
-            navigate(PATHS.CATEGORIAS.LIST);
+            navigate(PATHS.DASHBOARD.LIST);
           }
         }
 

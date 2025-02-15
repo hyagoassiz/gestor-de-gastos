@@ -1,4 +1,5 @@
 import { TitlePage } from "../../../shared/components/TitlePage/TItlePage";
+import { Graficos } from "./components/Graficos";
 import { Totais } from "./components/Totais";
 
 export const Listagem: React.FC = () => {
@@ -7,6 +8,8 @@ export const Listagem: React.FC = () => {
       <TitlePage title="Dashboard" />
 
       <Totais />
+
+      <Graficos />
     </>
   );
 };

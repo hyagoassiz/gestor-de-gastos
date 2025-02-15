@@ -1,28 +1,17 @@
+import dayjs from "dayjs";
 import { ISaldoMesAno, ITransacao } from "../interfaces";
-
-export interface ISaldo {
-  mesAno: string;
-  incluirEmSomas: boolean;
-  valores: {
-    concluido: {
-      entradas: number;
-      saidas: number;
-      saldo: number;
-    };
-    pendente: {
-      entradas: number;
-      saidas: number;
-      saldo: number;
-    };
-  };
-}
+import "dayjs/locale/pt-br";
 
 export function calcularSaldosMesAno(transacoes: ITransacao[]): ISaldoMesAno[] {
   const saldosMap = new Map<string, ISaldoMesAno>();
 
   transacoes.forEach((transacao) => {
     const { data, tipo, valor, concluido, incluirSoma } = transacao;
-    const mesAno = data.slice(0, 7); // Extrai "YYYY-MM" da data
+    const mesAnoCompleto = dayjs(data).locale("pt-br").format("MMMM/YYYY");
+    const mesAno =
+      mesAnoCompleto.split("/")[0].substring(0, 3) +
+      "/" +
+      mesAnoCompleto.split("/")[1];
 
     if (!saldosMap.has(mesAno)) {
       saldosMap.set(mesAno, {

@@ -10,8 +10,8 @@ export const TotalCard: React.FC<ITotalCard> = ({ title, total }) => {
   return (
     <Box
       sx={{
-        width: "300px",
-        height: "150px",
+        width: "250px",
+        height: "120px",
         borderRadius: "4px",
         gap: 2,
         backgroundColor: "white",
@@ -30,8 +30,8 @@ export const TotalCard: React.FC<ITotalCard> = ({ title, total }) => {
           <Box
             sx={{
               backgroundColor: "#D3D3D3",
-              width: 48,
-              height: 48,
+              width: 34,
+              height: 34,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
