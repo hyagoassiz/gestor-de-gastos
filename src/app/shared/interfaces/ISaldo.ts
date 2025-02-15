@@ -3,6 +3,8 @@ export interface ISaldo {
   nomeConta: string;
   agencia: string;
   conta: string;
+  categoria: string;
+  incluirEmSomas: boolean;
   valores: {
     concluido: {
       entradas: number;
