@@ -14,6 +14,7 @@ import { RegistrarNomeRoute } from "../pages/Autenticacao/RegistrarNome";
 import { TransacoesListagemRoute } from "../pages/Transacoes";
 import { SaldosListagemRoute } from "../pages/Saldos";
 import { DashboardListagemRoute } from "../pages/Dashboard";
+import { SideBar } from "../shared/components/SideBar";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -49,58 +50,58 @@ export const AppRoutes = () => {
         <Route
           path="*"
           element={
-            // <AppDrawer>
-            <>
-              <Layout>
-                <Routes>
-                  <Route
-                    path={PATHS.CATEGORIAS.LIST}
-                    element={
-                      <Private>
-                        <CategoriasListagemRoute />
-                      </Private>
-                    }
-                  />
-                  <Route
-                    path={PATHS.CONTAS.LIST}
-                    element={
-                      <Private>
-                        <ContasListagemRoute />
-                      </Private>
-                    }
-                  />
-                  <Route
-                    path={PATHS.TRANSACOES.LIST}
-                    element={
-                      <Private>
-                        <TransacoesListagemRoute />
-                      </Private>
-                    }
-                  />
-                  <Route
-                    path={PATHS.SALDOS.LIST}
-                    element={
-                      <Private>
-                        <SaldosListagemRoute />
-                      </Private>
-                    }
-                  />
-                  <Route
-                    path={PATHS.DASHBOARD.LIST}
-                    element={
-                      <Private>
-                        <DashboardListagemRoute />
-                      </Private>
-                    }
-                  />
-                  <Route
-                    path="*"
-                    element={<Navigate to={PATHS.CATEGORIAS.LIST} />}
-                  />
-                </Routes>
-              </Layout>
-            </>
-            // </AppDrawer>
+            <SideBar>
+              <>
+                <Layout>
+                  <Routes>
+                    <Route
+                      path={PATHS.CATEGORIAS.LIST}
+                      element={
+                        <Private>
+                          <CategoriasListagemRoute />
+                        </Private>
+                      }
+                    />
+                    <Route
+                      path={PATHS.CONTAS.LIST}
+                      element={
+                        <Private>
+                          <ContasListagemRoute />
+                        </Private>
+                      }
+                    />
+                    <Route
+                      path={PATHS.TRANSACOES.LIST}
+                      element={
+                        <Private>
+                          <TransacoesListagemRoute />
+                        </Private>
+                      }
+                    />
+                    <Route
+                      path={PATHS.SALDOS.LIST}
+                      element={
+                        <Private>
+                          <SaldosListagemRoute />
+                        </Private>
+                      }
+                    />
+                    <Route
+                      path={PATHS.DASHBOARD.LIST}
+                      element={
+                        <Private>
+                          <DashboardListagemRoute />
+                        </Private>
+                      }
+                    />
+                    <Route
+                      path="*"
+                      element={<Navigate to={PATHS.CATEGORIAS.LIST} />}
+                    />
+                  </Routes>
+                </Layout>
+              </>
+            </SideBar>
           }
         />
       </Routes>
