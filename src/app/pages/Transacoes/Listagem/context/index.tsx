@@ -62,7 +62,7 @@ export function TransacoesProvider({
 
   useEffect(() => {
     dispatch(setLoading(queryGetTransacoes.isLoading));
-  }, [queryGetTransacoes.isLoading, dispatch]);
+  }, [queryGetTransacoes.isLoading]);
 
   return (
     <TransacoesContext.Provider

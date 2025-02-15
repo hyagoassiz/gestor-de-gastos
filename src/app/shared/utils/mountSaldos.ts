@@ -9,6 +9,8 @@ export const mountSaldos = (transacoes: ITransacao[]): ISaldo[] => {
           nomeConta: obj?.nomeConta || "",
           agencia: obj?.agencia || "",
           conta: obj?.conta || "",
+          categoria: obj?.nomeCategoria || "",
+          incluirEmSomas: obj?.incluirSoma || false,
           valores: {
             concluido: {
               entradas: 0,
