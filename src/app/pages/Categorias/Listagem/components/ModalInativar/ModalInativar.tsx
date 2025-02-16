@@ -16,16 +16,20 @@ export const ModalInativar: React.FC = () => {
       style={{ width: "300px" }}
       buttons={
         <>
-          <Button variant="text" onClick={toggleModalInativar}>
+          <Button color="info" variant="outlined" onClick={toggleModalInativar}>
             {t("BUTTONS.CLOSE")}
           </Button>
-          <Button variant="contained" onClick={handleInativarCategoria}>
+          <Button
+            color="info"
+            variant="contained"
+            onClick={handleInativarCategoria}
+          >
             {t("BUTTONS.DEACTIVATE")}
           </Button>
         </>
       }
     >
-      <Typography align="justify">
+      <Typography color="textPrimary" align="justify">
         {t("PAGES.CATEGORIAS.MODALS.MODAL_DEACTIVATE.DESCRIPTION")}
       </Typography>
     </Modal>

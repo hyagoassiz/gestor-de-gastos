@@ -7,5 +7,6 @@ export const transacoesColumns: IDataColumns[] = [
   { key: "conta", label: "Conta" },
   { key: "valor", label: "Valor" },
   { key: "situacao", label: "Situação" },
+  { key: "observacao", label: "Observação" },
   { key: "options", label: "", style: { width: "10px" } },
 ];

@@ -10,7 +10,7 @@ export const Listagem: React.FC = () => {
 
   return (
     <>
-      <TitlePage title="Saldos" subTitle="Consulte o saldo de suas contas." />
+      <TitlePage title="Saldos" subTitle="Consulte o saldo de suas contas" />
 
       <ToolPainel searchBar={searchBar} />
 
