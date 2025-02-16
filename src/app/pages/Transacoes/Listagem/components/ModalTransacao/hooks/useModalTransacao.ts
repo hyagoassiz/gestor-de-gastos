@@ -61,7 +61,7 @@ const useModalTransacao = (): IUseModalTransacao => {
   const { data: contas } = useQuery({
     ...contasService.useQueryGetContas({
       ativo: [true],
-      tipoConta: ["Conta Corrente", "Conta Corrente", "Outros", "Poupança"],
+      tipoConta: ["Conta Corrente", "Outros", "Poupança", "Investimentos"],
     }),
   });
 
