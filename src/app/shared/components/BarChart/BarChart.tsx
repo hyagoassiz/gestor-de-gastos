@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import {
   Bar,
   BarChart as RechartsBarChart,
@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { BoxContainer } from "./styles";
 
 interface IBarChart {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,8 +16,13 @@ interface IBarChart {
 }
 export const BarChart: React.FC<IBarChart> = ({ data }) => {
   return (
-    <Box mt={2} bgcolor="white" padding={2} borderRadius="4px" width="50%">
-      <Typography variant="h6" align="center" gutterBottom>
+    <BoxContainer>
+      <Typography
+        color="textPrimary"
+        gutterBottom
+        mb={2}
+        sx={{ fontSize: "18px" }}
+      >
         Entradas e Saídas
       </Typography>
       <ResponsiveContainer width="100%" height={250}>
@@ -29,6 +35,6 @@ export const BarChart: React.FC<IBarChart> = ({ data }) => {
           <Bar dataKey="saidas" fill="#F44336" name="Saídas" />
         </RechartsBarChart>
       </ResponsiveContainer>
-    </Box>
+    </BoxContainer>
   );
 };

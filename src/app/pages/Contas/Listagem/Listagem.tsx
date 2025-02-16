@@ -35,7 +35,11 @@ export const Listagem: React.FC = () => {
       <ToolPainel
         buttons={
           <>
-            <Button variant="contained" onClick={handleAdicionarConta}>
+            <Button
+              color="info"
+              variant="contained"
+              onClick={handleAdicionarConta}
+            >
               {t("BUTTONS.ADD")}
             </Button>
             <FilterIcon onClick={toggleFiltro} badgeContent={badgeCount} />

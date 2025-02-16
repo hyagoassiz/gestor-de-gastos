@@ -57,7 +57,7 @@ const queryGetTransacoes = async function (
         valor: transacaoData.valor,
         concluido: transacaoData.concluido,
         observacao: transacaoData.observacao,
-        incluirSoma: transacaoData.incluirSoma,
+        incluirSoma: false,
       };
       transacoes.push(transacao);
     });
@@ -66,7 +66,12 @@ const queryGetTransacoes = async function (
     const contasSnapshot = await getDocs(collection(db, "conta"));
     const contaMap = new Map<
       string,
-      { nomeConta: string; conta: string; agencia: string }
+      {
+        nomeConta: string;
+        conta: string;
+        agencia: string;
+        incluirSoma: boolean;
+      }
     >();
 
     contasSnapshot.forEach((doc) => {
@@ -74,11 +79,13 @@ const queryGetTransacoes = async function (
         nome: string;
         conta: string;
         agencia: string;
+        incluirSoma: boolean;
       };
       contaMap.set(doc.id, {
-        nomeConta: contaData.nome || "Conta Desconhecida",
-        conta: contaData.conta || "Não Informado",
-        agencia: contaData.agencia || "Não Informada",
+        nomeConta: contaData.nome || "",
+        conta: contaData.conta || "",
+        agencia: contaData.agencia || "",
+        incluirSoma: contaData.incluirSoma || false,
       });
     });
 
@@ -87,7 +94,7 @@ const queryGetTransacoes = async function (
 
     categoriasSnapshot.forEach((doc) => {
       const categoriaData = doc.data() as { nome: string };
-      categoriaMap.set(doc.id, categoriaData.nome || "Categoria Desconhecida");
+      categoriaMap.set(doc.id, categoriaData.nome || "");
     });
 
     transacoes.forEach((transacao) => {
@@ -95,9 +102,8 @@ const queryGetTransacoes = async function (
       transacao.nomeConta = contaInfo?.nomeConta ?? "";
       transacao.conta = contaInfo?.conta ?? "";
       transacao.agencia = contaInfo?.agencia ?? "";
-
-      transacao.nomeCategoria =
-        categoriaMap.get(transacao.idCategoria) ?? "Sem Categoria";
+      transacao.nomeCategoria = categoriaMap.get(transacao.idCategoria) ?? "";
+      transacao.incluirSoma = contaInfo?.incluirSoma ?? false;
     });
 
     transacoes.sort((b, a) => a.data.localeCompare(b.data));

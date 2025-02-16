@@ -10,8 +10,8 @@ export const Graficos: React.FC = () => {
   return (
     <>
       <Stack direction="row" spacing={2} mt={2}>
-        <AreaChart data={data2} />
-        <BarChart data={data} />
+        {data2.length > 0 && <AreaChart data={data2} />}
+        {data.length > 0 && <BarChart data={data} />}
       </Stack>
     </>
   );

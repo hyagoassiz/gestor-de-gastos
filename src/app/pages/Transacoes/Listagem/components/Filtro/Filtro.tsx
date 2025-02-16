@@ -30,6 +30,7 @@ export const Filtro: React.FC = () => {
               multiple
               disablePortal
               id="tipo"
+              color="info"
               options={tiposTransacoes ?? []}
               getOptionLabel={(option) => option.nome || ""}
               onChange={(_, newValue) => {
@@ -44,7 +45,7 @@ export const Filtro: React.FC = () => {
                 <TextField
                   {...params}
                   variant="standard"
-                  color="secondary"
+                  color="info"
                   label="Tipo de Transação"
                   error={!!fieldState.error}
                 />
@@ -64,7 +65,11 @@ export const Filtro: React.FC = () => {
             <FormGroup>
               <FormControlLabel
                 control={
-                  <Checkbox checked={field.value} onChange={field.onChange} />
+                  <Checkbox
+                    color="info"
+                    checked={field.value}
+                    onChange={field.onChange}
+                  />
                 }
                 label="Exibir transações pendentes"
               />

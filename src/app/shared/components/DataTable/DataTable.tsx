@@ -4,6 +4,7 @@ import {
   TableContainer,
   TableRow,
   Typography,
+  useTheme,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import {
@@ -31,6 +32,8 @@ export const DataTable: React.FC<IDataTable> = ({
 }) => {
   const { paginatedData, totalPages, page, setPage } = useDataTable({ data });
 
+  const theme = useTheme();
+
   return (
     <>
       <TableContainer sx={{ maxHeight: 400 }}>
@@ -48,15 +51,21 @@ export const DataTable: React.FC<IDataTable> = ({
           {data.length ? (
             <TableBody>
               {paginatedData.map((row, index) => (
-                <TableRow key={index}>
+                <TableRow
+                  key={index}
+                  sx={{
+                    backgroundColor: theme.palette.primary.main,
+                    "&:hover": {
+                      backgroundColor: theme.palette.primary.light,
+                    },
+                  }}
+                >
                   {columns.map((column) => (
                     <StyledTableCellBody
                       size="small"
                       key={column.key}
-                      style={{
+                      sx={{
                         ...column?.style,
-                        backgroundColor:
-                          index % 2 === 0 ? "#F8F9FA" : "#FFFFFF",
                       }}
                     >
                       {row[column.key]}
@@ -70,7 +79,7 @@ export const DataTable: React.FC<IDataTable> = ({
               <TableRow>
                 <StyledTableCellBody colSpan={columns.length}>
                   <StyledBox>
-                    <Icon />
+                    <Icon color="warning" />
                     <Typography variant="body2">{textForEmptyData}</Typography>
                   </StyledBox>
                 </StyledTableCellBody>

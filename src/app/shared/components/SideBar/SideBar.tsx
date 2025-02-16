@@ -70,7 +70,12 @@ export const SideBar: React.FC<ISideBar> = ({ children }) => {
                 <StyledTypography>{title.title}</StyledTypography>
                 <List>
                   {title.routes.map((route) => (
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
                       {route.icon}
                       <ListItem
                         component="text"
@@ -86,7 +91,7 @@ export const SideBar: React.FC<ISideBar> = ({ children }) => {
                           cursor: "pointer",
                           color:
                             opcaoSelecionada === route.route
-                              ? theme.palette.primary.contrastText
+                              ? theme.palette.secondary.light
                               : "",
                           "&:hover": {
                             opacity: "80%",

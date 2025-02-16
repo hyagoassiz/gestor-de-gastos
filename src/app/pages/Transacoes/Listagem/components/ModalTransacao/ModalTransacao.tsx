@@ -35,14 +35,19 @@ export const ModalTransacao: React.FC = () => {
   return (
     <Modal
       open={openModalTransacao}
-      title={!transacao?.id ? "Adicionar" : "Editar"}
+      title={`${!transacao?.id ? "Adicionar" : "Editar"} Transação`}
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={toggleModalTransacao}>
+          <Button
+            color="info"
+            variant="outlined"
+            onClick={toggleModalTransacao}
+          >
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button
+            color="info"
             variant="contained"
             onClick={transacaoForm.handleSubmit(onSubmit)}
           >
@@ -61,7 +66,7 @@ export const ModalTransacao: React.FC = () => {
               <Autocomplete
                 disablePortal
                 id="tipo"
-                color="secondary"
+                color="info"
                 options={tiposTransacoes || []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
@@ -74,7 +79,7 @@ export const ModalTransacao: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    color="secondary"
+                    color="info"
                     variant="standard"
                     label="Tipo"
                     error={!!fieldState.error}
@@ -96,7 +101,7 @@ export const ModalTransacao: React.FC = () => {
                 label="Data"
                 type="date"
                 variant="standard"
-                color="secondary"
+                color="info"
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
@@ -139,7 +144,7 @@ export const ModalTransacao: React.FC = () => {
                 thousandSeparator={"."}
                 defaultValue={0}
                 required
-                color="secondary"
+                color="info"
                 error={!!fieldState.error}
               />
             )}
@@ -167,7 +172,7 @@ export const ModalTransacao: React.FC = () => {
                   <TextField
                     {...params}
                     variant="standard"
-                    color="secondary"
+                    color="info"
                     label="Categoria"
                     error={!!fieldState.error}
                     required
@@ -211,7 +216,7 @@ export const ModalTransacao: React.FC = () => {
                   <TextField
                     {...params}
                     variant="standard"
-                    color="secondary"
+                    color="info"
                     label="Conta"
                     error={!!fieldState.error}
                     required
@@ -233,7 +238,7 @@ export const ModalTransacao: React.FC = () => {
                 name="observacao"
                 type="text"
                 variant="standard"
-                color="secondary"
+                color="info"
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
@@ -255,7 +260,7 @@ export const ModalTransacao: React.FC = () => {
                 <FormControlLabel
                   control={
                     <Switch
-                      color="primary"
+                      color="info"
                       checked={field.value ?? true}
                       onChange={field.onChange}
                       size="medium"
@@ -264,9 +269,9 @@ export const ModalTransacao: React.FC = () => {
                   disabled={!transacaoForm.getValues("tipo")}
                   label={
                     transacaoForm.getValues("tipo") === "ENTRADA"
-                      ? "Recebido?"
+                      ? "Recebido"
                       : transacaoForm.getValues("tipo") === "SAIDA"
-                      ? "Pago?"
+                      ? "Pago"
                       : ""
                   }
                 />
