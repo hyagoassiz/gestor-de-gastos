@@ -25,12 +25,14 @@ interface IListagemContasContextData {
   searchBar: ISeachBar;
   openFiltro: boolean;
   openModalConta: boolean;
+  openModalObservacao: boolean;
   openModalInativar: boolean;
   filtroData: IPayloadListarContas;
   queryGetContas: UseQueryResult;
   setConta: Dispatch<SetStateAction<IConta | undefined>>;
   setOpenFiltro: Dispatch<SetStateAction<boolean>>;
   setOpenModalConta: Dispatch<SetStateAction<boolean>>;
+  setOpenModalObservacao: Dispatch<SetStateAction<boolean>>;
   setOpenModalInativar: Dispatch<SetStateAction<boolean>>;
   setFiltroData: Dispatch<SetStateAction<IPayloadListarContas>>;
 }
@@ -42,6 +44,8 @@ export function ContasProvider({ children }: IContasContextProps): JSX.Element {
   const [conta, setConta] = useState<IConta | undefined>(undefined);
   const [openFiltro, setOpenFiltro] = useState<boolean>(false);
   const [openModalConta, setOpenModalConta] = useState<boolean>(false);
+  const [openModalObservacao, setOpenModalObservacao] =
+    useState<boolean>(false);
   const [openModalInativar, setOpenModalInativar] = useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarContas>({
     ativo: [true],
@@ -51,7 +55,7 @@ export function ContasProvider({ children }: IContasContextProps): JSX.Element {
   const dispatch = useDispatch();
 
   const { searchBar, textoBusca } = useSearchBar({
-    placeHolder: "Pesquisar Contas",
+    placeHolder: "Pesquisar Conta",
   });
 
   const queryGetContas = useQuery({
@@ -80,12 +84,14 @@ export function ContasProvider({ children }: IContasContextProps): JSX.Element {
         searchBar,
         openFiltro,
         openModalConta,
+        openModalObservacao,
         openModalInativar,
         filtroData,
         queryGetContas,
         setConta,
         setOpenFiltro,
         setOpenModalConta,
+        setOpenModalObservacao,
         setOpenModalInativar,
         setFiltroData,
       }}

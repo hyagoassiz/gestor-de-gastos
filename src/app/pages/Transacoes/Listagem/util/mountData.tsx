@@ -1,20 +1,23 @@
-import { ListItemText, Typography } from "@mui/material";
+import { IconButton, ListItemText, Tooltip, Typography } from "@mui/material";
 import { ITransacao } from "../../../../shared/interfaces";
 import { TipoMovimentacao } from "../../../../shared/components/TipoMovimentacao";
 import { NumericFormat } from "react-number-format";
 import { MoreOptions } from "../../../../shared/components/MoreOptions";
 import dayjs from "dayjs";
+import CommentIcon from "@mui/icons-material/Comment";
 
 interface IMountData {
   transacoes: ITransacao[] | undefined;
   handleEditarTransacao(transacao: ITransacao): void;
   handleExcluirTransacao(transacao: ITransacao): void;
+  toggleModalObservacao(transacao: ITransacao): void;
 }
 
 export function mountData({
   transacoes,
   handleEditarTransacao,
   handleExcluirTransacao,
+  toggleModalObservacao,
 }: IMountData) {
   if (transacoes?.length) {
     return transacoes.map((transacao) => ({
@@ -55,6 +58,22 @@ export function mountData({
           : transacao.tipo === "SAIDA" && transacao.concluido
           ? "Pago"
           : "Em aberto",
+
+      observacao: (
+        <Tooltip placement="top" title="Observação">
+          <IconButton
+            disabled={!transacao.observacao?.trim()}
+            color="info"
+            aria-controls="options-menu"
+            aria-haspopup="true"
+            onClick={() => toggleModalObservacao(transacao)}
+          >
+            <CommentIcon
+              color={!transacao.observacao?.trim() ? "disabled" : "info"}
+            />
+          </IconButton>
+        </Tooltip>
+      ),
 
       options: (
         <MoreOptions

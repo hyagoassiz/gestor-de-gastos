@@ -9,6 +9,7 @@ interface IUseListagem {
   handleEditarTransacao(transacao: ITransacao): void;
   handleExcluirTransacao(transacao: ITransacao): void;
   toggleFiltro(): void;
+  toggleModalObservacao(transacao: ITransacao): void;
 }
 
 const useListagem = (): IUseListagem => {
@@ -18,6 +19,7 @@ const useListagem = (): IUseListagem => {
     setTrasacao,
     setOpenFiltro,
     setOpenModalTransacao,
+    setOpenModalObservacao,
     setOpenModalExcluir,
   } = useContext(TransacoesContext);
 
@@ -45,6 +47,11 @@ const useListagem = (): IUseListagem => {
     setOpenFiltro((prevToggle) => !prevToggle);
   }
 
+  function toggleModalObservacao(transacao: ITransacao): void {
+    setTrasacao(transacao);
+    setOpenModalObservacao((prevState) => !prevState);
+  }
+
   return {
     transacoes,
     badgeCount,
@@ -52,6 +59,7 @@ const useListagem = (): IUseListagem => {
     handleEditarTransacao,
     handleExcluirTransacao,
     toggleFiltro,
+    toggleModalObservacao,
   };
 };
 

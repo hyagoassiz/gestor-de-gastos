@@ -10,6 +10,7 @@ import useListagem from "./hooks/useListagem";
 import { DataTable } from "../../../shared/components/DataTable/DataTable";
 import { mountData } from "./utils/mountData";
 import { contasColumns } from "./constants/constants";
+import { ModalObservacao } from "./components/ModalObservacao";
 
 export const Listagem: React.FC = () => {
   const {
@@ -20,6 +21,7 @@ export const Listagem: React.FC = () => {
     handleAtivarConta,
     handleEditarConta,
     handleInativarConta,
+    toggleModalObservacao,
     toggleFiltro,
   } = useListagem();
 
@@ -55,6 +57,7 @@ export const Listagem: React.FC = () => {
           handleInativarConta,
           handleEditarConta,
           handleAtivarConta,
+          toggleModalObservacao,
         })}
         textForEmptyData={t("PAGES.CONTAS.DATA_TABLE.TEXT_FOR_EMPTY_DATA")}
       />
@@ -62,6 +65,8 @@ export const Listagem: React.FC = () => {
       <ModalConta />
 
       <ModalInativar />
+
+      <ModalObservacao />
 
       <Filtro />
     </>

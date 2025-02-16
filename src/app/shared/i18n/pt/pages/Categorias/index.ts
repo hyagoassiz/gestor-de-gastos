@@ -2,7 +2,7 @@ import { IPage } from "../../../interfaces";
 
 const CATEGORIAS: IPage = {
   TITLE: "Categorias",
-  SUBTITLE: "Gerencie categorias para entrada e saída.",
+  SUBTITLE: "Gerencie categorias para entrada e saída",
   DATA_TABLE: {
     TEXT_FOR_EMPTY_DATA: "Nenhuma categoria encontrada.",
   },

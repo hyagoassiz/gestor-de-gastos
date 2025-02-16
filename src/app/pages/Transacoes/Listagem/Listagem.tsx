@@ -10,6 +10,7 @@ import { mountData } from "./util/mountData";
 import { ModalTransacao } from "./components/ModalTransacao";
 import { Filtro } from "./components/Filtro";
 import { ModalExcluir } from "./components/ModalExcluir";
+import { ModalObservacao } from "./components/ModalObservacao";
 
 export const Listagem: React.FC = () => {
   const {
@@ -19,6 +20,7 @@ export const Listagem: React.FC = () => {
     handleEditarTransacao,
     handleExcluirTransacao,
     toggleFiltro,
+    toggleModalObservacao,
   } = useListagem();
 
   const { t } = useTranslation();
@@ -48,6 +50,7 @@ export const Listagem: React.FC = () => {
           transacoes,
           handleEditarTransacao,
           handleExcluirTransacao,
+          toggleModalObservacao,
         })}
         textForEmptyData={t("Nenhuma transação encontrada.")}
       />
@@ -55,6 +58,8 @@ export const Listagem: React.FC = () => {
       <ModalTransacao />
 
       <ModalExcluir />
+
+      <ModalObservacao />
 
       <Filtro />
     </>
