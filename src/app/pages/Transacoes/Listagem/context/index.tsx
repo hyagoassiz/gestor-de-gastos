@@ -24,12 +24,14 @@ interface IListagemTransacoesContextData {
   openFiltro: boolean;
   openModalExcluir: boolean;
   openModalTransacao: boolean;
+  openModalObservacao: boolean;
   filtroData: IPayloadListarTransacoes;
   queryGetTransacoes: UseQueryResult;
   setTrasacao: Dispatch<SetStateAction<ITransacao | undefined>>;
   setOpenFiltro: Dispatch<SetStateAction<boolean>>;
   setOpenModalExcluir: Dispatch<SetStateAction<boolean>>;
   setOpenModalTransacao: Dispatch<SetStateAction<boolean>>;
+  setOpenModalObservacao: Dispatch<SetStateAction<boolean>>;
   setFiltroData: Dispatch<SetStateAction<IPayloadListarTransacoes>>;
 }
 
@@ -45,6 +47,8 @@ export function TransacoesProvider({
   const [openFiltro, setOpenFiltro] = useState<boolean>(false);
   const [openModalExcluir, setOpenModalExcluir] = useState<boolean>(false);
   const [openModalTransacao, setOpenModalTransacao] = useState<boolean>(false);
+  const [openModalObservacao, setOpenModalObservacao] =
+    useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarTransacoes>({
     concluido: [true, false],
     tipo: ["ENTRADA", "SAIDA"],
@@ -72,11 +76,13 @@ export function TransacoesProvider({
         openFiltro,
         openModalExcluir,
         openModalTransacao,
+        openModalObservacao,
         filtroData,
         queryGetTransacoes,
         setTrasacao,
         setOpenFiltro,
         setOpenModalTransacao,
+        setOpenModalObservacao,
         setOpenModalExcluir,
         setFiltroData,
       }}

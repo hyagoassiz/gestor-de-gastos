@@ -15,6 +15,7 @@ interface IUseListagem {
   handleAtivarConta(conta: IConta): void;
   handleEditarConta(conta: IConta): void;
   handleInativarConta(conta: IConta): void;
+  toggleModalObservacao(conta: IConta): void;
   toggleFiltro(): void;
 }
 
@@ -27,6 +28,7 @@ const useListagem = (): IUseListagem => {
     setConta,
     setOpenFiltro,
     setOpenModalConta,
+    setOpenModalObservacao,
     setOpenModalInativar,
   } = useContext(ContasContext);
 
@@ -36,14 +38,6 @@ const useListagem = (): IUseListagem => {
     return tipo + ativo;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(filtroData)]);
-
-  function handleAdicionarConta(): void {
-    setOpenModalConta((prevState) => !prevState);
-  }
-
-  function toggleFiltro(): void {
-    setOpenFiltro((prevToggle) => !prevToggle);
-  }
 
   const dispatch = useDispatch();
 
@@ -73,6 +67,10 @@ const useListagem = (): IUseListagem => {
     );
   }
 
+  function handleAdicionarConta(): void {
+    setOpenModalConta((prevState) => !prevState);
+  }
+
   function handleEditarConta(conta: IConta): void {
     setOpenModalConta((prevState) => !prevState);
     setConta(conta);
@@ -83,6 +81,15 @@ const useListagem = (): IUseListagem => {
     setOpenModalInativar((prevState) => !prevState);
   }
 
+  function toggleModalObservacao(conta: IConta): void {
+    setOpenModalObservacao((prevState) => !prevState);
+    setConta(conta);
+  }
+
+  function toggleFiltro(): void {
+    setOpenFiltro((prevToggle) => !prevToggle);
+  }
+
   return {
     contas,
     searchBar,
@@ -91,6 +98,7 @@ const useListagem = (): IUseListagem => {
     handleAtivarConta,
     handleEditarConta,
     handleInativarConta,
+    toggleModalObservacao,
     toggleFiltro,
   };
 };

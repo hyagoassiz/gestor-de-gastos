@@ -25,7 +25,7 @@ export function SaldosProvider({
   const dispatch = useDispatch();
 
   const { searchBar, textoBusca } = useSearchBar({
-    placeHolder: "Pesquisar por Conta",
+    placeHolder: "Pesquisar Conta",
   });
 
   const queryGetTransacoes = useQuery({
