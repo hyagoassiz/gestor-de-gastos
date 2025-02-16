@@ -7,11 +7,9 @@ interface ITitlePage {
 
 export const TitlePage: React.FC<ITitlePage> = ({ title, subTitle }) => {
   return (
-    <>
-      <StyledBox>
-        <StyledTitle>{title}</StyledTitle>
-        <StyledSubTitle>{subTitle}</StyledSubTitle>
-      </StyledBox>
-    </>
+    <StyledBox>
+      <StyledTitle>{title}</StyledTitle>
+      <StyledSubTitle>{subTitle}</StyledSubTitle>
+    </StyledBox>
   );
 };

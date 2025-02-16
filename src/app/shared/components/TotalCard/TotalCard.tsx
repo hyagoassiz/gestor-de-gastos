@@ -1,24 +1,20 @@
 import { Box, Stack, Typography } from "@mui/material";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { NumericFormat } from "react-number-format";
+import { BoxContainer, StyledBox } from "./styles";
+import { ReactNode } from "react";
 
 interface ITotalCard {
   title: string;
+  icon: ReactNode;
   total: number;
 }
-export const TotalCard: React.FC<ITotalCard> = ({ title, total }) => {
+export const TotalCard: React.FC<ITotalCard> = ({ title, icon, total }) => {
   return (
-    <Box
-      sx={{
-        width: "250px",
-        height: "120px",
-        borderRadius: "4px",
-        gap: 2,
-        backgroundColor: "white",
-      }}
-    >
+    <BoxContainer>
       <Box padding={2}>
-        <Typography sx={{ fontWeight: 600 }}>{title}</Typography>
+        <Typography color="info" sx={{ fontSize: "14px", fontWeight: 500 }}>
+          {title}
+        </Typography>
 
         <Stack
           mt={2}
@@ -27,20 +23,11 @@ export const TotalCard: React.FC<ITotalCard> = ({ title, total }) => {
           direction="row"
           spacing={2}
         >
-          <Box
-            sx={{
-              backgroundColor: "#D3D3D3",
-              width: 34,
-              height: 34,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: "50%",
-            }}
+          <StyledBox>{icon}</StyledBox>
+          <Typography
+            color="textPrimary"
+            sx={{ fontSize: "20px", fontWeight: "bold" }}
           >
-            <AttachMoneyIcon />
-          </Box>
-          <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
             <NumericFormat
               value={total}
               prefix={"R$ "}
@@ -53,6 +40,6 @@ export const TotalCard: React.FC<ITotalCard> = ({ title, total }) => {
           </Typography>
         </Stack>
       </Box>
-    </Box>
+    </BoxContainer>
   );
 };
