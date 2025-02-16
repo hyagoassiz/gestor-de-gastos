@@ -16,16 +16,20 @@ export const ModalExcluir: React.FC = () => {
       style={{ width: "300px" }}
       buttons={
         <>
-          <Button variant="text" onClick={toggleModalExcluir}>
+          <Button color="info" variant="outlined" onClick={toggleModalExcluir}>
             {t("BUTTONS.CLOSE")}
           </Button>
-          <Button variant="contained" onClick={handleExcluirTransacao}>
+          <Button
+            color="info"
+            variant="contained"
+            onClick={handleExcluirTransacao}
+          >
             {t("BUTTONS.DELETE")}
           </Button>
         </>
       }
     >
-      <Typography align="justify">
+      <Typography color="textPrimary" align="justify">
         "Ao clicar em "Excluir", a transação será excluída e não poderá ser
         recuperada."
       </Typography>

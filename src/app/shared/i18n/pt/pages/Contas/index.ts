@@ -2,7 +2,7 @@ import { IPage } from "../../../interfaces";
 
 const CONTAS: IPage = {
   TITLE: "Contas",
-  SUBTITLE: "Gerencie contas para entrada e saída.",
+  SUBTITLE: "Gerencie contas para entrada e saída",
   DATA_TABLE: {
     TEXT_FOR_EMPTY_DATA: "Nenhuma conta encontrada.",
   },
