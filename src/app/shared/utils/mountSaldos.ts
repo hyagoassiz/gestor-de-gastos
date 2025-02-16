@@ -3,9 +3,9 @@ import { ISaldo, ITransacao } from "../interfaces";
 export const mountSaldos = (transacoes: ITransacao[]): ISaldo[] => {
   const resultado = Object.values(
     transacoes.reduce((acc: { [key: string]: ISaldo }, obj: ITransacao) => {
-      if (!acc[obj.conta]) {
-        acc[obj.conta] = {
-          idConta: obj.conta,
+      if (!acc[obj.idConta]) {
+        acc[obj.idConta] = {
+          idConta: obj.idConta,
           nomeConta: obj?.nomeConta || "",
           agencia: obj?.agencia || "",
           conta: obj?.conta || "",
@@ -26,7 +26,7 @@ export const mountSaldos = (transacoes: ITransacao[]): ISaldo[] => {
         };
       }
 
-      const valores = acc[obj.conta].valores;
+      const valores = acc[obj.idConta].valores;
 
       if (obj.tipo === "ENTRADA") {
         if (obj.concluido) {
