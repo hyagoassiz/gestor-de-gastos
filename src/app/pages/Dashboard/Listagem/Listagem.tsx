@@ -5,7 +5,7 @@ import { Totais } from "./components/Totais";
 export const Listagem: React.FC = () => {
   return (
     <>
-      <TitlePage title="Dashboard" />
+      <TitlePage title="Dashboard" subTitle="Bem vindo à sua Dashboard" />
 
       <Totais />
 

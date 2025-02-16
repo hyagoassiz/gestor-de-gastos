@@ -13,19 +13,20 @@ export const TipoMovimentacao: React.FC<ITipoMovimentacao> = ({ tipo }) => {
     <StyledBox>
       {tipo === "ENTRADA" ? (
         <ArrowDropUpIcon
+          color="success"
           sx={{
-            color: "limegreen",
             height: "24px",
           }}
         />
       ) : (
-        <ArrowDropDownIcon sx={{ color: "crimson", height: "24px" }} />
+        <ArrowDropDownIcon color="error" sx={{ height: "24px" }} />
       )}
 
       <Typography
         variant="body2"
+        color={tipo === "ENTRADA" ? "success" : "error"}
         sx={{
-          color: tipo === "ENTRADA" ? "limegreen" : "crimson",
+          // color: tipo === "ENTRADA" ? "limegreen" : "crimson",
           fontWeight: 600,
         }}
       >

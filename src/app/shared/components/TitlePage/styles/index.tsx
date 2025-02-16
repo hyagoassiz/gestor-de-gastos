@@ -9,9 +9,11 @@ export const StyledTitle = styled(Typography)(({ theme }) => ({
   fontSize: theme.spacing(3),
   fontWeight: 600,
   textTransform: "uppercase",
+  color: theme.palette.primary.contrastText,
 }));
 
 export const StyledSubTitle = styled(Typography)(({ theme }) => ({
   fontSize: theme.spacing(2),
   fontWeight: 500,
+  color: theme.palette.info.main,
 }));
