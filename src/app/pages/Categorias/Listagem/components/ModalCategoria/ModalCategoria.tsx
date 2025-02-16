@@ -27,10 +27,15 @@ export const ModalCategoria: React.FC = () => {
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={toggleModalCategoria}>
+          <Button
+            color="info"
+            variant="outlined"
+            onClick={toggleModalCategoria}
+          >
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button
+            color="info"
             variant="contained"
             onClick={categoriaForm.handleSubmit(onSubmit)}
           >
@@ -49,7 +54,7 @@ export const ModalCategoria: React.FC = () => {
               <TextField
                 label="Nome"
                 type="text"
-                color="secondary"
+                color="info"
                 variant="standard"
                 onChange={field.onChange}
                 value={field.value ?? ""}
@@ -72,7 +77,7 @@ export const ModalCategoria: React.FC = () => {
               <Autocomplete
                 disablePortal
                 id="tipo"
-                color="secondary"
+                color="info"
                 options={tiposTransacoes || []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
@@ -81,12 +86,12 @@ export const ModalCategoria: React.FC = () => {
                 value={
                   tiposTransacoes?.find((c) => c.id === field.value) || null
                 }
-                disabled={Boolean(categoriaForm.getValues("id"))}
+                // disabled={Boolean(categoriaForm.getValues("id"))}
                 noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    color="secondary"
+                    color="info"
                     variant="standard"
                     label="Tipo"
                     error={!!fieldState.error}

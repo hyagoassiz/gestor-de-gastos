@@ -3,8 +3,8 @@ import { styled } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 
 export const HeaderBox = styled(Box)(({ theme }) => ({
-  height: theme.spacing(7),
-  backgroundColor: "#1976d2",
+  height: theme.spacing(7.5),
+  backgroundColor: theme.palette.primary.dark,
   display: "flex",
   alignItems: "center",
 }));
@@ -12,6 +12,7 @@ export const HeaderBox = styled(Box)(({ theme }) => ({
 export const StyledBox = styled(Box)(({ theme }) => ({
   width: theme.spacing(45),
   height: "100vw",
+  backgroundColor: theme.palette.primary.main,
 }));
 
 export const BoxButtons = styled(Box)(({ theme }) => ({

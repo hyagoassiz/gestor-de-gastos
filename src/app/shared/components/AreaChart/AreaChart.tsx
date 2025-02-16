@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import {
   Area,
   AreaChart as RechartsAreaChart,
@@ -8,6 +7,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { BoxContainer } from "./styles";
+import { Typography } from "@mui/material";
 
 interface IAreaChart {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,15 +16,15 @@ interface IAreaChart {
 }
 export const AreaChart: React.FC<IAreaChart> = ({ data }) => {
   return (
-    <Box
-      sx={{
-        width: "50%",
-        height: "auto",
-        borderRadius: "4px",
-        backgroundColor: "white",
-        padding: 2,
-      }}
-    >
+    <BoxContainer>
+      <Typography
+        color="textPrimary"
+        mb={2}
+        gutterBottom
+        sx={{ fontSize: "18px" }}
+      >
+        Patrimônio
+      </Typography>
       <ResponsiveContainer width="100%" height={250}>
         <RechartsAreaChart
           data={data}
@@ -48,6 +49,6 @@ export const AreaChart: React.FC<IAreaChart> = ({ data }) => {
           />
         </RechartsAreaChart>
       </ResponsiveContainer>
-    </Box>
+    </BoxContainer>
   );
 };

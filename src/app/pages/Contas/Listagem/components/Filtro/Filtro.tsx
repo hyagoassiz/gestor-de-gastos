@@ -44,7 +44,7 @@ export const Filtro: React.FC = () => {
                 <TextField
                   {...params}
                   variant="standard"
-                  color="secondary"
+                  color="info"
                   label="Tipo de Conta"
                   error={!!fieldState.error}
                 />
@@ -64,7 +64,11 @@ export const Filtro: React.FC = () => {
             <FormGroup>
               <FormControlLabel
                 control={
-                  <Checkbox checked={field.value} onChange={field.onChange} />
+                  <Checkbox
+                    color="info"
+                    checked={field.value}
+                    onChange={field.onChange}
+                  />
                 }
                 label="Exibir somente inativos"
               />

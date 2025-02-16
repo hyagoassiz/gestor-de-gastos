@@ -33,8 +33,9 @@ export const ToolPainel: React.FC<MuiFrameProps> = ({ buttons, searchBar }) => {
                   style: {
                     paddingLeft: theme.spacing(1),
                     paddingRight: theme.spacing(1),
-                    height: theme.spacing(4),
+                    height: theme.spacing(5),
                     width: "100%",
+                    backgroundColor: theme.palette.primary.main,
                   },
                   startAdornment: (
                     <InputAdornment position="start">

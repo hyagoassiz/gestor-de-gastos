@@ -40,11 +40,7 @@ const Drawer = ({ open, children, closeFilter, applyFilter }: IDrawer) => {
               {t("BUTTONS.CLOSE")}
             </StyledTypography>
             <BoxApply>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={applyFilter}
-              >
+              <Button color="info" variant="contained" onClick={applyFilter}>
                 {t("BUTTONS.APPLY")}
               </Button>
             </BoxApply>
