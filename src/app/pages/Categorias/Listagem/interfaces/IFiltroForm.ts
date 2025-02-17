@@ -1,6 +1,6 @@
-import { TypeCategoria } from "../../../../shared/interfaces";
+import { TypeTransacao } from "../../../../shared/interfaces";
 
 export interface IFiltroForm {
-  tipo: TypeCategoria[];
+  tipo: TypeTransacao[];
   ativo: boolean;
 }

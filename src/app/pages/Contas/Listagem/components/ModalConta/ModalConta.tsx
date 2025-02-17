@@ -14,19 +14,14 @@ import { Controller } from "react-hook-form";
 import { tipoContas } from "../../../../../shared/constants/tipoContas";
 
 export const ModalConta: React.FC = () => {
-  const {
-    toggleModalConta,
-    handleToggleModalConta,
-    contaForm,
-    onSubmit,
-    conta,
-  } = useModalConta();
+  const { contaForm, conta, openModalConta, onSubmit, toggleModalConta } =
+    useModalConta();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalConta}
+      open={openModalConta}
       title={
         !conta?.id
           ? t("PAGES.CONTAS.MODALS.MODAL_CREATE.ADD")
@@ -35,10 +30,11 @@ export const ModalConta: React.FC = () => {
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalConta}>
+          <Button color="info" variant="outlined" onClick={toggleModalConta}>
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button
+            color="info"
             variant="contained"
             onClick={contaForm.handleSubmit(onSubmit)}
           >
@@ -57,7 +53,7 @@ export const ModalConta: React.FC = () => {
               <TextField
                 label="Nome"
                 type="text"
-                color="secondary"
+                color="info"
                 variant="standard"
                 onChange={field.onChange}
                 value={field.value ?? ""}
@@ -80,17 +76,18 @@ export const ModalConta: React.FC = () => {
               <Autocomplete
                 disablePortal
                 id="tipo"
-                color="secondary"
+                color="info"
                 options={tipoContas || []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue?.id);
                 }}
                 value={tipoContas?.find((c) => c.id === field.value) || null}
+                noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    color="secondary"
+                    color="info"
                     variant="standard"
                     label="Tipo da Conta"
                     error={!!fieldState.error}
@@ -113,11 +110,11 @@ export const ModalConta: React.FC = () => {
                 name="agencia"
                 type="text"
                 variant="standard"
-                color="secondary"
+                color="info"
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 6,
                 }}
                 fullWidth
                 error={!!fieldState.error}
@@ -136,11 +133,11 @@ export const ModalConta: React.FC = () => {
                 name="conta"
                 type="text"
                 variant="standard"
-                color="secondary"
+                color="info"
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 17,
                 }}
                 fullWidth
                 error={!!fieldState.error}
@@ -157,7 +154,7 @@ export const ModalConta: React.FC = () => {
               <TextField
                 label="Observação"
                 type="text"
-                color="secondary"
+                color="info"
                 variant="standard"
                 onChange={field.onChange}
                 value={field.value ?? ""}
@@ -179,10 +176,10 @@ export const ModalConta: React.FC = () => {
                 <FormControlLabel
                   control={
                     <Switch
-                      color="primary"
+                      color="info"
                       checked={field.value ?? true}
                       onChange={field.onChange}
-                      size="small"
+                      size="medium"
                     />
                   }
                   label="Incluir em somas"

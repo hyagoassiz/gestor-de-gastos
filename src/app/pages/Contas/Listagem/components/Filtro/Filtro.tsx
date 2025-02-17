@@ -12,14 +12,13 @@ import {
 import { tipoContas } from "../../../../../shared/constants/tipoContas";
 
 export const Filtro: React.FC = () => {
-  const { toggleFiltro, handleToggleFiltro, filtroForm, handleSubmit } =
-    useFiltro();
+  const { filtroForm, openFiltro, toggleFiltro, handleSubmit } = useFiltro();
 
   return (
     <Drawer
-      open={toggleFiltro}
+      open={openFiltro}
       applyFilter={filtroForm.handleSubmit(handleSubmit)}
-      closeFilter={handleToggleFiltro}
+      closeFilter={toggleFiltro}
     >
       <Box>
         <Controller
@@ -45,7 +44,7 @@ export const Filtro: React.FC = () => {
                 <TextField
                   {...params}
                   variant="standard"
-                  color="secondary"
+                  color="info"
                   label="Tipo de Conta"
                   error={!!fieldState.error}
                 />
@@ -65,7 +64,11 @@ export const Filtro: React.FC = () => {
             <FormGroup>
               <FormControlLabel
                 control={
-                  <Checkbox checked={field.value} onChange={field.onChange} />
+                  <Checkbox
+                    color="info"
+                    checked={field.value}
+                    onChange={field.onChange}
+                  />
                 }
                 label="Exibir somente inativos"
               />

@@ -1,9 +1,10 @@
 import { styled, Box } from "@mui/material";
 
-export const BoxContainer = styled(Box)(() => ({
+export const BoxContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",
+  backgroundColor: theme.palette.primary.dark,
 }));
 
 export const StyledBox = styled(Box)(({ theme }) => ({

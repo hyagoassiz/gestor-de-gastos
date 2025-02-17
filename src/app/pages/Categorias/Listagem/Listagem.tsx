@@ -7,11 +7,21 @@ import { ToolPainel } from "../../../shared/components/ToolPanel/ToolPanel";
 import { Button } from "@mui/material";
 import { FilterIcon } from "../../../shared/components/FilterIcon";
 import useListagem from "./hooks/useListagem";
-import { Tabela } from "./components/Tabela";
+import { DataTable } from "../../../shared/components/DataTable/DataTable";
+import { categoriasColumns } from "./constants/constants";
+import { mountData } from "./utils/mountData";
 
 export const Listagem: React.FC = () => {
-  const { handleToggleFiltro, handleAdicionar, badgeCount, searchBar } =
-    useListagem();
+  const {
+    categorias,
+    searchBar,
+    badgeCount,
+    handleAdicionarCategoria,
+    handleAtivarCategoria,
+    handleEditarCategoria,
+    handleInativarCategoria,
+    toggleFiltro,
+  } = useListagem();
 
   const { t } = useTranslation();
 
@@ -25,19 +35,30 @@ export const Listagem: React.FC = () => {
       <ToolPainel
         buttons={
           <>
-            <Button variant="contained" onClick={handleAdicionar}>
+            <Button
+              color="info"
+              variant="contained"
+              onClick={handleAdicionarCategoria}
+            >
               {t("BUTTONS.ADD")}
             </Button>
-            <FilterIcon
-              onClick={handleToggleFiltro}
-              badgeContent={badgeCount}
-            />
+
+            <FilterIcon onClick={toggleFiltro} badgeContent={badgeCount} />
           </>
         }
         searchBar={searchBar}
       />
 
-      <Tabela />
+      <DataTable
+        columns={categoriasColumns}
+        data={mountData({
+          categorias,
+          handleInativarCategoria,
+          handleEditarCategoria,
+          handleAtivarCategoria,
+        })}
+        textForEmptyData={t("PAGES.CATEGORIAS.DATA_TABLE.TEXT_FOR_EMPTY_DATA")}
+      />
 
       <ModalCategoria />
 

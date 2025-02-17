@@ -19,3 +19,18 @@ export const CATEGORIAS = {
 export const CONTAS = {
   LIST: `${REPOSITORIO.LIST}/contas`,
 };
+
+// TRANSACOES
+export const TRANSACOES = {
+  LIST: `${REPOSITORIO.LIST}/transacoes`,
+};
+
+// SALDOS
+export const SALDOS = {
+  LIST: `${REPOSITORIO.LIST}/saldos`,
+};
+
+// DASHBOARD
+export const DASHBOARD = {
+  LIST: `${REPOSITORIO.LIST}/dashboard`,
+};

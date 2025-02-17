@@ -12,17 +12,17 @@ import { showSnackbar } from "../../../../../../shared/redux/snackBar/actions";
 interface IModalCategoria {
   categoriaForm: UseFormReturn<ICategoriaForm>;
   categoria: ICategoria | undefined;
-  toggleModalCategoria: boolean;
-  handleToggleModalCategoria: () => void;
+  openModalCategoria: boolean;
   onSubmit(): void;
+  toggleModalCategoria(): void;
 }
 const useModalCategoria = (): IModalCategoria => {
   const {
-    toggleModalCategoria,
-    setToggleModalCategoria,
-    setCategoria,
     categoria,
     queryGetCategorias,
+    openModalCategoria,
+    setCategoria,
+    setOpenModalCategoria,
   } = useContext(CategoriasContext);
 
   const categoriaForm = useForm<ICategoriaForm>();
@@ -35,18 +35,18 @@ const useModalCategoria = (): IModalCategoria => {
     categoriasService.useMutationPersistirCategoria();
 
   useEffect(() => {
-    if (categoria?.id && toggleModalCategoria) {
+    if (categoria?.id && openModalCategoria) {
       (Object.keys(categoria) as (keyof ICategoria)[]).forEach((key) => {
         categoriaForm.setValue(
-          key as keyof ICategoria,
+          key as keyof ICategoriaForm,
           categoria[key] as ICategoria[keyof ICategoria]
         );
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toggleModalCategoria, categoria]);
+  }, [openModalCategoria, categoria]);
 
-  function onSubmit() {
+  function onSubmit(): void {
     categoriaForm.handleSubmit(async (data) => {
       const payload: IPayloadPersistirCategoria = {
         id: data.id ?? undefined,
@@ -54,7 +54,7 @@ const useModalCategoria = (): IModalCategoria => {
         tipo: data.tipo,
         ativo: true,
       };
-      handleToggleModalCategoria();
+      toggleModalCategoria();
       mutatePersistirCategoria(
         { payload: payload },
         {
@@ -74,8 +74,8 @@ const useModalCategoria = (): IModalCategoria => {
     })();
   }
 
-  function handleToggleModalCategoria() {
-    setToggleModalCategoria((prevState) => !prevState);
+  function toggleModalCategoria(): void {
+    setOpenModalCategoria((prevState) => !prevState);
     setCategoria(undefined);
     categoriaForm.reset();
   }
@@ -83,9 +83,9 @@ const useModalCategoria = (): IModalCategoria => {
   return {
     categoriaForm,
     categoria,
-    toggleModalCategoria,
-    handleToggleModalCategoria,
+    openModalCategoria,
     onSubmit,
+    toggleModalCategoria,
   };
 };
 

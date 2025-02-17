@@ -23,15 +23,17 @@ interface IListagemContasContextData {
   contas: IConta[] | undefined;
   conta: IConta | undefined;
   searchBar: ISeachBar;
-  toggleModalConta: boolean;
-  toggleFiltro: boolean;
-  toggleModalInativar: boolean;
+  openFiltro: boolean;
+  openModalConta: boolean;
+  openModalObservacao: boolean;
+  openModalInativar: boolean;
   filtroData: IPayloadListarContas;
   queryGetContas: UseQueryResult;
   setConta: Dispatch<SetStateAction<IConta | undefined>>;
-  setToggleModalConta: Dispatch<SetStateAction<boolean>>;
-  setToggleFiltro: Dispatch<SetStateAction<boolean>>;
-  setToggleModalInativar: Dispatch<SetStateAction<boolean>>;
+  setOpenFiltro: Dispatch<SetStateAction<boolean>>;
+  setOpenModalConta: Dispatch<SetStateAction<boolean>>;
+  setOpenModalObservacao: Dispatch<SetStateAction<boolean>>;
+  setOpenModalInativar: Dispatch<SetStateAction<boolean>>;
   setFiltroData: Dispatch<SetStateAction<IPayloadListarContas>>;
 }
 
@@ -40,10 +42,11 @@ export const ContasContext = createContext({} as IListagemContasContextData);
 
 export function ContasProvider({ children }: IContasContextProps): JSX.Element {
   const [conta, setConta] = useState<IConta | undefined>(undefined);
-  const [toggleModalConta, setToggleModalConta] = useState<boolean>(false);
-  const [toggleFiltro, setToggleFiltro] = useState<boolean>(false);
-  const [toggleModalInativar, setToggleModalInativar] =
+  const [openFiltro, setOpenFiltro] = useState<boolean>(false);
+  const [openModalConta, setOpenModalConta] = useState<boolean>(false);
+  const [openModalObservacao, setOpenModalObservacao] =
     useState<boolean>(false);
+  const [openModalInativar, setOpenModalInativar] = useState<boolean>(false);
   const [filtroData, setFiltroData] = useState<IPayloadListarContas>({
     ativo: [true],
     tipoConta: [],
@@ -52,7 +55,7 @@ export function ContasProvider({ children }: IContasContextProps): JSX.Element {
   const dispatch = useDispatch();
 
   const { searchBar, textoBusca } = useSearchBar({
-    placeHolder: "Pesquisar Contas",
+    placeHolder: "Pesquisar Conta",
   });
 
   const queryGetContas = useQuery({
@@ -79,15 +82,17 @@ export function ContasProvider({ children }: IContasContextProps): JSX.Element {
         contas,
         conta,
         searchBar,
-        toggleModalConta,
-        toggleFiltro,
-        toggleModalInativar,
+        openFiltro,
+        openModalConta,
+        openModalObservacao,
+        openModalInativar,
         filtroData,
         queryGetContas,
         setConta,
-        setToggleModalConta,
-        setToggleFiltro,
-        setToggleModalInativar,
+        setOpenFiltro,
+        setOpenModalConta,
+        setOpenModalObservacao,
+        setOpenModalInativar,
         setFiltroData,
       }}
     >

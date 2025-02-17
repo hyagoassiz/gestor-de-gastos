@@ -3,22 +3,22 @@ import { Modal } from "../../../../../shared/components/Modal/Modal";
 import useModalCategoria from "./hooks/useModalCategoria";
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
-import { tipoCategorias } from "../../../../../shared/constants/tipoCategorias";
+import { tiposTransacoes } from "../../../../../shared/constants/tiposTransacoes";
 
 export const ModalCategoria: React.FC = () => {
   const {
-    toggleModalCategoria,
-    handleToggleModalCategoria,
     categoriaForm,
-    onSubmit,
     categoria,
+    openModalCategoria,
+    onSubmit,
+    toggleModalCategoria,
   } = useModalCategoria();
 
   const { t } = useTranslation();
 
   return (
     <Modal
-      open={toggleModalCategoria}
+      open={openModalCategoria}
       title={
         !categoria?.id
           ? t("PAGES.CATEGORIAS.MODALS.MODAL_CREATE.ADD")
@@ -27,10 +27,15 @@ export const ModalCategoria: React.FC = () => {
       style={{ width: "600px" }}
       buttons={
         <>
-          <Button variant="text" onClick={handleToggleModalCategoria}>
+          <Button
+            color="info"
+            variant="outlined"
+            onClick={toggleModalCategoria}
+          >
             {t("BUTTONS.CLOSE")}
           </Button>
           <Button
+            color="info"
             variant="contained"
             onClick={categoriaForm.handleSubmit(onSubmit)}
           >
@@ -49,12 +54,12 @@ export const ModalCategoria: React.FC = () => {
               <TextField
                 label="Nome"
                 type="text"
-                color="secondary"
+                color="info"
                 variant="standard"
                 onChange={field.onChange}
                 value={field.value ?? ""}
                 inputProps={{
-                  maxLength: 30,
+                  maxLength: 50,
                 }}
                 required
                 error={!!fieldState.error}
@@ -72,20 +77,21 @@ export const ModalCategoria: React.FC = () => {
               <Autocomplete
                 disablePortal
                 id="tipo"
-                color="secondary"
-                options={tipoCategorias || []}
+                color="info"
+                options={tiposTransacoes || []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue?.id);
                 }}
                 value={
-                  tipoCategorias?.find((c) => c.id === field.value) || null
+                  tiposTransacoes?.find((c) => c.id === field.value) || null
                 }
-                disabled={Boolean(categoriaForm.getValues("id"))}
+                // disabled={Boolean(categoriaForm.getValues("id"))}
+                noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    color="secondary"
+                    color="info"
                     variant="standard"
                     label="Tipo"
                     error={!!fieldState.error}

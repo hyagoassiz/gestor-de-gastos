@@ -26,7 +26,7 @@ export const useCadastro = (): IUseCadastro => {
   const { mutate: mutateCriarEmail, isPending } =
     autenticacaoService.useMutationCriarEmail();
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     cadastroForm.handleSubmit(async (data) => {
       const payload: IAutenticacao = {
         auth: auth,
@@ -40,7 +40,7 @@ export const useCadastro = (): IUseCadastro => {
     })();
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === "Enter") {
       cadastroForm.handleSubmit(onSubmit)();
     }

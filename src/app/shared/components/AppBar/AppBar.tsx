@@ -6,7 +6,7 @@ export const AppBar: React.FC = () => {
     <MuiAppBar position="static" elevation={0}>
       <Container maxWidth="xl">
         <Toolbar>
-          <Title noWrap>Gestor de Gastos</Title>
+          <Title noWrap></Title>
         </Toolbar>
       </Container>
     </MuiAppBar>

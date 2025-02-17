@@ -1,17 +1,36 @@
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { ContasContext } from "../context";
-import { ISeachBar } from "../../../../shared/interfaces";
+import { IConta, ISeachBar } from "../../../../shared/interfaces";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { contasService } from "../../../../shared/services/contas";
+import { setLoading } from "../../../../shared/redux/loading/actions";
+import { showSnackbar } from "../../../../shared/redux/snackBar/actions";
 
 interface IUseListagem {
-  badgeCount: number;
+  contas: IConta[] | undefined;
   searchBar: ISeachBar;
-  handleToggleFiltro: () => void;
-  handleAdicionar: () => void;
+  badgeCount: number;
+  handleAdicionarConta(): void;
+  handleAtivarConta(conta: IConta): void;
+  handleEditarConta(conta: IConta): void;
+  handleInativarConta(conta: IConta): void;
+  toggleModalObservacao(conta: IConta): void;
+  toggleFiltro(): void;
 }
 
 const useListagem = (): IUseListagem => {
-  const { setToggleFiltro, setToggleModalConta, filtroData, searchBar } =
-    useContext(ContasContext);
+  const {
+    contas,
+    searchBar,
+    filtroData,
+    queryGetContas,
+    setConta,
+    setOpenFiltro,
+    setOpenModalConta,
+    setOpenModalObservacao,
+    setOpenModalInativar,
+  } = useContext(ContasContext);
 
   const badgeCount: number = useMemo(() => {
     const tipo = filtroData.tipoConta?.length || 0;
@@ -20,15 +39,68 @@ const useListagem = (): IUseListagem => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(filtroData)]);
 
-  function handleAdicionar() {
-    setToggleModalConta((prevState) => !prevState);
+  const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
+  const { mutate: mutateAlterarSituacaoConta, isPending } =
+    contasService.useMutationAlterarSituacaoConta();
+
+  useEffect(() => {
+    dispatch(setLoading(isPending));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPending]);
+
+  function handleAtivarConta(categoria: IConta): void {
+    mutateAlterarSituacaoConta(
+      {
+        payload: { id: categoria.id, ativo: true },
+      },
+      {
+        onSuccess: () => {
+          queryGetContas.refetch();
+          dispatch(
+            showSnackbar(t("PAGES.CONTAS.SNACK_BARS.ACTIVATE"), "success")
+          );
+        },
+      }
+    );
   }
 
-  function handleToggleFiltro() {
-    setToggleFiltro((prevToggle) => !prevToggle);
+  function handleAdicionarConta(): void {
+    setOpenModalConta((prevState) => !prevState);
   }
 
-  return { badgeCount, searchBar, handleToggleFiltro, handleAdicionar };
+  function handleEditarConta(conta: IConta): void {
+    setOpenModalConta((prevState) => !prevState);
+    setConta(conta);
+  }
+
+  function handleInativarConta(conta: IConta): void {
+    setConta(conta);
+    setOpenModalInativar((prevState) => !prevState);
+  }
+
+  function toggleModalObservacao(conta: IConta): void {
+    setOpenModalObservacao((prevState) => !prevState);
+    setConta(conta);
+  }
+
+  function toggleFiltro(): void {
+    setOpenFiltro((prevToggle) => !prevToggle);
+  }
+
+  return {
+    contas,
+    searchBar,
+    badgeCount,
+    handleAdicionarConta,
+    handleAtivarConta,
+    handleEditarConta,
+    handleInativarConta,
+    toggleModalObservacao,
+    toggleFiltro,
+  };
 };
 
 export default useListagem;
