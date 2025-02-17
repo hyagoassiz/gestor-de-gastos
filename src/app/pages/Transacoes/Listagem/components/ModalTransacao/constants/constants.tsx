@@ -1,5 +1,5 @@
-import { IDataColumns } from "../../../../shared/interfaces";
-import { ITransacaoForm } from "../interfaces";
+import { IDataColumns } from "../../../../../../shared/interfaces";
+import { ITransacaoForm } from "../../../interfaces";
 
 export const transacoesColumns: IDataColumns[] = [
   { key: "data", label: "Data" },

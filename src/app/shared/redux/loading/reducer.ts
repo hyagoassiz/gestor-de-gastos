@@ -1,4 +1,4 @@
-import { ILoading } from "../interfaces";
+import { ILoading } from "../../interfaces";
 import LoadingActionTypes from "./action-types";
 
 const initialState: ILoading = {
