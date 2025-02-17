@@ -23,6 +23,10 @@ const queryExcluirTransacao = async function (
   try {
     const { id } = payload;
 
+    if (!id) {
+      throw new Error("ID da transação está indefinido.");
+    }
+
     const transacaoRef = doc(db, "transacao", id);
 
     await deleteDoc(transacaoRef);
