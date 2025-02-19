@@ -1,5 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { createContext, ReactNode, useEffect, useMemo } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { transacoesService } from "../../../../shared/services/transacoes";
 import { ISaldo, ISeachBar } from "../../../../shared/interfaces";
 import { mountSaldos } from "../../../../shared/utils/mountSaldos";
@@ -14,6 +22,10 @@ interface IListagemSaldosContextProps {
 interface IListagemSaldosContextData {
   saldos: ISaldo[] | undefined;
   searchBar: ISeachBar;
+  openModalTransferir: boolean;
+  idConta: string | null;
+  setOpenModalTransferir: Dispatch<SetStateAction<boolean>>;
+  setIdConta: Dispatch<SetStateAction<string | null>>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -22,6 +34,10 @@ export const SaldosContext = createContext({} as IListagemSaldosContextData);
 export function SaldosProvider({
   children,
 }: IListagemSaldosContextProps): JSX.Element {
+  const [openModalTransferir, setOpenModalTransferir] =
+    useState<boolean>(false);
+  const [idConta, setIdConta] = useState<string | null>(null);
+
   const dispatch = useDispatch();
 
   const { searchBar, textoBusca } = useSearchBar({
@@ -51,6 +67,10 @@ export function SaldosProvider({
       value={{
         saldos,
         searchBar,
+        openModalTransferir,
+        idConta,
+        setOpenModalTransferir,
+        setIdConta,
       }}
     >
       {children}
