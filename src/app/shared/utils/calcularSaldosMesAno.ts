@@ -7,6 +7,9 @@ export function calcularSaldosMesAno(transacoes: ITransacao[]): ISaldoMesAno[] {
 
   transacoes.forEach((transacao) => {
     const { data, tipo, valor, concluido, incluirSoma } = transacao;
+
+    if (!incluirSoma) return;
+
     const mesAnoCompleto = dayjs(data).locale("pt-br").format("MMMM/YYYY");
     const mesAno =
       mesAnoCompleto.split("/")[0].substring(0, 3) +
@@ -16,7 +19,6 @@ export function calcularSaldosMesAno(transacoes: ITransacao[]): ISaldoMesAno[] {
     if (!saldosMap.has(mesAno)) {
       saldosMap.set(mesAno, {
         mesAno,
-        incluirEmSomas: incluirSoma ?? true,
         valores: {
           concluido: { entradas: 0, saidas: 0, saldo: 0 },
           pendente: { entradas: 0, saidas: 0, saldo: 0 },

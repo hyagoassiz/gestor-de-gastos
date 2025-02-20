@@ -22,17 +22,15 @@ const useTotais = (): IUseTotais => {
       saldo: 0,
     };
 
-    saldosMesAno
-      ?.filter((s) => s.incluirEmSomas)
-      .forEach((saldos) => {
-        concluido.entradas += saldos.valores.concluido.entradas;
-        concluido.saidas += saldos.valores.concluido.saidas;
-        concluido.saldo += saldos.valores.concluido.saldo;
+    saldosMesAno?.forEach((saldos) => {
+      concluido.entradas += saldos.valores.concluido.entradas;
+      concluido.saidas += saldos.valores.concluido.saidas;
+      concluido.saldo += saldos.valores.concluido.saldo;
 
-        pendente.entradas += saldos.valores.pendente.entradas;
-        pendente.saidas += saldos.valores.pendente.saidas;
-        pendente.saldo += saldos.valores.pendente.saldo;
-      });
+      pendente.entradas += saldos.valores.pendente.entradas;
+      pendente.saidas += saldos.valores.pendente.saidas;
+      pendente.saldo += saldos.valores.pendente.saldo;
+    });
 
     return { concluido, pendente };
   }, [saldosMesAno]);
