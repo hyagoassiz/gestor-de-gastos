@@ -8,9 +8,10 @@ interface IMoreOptions {
     label: string;
     action: () => void;
   }[];
+  disabled?: boolean;
 }
 
-export const MoreOptions = ({ options }: IMoreOptions) => {
+export const MoreOptions = ({ options, disabled = false }: IMoreOptions) => {
   const { handleClick, anchorEl, handleClose } = useMoreOptions();
 
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ export const MoreOptions = ({ options }: IMoreOptions) => {
           aria-controls="options-menu"
           aria-haspopup="true"
           onClick={handleClick}
+          disabled={disabled}
         >
           <MoreVert />
         </IconButton>

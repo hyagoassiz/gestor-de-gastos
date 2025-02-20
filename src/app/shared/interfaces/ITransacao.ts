@@ -15,4 +15,5 @@ export interface ITransacao {
   concluido: boolean;
   observacao: string;
   incluirSoma: boolean;
+  eTransferencia: boolean;
 }

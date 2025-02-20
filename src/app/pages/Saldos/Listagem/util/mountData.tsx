@@ -1,12 +1,14 @@
 import { Box, ListItemText, Typography } from "@mui/material";
 import { ISaldo } from "../../../../shared/interfaces";
 import { NumericFormat } from "react-number-format";
+import { MoreOptions } from "../../../../shared/components/MoreOptions";
 
 interface IMountData {
   saldos: ISaldo[] | undefined;
+  handleTransferir(idConta: string): void;
 }
 
-export function mountData({ saldos }: IMountData) {
+export function mountData({ saldos, handleTransferir }: IMountData) {
   if (saldos?.length) {
     return saldos.map((saldo) => ({
       ...saldo,
@@ -122,6 +124,18 @@ export function mountData({ saldos }: IMountData) {
           }
           secondaryTypographyProps={{ fontSize: "12px" }}
         />
+      ),
+      options: (
+        <>
+          <MoreOptions
+            options={[
+              {
+                label: "Transferir Saldo",
+                action: () => handleTransferir(saldo.idConta),
+              },
+            ]}
+          />
+        </>
       ),
     }));
   }

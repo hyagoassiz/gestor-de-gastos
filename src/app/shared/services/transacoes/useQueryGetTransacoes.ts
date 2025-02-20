@@ -58,11 +58,11 @@ const queryGetTransacoes = async function (
         concluido: transacaoData.concluido,
         observacao: transacaoData.observacao,
         incluirSoma: false,
+        eTransferencia: transacaoData.eTransferencia,
       };
       transacoes.push(transacao);
     });
 
-    // Mapear contas
     const contasSnapshot = await getDocs(collection(db, "conta"));
     const contaMap = new Map<
       string,
@@ -102,7 +102,8 @@ const queryGetTransacoes = async function (
       transacao.nomeConta = contaInfo?.nomeConta ?? "";
       transacao.conta = contaInfo?.conta ?? "";
       transacao.agencia = contaInfo?.agencia ?? "";
-      transacao.nomeCategoria = categoriaMap.get(transacao.idCategoria) ?? "";
+      transacao.nomeCategoria =
+        categoriaMap.get(transacao.idCategoria) ?? "Transferência entre Contas";
       transacao.incluirSoma = contaInfo?.incluirSoma ?? false;
     });
 

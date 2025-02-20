@@ -77,6 +77,7 @@ export function mountData({
 
       options: (
         <MoreOptions
+          disabled={transacao.eTransferencia}
           options={[
             { label: "Editar", action: () => handleEditarTransacao(transacao) },
             {

@@ -102,8 +102,8 @@ const useModalTransacao = (): IUseModalTransacao => {
         idConta: data.idConta,
         concluido: data.concluido ?? true,
         observacao: data.observacao ?? "",
+        eTransferencia: false,
       };
-      console.log(payload);
       mutatePersistirTransacao(
         { payload: payload },
         {
