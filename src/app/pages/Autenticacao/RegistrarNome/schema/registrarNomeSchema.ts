@@ -4,5 +4,5 @@ export const registrarNomeSchema = z.object({
   nome: z
     .string()
     .nonempty()
-    .transform((value) => value.toLowerCase().trim().replace(/\s+/g, " ")),
+    .transform((value) => value.trim().replace(/\s+/g, " ")),
 });
