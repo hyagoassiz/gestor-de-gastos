@@ -1,5 +1,5 @@
 import { ISaldo } from "./ISaldo";
 
-export type ISaldoMesAno = Pick<ISaldo, "valores" | "incluirEmSomas"> & {
+export type ISaldoMesAno = Pick<ISaldo, "valores"> & {
   mesAno: string;
 };

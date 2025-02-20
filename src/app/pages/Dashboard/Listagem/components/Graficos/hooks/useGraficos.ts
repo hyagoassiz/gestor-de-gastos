@@ -32,7 +32,6 @@ const useGraficos = (): IUseGraficos => {
 
         return dataA.getTime() - dataB.getTime();
       })
-      .filter((s) => s.incluirEmSomas)
       .map((s) => ({
         name: s.mesAno,
         entradas: pago
@@ -66,16 +65,14 @@ const useGraficos = (): IUseGraficos => {
 
     // saldos.sort((b, a) => a.mesAno.localeCompare(b.mesAno));
 
-    return saldos
-      .filter((s) => s.incluirEmSomas)
-      .map((s) => {
-        patrimonioAcumulado += s.valores.concluido.saldo;
+    return saldos.map((s) => {
+      patrimonioAcumulado += s.valores.concluido.saldo;
 
-        return {
-          name: s.mesAno,
-          patrimonio: patrimonioAcumulado,
-        };
-      });
+      return {
+        name: s.mesAno,
+        patrimonio: patrimonioAcumulado,
+      };
+    });
   }
 
   return {
