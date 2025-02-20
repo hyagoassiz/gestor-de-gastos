@@ -20,4 +20,5 @@ export const initialTransacaoForm: ITransacaoForm = {
   tipo: "" as ITransacaoForm["tipo"],
   valor: 0,
   observacao: "",
+  eTransferencia: false,
 };
