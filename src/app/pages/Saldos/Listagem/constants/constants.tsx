@@ -5,4 +5,5 @@ export const saldosColumns: IDataColumns[] = [
   { key: "entradas", label: "Entradas" },
   { key: "saidas", label: "Saídas" },
   { key: "saldoAtual", label: "Saldo Atual" },
+  { key: "options", label: "", style: { width: "10px" } },
 ];
