@@ -16,6 +16,7 @@ export const ModalTransferir: React.FC = () => {
     contas,
     modalTransferirForm,
     openModalTransferir,
+    handleTransferirSaldo,
     toggleModalTransferir,
   } = useModalTransferir();
 
@@ -36,7 +37,7 @@ export const ModalTransferir: React.FC = () => {
           <Button
             color="info"
             variant="contained"
-            onClick={toggleModalTransferir}
+            onClick={handleTransferirSaldo}
           >
             Transferir
           </Button>

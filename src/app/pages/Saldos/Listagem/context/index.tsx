@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import {
   createContext,
   Dispatch,
@@ -20,6 +20,7 @@ interface IListagemSaldosContextProps {
 }
 
 interface IListagemSaldosContextData {
+  queryGetTransacoes: UseQueryResult;
   saldos: ISaldo[] | undefined;
   searchBar: ISeachBar;
   openModalTransferir: boolean;
@@ -65,6 +66,7 @@ export function SaldosProvider({
   return (
     <SaldosContext.Provider
       value={{
+        queryGetTransacoes,
         saldos,
         searchBar,
         openModalTransferir,
