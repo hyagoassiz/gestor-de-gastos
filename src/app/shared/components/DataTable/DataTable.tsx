@@ -36,7 +36,7 @@ export const DataTable: React.FC<IDataTable> = ({
 
   return (
     <>
-      <TableContainer sx={{ maxHeight: 400 }}>
+      <TableContainer sx={{ maxHeight: 400, borderRadius: "8px 8px 0px 0px" }}>
         <Table size="small" stickyHeader aria-label="sticky table">
           <StyledTableHead>
             <TableRow>
@@ -89,7 +89,7 @@ export const DataTable: React.FC<IDataTable> = ({
         </Table>
       </TableContainer>
       {paginatedData.length > 0 && (
-        <Footer spacing={2}>
+        <Footer spacing={2} sx={{ borderRadius: "0px 0px 8px 8px" }}>
           <Pagination
             color="primary"
             count={totalPages}

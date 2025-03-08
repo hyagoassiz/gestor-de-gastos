@@ -11,7 +11,7 @@ export const PowerIcon: React.FC<IPowerIcon> = ({ onClick }) => {
   return (
     <IconButton onClick={onClick}>
       <Tooltip title={t("TOOLTIPS.ACTIVATE")} placement="top">
-        <PowerSettingsNewIcon color="inherit" />
+        <PowerSettingsNewIcon color="info" />
       </Tooltip>
     </IconButton>
   );
