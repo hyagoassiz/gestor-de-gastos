@@ -16,7 +16,7 @@ export const FilterIcon: React.FC<IFilterIcon> = ({
     <>
       <IconButton onClick={onClick} color="info">
         <Tooltip title={t("TOOLTIPS.FILTER")} placement="top">
-          <Badge badgeContent={badgeContent} color="info">
+          <Badge badgeContent={badgeContent} color="secondary">
             <FilterListIcon />
           </Badge>
         </Tooltip>
