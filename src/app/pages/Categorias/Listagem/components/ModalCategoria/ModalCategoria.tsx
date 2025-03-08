@@ -86,7 +86,7 @@ export const ModalCategoria: React.FC = () => {
                 value={
                   tiposTransacoes?.find((c) => c.id === field.value) || null
                 }
-                // disabled={Boolean(categoriaForm.getValues("id"))}
+                disabled={Boolean(categoriaForm.getValues("id"))}
                 noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
