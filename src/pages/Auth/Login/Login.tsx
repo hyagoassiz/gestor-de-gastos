@@ -1,4 +1,4 @@
-import { Checkbox, Grid } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useLogin } from "./hooks/useLogin";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../styles";
 import { AuthLayout } from "../../../layouts/AuthLayout";
 import { LoadingButton } from "@mui/lab";
+import { Grid } from "@mui/material";
 
 export const Login: React.FC = () => {
   const {
