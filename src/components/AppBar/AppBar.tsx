@@ -75,7 +75,7 @@ export const AppBar: React.FC = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div">
-          CoreUI
+          Gestor de Gastos
         </Typography>
 
         {/* Box para empurrar os elementos para a direita */}

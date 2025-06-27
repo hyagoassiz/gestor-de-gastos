@@ -13,14 +13,16 @@ export const DASHBOARD = {
   LIST: `/dashboard`,
 };
 
+export const ASSETS = {
+  LIST: "/ativos",
+  CREATE: "/ativos/cadastrar",
+  EDIT: "/ativos/editar/:id",
+};
+
 export const SALES = {
   LIST: `/vendas`,
   REGISTER: `/vendas/nova`,
   EDIT: `/vendas/venda/:id`,
-};
-
-export const PRODUCTS = {
-  LIST: `/produtos`,
 };
 
 export const ABOUT = {

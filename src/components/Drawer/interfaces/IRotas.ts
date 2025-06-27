@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 
 export interface IRotas {
-  categoria: "Categoria" | "News" | "";
+  categoria: "" | "Cadastrar";
   rotas: {
     name: string;
     route: string;
-    function?: () => Promise<void>;
     icon?: ReactElement;
+    function?: () => Promise<void>;
   }[];
 }

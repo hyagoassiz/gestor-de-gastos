@@ -7,10 +7,10 @@ import { CreateAccountRoute } from "../pages/Auth/CreateAccount";
 import { VerificationRoute } from "../pages/Auth/Verification";
 import { PersonalInfoRoute } from "../pages/Auth/PersonalInfo";
 import { DashboardRoute } from "../pages/Dashboard/List";
-import { ProductsRoute } from "../pages/Products/List";
 import { AboutRoute } from "../pages/About/List";
 import { SettingsRoute } from "../pages/Settings/List";
 import { SalesRegisterRoute, SalesRoute } from "../pages/Sales";
+import { AssetsListRoute } from "../pages/Assets";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -54,6 +54,15 @@ export const AppRoutes = () => {
           />
 
           <Route
+            path={PATHS.ASSETS.LIST}
+            element={
+              <ProtectedRoute permission="">
+                <AssetsListRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path={PATHS.SALES.LIST}
             element={
               <ProtectedRoute permission="">
@@ -76,15 +85,6 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <SalesRegisterRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.PRODUCTS.LIST}
-            element={
-              <ProtectedRoute permission="">
-                <ProductsRoute />
               </ProtectedRoute>
             }
           />

@@ -106,7 +106,9 @@ export const Drawer: React.FC<IDrawer> = ({ children }) => {
 
         {rotas.map((categoria, index) => (
           <Box key={index}>
-            <ListSubheader sx={{ backgroundColor: theme.palette.text.primary }}>
+            <ListSubheader
+              sx={{ backgroundColor: theme.palette.primary.contrastText }}
+            >
               {categoria.categoria}
             </ListSubheader>
             {categoria.rotas.map((rota) => {

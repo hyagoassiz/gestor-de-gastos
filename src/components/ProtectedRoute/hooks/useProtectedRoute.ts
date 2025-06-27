@@ -37,6 +37,8 @@ export const useProtectedRoute = ({
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       handleNavigate(user);
 
+      setSigned(false);
+
       if (user) {
         dispatch(setUser(extractUserData(user)));
 

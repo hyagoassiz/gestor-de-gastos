@@ -118,7 +118,7 @@ export const DataTable: React.FC<IDataTable> = ({
       }}
     >
       {chips && (
-        <Stack direction="row" spacing={1} p="8px 8px 0px 8px">
+        <Stack direction="row" spacing={1} p="8px 8px 8px 8px">
           {chips}
         </Stack>
       )}

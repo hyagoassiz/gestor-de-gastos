@@ -67,7 +67,7 @@ export const ToolbarContainer: React.FC<IToolbarContainerProps> = ({
                 <Divider
                   orientation="vertical"
                   flexItem
-                  sx={{ ml: 2, mr: 3 }}
+                  sx={{ ml: 2, mr: 3, borderWidth: "2px" }}
                 />
               )}
             </>

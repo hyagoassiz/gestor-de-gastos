@@ -1,1 +1,0 @@
-export type IProductForm = IProductPayloadApi;
