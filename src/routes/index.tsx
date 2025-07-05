@@ -11,6 +11,7 @@ import { AboutRoute } from "../pages/About/List";
 import { SettingsRoute } from "../pages/Settings/List";
 import { SalesRegisterRoute, SalesRoute } from "../pages/Sales";
 import { AssetsListRoute } from "../pages/Assets";
+import { IncomeListRoute } from "../pages/Income";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -49,6 +50,15 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <DashboardRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.INCOME.LIST}
+            element={
+              <ProtectedRoute permission="">
+                <IncomeListRoute />
               </ProtectedRoute>
             }
           />

@@ -15,8 +15,10 @@ export const DASHBOARD = {
 
 export const ASSETS = {
   LIST: "/ativos",
-  CREATE: "/ativos/cadastrar",
-  EDIT: "/ativos/editar/:id",
+};
+
+export const INCOME = {
+  LIST: "/proventos",
 };
 
 export const SALES = {

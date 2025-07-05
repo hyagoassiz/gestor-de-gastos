@@ -1,6 +1,6 @@
 export const assetTypeOptions: IAssetTypeApi[] = [
   {
-    id: "acao",
+    id: "ACAO",
     nome: "Ação",
   },
 ];

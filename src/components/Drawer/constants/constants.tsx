@@ -17,7 +17,17 @@ export const rotas: IRotas[] = [
     ],
   },
   {
-    categoria: "Cadastrar",
+    categoria: "Movimentações",
+    rotas: [
+      {
+        name: "Proventos",
+        route: PATHS.INCOME.LIST,
+        icon: <SpaceDashboardIcon />,
+      },
+    ],
+  },
+  {
+    categoria: "Sub Cadastros",
     rotas: [
       {
         name: "Ativos",

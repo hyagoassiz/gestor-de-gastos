@@ -1,4 +1,4 @@
 interface IAssetTypeApi {
-  id: "acao";
+  id: "ACAO";
   nome: "Ação";
 }
