@@ -64,12 +64,12 @@ export const useIncomeModal = ({
 
           const payload: IIncomePayloadApi = {
             id: isDuplicating ? undefined : data.id ?? undefined,
-            dataRecebimento: data.dataRecebimento,
-            tipoProvento: data.tipoProvento,
+            dataPagamento: data.dataPagamento,
+            tipoProventoId: data.tipoProvento.id,
             ativoId: data.ativo.id,
             quantidade: data.quantidade,
-            valorUnitario: data.valorUnitario,
-            valorTotal: data.valorTotal,
+            precoUnitario: data.precoUnitario,
+            total: data.total,
             observacao: data.observacao ?? "",
             createdAt: data.createdAt ?? now,
             updatedAt: data.id ? now : "",

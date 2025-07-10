@@ -16,13 +16,13 @@ export function mountData({
 }: IMountData): any[] {
   if (income?.length) {
     return income.map((_income) => ({
-      dataRecebimento: dayjs(_income.dataRecebimento).format("DD/MM/YYYY"),
+      dataPagamento: dayjs(_income.dataPagamento).format("DD/MM/YYYY"),
       tipoProvento: _income.tipoProvento?.nome ?? "Não encontrado",
       ativo: _income?.ativo?.nome ?? "Ativo não encontrado",
-      valorTotal: (
+      total: (
         <Typography variant="body2">
           <NumericFormat
-            value={_income.valorTotal}
+            value={_income.total}
             prefix={"R$ "}
             decimalScale={2}
             fixedDecimalScale={true}

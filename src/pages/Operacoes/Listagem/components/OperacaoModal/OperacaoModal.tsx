@@ -29,7 +29,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
     onClose,
   });
 
-  const { calcularValorTotal, calcularValorUnitario } = useCalcularValores();
+  const { calcularTotal, calcularPrecoUnitario } = useCalcularValores();
 
   return (
     <Modal
@@ -166,12 +166,12 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                 value={field.value ?? null}
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
-                    const total = calcularValorTotal(
+                    const total = calcularTotal(
                       floatValue ?? 0,
-                      operacaoForm.getValues("valorUnitario") ?? 0
+                      operacaoForm.getValues("precoUnitario") ?? 0
                     );
 
-                    operacaoForm.setValue("valorTotal", total);
+                    operacaoForm.setValue("total", total);
                     field.onChange(floatValue);
                   }
                 }}
@@ -188,7 +188,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
 
         <Grid item xs={6}>
           <Controller
-            name="valorUnitario"
+            name="precoUnitario"
             control={operacaoForm.control}
             rules={{
               required: true,
@@ -206,12 +206,12 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                 value={field.value ?? null}
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
-                    const total = calcularValorTotal(
+                    const total = calcularTotal(
                       operacaoForm.getValues("quantidade"),
                       floatValue ?? 0
                     );
 
-                    operacaoForm.setValue("valorTotal", total);
+                    operacaoForm.setValue("total", total);
 
                     field.onChange(floatValue);
                   }
@@ -229,7 +229,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
 
         <Grid item xs={12}>
           <Controller
-            name="valorTotal"
+            name="total"
             control={operacaoForm.control}
             rules={{
               required: true,
@@ -247,12 +247,12 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                 value={field.value ?? null}
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
-                    const valorUnitario = calcularValorUnitario(
+                    const valorUnitario = calcularPrecoUnitario(
                       floatValue ?? 0,
                       operacaoForm.getValues("quantidade")
                     );
 
-                    operacaoForm.setValue("valorUnitario", valorUnitario);
+                    operacaoForm.setValue("precoUnitario", valorUnitario);
 
                     field.onChange(floatValue);
                   }

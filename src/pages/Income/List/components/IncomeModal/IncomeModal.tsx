@@ -32,7 +32,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
     onClose,
   });
 
-  const { calcularValorTotal, calcularValorUnitario } = useCalcularValores();
+  const { calcularTotal, calcularPrecoUnitario } = useCalcularValores();
 
   return (
     <Modal
@@ -53,12 +53,12 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Controller
-            name="dataRecebimento"
+            name="dataPagamento"
             control={incomeForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <TextField
-                label="Data de Recebimento"
+                label="Data de Pagamento"
                 type="date"
                 color="info"
                 fullWidth
@@ -169,12 +169,12 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                 value={field.value ?? null}
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
-                    const total = calcularValorTotal(
+                    const total = calcularTotal(
                       floatValue ?? 0,
-                      incomeForm.getValues("valorUnitario") ?? 0
+                      incomeForm.getValues("precoUnitario") ?? 0
                     );
 
-                    incomeForm.setValue("valorTotal", total);
+                    incomeForm.setValue("total", total);
                     field.onChange(floatValue);
                   }
                 }}
@@ -191,7 +191,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
 
         <Grid item xs={4}>
           <Controller
-            name="valorUnitario"
+            name="precoUnitario"
             control={incomeForm.control}
             rules={{
               required: true,
@@ -209,12 +209,12 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                 value={field.value ?? null}
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
-                    const total = calcularValorTotal(
+                    const total = calcularTotal(
                       incomeForm.getValues("quantidade"),
                       floatValue ?? 0
                     );
 
-                    incomeForm.setValue("valorTotal", total);
+                    incomeForm.setValue("total", total);
 
                     field.onChange(floatValue);
                   }
@@ -232,7 +232,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
 
         <Grid item xs={4}>
           <Controller
-            name="valorTotal"
+            name="total"
             control={incomeForm.control}
             rules={{
               required: true,
@@ -250,12 +250,12 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                 value={field.value ?? null}
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
-                    const valorUnitario = calcularValorUnitario(
+                    const valorUnitario = calcularPrecoUnitario(
                       floatValue ?? 0,
                       incomeForm.getValues("quantidade")
                     );
 
-                    incomeForm.setValue("valorUnitario", valorUnitario);
+                    incomeForm.setValue("precoUnitario", valorUnitario);
 
                     field.onChange(floatValue);
                   }

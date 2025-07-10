@@ -37,29 +37,29 @@ export async function getIncome(
 
       proventos.push({
         id: docSnap.id,
-        dataRecebimento: incomeData.dataRecebimento,
+        dataPagamento: incomeData.dataPagamento,
         tipoProvento: incomeTypeOptions.find(
-          (tipo) => tipo.id === incomeData.tipoProvento
+          (tipo) => tipo.id === incomeData.tipoProventoId
         ) as IIncomeTypeApi,
         ativo,
         observacao: incomeData.observacao,
         quantidade: incomeData.quantidade,
-        valorUnitario: incomeData.valorUnitario,
-        valorTotal: incomeData.valorTotal,
+        precoUnitario: incomeData.precoUnitario,
+        total: incomeData.total,
         createdAt: incomeData.createdAt ?? "",
         updatedAt: incomeData.updatedAt ?? "",
       });
     }
 
     proventos.sort((a, b) => {
-      const dateA = a.dataRecebimento;
-      const dateB = b.dataRecebimento;
+      const dateA = a.dataPagamento;
+      const dateB = b.dataPagamento;
 
       if (dateA === dateB) {
         return b.createdAt.localeCompare(a.createdAt);
       }
 
-      return b.dataRecebimento.localeCompare(a.dataRecebimento);
+      return b.dataPagamento.localeCompare(a.dataPagamento);
     });
 
     return proventos;

@@ -1,6 +1,6 @@
 interface IUseCalcularValores {
-  calcularValorTotal(quantidade: number, valorUnitario: number): number;
-  calcularValorUnitario(total: number, quantidade: number): number;
+  calcularTotal(quantidade: number, valorUnitario: number): number;
+  calcularPrecoUnitario(total: number, quantidade: number): number;
 }
 
 const useCalcularValores = (): IUseCalcularValores => {
@@ -8,16 +8,13 @@ const useCalcularValores = (): IUseCalcularValores => {
     return typeof valor === "number" && Number.isFinite(valor);
   }
 
-  function calcularValorTotal(
-    quantidade: number,
-    valorUnitario: number
-  ): number {
+  function calcularTotal(quantidade: number, valorUnitario: number): number {
     if (!isNumeroValido(quantidade) || !isNumeroValido(valorUnitario)) return 0;
 
     return quantidade * valorUnitario;
   }
 
-  function calcularValorUnitario(total: number, quantidade: number): number {
+  function calcularPrecoUnitario(total: number, quantidade: number): number {
     if (
       !isNumeroValido(total) ||
       !isNumeroValido(quantidade) ||
@@ -28,7 +25,7 @@ const useCalcularValores = (): IUseCalcularValores => {
     return total / quantidade;
   }
 
-  return { calcularValorTotal, calcularValorUnitario };
+  return { calcularTotal, calcularPrecoUnitario };
 };
 
 export default useCalcularValores;

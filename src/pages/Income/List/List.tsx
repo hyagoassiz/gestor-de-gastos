@@ -43,12 +43,12 @@ export const List: React.FC = () => {
   console.log(income);
 
   interface ExcelIncomeRow {
-    "Data Recebimento": string;
+    "Data Pagamento": string;
     "Tipo Provento": IIncomeTypeApi["id"];
     Ativo: string;
     Quantidade: number;
-    "Valor Unitário": number;
-    "Valor Total": number;
+    "Preço Unitário": number;
+    Total: number;
     Observação?: string;
   }
 
@@ -76,16 +76,16 @@ export const List: React.FC = () => {
           );
 
           // Converte "DD/MM/YYYY" em "YYYY-MM-DD"
-          const [dia, mes, ano] = row["Data Recebimento"].split("/");
+          const [dia, mes, ano] = row["Data Pagamento"].split("/");
           const dataFormatada = `${ano}-${mes}-${dia}`;
 
           const payload: IIncomePayloadApi = {
-            dataRecebimento: dataFormatada,
-            tipoProvento: row["Tipo Provento"],
+            dataPagamento: dataFormatada,
+            tipoProventoId: row["Tipo Provento"],
             ativoId: ativoEncontrado?.id ?? row["Ativo"],
             quantidade: Number(row["Quantidade"]),
-            valorUnitario: Number(row["Valor Unitário"]),
-            valorTotal: Number(row["Valor Total"]),
+            precoUnitario: Number(row["Preço Unitário"]),
+            total: Number(row["Total"]),
             observacao: row["Observação"] ?? "",
             createdAt: now,
             updatedAt: "",

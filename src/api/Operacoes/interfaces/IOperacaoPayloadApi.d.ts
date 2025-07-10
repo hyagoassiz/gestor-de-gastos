@@ -4,7 +4,7 @@ interface IOperacaoPayloadApi extends ITimestampableApi {
   ativoId: string;
   tipoOperacao: ITipoOperacaoApi;
   quantidade: number;
-  valorUnitario: number;
-  valorTotal: number;
+  precoUnitario: number;
+  total: number;
   observacao: string;
 }

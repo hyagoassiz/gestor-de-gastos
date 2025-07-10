@@ -1,6 +1,6 @@
 type IIncomeResponseApi = Omit<
   IIncomePayloadApi,
-  "id" | "ativoId" | "tipoProvento"
+  "id" | "ativoId" | "tipoProventoId"
 > & {
   id: string;
   tipoProvento: IIncomeTypeApi;
