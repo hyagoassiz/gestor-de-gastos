@@ -42,34 +42,43 @@ export function mountData({
       status: getStatusChip(sale.status),
       options: (
         <MoreOptions>
-          {sale.status.id === "ORCAMENTO" && (
-            <MenuItem
-              onClick={() => {
-                handleEditSale(sale.id);
-              }}
-            >
-              Editar
-            </MenuItem>
-          )}
+          {({ handleClose }) => (
+            <>
+              {sale.status.id === "ORCAMENTO" && (
+                <MenuItem
+                  onClick={() => {
+                    handleEditSale(sale.id);
+                    handleClose();
+                  }}
+                >
+                  Editar
+                </MenuItem>
+              )}
 
-          {(sale.status.id === "ORCAMENTO" || sale.status.id === "VENDA") && (
-            <MenuItem
-              onClick={() => {
-                handleCancelSale(sale);
-              }}
-            >
-              Cancelar
-            </MenuItem>
-          )}
+              {(sale.status.id === "ORCAMENTO" ||
+                sale.status.id === "VENDA") && (
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    handleCancelSale(sale);
+                  }}
+                >
+                  Cancelar
+                </MenuItem>
+              )}
 
-          {(sale.status.id === "VENDA" || sale.status.id === "CANCELADO") && (
-            <MenuItem
-              onClick={() => {
-                handleEditSale(sale.id);
-              }}
-            >
-              Visualizar
-            </MenuItem>
+              {(sale.status.id === "VENDA" ||
+                sale.status.id === "CANCELADO") && (
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    handleEditSale(sale.id);
+                  }}
+                >
+                  Visualizar
+                </MenuItem>
+              )}
+            </>
           )}
         </MoreOptions>
       ),

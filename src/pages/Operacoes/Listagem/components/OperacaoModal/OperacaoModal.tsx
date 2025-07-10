@@ -8,27 +8,24 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Modal } from "../../../../../components/Modal";
-import { useIncomeModal } from "./hooks/useIncomeModal";
-import { incomeTypeOptions } from "../../../../../constants/incomeTypeOptions";
+import { useOperacaoModal } from "./hooks/useOperacaoModal";
 import { NumericFormat } from "react-number-format";
+import { tipoOperacaoOptions } from "../../../../../constants/tipoOperacaoOptions";
 import useCalcularValores from "../../../../../hooks/useCalcularPrecos";
 
-interface IIncomeModalProps {
-  income: IIncomeResponseApi | null;
+interface IOperacaoModalProps {
+  operacao: IOperacaoResponseApi | null;
   open: boolean;
-  isDuplicating: boolean;
   onClose(): void;
 }
 
-export const IncomeModal: React.FC<IIncomeModalProps> = ({
-  income,
+export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
+  operacao,
   open,
-  isDuplicating,
   onClose,
 }) => {
-  const { assets, incomeForm, submitIncomeForm } = useIncomeModal({
-    income,
-    isDuplicating,
+  const { assets, operacaoForm, submitIncomeForm } = useOperacaoModal({
+    operacao,
     onClose,
   });
 
@@ -38,7 +35,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
     <Modal
       open={open}
       style={{ width: 480, height: "auto", minWidth: 480 }}
-      title={`${income && !isDuplicating ? "Editar" : "Registrar"} Provento`}
+      title={`${operacao ? "Editar" : "Nova"} Operação`}
       buttons={
         <>
           <Button variant="text" onClick={onClose}>
@@ -53,12 +50,12 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Controller
-            name="dataRecebimento"
-            control={incomeForm.control}
+            name="dataOperacao"
+            control={operacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <TextField
-                label="Data de Recebimento"
+                label="Data"
                 type="date"
                 color="info"
                 fullWidth
@@ -74,14 +71,14 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
 
         <Grid item xs={6}>
           <Controller
-            name="tipoProvento"
-            control={incomeForm.control}
+            name="tipoOperacao"
+            control={operacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
                 id="tipo"
-                options={incomeTypeOptions ?? []}
+                options={tipoOperacaoOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue);
@@ -105,7 +102,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
         <Grid item xs={12}>
           <Controller
             name="ativo"
-            control={incomeForm.control}
+            control={operacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
@@ -150,10 +147,10 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
           />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Controller
             name="quantidade"
-            control={incomeForm.control}
+            control={operacaoForm.control}
             rules={{
               required: true,
               validate: (value) => value > 0,
@@ -171,10 +168,10 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                   if (event?.isTrusted) {
                     const total = calcularValorTotal(
                       floatValue ?? 0,
-                      incomeForm.getValues("valorUnitario") ?? 0
+                      operacaoForm.getValues("valorUnitario") ?? 0
                     );
 
-                    incomeForm.setValue("valorTotal", total);
+                    operacaoForm.setValue("valorTotal", total);
                     field.onChange(floatValue);
                   }
                 }}
@@ -189,10 +186,10 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
           />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Controller
             name="valorUnitario"
-            control={incomeForm.control}
+            control={operacaoForm.control}
             rules={{
               required: true,
               validate: (value) => value > 0,
@@ -210,11 +207,11 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
                     const total = calcularValorTotal(
-                      incomeForm.getValues("quantidade"),
+                      operacaoForm.getValues("quantidade"),
                       floatValue ?? 0
                     );
 
-                    incomeForm.setValue("valorTotal", total);
+                    operacaoForm.setValue("valorTotal", total);
 
                     field.onChange(floatValue);
                   }
@@ -230,10 +227,10 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
           />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <Controller
             name="valorTotal"
-            control={incomeForm.control}
+            control={operacaoForm.control}
             rules={{
               required: true,
               validate: (value) => value > 0,
@@ -252,10 +249,10 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                   if (event?.isTrusted) {
                     const valorUnitario = calcularValorUnitario(
                       floatValue ?? 0,
-                      incomeForm.getValues("quantidade")
+                      operacaoForm.getValues("quantidade")
                     );
 
-                    incomeForm.setValue("valorUnitario", valorUnitario);
+                    operacaoForm.setValue("valorUnitario", valorUnitario);
 
                     field.onChange(floatValue);
                   }
@@ -275,7 +272,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
           <Controller
             name="observacao"
             rules={{ required: false }}
-            control={incomeForm.control}
+            control={operacaoForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}

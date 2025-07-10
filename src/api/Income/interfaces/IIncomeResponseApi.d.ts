@@ -1,8 +1,8 @@
-interface IIncomeResponseApi extends ITimestampableApi {
+type IIncomeResponseApi = Omit<
+  IIncomePayloadApi,
+  "id" | "ativoId" | "tipoProvento"
+> & {
   id: string;
-  dataRecebimento: string;
-  ativo: IAssetResponseApi | null;
   tipoProvento: IIncomeTypeApi;
-  valor: number;
-  observacao: string;
-}
+  ativo: IAssetResponseApi | null;
+};

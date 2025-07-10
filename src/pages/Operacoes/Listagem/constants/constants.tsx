@@ -1,9 +1,11 @@
 import { IDataTableColumns } from "../../../../interfaces";
 
 export const incomeColumns: IDataTableColumns[] = [
-  { key: "dataRecebimento", label: "Data de Recebimento" },
+  { key: "dataOperacao", label: "Data" },
   { key: "ativo", label: "Ativo" },
-  { key: "tipoProvento", label: "Tipo" },
+  { key: "tipoOperacao", label: "Tipo" },
+  { key: "quantidade", label: "Quantidade" },
+  { key: "valorUnitario", label: "Valor Unitário" },
   { key: "valorTotal", label: "Valor Total" },
   { key: "options", label: "", style: { width: "40px" } },
 ];

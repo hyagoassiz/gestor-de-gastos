@@ -1,4 +1,4 @@
 interface IAssetTypeApi {
-  id: "ACAO";
-  nome: "Ação";
+  id: "ACAO" | "FIIS";
+  nome: "Ação" | "FIIs (Fundos Imobiliários)";
 }

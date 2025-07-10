@@ -60,7 +60,12 @@ export const AssetModal: React.FC<IAsseModalProps> = ({
               label="Sigla"
               fullWidth
               required
-              onChange={(e) => field.onChange(e.target.value.toUpperCase())}
+              onChange={(e) => {
+                const valueSemEspaco = e.target.value
+                  .replace(/\s/g, "")
+                  .toUpperCase();
+                field.onChange(valueSemEspaco);
+              }}
               value={field.value?.toUpperCase() || ""}
               error={!!formState.errors.sigla}
               inputProps={{ maxLength: 10 }}

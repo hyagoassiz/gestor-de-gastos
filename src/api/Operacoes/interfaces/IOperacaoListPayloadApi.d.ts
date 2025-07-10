@@ -1,0 +1,3 @@
+interface IOperacaoListPayloadApi {
+  ativoId?: string;
+}

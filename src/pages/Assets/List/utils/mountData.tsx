@@ -23,21 +23,27 @@ export function mountData({
         <>
           {asset.ativo ? (
             <MoreOptions>
-              <MenuItem
-                onClick={() => {
-                  handleEditAsset(asset);
-                }}
-              >
-                Editar
-              </MenuItem>
+              {({ handleClose }) => (
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      handleEditAsset(asset);
+                      handleClose();
+                    }}
+                  >
+                    Editar
+                  </MenuItem>
 
-              <MenuItem
-                onClick={() => {
-                  handleDeactivateAsset(asset);
-                }}
-              >
-                Inativar
-              </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleDeactivateAsset(asset);
+                      handleClose();
+                    }}
+                  >
+                    Inativar
+                  </MenuItem>
+                </>
+              )}
             </MoreOptions>
           ) : (
             <PowerIcon onClick={() => handleActivateAsset(asset)} />

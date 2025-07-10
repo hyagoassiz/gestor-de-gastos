@@ -1,65 +1,123 @@
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { Frame } from "../../../components/Frame";
 import { Header } from "../../../components/Header";
 import { ToolbarContainer } from "../../../components/ToolbarContainer";
-import { Add } from "@mui/icons-material";
+import { Add, UploadFile } from "@mui/icons-material";
 import { useList } from "./hooks/useList";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { incomeColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import { DeactivateModal } from "./components/DeactivateModal";
 import { IncomeModal } from "./components/IncomeModal";
+import { ChangeEvent, useRef } from "react";
+import { KEY_GET_INCOME } from "../../../api/Income/utils/getQueryOptionsGetIncome";
+import { useLoading } from "../../../hooks/useLoading";
+import { useNotification } from "../../../hooks/useNotification";
+import { useQueryClient } from "@tanstack/react-query";
+import { postIncome } from "../../../api/Income/postIncome";
+import dayjs from "dayjs";
+import * as XLSX from "xlsx";
+import { getAssets } from "../../../api/Assets/getAssets";
 
 export const List: React.FC = () => {
   const {
     income,
     incomeModalState,
-    deactivateModalState,
     closeIncomeModal,
-    closeDeactivateModal,
+    handleDuplicarProvento,
     handleEditIncome,
     openIncomeModal,
   } = useList();
 
+  const { setLoading } = useLoading();
+
+  const { showSnackBar } = useNotification();
+
+  const queryClient = useQueryClient();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  console.log(income);
+
+  interface ExcelIncomeRow {
+    "Data Recebimento": string;
+    "Tipo Provento": IIncomeTypeApi["id"];
+    Ativo: string;
+    Quantidade: number;
+    "Valor Unitário": number;
+    "Valor Total": number;
+    Observação?: string;
+  }
+
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setLoading(true);
+
+      const ativos = await getAssets();
+
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+      const rows: ExcelIncomeRow[] = XLSX.utils.sheet_to_json(sheet);
+
+      const now = dayjs().toISOString();
+
+      for (const row of rows) {
+        try {
+          const ativoEncontrado = ativos.find(
+            (ativo) => ativo.sigla.toUpperCase() === row["Ativo"].toUpperCase()
+          );
+
+          // Converte "DD/MM/YYYY" em "YYYY-MM-DD"
+          const [dia, mes, ano] = row["Data Recebimento"].split("/");
+          const dataFormatada = `${ano}-${mes}-${dia}`;
+
+          const payload: IIncomePayloadApi = {
+            dataRecebimento: dataFormatada,
+            tipoProvento: row["Tipo Provento"],
+            ativoId: ativoEncontrado?.id ?? row["Ativo"],
+            quantidade: Number(row["Quantidade"]),
+            valorUnitario: Number(row["Valor Unitário"]),
+            valorTotal: Number(row["Valor Total"]),
+            observacao: row["Observação"] ?? "",
+            createdAt: now,
+            updatedAt: "",
+          };
+
+          await postIncome(payload);
+        } catch (err) {
+          console.error("Erro ao importar linha:", err);
+        }
+      }
+
+      showSnackBar("Importação concluída com sucesso!", "success");
+      queryClient.invalidateQueries({ queryKey: [KEY_GET_INCOME] });
+    } catch (err) {
+      console.error("Erro ao importar o arquivo:", err);
+      showSnackBar("Erro ao importar arquivo Excel", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <Header
-        title="Proventos"
-        // buttons={
-        //   <FilterDrawer
-        //     applyFilter={handleSubmitFilterForm}
-        //     filterCount={filterCount}
-        //   >
-        //     <Controller
-        //       name="ativoId"
-        //       control={filterForm.control}
-        //       defaultValue={false}
-        //       render={({ field }) => (
-        //         <FormGroup>
-        //           <FormControlLabel
-        //             control={
-        //               <Checkbox
-        //                 color="info"
-        //                 checked={field.value}
-        //                 onChange={field.onChange}
-        //               />
-        //             }
-        //             label="Exibir somente inativos"
-        //           />
-        //         </FormGroup>
-        //       )}
-        //     />
-        //   </FilterDrawer>
-        // }
-      />
+      <Header title="Proventos" />
 
       <Frame>
         <ToolbarContainer
-          title={`Proventos`}
+          title="Proventos"
           showTitleDivider
           showDividers
           buttons={
-            <>
+            <Stack direction="row" spacing={1}>
               <Button
                 startIcon={<Add />}
                 color="primary"
@@ -68,7 +126,24 @@ export const List: React.FC = () => {
               >
                 Novo
               </Button>
-            </>
+
+              <input
+                type="file"
+                accept=".xlsx, .xls"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+
+              <Button
+                startIcon={<UploadFile />}
+                color="secondary"
+                variant="outlined"
+                onClick={handleImportClick}
+              >
+                Importar Excel
+              </Button>
+            </Stack>
           }
         />
 
@@ -77,6 +152,7 @@ export const List: React.FC = () => {
           data={mountData({
             income,
             handleEditIncome,
+            handleDuplicarProvento,
           })}
           textForEmptyData="Nenhum provento encontrado."
         />
@@ -86,15 +162,8 @@ export const List: React.FC = () => {
         <IncomeModal
           income={incomeModalState.income}
           open={incomeModalState.open}
+          isDuplicating={incomeModalState.isDuplicating}
           onClose={closeIncomeModal}
-        />
-      )}
-
-      {deactivateModalState.open && (
-        <DeactivateModal
-          open={deactivateModalState.open}
-          income={deactivateModalState.income}
-          onClose={closeDeactivateModal}
         />
       )}
     </>

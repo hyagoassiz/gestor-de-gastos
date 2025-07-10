@@ -13,6 +13,7 @@ interface IUseList {
   closeIncomeModal(): void;
   closeDeactivateModal(): void;
   handleDeactivateAsset(income: IIncomeResponseApi): void;
+  handleDuplicarProvento(income: IIncomeResponseApi): void;
   handleEditIncome(income: IIncomeResponseApi): void;
   handleSubmitFilterForm(): void;
   openIncomeModal(): void;
@@ -23,12 +24,14 @@ export const useList = (): IUseList => {
   const [incomeModalState, setIncomeModalState] = useState<IIncomeModalState>({
     income: null,
     open: false,
+    isDuplicating: false,
   });
 
   const [deactivateModalState, setDeactivateModalState] =
     useState<IDeactivateModalState>({
       income: null,
       open: false,
+      isDuplicating: false,
     });
 
   const [incomeListPayload, setIncomeListPayload] =
@@ -49,23 +52,31 @@ export const useList = (): IUseList => {
   }, [queryGetIncome.data]);
 
   function openIncomeModal(): void {
-    setIncomeModalState({ income: null, open: true });
+    setIncomeModalState({ income: null, open: true, isDuplicating: false });
   }
 
   function closeIncomeModal(): void {
-    setIncomeModalState({ income: null, open: false });
+    setIncomeModalState({ income: null, open: false, isDuplicating: false });
   }
 
   function closeDeactivateModal(): void {
-    setDeactivateModalState({ income: null, open: false });
+    setDeactivateModalState({
+      income: null,
+      open: false,
+      isDuplicating: false,
+    });
   }
 
   function handleDeactivateAsset(income: IIncomeResponseApi): void {
-    setDeactivateModalState({ income, open: true });
+    setDeactivateModalState({ income, open: true, isDuplicating: false });
+  }
+
+  function handleDuplicarProvento(income: IIncomeResponseApi): void {
+    setDeactivateModalState({ income, open: true, isDuplicating: true });
   }
 
   function handleEditIncome(income: IIncomeResponseApi): void {
-    setIncomeModalState({ income, open: true });
+    setIncomeModalState({ income, open: true, isDuplicating: false });
   }
 
   function handleSubmitFilterForm(): void {
@@ -83,6 +94,7 @@ export const useList = (): IUseList => {
     closeIncomeModal,
     closeDeactivateModal,
     handleEditIncome,
+    handleDuplicarProvento,
     handleDeactivateAsset,
     handleSubmitFilterForm,
     openIncomeModal,

@@ -1,8 +1,8 @@
-interface IIncomePayloadApi extends ITimestampableApi {
+interface IOperacaoPayloadApi extends ITimestampableApi {
   id?: string;
-  dataRecebimento: string;
+  dataOperacao: string;
   ativoId: string;
-  tipoProvento: IIncomeTypeApi["id"];
+  tipoOperacao: ITipoOperacaoApi;
   quantidade: number;
   valorUnitario: number;
   valorTotal: number;

@@ -1,10 +1,14 @@
 export const incomeTypeOptions: IIncomeTypeApi[] = [
   {
     id: "DIVIDENDO",
-    nome: "Dividendos",
+    nome: "Dividendo",
   },
   {
     id: "JCP",
     nome: "Juros sobre Capital Próprio (JCP)",
+  },
+  {
+    id: "RENDIMENTO",
+    nome: "Rendimento",
   },
 ];

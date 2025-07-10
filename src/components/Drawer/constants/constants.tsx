@@ -20,6 +20,11 @@ export const rotas: IRotas[] = [
     categoria: "Movimentações",
     rotas: [
       {
+        name: "Operações",
+        route: PATHS.OPERACOES.LIST,
+        icon: <SpaceDashboardIcon />,
+      },
+      {
         name: "Proventos",
         route: PATHS.INCOME.LIST,
         icon: <SpaceDashboardIcon />,

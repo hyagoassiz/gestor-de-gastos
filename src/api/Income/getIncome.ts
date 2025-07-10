@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../FirebaseConnection";
 import { getCurrentUserOrThrow } from "../getCurrentUserOrThrow";
+import { incomeTypeOptions } from "../../constants/incomeTypeOptions";
 
 export async function getIncome(
   payload?: IIncomeListPayloadApi
@@ -37,10 +38,14 @@ export async function getIncome(
       proventos.push({
         id: docSnap.id,
         dataRecebimento: incomeData.dataRecebimento,
-        tipoProvento: incomeData.tipoProvento,
+        tipoProvento: incomeTypeOptions.find(
+          (tipo) => tipo.id === incomeData.tipoProvento
+        ) as IIncomeTypeApi,
         ativo,
         observacao: incomeData.observacao,
-        valor: incomeData.valor,
+        quantidade: incomeData.quantidade,
+        valorUnitario: incomeData.valorUnitario,
+        valorTotal: incomeData.valorTotal,
         createdAt: incomeData.createdAt ?? "",
         updatedAt: incomeData.updatedAt ?? "",
       });

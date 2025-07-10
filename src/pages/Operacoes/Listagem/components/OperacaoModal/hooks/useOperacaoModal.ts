@@ -4,29 +4,27 @@ import { useNotification } from "../../../../../../hooks/useNotification";
 import dayjs from "dayjs";
 import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { TIncomeForm } from "../interfaces";
-import { postIncome } from "../../../../../../api/Income/postIncome";
-import { KEY_GET_INCOME } from "../../../../../../api/Income/utils/getQueryOptionsGetIncome";
 import { getQueryOptionsGetAssets } from "../../../../../../api/Assets/utils/getQueryOptionsGetAssets";
+import { TOperacaoForm } from "../interfaces";
+import { postOperacao } from "../../../../../../api/Operacoes/postOperacao";
+import { KEY_GET_OPERACOES } from "../../../../../../api/Operacoes/utils/getQueryOptionsGetIncome";
 
-interface IUseIncomeModalProps {
-  income: IIncomeResponseApi | null;
-  isDuplicating: boolean;
+interface IUseOperacaoModal {
+  operacao: IOperacaoResponseApi | null;
   onClose(): void;
 }
 
-interface IUseIncomeModalReturn {
+interface IUseOperacaoModalReturn {
   assets: IAssetResponseApi[] | undefined;
-  incomeForm: UseFormReturn<TIncomeForm>;
+  operacaoForm: UseFormReturn<TOperacaoForm>;
   submitIncomeForm(): void;
 }
 
-export const useIncomeModal = ({
-  income,
-  isDuplicating,
+export const useOperacaoModal = ({
+  operacao,
   onClose,
-}: IUseIncomeModalProps): IUseIncomeModalReturn => {
-  const incomeForm = useForm<TIncomeForm>();
+}: IUseOperacaoModal): IUseOperacaoModalReturn => {
+  const operacaoForm = useForm<TOperacaoForm>();
 
   const { setLoading } = useLoading();
 
@@ -43,46 +41,44 @@ export const useIncomeModal = ({
   }, [queryGetAssets.data]);
 
   useEffect(() => {
-    if (income) {
-      (Object.keys(income) as (keyof IIncomeResponseApi)[]).forEach((key) => {
-        incomeForm.setValue(
-          key as keyof TIncomeForm,
-          income[key] as IIncomeResponseApi[keyof IIncomeResponseApi]
-        );
-      });
+    if (operacao) {
+      (Object.keys(operacao) as (keyof IOperacaoResponseApi)[]).forEach(
+        (key) => {
+          operacaoForm.setValue(
+            key as keyof TOperacaoForm,
+            operacao[key] as IOperacaoResponseApi[keyof IOperacaoResponseApi]
+          );
+        }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [income]);
+  }, [operacao]);
 
   function submitIncomeForm(): void {
-    incomeForm.handleSubmit(
+    operacaoForm.handleSubmit(
       async (data) => {
         try {
           setLoading(true);
 
           const now = dayjs().toISOString();
 
-          const payload: IIncomePayloadApi = {
-            id: isDuplicating ? undefined : data.id ?? undefined,
-            dataRecebimento: data.dataRecebimento,
-            tipoProvento: data.tipoProvento,
+          const payload: IOperacaoPayloadApi = {
+            ...data,
+            id: data.id ?? undefined,
             ativoId: data.ativo.id,
-            quantidade: data.quantidade,
-            valorUnitario: data.valorUnitario,
-            valorTotal: data.valorTotal,
             observacao: data.observacao ?? "",
             createdAt: data.createdAt ?? now,
             updatedAt: data.id ? now : "",
           };
 
-          await postIncome(payload);
+          await postOperacao(payload);
 
           showSnackBar(
-            `Provento ${payload.id ? "editado" : "adicionado"} com sucesso!`,
+            `Operação ${payload.id ? "editada" : "adicionada"} com sucesso!`,
             "success"
           );
 
-          queryClient.invalidateQueries({ queryKey: [KEY_GET_INCOME] });
+          queryClient.invalidateQueries({ queryKey: [KEY_GET_OPERACOES] });
 
           onClose();
         } catch (error) {
@@ -99,7 +95,7 @@ export const useIncomeModal = ({
 
   return {
     assets,
-    incomeForm,
+    operacaoForm,
     submitIncomeForm,
   };
 };

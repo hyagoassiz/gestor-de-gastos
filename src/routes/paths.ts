@@ -21,6 +21,10 @@ export const INCOME = {
   LIST: "/proventos",
 };
 
+export const OPERACOES = {
+  LIST: "/operacoes",
+};
+
 export const SALES = {
   LIST: `/vendas`,
   REGISTER: `/vendas/nova`,

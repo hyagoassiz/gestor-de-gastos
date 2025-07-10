@@ -1,0 +1,72 @@
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { IOperacaoModalState } from "../interfaces";
+import { useForm, UseFormReturn } from "react-hook-form";
+import { getQueryOptionsGetOperacoes } from "../../../../api/Operacoes/utils/getQueryOptionsGetIncome";
+
+interface IUseListagem {
+  operacoes: IOperacaoResponseApi[] | undefined;
+  operacaoModalState: IOperacaoModalState;
+  filterForm: UseFormReturn<IIncomeListPayloadApi>;
+  filterCount: number;
+  closeOperacaoModal(): void;
+  handleEditarOperacao(operacao: IOperacaoResponseApi): void;
+  handleSubmitFilterForm(): void;
+  openOperacaoModal(): void;
+  setOperacaoListPayload: Dispatch<SetStateAction<IIncomeListPayloadApi>>;
+}
+
+export const useListagem = (): IUseListagem => {
+  const [operacaoModalState, setOperacaoModalState] =
+    useState<IOperacaoModalState>({
+      operacao: null,
+      open: false,
+    });
+
+  const [operacaoListPayload, setOperacaoListPayload] =
+    useState<IIncomeListPayloadApi>({ ativoId: "" });
+
+  const filterForm = useForm<IIncomeListPayloadApi>({
+    defaultValues: { ativoId: operacaoListPayload.ativoId },
+  });
+
+  const queryGetOperacoes = useQuery({
+    ...getQueryOptionsGetOperacoes(operacaoListPayload),
+  });
+
+  const filterCount: number = operacaoListPayload.ativoId === "" ? 0 : 1;
+
+  const operacoes = useMemo(() => {
+    return queryGetOperacoes.data;
+  }, [queryGetOperacoes.data]);
+
+  function openOperacaoModal(): void {
+    setOperacaoModalState({ operacao: null, open: true });
+  }
+
+  function closeOperacaoModal(): void {
+    setOperacaoModalState({ operacao: null, open: false });
+  }
+
+  function handleEditarOperacao(operacao: IOperacaoResponseApi): void {
+    setOperacaoModalState({ operacao, open: true });
+  }
+
+  function handleSubmitFilterForm(): void {
+    filterForm.handleSubmit((data) => {
+      setOperacaoListPayload({ ativoId: data.ativoId });
+    })();
+  }
+
+  return {
+    operacoes,
+    operacaoModalState,
+    filterForm,
+    filterCount,
+    closeOperacaoModal,
+    handleEditarOperacao,
+    handleSubmitFilterForm,
+    openOperacaoModal,
+    setOperacaoListPayload,
+  };
+};

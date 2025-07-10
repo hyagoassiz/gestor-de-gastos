@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import useMoreOptions from "./hooks/useMoreOptions";
 
 interface MoreOptionsProps {
-  children: ReactNode;
+  children: (props: { handleClose: () => void }) => ReactNode;
   disabled?: boolean;
 }
 
@@ -38,8 +38,7 @@ export const MoreOptions = ({
           horizontal: "right",
         }}
       >
-        {/* Aqui você pode acessar handleClose via contexto se quiser */}
-        {children}
+        {children({ handleClose })}
       </Menu>
     </>
   );
