@@ -18,10 +18,10 @@ export function mountData({
       dataOperacao: dayjs(operacao.dataOperacao).format("DD/MM/YYYY"),
       ativo: operacao.ativo?.nome ?? "Ativo não encontrado",
       tipoOperacao: operacao.tipoOperacao.nome,
-      valorUnitario: (
+      precoUnitario: (
         <Typography variant="body2">
           <NumericFormat
-            value={operacao.valorUnitario}
+            value={operacao.precoUnitario}
             prefix={"R$ "}
             decimalScale={2}
             fixedDecimalScale={true}
@@ -31,10 +31,10 @@ export function mountData({
           />
         </Typography>
       ),
-      valorTotal: (
+      total: (
         <Typography variant="body2">
           <NumericFormat
-            value={operacao.valorTotal}
+            value={operacao.total}
             prefix={"R$ "}
             decimalScale={2}
             fixedDecimalScale={true}

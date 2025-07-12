@@ -28,6 +28,8 @@ export const List: React.FC = () => {
     openIncomeModal,
   } = useList();
 
+  console.log("teste", incomeModalState);
+
   const { setLoading } = useLoading();
 
   const { showSnackBar } = useNotification();
@@ -39,8 +41,6 @@ export const List: React.FC = () => {
   const handleImportClick = () => {
     fileInputRef.current?.click();
   };
-
-  console.log(income);
 
   interface ExcelIncomeRow {
     "Data Pagamento": string;

@@ -84,6 +84,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                   field.onChange(newValue);
                 }}
                 value={field.value ?? null}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
@@ -123,6 +124,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                   field.onChange(newValue);
                 }}
                 value={field.value ?? null}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
                 renderOption={(props, option) => (
                   <ListItem {...props} key={option.id}>

@@ -87,6 +87,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                   field.onChange(newValue);
                 }}
                 value={field.value ?? null}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
@@ -126,6 +127,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
                   field.onChange(newValue);
                 }}
                 value={field.value ?? null}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
                 renderOption={(props, option) => (
                   <ListItem {...props} key={option.id}>
@@ -199,7 +201,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Valor Unitário"
+                label="Preço Unitário"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth
@@ -240,7 +242,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Valor Total"
+                label="Total"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth

@@ -5,7 +5,7 @@ export const incomeColumns: IDataTableColumns[] = [
   { key: "ativo", label: "Ativo" },
   { key: "tipoOperacao", label: "Tipo" },
   { key: "quantidade", label: "Quantidade" },
-  { key: "valorUnitario", label: "Valor Unitário" },
-  { key: "valorTotal", label: "Valor Total" },
+  { key: "precoUnitario", label: "Preço Unitário" },
+  { key: "total", label: "Total" },
   { key: "options", label: "", style: { width: "40px" } },
 ];

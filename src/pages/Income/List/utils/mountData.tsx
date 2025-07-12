@@ -35,7 +35,7 @@ export function mountData({
       options: (
         <MoreOptions>
           {({ handleClose }) => (
-            <>
+            <div>
               <MenuItem
                 onClick={() => {
                   handleEditIncome(_income);
@@ -53,7 +53,7 @@ export function mountData({
               >
                 Duplicar
               </MenuItem>
-            </>
+            </div>
           )}
         </MoreOptions>
       ),

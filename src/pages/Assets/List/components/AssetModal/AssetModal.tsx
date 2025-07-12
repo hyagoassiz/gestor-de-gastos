@@ -87,6 +87,7 @@ export const AssetModal: React.FC<IAsseModalProps> = ({
                 field.onChange(newValue);
               }}
               value={field.value ?? null}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               noOptionsText="Nenhum resultado encontrado."
               renderInput={(params) => (
                 <TextField

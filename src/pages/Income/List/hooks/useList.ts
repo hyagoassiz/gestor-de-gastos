@@ -72,7 +72,7 @@ export const useList = (): IUseList => {
   }
 
   function handleDuplicarProvento(income: IIncomeResponseApi): void {
-    setDeactivateModalState({ income, open: true, isDuplicating: true });
+    setIncomeModalState({ income, open: true, isDuplicating: true });
   }
 
   function handleEditIncome(income: IIncomeResponseApi): void {

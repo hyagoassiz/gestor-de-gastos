@@ -20,11 +20,11 @@ export function mountData({
       ...asset,
       tipo: asset?.tipo.nome,
       options: (
-        <>
+        <div>
           {asset.ativo ? (
             <MoreOptions>
               {({ handleClose }) => (
-                <>
+                <div>
                   <MenuItem
                     onClick={() => {
                       handleEditAsset(asset);
@@ -42,13 +42,13 @@ export function mountData({
                   >
                     Inativar
                   </MenuItem>
-                </>
+                </div>
               )}
             </MoreOptions>
           ) : (
             <PowerIcon onClick={() => handleActivateAsset(asset)} />
           )}
-        </>
+        </div>
       ),
     }));
   }
