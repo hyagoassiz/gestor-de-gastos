@@ -36,7 +36,7 @@ export const rotas: IRotas[] = [
     rotas: [
       {
         name: "Ativos",
-        route: PATHS.ASSETS.LIST,
+        route: PATHS.ATIVOS.LIST,
         icon: <SpaceDashboardIcon />,
       },
     ],

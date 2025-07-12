@@ -7,7 +7,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { TIncomeForm } from "../interfaces";
 import { postIncome } from "../../../../../../api/Income/postIncome";
 import { KEY_GET_INCOME } from "../../../../../../api/Income/utils/getQueryOptionsGetIncome";
-import { getQueryOptionsGetAssets } from "../../../../../../api/Assets/utils/getQueryOptionsGetAssets";
+import { getQueryOptionsGetAtivos } from "../../../../../../api/Ativos/utils/getQueryOptionsGetAtivos";
 
 interface IUseIncomeModalProps {
   income: IIncomeResponseApi | null;
@@ -16,7 +16,7 @@ interface IUseIncomeModalProps {
 }
 
 interface IUseIncomeModalReturn {
-  assets: IAssetResponseApi[] | undefined;
+  ativos: IAtivoResponseApi[] | undefined;
   incomeForm: UseFormReturn<TIncomeForm>;
   submitIncomeForm(): void;
 }
@@ -34,13 +34,13 @@ export const useIncomeModal = ({
 
   const queryClient = useQueryClient();
 
-  const queryGetAssets = useQuery({
-    ...getQueryOptionsGetAssets({ ativo: true }),
+  const queryGetAtivos = useQuery({
+    ...getQueryOptionsGetAtivos({ ativo: true }),
   });
 
-  const assets = useMemo(() => {
-    return queryGetAssets.data;
-  }, [queryGetAssets.data]);
+  const ativos = useMemo(() => {
+    return queryGetAtivos.data;
+  }, [queryGetAtivos.data]);
 
   useEffect(() => {
     if (income) {
@@ -98,7 +98,7 @@ export const useIncomeModal = ({
   }
 
   return {
-    assets,
+    ativos,
     incomeForm,
     submitIncomeForm,
   };

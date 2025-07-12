@@ -4,5 +4,5 @@ type IIncomeResponseApi = Omit<
 > & {
   id: string;
   tipoProvento: IIncomeTypeApi;
-  ativo: IAssetResponseApi | null;
+  ativo: IAtivoResponseApi | null;
 };

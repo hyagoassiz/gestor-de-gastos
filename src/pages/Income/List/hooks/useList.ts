@@ -12,7 +12,7 @@ interface IUseList {
   filterCount: number;
   closeIncomeModal(): void;
   closeDeactivateModal(): void;
-  handleDeactivateAsset(income: IIncomeResponseApi): void;
+  handleInativarAtivo(income: IIncomeResponseApi): void;
   handleDuplicarProvento(income: IIncomeResponseApi): void;
   handleEditIncome(income: IIncomeResponseApi): void;
   handleSubmitFilterForm(): void;
@@ -67,7 +67,7 @@ export const useList = (): IUseList => {
     });
   }
 
-  function handleDeactivateAsset(income: IIncomeResponseApi): void {
+  function handleInativarAtivo(income: IIncomeResponseApi): void {
     setDeactivateModalState({ income, open: true, isDuplicating: false });
   }
 
@@ -95,7 +95,7 @@ export const useList = (): IUseList => {
     closeDeactivateModal,
     handleEditIncome,
     handleDuplicarProvento,
-    handleDeactivateAsset,
+    handleInativarAtivo,
     handleSubmitFilterForm,
     openIncomeModal,
     setIncomeListPayload,

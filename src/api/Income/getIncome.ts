@@ -31,7 +31,7 @@ export async function getIncome(
       const ativo = ativoDoc.exists()
         ? {
             id: ativoDoc.id,
-            ...(ativoDoc.data() as Omit<IAssetResponseApi, "id">),
+            ...(ativoDoc.data() as Omit<IAtivoResponseApi, "id">),
           }
         : null;
 

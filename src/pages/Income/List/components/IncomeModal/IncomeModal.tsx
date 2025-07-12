@@ -26,7 +26,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
   isDuplicating,
   onClose,
 }) => {
-  const { assets, incomeForm, submitIncomeForm } = useIncomeModal({
+  const { ativos, incomeForm, submitIncomeForm } = useIncomeModal({
     income,
     isDuplicating,
     onClose,
@@ -112,7 +112,7 @@ export const IncomeModal: React.FC<IIncomeModalProps> = ({
               <Autocomplete
                 disablePortal
                 id="ativo"
-                options={assets ?? []}
+                options={ativos ?? []}
                 getOptionLabel={(option) => option.sigla || ""}
                 filterOptions={(options, { inputValue }) =>
                   options.filter((option) => {

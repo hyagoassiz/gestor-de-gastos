@@ -3,5 +3,5 @@ export type TIncomeForm = Omit<
   "ativoId" | "tipoProvento"
 > & {
   tipoProvento: IIncomeTypeApi;
-  ativo: IAssetResponseApi;
+  ativo: IAtivoResponseApi;
 };

@@ -10,7 +10,7 @@ import { DashboardRoute } from "../pages/Dashboard/List";
 import { AboutRoute } from "../pages/About/List";
 import { SettingsRoute } from "../pages/Settings/List";
 import { SalesRegisterRoute, SalesRoute } from "../pages/Sales";
-import { AssetsListRoute } from "../pages/Assets";
+import { AtivosListagemRoute } from "../pages/Ativos";
 import { IncomeListRoute } from "../pages/Income";
 import { OperacoesListagemRoute } from "../pages/Operacoes";
 
@@ -74,10 +74,10 @@ export const AppRoutes = () => {
           />
 
           <Route
-            path={PATHS.ASSETS.LIST}
+            path={PATHS.ATIVOS.LIST}
             element={
               <ProtectedRoute permission="">
-                <AssetsListRoute />
+                <AtivosListagemRoute />
               </ProtectedRoute>
             }
           />

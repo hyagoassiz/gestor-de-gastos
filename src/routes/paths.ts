@@ -13,7 +13,7 @@ export const DASHBOARD = {
   LIST: `/dashboard`,
 };
 
-export const ASSETS = {
+export const ATIVOS = {
   LIST: "/ativos",
 };
 

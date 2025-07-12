@@ -4,7 +4,7 @@ import { useNotification } from "../../../../../../hooks/useNotification";
 import dayjs from "dayjs";
 import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getQueryOptionsGetAssets } from "../../../../../../api/Assets/utils/getQueryOptionsGetAssets";
+import { getQueryOptionsGetAtivos } from "../../../../../../api/Ativos/utils/getQueryOptionsGetAtivos";
 import { TOperacaoForm } from "../interfaces";
 import { postOperacao } from "../../../../../../api/Operacoes/postOperacao";
 import { KEY_GET_OPERACOES } from "../../../../../../api/Operacoes/utils/getQueryOptionsGetIncome";
@@ -15,7 +15,7 @@ interface IUseOperacaoModal {
 }
 
 interface IUseOperacaoModalReturn {
-  assets: IAssetResponseApi[] | undefined;
+  ativos: IAtivoResponseApi[] | undefined;
   operacaoForm: UseFormReturn<TOperacaoForm>;
   submitIncomeForm(): void;
 }
@@ -32,13 +32,13 @@ export const useOperacaoModal = ({
 
   const queryClient = useQueryClient();
 
-  const queryGetAssets = useQuery({
-    ...getQueryOptionsGetAssets({ ativo: true }),
+  const queryGetAtivos = useQuery({
+    ...getQueryOptionsGetAtivos({ ativo: true }),
   });
 
-  const assets = useMemo(() => {
-    return queryGetAssets.data;
-  }, [queryGetAssets.data]);
+  const ativos = useMemo(() => {
+    return queryGetAtivos.data;
+  }, [queryGetAtivos.data]);
 
   useEffect(() => {
     if (operacao) {
@@ -94,7 +94,7 @@ export const useOperacaoModal = ({
   }
 
   return {
-    assets,
+    ativos,
     operacaoForm,
     submitIncomeForm,
   };

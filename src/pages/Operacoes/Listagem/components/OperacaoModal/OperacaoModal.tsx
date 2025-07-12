@@ -24,7 +24,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
   open,
   onClose,
 }) => {
-  const { assets, operacaoForm, submitIncomeForm } = useOperacaoModal({
+  const { ativos, operacaoForm, submitIncomeForm } = useOperacaoModal({
     operacao,
     onClose,
   });
@@ -109,7 +109,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
               <Autocomplete
                 disablePortal
                 id="ativo"
-                options={assets ?? []}
+                options={ativos ?? []}
                 getOptionLabel={(option) => option.sigla || ""}
                 filterOptions={(options, { inputValue }) =>
                   options.filter((option) => {

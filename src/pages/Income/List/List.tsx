@@ -16,7 +16,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { postIncome } from "../../../api/Income/postIncome";
 import dayjs from "dayjs";
 import * as XLSX from "xlsx";
-import { getAssets } from "../../../api/Assets/getAssets";
+import { getAtivos } from "../../../api/Ativos/getAtivos";
 
 export const List: React.FC = () => {
   const {
@@ -59,7 +59,7 @@ export const List: React.FC = () => {
     try {
       setLoading(true);
 
-      const ativos = await getAssets();
+      const ativos = await getAtivos();
 
       const data = await file.arrayBuffer();
       const workbook = XLSX.read(data, { type: "array" });
