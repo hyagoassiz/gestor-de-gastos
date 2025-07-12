@@ -5,7 +5,7 @@ import { ToolbarContainer } from "../../../components/ToolbarContainer";
 import { Add } from "@mui/icons-material";
 import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
-import { incomeColumns } from "./constants/constants";
+import { proventosColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import { OperacaoModal } from "./components/OperacaoModal";
 
@@ -42,7 +42,7 @@ export const Listagem: React.FC = () => {
         />
 
         <DataTable
-          columns={incomeColumns}
+          columns={proventosColumns}
           data={mountData({
             operacoes,
             handleEditarOperacao,

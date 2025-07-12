@@ -2,7 +2,7 @@ import { MenuItem, Typography } from "@mui/material";
 import { NumericFormat } from "react-number-format";
 import { MoreOptions } from "../../../../../../../../components/MoreOptions";
 
-interface IMountData {
+interface IMountDataProps {
   products: ISaleRegisterApi["produtos"] | undefined;
   isEditMode: boolean;
   handleEditProduct(product: ISaleRegisterApi["produtos"][0]): void;
@@ -12,7 +12,7 @@ export function mountData({
   products,
   isEditMode,
   handleEditProduct,
-}: IMountData): any[] {
+}: IMountDataProps): any[] {
   if (products?.length) {
     return products.map((product) => ({
       ...product,

@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { getStatusChip } from "../../../../utils/getStatusIcon";
-interface IMountData {
+interface IMountDataProps {
   sales: ISaleResponseApi[] | undefined;
   handleCancelSale(sale: ISaleResponseApi): void;
   handleEditSale(id: string): void;
@@ -13,7 +13,7 @@ export function mountData({
   sales,
   handleCancelSale,
   handleEditSale,
-}: IMountData): any[] {
+}: IMountDataProps): any[] {
   if (sales?.length) {
     return sales.map((sale) => ({
       ...sale,

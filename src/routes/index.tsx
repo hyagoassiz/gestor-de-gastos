@@ -11,7 +11,7 @@ import { AboutRoute } from "../pages/About/List";
 import { SettingsRoute } from "../pages/Settings/List";
 import { SalesRegisterRoute, SalesRoute } from "../pages/Sales";
 import { AtivosListagemRoute } from "../pages/Ativos";
-import { IncomeListRoute } from "../pages/Income";
+import { ProventosListagemRoute } from "../pages/Proventos";
 import { OperacoesListagemRoute } from "../pages/Operacoes";
 
 const LayoutWrapper = () => (
@@ -65,10 +65,10 @@ export const AppRoutes = () => {
           />
 
           <Route
-            path={PATHS.INCOME.LIST}
+            path={PATHS.PROVENTOS.LIST}
             element={
               <ProtectedRoute permission="">
-                <IncomeListRoute />
+                <ProventosListagemRoute />
               </ProtectedRoute>
             }
           />

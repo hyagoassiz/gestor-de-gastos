@@ -8,24 +8,27 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Modal } from "../../../../../components/Modal";
-import { useOperacaoModal } from "./hooks/useOperacaoModal";
+import { useModalProvento } from "./hooks/useModalProvento";
+import { proventosTypeOptions } from "../../../../../constants/proventosTypeOptions";
 import { NumericFormat } from "react-number-format";
-import { tipoOperacaoOptions } from "../../../../../constants/tipoOperacaoOptions";
 import useCalcularValores from "../../../../../hooks/useCalcularPrecos";
 
-interface IOperacaoModalProps {
-  operacao: IOperacaoResponseApi | null;
+interface IModalProventoProps {
+  provento: IProventoResponseApi | null;
   open: boolean;
+  isDuplicating: boolean;
   onClose(): void;
 }
 
-export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
-  operacao,
+export const ModalProvento: React.FC<IModalProventoProps> = ({
+  provento,
   open,
+  isDuplicating,
   onClose,
 }) => {
-  const { ativos, operacaoForm, submiTProventoForm } = useOperacaoModal({
-    operacao,
+  const { ativos, proventosForm, submiTProventoForm } = useModalProvento({
+    provento,
+    isDuplicating,
     onClose,
   });
 
@@ -35,7 +38,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
     <Modal
       open={open}
       style={{ width: 480, height: "auto", minWidth: 480 }}
-      title={`${operacao ? "Editar" : "Nova"} Operação`}
+      title={`${provento && !isDuplicating ? "Editar" : "Registrar"} Provento`}
       buttons={
         <>
           <Button variant="text" onClick={onClose}>
@@ -50,12 +53,12 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Controller
-            name="dataOperacao"
-            control={operacaoForm.control}
+            name="dataPagamento"
+            control={proventosForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <TextField
-                label="Data"
+                label="Data de Pagamento"
                 type="date"
                 color="info"
                 fullWidth
@@ -71,14 +74,14 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
 
         <Grid item xs={6}>
           <Controller
-            name="tipoOperacao"
-            control={operacaoForm.control}
+            name="tipoProvento"
+            control={proventosForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
                 id="tipo"
-                options={tipoOperacaoOptions ?? []}
+                options={proventosTypeOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue);
@@ -103,12 +106,12 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
         <Grid item xs={12}>
           <Controller
             name="ativo"
-            control={operacaoForm.control}
+            control={proventosForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
-                id="ativo"
+                id="provento"
                 options={ativos ?? []}
                 getOptionLabel={(option) => option.sigla || ""}
                 filterOptions={(options, { inputValue }) =>
@@ -138,7 +141,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Ativo"
+                    label="provento"
                     required
                     fullWidth
                     error={!!fieldState.error}
@@ -149,10 +152,10 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Controller
             name="quantidade"
-            control={operacaoForm.control}
+            control={proventosForm.control}
             rules={{
               required: true,
               validate: (value) => value > 0,
@@ -170,10 +173,10 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                   if (event?.isTrusted) {
                     const total = calcularTotal(
                       floatValue ?? 0,
-                      operacaoForm.getValues("precoUnitario") ?? 0
+                      proventosForm.getValues("precoUnitario") ?? 0
                     );
 
-                    operacaoForm.setValue("total", total);
+                    proventosForm.setValue("total", total);
                     field.onChange(floatValue);
                   }
                 }}
@@ -188,17 +191,17 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Controller
             name="precoUnitario"
-            control={operacaoForm.control}
+            control={proventosForm.control}
             rules={{
               required: true,
               validate: (value) => value > 0,
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Valor Unitário"
+                label="Preço Unitário"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth
@@ -209,11 +212,11 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                 onValueChange={({ floatValue }, { event }) => {
                   if (event?.isTrusted) {
                     const total = calcularTotal(
-                      operacaoForm.getValues("quantidade"),
+                      proventosForm.getValues("quantidade"),
                       floatValue ?? 0
                     );
 
-                    operacaoForm.setValue("total", total);
+                    proventosForm.setValue("total", total);
 
                     field.onChange(floatValue);
                   }
@@ -229,17 +232,17 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={4}>
           <Controller
             name="total"
-            control={operacaoForm.control}
+            control={proventosForm.control}
             rules={{
               required: true,
               validate: (value) => value > 0,
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Valor Total"
+                label="Total"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth
@@ -251,10 +254,10 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
                   if (event?.isTrusted) {
                     const valorUnitario = calcularPrecoUnitario(
                       floatValue ?? 0,
-                      operacaoForm.getValues("quantidade")
+                      proventosForm.getValues("quantidade")
                     );
 
-                    operacaoForm.setValue("precoUnitario", valorUnitario);
+                    proventosForm.setValue("precoUnitario", valorUnitario);
 
                     field.onChange(floatValue);
                   }
@@ -274,7 +277,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
           <Controller
             name="observacao"
             rules={{ required: false }}
-            control={operacaoForm.control}
+            control={proventosForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}

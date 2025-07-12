@@ -4,27 +4,29 @@ import { useNotification } from "../../../../../../hooks/useNotification";
 import dayjs from "dayjs";
 import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { TProventoForm } from "../interfaces";
+import { postProvento } from "../../../../../../api/Proventos/postProvento";
+import { KEY_GET_PROVENTOS } from "../../../../../../api/Proventos/utils/getQueryOptionsGetProventos";
 import { getQueryOptionsGetAtivos } from "../../../../../../api/Ativos/utils/getQueryOptionsGetAtivos";
-import { TOperacaoForm } from "../interfaces";
-import { postOperacao } from "../../../../../../api/Operacoes/postOperacao";
-import { KEY_GET_OPERACOES } from "../../../../../../api/Operacoes/utils/getQueryOptionsGetOperacoes";
 
-interface IUseOperacaoModal {
-  operacao: IOperacaoResponseApi | null;
+interface IUseModalProventoProps {
+  provento: IProventoResponseApi | null;
+  isDuplicating: boolean;
   onClose(): void;
 }
 
-interface IUseOperacaoModalReturn {
+interface IUseModalProventoReturn {
   ativos: IAtivoResponseApi[] | undefined;
-  operacaoForm: UseFormReturn<TOperacaoForm>;
+  proventosForm: UseFormReturn<TProventoForm>;
   submiTProventoForm(): void;
 }
 
-export const useOperacaoModal = ({
-  operacao,
+export const useModalProvento = ({
+  provento,
+  isDuplicating,
   onClose,
-}: IUseOperacaoModal): IUseOperacaoModalReturn => {
-  const operacaoForm = useForm<TOperacaoForm>();
+}: IUseModalProventoProps): IUseModalProventoReturn => {
+  const proventosForm = useForm<TProventoForm>();
 
   const { setLoading } = useLoading();
 
@@ -41,44 +43,48 @@ export const useOperacaoModal = ({
   }, [queryGetAtivos.data]);
 
   useEffect(() => {
-    if (operacao) {
-      (Object.keys(operacao) as (keyof IOperacaoResponseApi)[]).forEach(
+    if (provento) {
+      (Object.keys(provento) as (keyof IProventoResponseApi)[]).forEach(
         (key) => {
-          operacaoForm.setValue(
-            key as keyof TOperacaoForm,
-            operacao[key] as IOperacaoResponseApi[keyof IOperacaoResponseApi]
+          proventosForm.setValue(
+            key as keyof TProventoForm,
+            provento[key] as IProventoResponseApi[keyof IProventoResponseApi]
           );
         }
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operacao]);
+  }, [provento]);
 
   function submiTProventoForm(): void {
-    operacaoForm.handleSubmit(
+    proventosForm.handleSubmit(
       async (data) => {
         try {
           setLoading(true);
 
           const now = dayjs().toISOString();
 
-          const payload: IOperacaoPayloadApi = {
-            ...data,
-            id: data.id ?? undefined,
+          const payload: IProventoPayloadApi = {
+            id: isDuplicating ? undefined : data.id ?? undefined,
+            dataPagamento: data.dataPagamento,
+            tipoProventoId: data.tipoProvento.id,
             ativoId: data.ativo.id,
+            quantidade: data.quantidade,
+            precoUnitario: data.precoUnitario,
+            total: data.total,
             observacao: data.observacao ?? "",
             createdAt: data.createdAt ?? now,
             updatedAt: data.id ? now : "",
           };
 
-          await postOperacao(payload);
+          await postProvento(payload);
 
           showSnackBar(
-            `Operação ${payload.id ? "editada" : "adicionada"} com sucesso!`,
+            `Provento ${payload.id ? "editado" : "adicionado"} com sucesso!`,
             "success"
           );
 
-          queryClient.invalidateQueries({ queryKey: [KEY_GET_OPERACOES] });
+          queryClient.invalidateQueries({ queryKey: [KEY_GET_PROVENTOS] });
 
           onClose();
         } catch (error) {
@@ -95,7 +101,7 @@ export const useOperacaoModal = ({
 
   return {
     ativos,
-    operacaoForm,
+    proventosForm,
     submiTProventoForm,
   };
 };

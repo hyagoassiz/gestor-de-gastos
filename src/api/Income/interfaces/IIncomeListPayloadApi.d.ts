@@ -1,3 +1,0 @@
-interface IIncomeListPayloadApi {
-  ativoId?: string;
-}

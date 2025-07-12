@@ -2,18 +2,18 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IOperacaoModalState } from "../interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { getQueryOptionsGetOperacoes } from "../../../../api/Operacoes/utils/getQueryOptionsGetIncome";
+import { getQueryOptionsGetOperacoes } from "../../../../api/Operacoes/utils/getQueryOptionsGetOperacoes";
 
 interface IUseListagem {
   operacoes: IOperacaoResponseApi[] | undefined;
   operacaoModalState: IOperacaoModalState;
-  filterForm: UseFormReturn<IIncomeListPayloadApi>;
+  filterForm: UseFormReturn<IProventoListPayloadApi>;
   filterCount: number;
   closeOperacaoModal(): void;
   handleEditarOperacao(operacao: IOperacaoResponseApi): void;
   handleSubmitFilterForm(): void;
   openOperacaoModal(): void;
-  setOperacaoListPayload: Dispatch<SetStateAction<IIncomeListPayloadApi>>;
+  setOperacaoListPayload: Dispatch<SetStateAction<IProventoListPayloadApi>>;
 }
 
 export const useListagem = (): IUseListagem => {
@@ -24,9 +24,9 @@ export const useListagem = (): IUseListagem => {
     });
 
   const [operacaoListPayload, setOperacaoListPayload] =
-    useState<IIncomeListPayloadApi>({ ativoId: "" });
+    useState<IProventoListPayloadApi>({ ativoId: "" });
 
-  const filterForm = useForm<IIncomeListPayloadApi>({
+  const filterForm = useForm<IProventoListPayloadApi>({
     defaultValues: { ativoId: operacaoListPayload.ativoId },
   });
 

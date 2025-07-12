@@ -3,7 +3,7 @@ import { MoreOptions } from "../../../../components/MoreOptions";
 import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
 
-interface IMountData {
+interface IMountDataProps {
   operacoes: IOperacaoResponseApi[] | undefined;
   handleEditarOperacao(operacao: IOperacaoResponseApi): void;
 }
@@ -11,7 +11,7 @@ interface IMountData {
 export function mountData({
   operacoes,
   handleEditarOperacao,
-}: IMountData): any[] {
+}: IMountDataProps): any[] {
   if (operacoes?.length) {
     return operacoes.map((operacao) => ({
       ...operacao,

@@ -2,7 +2,7 @@ import { MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
 
-interface IMountData {
+interface IMountDataProps {
   ativos: IAtivoResponseApi[] | undefined;
   handleAtivarAtivo(ativo: IAtivoResponseApi): Promise<void>;
   handleInativarAtivo(ativo: IAtivoResponseApi): void;
@@ -14,7 +14,7 @@ export function mountData({
   handleAtivarAtivo,
   handleEditarAtivo,
   handleInativarAtivo,
-}: IMountData): any[] {
+}: IMountDataProps): any[] {
   if (ativos?.length) {
     return ativos.map((ativo) => ({
       ...ativo,

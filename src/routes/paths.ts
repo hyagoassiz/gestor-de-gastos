@@ -17,7 +17,7 @@ export const ATIVOS = {
   LIST: "/ativos",
 };
 
-export const INCOME = {
+export const PROVENTOS = {
   LIST: "/proventos",
 };
 

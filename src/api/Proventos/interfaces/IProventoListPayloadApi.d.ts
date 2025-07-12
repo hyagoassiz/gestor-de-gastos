@@ -1,0 +1,3 @@
+interface IProventoListPayloadApi {
+  ativoId?: string;
+}

@@ -1,11 +1,9 @@
 import { IDataTableColumns } from "../../../../interfaces";
 
 export const proventosColumns: IDataTableColumns[] = [
-  { key: "dataOperacao", label: "Data" },
+  { key: "dataPagamento", label: "Data de Recebimento" },
   { key: "ativo", label: "Ativo" },
-  { key: "tipoOperacao", label: "Tipo" },
-  { key: "quantidade", label: "Quantidade" },
-  { key: "precoUnitario", label: "Preço Unitário" },
+  { key: "tipoProvento", label: "Tipo" },
   { key: "total", label: "Total" },
   { key: "options", label: "", style: { width: "40px" } },
 ];
