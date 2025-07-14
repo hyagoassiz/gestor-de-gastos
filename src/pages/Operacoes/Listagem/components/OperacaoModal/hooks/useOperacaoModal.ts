@@ -66,6 +66,7 @@ export const useOperacaoModal = ({
             ...data,
             id: data.id ?? undefined,
             ativoId: data.ativo.id,
+            tipoOperacaoId: data.tipoOperacao.id,
             observacao: data.observacao ?? "",
             createdAt: data.createdAt ?? now,
             updatedAt: data.id ? now : "",

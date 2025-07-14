@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../FirebaseConnection";
 import { getCurrentUserOrThrow } from "../getCurrentUserOrThrow";
+import { tipoOperacaoOptions } from "../../constants/tipoOperacaoOptions";
 
 export async function getOperacoes(
   payload?: IOperacaoListPayloadApi
@@ -38,7 +39,9 @@ export async function getOperacoes(
         id: docSnap.id,
         dataOperacao: operacaoData.dataOperacao,
         ativo,
-        tipoOperacao: operacaoData.tipoOperacao,
+        tipoOperacao: tipoOperacaoOptions.find(
+          (tipo) => tipo.id == operacaoData.tipoOperacaoId
+        ) as ITipoOperacaoApi,
         quantidade: operacaoData.quantidade,
         precoUnitario: operacaoData.precoUnitario,
         total: operacaoData.total,

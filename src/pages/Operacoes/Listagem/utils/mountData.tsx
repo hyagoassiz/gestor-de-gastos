@@ -17,7 +17,7 @@ export function mountData({
       ...operacao,
       dataOperacao: dayjs(operacao.dataOperacao).format("DD/MM/YYYY"),
       ativo: operacao.ativo?.nome ?? "Ativo não encontrado",
-      tipoOperacao: operacao.tipoOperacao.nome,
+      tipoOperacao: operacao?.tipoOperacao?.nome,
       precoUnitario: (
         <Typography variant="body2">
           <NumericFormat
