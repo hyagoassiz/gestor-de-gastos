@@ -1,4 +1,4 @@
-import { MenuItem } from "@mui/material";
+import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
 
@@ -18,6 +18,14 @@ export function mountData({
   if (ativos?.length) {
     return ativos.map((ativo) => ({
       ...ativo,
+      ativo: (
+        <ListItemText
+          primary={ativo?.sigla}
+          secondary={ativo?.nome}
+          primaryTypographyProps={{ fontSize: "14px" }}
+          secondaryTypographyProps={{ fontSize: "12px" }}
+        />
+      ),
       tipo: ativo?.tipo.nome,
       options: (
         <div>

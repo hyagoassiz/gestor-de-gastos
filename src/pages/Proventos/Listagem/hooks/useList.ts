@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IModalProventoState } from "../interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { getQueryOptionsGetProventos } from "../../../../api/Proventos/utils/getQueryOptionsGetProventos";
+import { useLoading } from "../../../../hooks/useLoading";
 
 interface IUseList {
   proventos: IProventoResponseApi[] | undefined;
@@ -32,6 +33,8 @@ export const useList = (): IUseList => {
     defaultValues: { ativoId: proventoListPayload.ativoId },
   });
 
+  const { setLoading } = useLoading();
+
   const querygetProventos = useQuery({
     ...getQueryOptionsGetProventos(proventoListPayload),
   });
@@ -41,6 +44,11 @@ export const useList = (): IUseList => {
   const proventos = useMemo(() => {
     return querygetProventos.data;
   }, [querygetProventos.data]);
+
+  useEffect(() => {
+    setLoading(querygetProventos.isLoading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [querygetProventos.isLoading]);
 
   function openModalProvento(): void {
     setModalProventoState({ provento: null, open: true, isDuplicating: false });

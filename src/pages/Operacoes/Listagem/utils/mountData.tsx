@@ -1,4 +1,4 @@
-import { MenuItem, Typography } from "@mui/material";
+import { ListItemText, MenuItem, Typography } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
@@ -18,7 +18,14 @@ export function mountData({
     return operacoes.map((operacao) => ({
       ...operacao,
       dataOperacao: dayjs(operacao.dataOperacao).format("DD/MM/YYYY"),
-      ativo: operacao.ativo?.nome ?? "Ativo não encontrado",
+      ativo: (
+        <ListItemText
+          primary={operacao?.ativo?.sigla ?? "Ativo não encontrado"}
+          secondary={operacao?.ativo?.nome ?? "-"}
+          primaryTypographyProps={{ fontSize: "14px" }}
+          secondaryTypographyProps={{ fontSize: "12px" }}
+        />
+      ),
       tipoOperacao: operacao?.tipoOperacao?.nome,
       precoUnitario: (
         <Typography variant="body2">

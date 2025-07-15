@@ -106,7 +106,7 @@ export const Register: React.FC = () => {
                     field.onChange(floatValue ?? "");
                   }}
                   customInput={TextField}
-                  label="Valor Total"
+                  label="Total"
                   fullWidth
                   allowNegative={true}
                   thousandSeparator="."

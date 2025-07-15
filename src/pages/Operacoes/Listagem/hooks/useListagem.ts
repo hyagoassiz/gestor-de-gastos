@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IModalOperacaoState } from "../interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { getQueryOptionsGetOperacoes } from "../../../../api/Operacoes/utils/getQueryOptionsGetOperacoes";
+import { useLoading } from "../../../../hooks/useLoading";
 
 interface IUseListagem {
   operacoes: IOperacaoResponseApi[] | undefined;
@@ -32,6 +33,8 @@ export const useListagem = (): IUseListagem => {
     defaultValues: { ativoId: operacaoListPayload.ativoId },
   });
 
+  const { setLoading } = useLoading();
+
   const queryGetOperacoes = useQuery({
     ...getQueryOptionsGetOperacoes(operacaoListPayload),
   });
@@ -41,6 +44,11 @@ export const useListagem = (): IUseListagem => {
   const operacoes = useMemo(() => {
     return queryGetOperacoes.data;
   }, [queryGetOperacoes.data]);
+
+  useEffect(() => {
+    setLoading(queryGetOperacoes.isLoading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryGetOperacoes.isLoading]);
 
   function openOperacaoModal(): void {
     setOperacaoModalState({ operacao: null, open: true, isDuplicating: false });

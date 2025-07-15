@@ -4,6 +4,7 @@ import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { Settings } from "@mui/icons-material";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const rotas: IRotas[] = [
   {
@@ -27,7 +28,7 @@ export const rotas: IRotas[] = [
       {
         name: "Proventos",
         route: PATHS.PROVENTOS.LIST,
-        icon: <SpaceDashboardIcon />,
+        icon: <AttachMoneyIcon />,
       },
     ],
   },

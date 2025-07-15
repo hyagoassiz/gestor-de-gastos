@@ -242,7 +242,7 @@ export const ModalOperacao: React.FC<IModalOperacaoProps> = ({
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Valor Total"
+                label="Total"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth

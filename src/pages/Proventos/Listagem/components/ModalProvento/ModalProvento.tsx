@@ -152,7 +152,7 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Controller
             name="quantidade"
             control={proventosForm.control}
@@ -191,7 +191,7 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Controller
             name="precoUnitario"
             control={proventosForm.control}
@@ -232,7 +232,7 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <Controller
             name="total"
             control={proventosForm.control}
