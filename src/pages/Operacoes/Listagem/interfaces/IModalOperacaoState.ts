@@ -1,4 +1,4 @@
-export interface IOperacaoModalState {
+export interface IModalOperacaoState {
   operacao: IOperacaoResponseApi | null;
   open: boolean;
 }

@@ -127,7 +127,7 @@ export const ProductModal: React.FC<IProductModalProps> = ({
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Valor Unitário"
+                label="Preço Unitário"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth

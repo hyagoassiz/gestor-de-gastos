@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IOperacaoModalState } from "../interfaces";
+import { IModalOperacaoState } from "../interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { getQueryOptionsGetOperacoes } from "../../../../api/Operacoes/utils/getQueryOptionsGetOperacoes";
 
 interface IUseListagem {
   operacoes: IOperacaoResponseApi[] | undefined;
-  operacaoModalState: IOperacaoModalState;
+  operacaoModalState: IModalOperacaoState;
   filterForm: UseFormReturn<IProventoListPayloadApi>;
   filterCount: number;
   closeOperacaoModal(): void;
@@ -18,7 +18,7 @@ interface IUseListagem {
 
 export const useListagem = (): IUseListagem => {
   const [operacaoModalState, setOperacaoModalState] =
-    useState<IOperacaoModalState>({
+    useState<IModalOperacaoState>({
       operacao: null,
       open: false,
     });

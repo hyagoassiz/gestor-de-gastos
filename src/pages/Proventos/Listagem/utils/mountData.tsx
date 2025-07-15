@@ -16,9 +16,23 @@ export function mountData({
 }: IMountDataProps): any[] {
   if (proventos?.length) {
     return proventos.map((provento) => ({
+      ...provento,
       dataPagamento: dayjs(provento.dataPagamento).format("DD/MM/YYYY"),
       tipoProvento: provento.tipoProvento?.nome ?? "Não encontrado",
       ativo: provento?.ativo?.nome ?? "Ativo não encontrado",
+      precoUnitario: (
+        <Typography variant="body2">
+          <NumericFormat
+            value={provento.precoUnitario}
+            prefix={"R$ "}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            decimalSeparator=","
+            thousandSeparator="."
+            displayType="text"
+          />
+        </Typography>
+      ),
       total: (
         <Typography variant="body2">
           <NumericFormat

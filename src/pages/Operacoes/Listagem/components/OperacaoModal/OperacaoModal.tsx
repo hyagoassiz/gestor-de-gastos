@@ -198,7 +198,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Valor Unitário"
+                label="Preço Unitário"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth

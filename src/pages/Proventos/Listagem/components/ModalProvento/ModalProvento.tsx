@@ -111,7 +111,7 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
-                id="provento"
+                id="ativo"
                 options={ativos ?? []}
                 getOptionLabel={(option) => option.sigla || ""}
                 filterOptions={(options, { inputValue }) =>
@@ -141,7 +141,7 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="provento"
+                    label="Ativo"
                     required
                     fullWidth
                     error={!!fieldState.error}

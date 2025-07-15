@@ -1,1 +1,1 @@
-export * from "./IOperacaoModalState";
+export * from "./IModalOperacaoState";
