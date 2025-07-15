@@ -1,11 +1,4 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../FirebaseConnection";
 import { getCurrentUserOrThrow } from "../getCurrentUserOrThrow";
 import { proventosTypeOptions } from "../../constants/proventosTypeOptions";
@@ -17,23 +10,27 @@ export async function getProventos(
     const currentUser = getCurrentUserOrThrow();
 
     const conditions = [where("usuario", "==", currentUser.uid)];
-
     const proventosQuery = query(collection(db, "provento"), ...conditions);
+    const proventosSnapshot = await getDocs(proventosQuery);
 
-    const querySnapshot = await getDocs(proventosQuery);
+    const ativosSnapshot = await getDocs(
+      query(collection(db, "ativo"), where("usuario", "==", currentUser.uid))
+    );
+
+    const ativosMap = new Map<string, IAtivoResponseApi>();
+    ativosSnapshot.forEach((doc) => {
+      ativosMap.set(doc.id, {
+        id: doc.id,
+        ...(doc.data() as Omit<IAtivoResponseApi, "id">),
+      });
+    });
 
     const proventos: IProventoResponseApi[] = [];
 
-    for (const docSnap of querySnapshot.docs) {
+    // 4. Montar os proventos usando o Map
+    for (const docSnap of proventosSnapshot.docs) {
       const proventosData = docSnap.data() as IProventoPayloadApi;
-
-      const ativoDoc = await getDoc(doc(db, "ativo", proventosData.ativoId));
-      const ativo = ativoDoc.exists()
-        ? {
-            id: ativoDoc.id,
-            ...(ativoDoc.data() as Omit<IAtivoResponseApi, "id">),
-          }
-        : null;
+      const ativo = ativosMap.get(proventosData.ativoId) ?? null;
 
       proventos.push({
         id: docSnap.id,

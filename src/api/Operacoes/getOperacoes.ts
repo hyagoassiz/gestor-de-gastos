@@ -1,11 +1,4 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../FirebaseConnection";
 import { getCurrentUserOrThrow } from "../getCurrentUserOrThrow";
 import { tipoOperacaoOptions } from "../../constants/tipoOperacaoOptions";
@@ -17,23 +10,26 @@ export async function getOperacoes(
     const currentUser = getCurrentUserOrThrow();
 
     const conditions = [where("usuario", "==", currentUser.uid)];
-
     const operacaoQuery = query(collection(db, "operacao"), ...conditions);
+    const operacaoSnapshot = await getDocs(operacaoQuery);
 
-    const querySnapshot = await getDocs(operacaoQuery);
+    const ativosSnapshot = await getDocs(
+      query(collection(db, "ativo"), where("usuario", "==", currentUser.uid))
+    );
+
+    const ativosMap = new Map<string, IAtivoResponseApi>();
+    ativosSnapshot.forEach((doc) => {
+      ativosMap.set(doc.id, {
+        id: doc.id,
+        ...(doc.data() as Omit<IAtivoResponseApi, "id">),
+      });
+    });
 
     const operacoes: IOperacaoResponseApi[] = [];
 
-    for (const docSnap of querySnapshot.docs) {
+    for (const docSnap of operacaoSnapshot.docs) {
       const operacaoData = docSnap.data() as IOperacaoPayloadApi;
-
-      const ativoDoc = await getDoc(doc(db, "ativo", operacaoData.ativoId));
-      const ativo = ativoDoc.exists()
-        ? {
-            id: ativoDoc.id,
-            ...(ativoDoc.data() as Omit<IAtivoResponseApi, "id">),
-          }
-        : null;
+      const ativo = ativosMap.get(operacaoData.ativoId) ?? null;
 
       operacoes.push({
         id: docSnap.id,

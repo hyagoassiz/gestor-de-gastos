@@ -6,11 +6,13 @@ import { NumericFormat } from "react-number-format";
 interface IMountDataProps {
   operacoes: IOperacaoResponseApi[] | undefined;
   handleEditarOperacao(operacao: IOperacaoResponseApi): void;
+  handleDuplicarOperacao(operacao: IOperacaoResponseApi): void;
 }
 
 export function mountData({
   operacoes,
   handleEditarOperacao,
+  handleDuplicarOperacao,
 }: IMountDataProps): any[] {
   if (operacoes?.length) {
     return operacoes.map((operacao) => ({
@@ -47,14 +49,25 @@ export function mountData({
       options: (
         <MoreOptions>
           {({ handleClose }) => (
-            <MenuItem
-              onClick={() => {
-                handleEditarOperacao(operacao);
-                handleClose();
-              }}
-            >
-              Editar
-            </MenuItem>
+            <div>
+              <MenuItem
+                onClick={() => {
+                  handleEditarOperacao(operacao);
+                  handleClose();
+                }}
+              >
+                Editar
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  handleDuplicarOperacao(operacao);
+                  handleClose();
+                }}
+              >
+                Duplicar
+              </MenuItem>
+            </div>
           )}
         </MoreOptions>
       ),

@@ -8,24 +8,27 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Modal } from "../../../../../components/Modal";
-import { useOperacaoModal } from "./hooks/useOperacaoModal";
+import { useModalOperacao } from "./hooks/useModalOperacao";
 import { NumericFormat } from "react-number-format";
 import { tipoOperacaoOptions } from "../../../../../constants/tipoOperacaoOptions";
 import useCalcularValores from "../../../../../hooks/useCalcularPrecos";
 
-interface IOperacaoModalProps {
+interface IModalOperacaoProps {
   operacao: IOperacaoResponseApi | null;
   open: boolean;
+  isDuplicating: boolean;
   onClose(): void;
 }
 
-export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
+export const ModalOperacao: React.FC<IModalOperacaoProps> = ({
   operacao,
   open,
+  isDuplicating,
   onClose,
 }) => {
-  const { ativos, operacaoForm, submiTProventoForm } = useOperacaoModal({
+  const { ativos, operacaoForm, submiTProventoForm } = useModalOperacao({
     operacao,
+    isDuplicating,
     onClose,
   });
 
@@ -35,7 +38,7 @@ export const OperacaoModal: React.FC<IOperacaoModalProps> = ({
     <Modal
       open={open}
       style={{ width: 480, height: "auto", minWidth: 480 }}
-      title={`${operacao ? "Editar" : "Nova"} Operação`}
+      title={`${operacao && !isDuplicating ? "Editar" : "Nova"} Operação`}
       buttons={
         <>
           <Button variant="text" onClick={onClose}>

@@ -11,6 +11,7 @@ interface IUseListagem {
   filterCount: number;
   closeOperacaoModal(): void;
   handleEditarOperacao(operacao: IOperacaoResponseApi): void;
+  handleDuplicarOperacao(operacao: IOperacaoResponseApi): void;
   handleSubmitFilterForm(): void;
   openOperacaoModal(): void;
   setOperacaoListPayload: Dispatch<SetStateAction<IProventoListPayloadApi>>;
@@ -21,6 +22,7 @@ export const useListagem = (): IUseListagem => {
     useState<IModalOperacaoState>({
       operacao: null,
       open: false,
+      isDuplicating: false,
     });
 
   const [operacaoListPayload, setOperacaoListPayload] =
@@ -41,15 +43,23 @@ export const useListagem = (): IUseListagem => {
   }, [queryGetOperacoes.data]);
 
   function openOperacaoModal(): void {
-    setOperacaoModalState({ operacao: null, open: true });
+    setOperacaoModalState({ operacao: null, open: true, isDuplicating: false });
   }
 
   function closeOperacaoModal(): void {
-    setOperacaoModalState({ operacao: null, open: false });
+    setOperacaoModalState({
+      operacao: null,
+      open: false,
+      isDuplicating: false,
+    });
   }
 
   function handleEditarOperacao(operacao: IOperacaoResponseApi): void {
-    setOperacaoModalState({ operacao, open: true });
+    setOperacaoModalState({ operacao, open: true, isDuplicating: false });
+  }
+
+  function handleDuplicarOperacao(operacao: IOperacaoResponseApi): void {
+    setOperacaoModalState({ operacao, open: true, isDuplicating: true });
   }
 
   function handleSubmitFilterForm(): void {
@@ -65,6 +75,7 @@ export const useListagem = (): IUseListagem => {
     filterCount,
     closeOperacaoModal,
     handleEditarOperacao,
+    handleDuplicarOperacao,
     handleSubmitFilterForm,
     openOperacaoModal,
     setOperacaoListPayload,

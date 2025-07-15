@@ -9,21 +9,23 @@ import { TOperacaoForm } from "../interfaces";
 import { postOperacao } from "../../../../../../api/Operacoes/postOperacao";
 import { KEY_GET_OPERACOES } from "../../../../../../api/Operacoes/utils/getQueryOptionsGetOperacoes";
 
-interface IUseOperacaoModal {
+interface IUseModalOperacaoProps {
   operacao: IOperacaoResponseApi | null;
+  isDuplicating: boolean;
   onClose(): void;
 }
 
-interface IUseOperacaoModalReturn {
+interface IUseModalOperacaoReturn {
   ativos: IAtivoResponseApi[] | undefined;
   operacaoForm: UseFormReturn<TOperacaoForm>;
   submiTProventoForm(): void;
 }
 
-export const useOperacaoModal = ({
+export const useModalOperacao = ({
   operacao,
+  isDuplicating,
   onClose,
-}: IUseOperacaoModal): IUseOperacaoModalReturn => {
+}: IUseModalOperacaoProps): IUseModalOperacaoReturn => {
   const operacaoForm = useForm<TOperacaoForm>();
 
   const { setLoading } = useLoading();
@@ -64,7 +66,7 @@ export const useOperacaoModal = ({
 
           const payload: IOperacaoPayloadApi = {
             ...data,
-            id: data.id ?? undefined,
+            id: !isDuplicating ? data.id : undefined,
             ativoId: data.ativo.id,
             tipoOperacaoId: data.tipoOperacao.id,
             observacao: data.observacao ?? "",
