@@ -1,7 +1,5 @@
 import { Button, Stack } from "@mui/material";
 import { Frame } from "../../../components/Frame";
-import { Header } from "../../../components/Header";
-import { ToolbarContainer } from "../../../components/ToolbarContainer";
 import { Add, UploadFile } from "@mui/icons-material";
 import { useList } from "./hooks/useList";
 import { DataTable } from "../../../components/DataTable/DataTable";
@@ -17,6 +15,8 @@ import { postProvento } from "../../../api/Proventos/postProvento";
 import dayjs from "dayjs";
 import * as XLSX from "xlsx";
 import { getAtivos } from "../../../api/Ativos/getAtivos";
+import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
+import Header from "../../../components/Header/Header";
 
 export const Listagem: React.FC = () => {
   const {

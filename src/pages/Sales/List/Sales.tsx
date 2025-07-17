@@ -6,8 +6,8 @@ import { salesColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import { CancelSaleModal } from "./components/CancelSaleModal";
 import { Frame } from "../../../components/Frame";
-import { ToolbarContainer } from "../../../components/ToolbarContainer";
-import { Header } from "../../../components/Header";
+import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
+import Header from "../../../components/Header/Header";
 
 export const Sales: React.FC = () => {
   const {

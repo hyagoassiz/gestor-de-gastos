@@ -6,8 +6,6 @@ import {
   FormGroup,
 } from "@mui/material";
 import { Frame } from "../../../components/Frame";
-import { Header } from "../../../components/Header";
-import { ToolbarContainer } from "../../../components/ToolbarContainer";
 import { Add } from "@mui/icons-material";
 import { ModalAtivo } from "./components/ModalAtivo";
 import { useList } from "./hooks/useList";
@@ -17,6 +15,8 @@ import { mountData } from "./utils/mountData";
 import { ModalInativar } from "./components/ModalInativar";
 import { FilterDrawer } from "../../../components/FilterDrawer";
 import { Controller } from "react-hook-form";
+import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
+import Header from "../../../components/Header/Header";
 
 export const Listagem: React.FC = () => {
   const {
@@ -53,7 +53,6 @@ export const Listagem: React.FC = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        color="info"
                         checked={field.value}
                         onChange={field.onChange}
                       />

@@ -4,7 +4,6 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export const HeaderBox = styled(Box)(({ theme }) => ({
   height: theme.spacing(7.5),
-  backgroundColor: theme.palette.primary.dark,
   display: "flex",
   alignItems: "center",
 }));
@@ -21,6 +20,7 @@ export const BoxButtons = styled(Box)(({ theme }) => ({
   width: "100%",
   marginLeft: theme.spacing(1),
   marginRight: theme.spacing(1),
+  gap: theme.spacing(1),
 }));
 
 export const Icon = styled(CloseIcon)(() => ({

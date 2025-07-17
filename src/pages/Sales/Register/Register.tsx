@@ -3,8 +3,8 @@ import { TextField, Button, Autocomplete, Grid } from "@mui/material";
 import { NumericFormat } from "react-number-format";
 import { useRegister } from "./hooks/useRegister";
 import { Frame } from "../../../components/Frame";
-import { Header } from "../../../components/Header";
 import { RegisterTabs } from "./components/Tabs";
+import Header from "../../../components/Header/Header";
 
 export const Register: React.FC = () => {
   const {

@@ -1,7 +1,7 @@
 import { Box, Paper, Typography, useTheme } from "@mui/material";
 import { ISeachBar } from "../../interfaces/ISearchBar";
-import { ReactNode } from "react";
-import { ToolbarContainer } from "../ToolbarContainer";
+import { memo, ReactNode } from "react";
+import ToolbarContainer from "../ToolbarContainer/ToolbarContainer";
 
 interface IHeaderProps {
   title: string;
@@ -10,7 +10,7 @@ interface IHeaderProps {
   backButton?(): void;
 }
 
-export const Header: React.FC<IHeaderProps> = ({
+const Header: React.FC<IHeaderProps> = ({
   title,
   buttons,
   searchBar,
@@ -60,3 +60,5 @@ export const Header: React.FC<IHeaderProps> = ({
     </Paper>
   );
 };
+
+export default memo(Header);

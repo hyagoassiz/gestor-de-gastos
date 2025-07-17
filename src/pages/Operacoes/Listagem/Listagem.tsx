@@ -1,7 +1,5 @@
 import { Button } from "@mui/material";
 import { Frame } from "../../../components/Frame";
-import { Header } from "../../../components/Header";
-import { ToolbarContainer } from "../../../components/ToolbarContainer";
 import { Add, UploadFile } from "@mui/icons-material";
 import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
@@ -9,6 +7,8 @@ import { proventosColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import { ModalOperacao } from "./components/ModalOperacao";
 import usePostOperacaoEmLote from "./hooks/usePostOperacaoEmLote";
+import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
+import Header from "../../../components/Header/Header";
 
 export const Listagem: React.FC = () => {
   const {

@@ -4,8 +4,8 @@ import { mountData } from "./utils/mountData";
 import { Add, Delete } from "@mui/icons-material";
 import { ProductModal } from "./components/ProductModal";
 import { useProducts } from "./hooks/useProducts";
-import { ToolbarContainer } from "../../../../../../../components/ToolbarContainer";
 import { DataTable } from "../../../../../../../components/DataTable/DataTable";
+import ToolbarContainer from "../../../../../../../components/ToolbarContainer/ToolbarContainer";
 
 interface IProductsProps {
   isEditMode: boolean;

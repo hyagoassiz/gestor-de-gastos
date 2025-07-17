@@ -1,6 +1,7 @@
 import {
   Badge,
   Button,
+  Divider,
   IconButton,
   Drawer as MuiDrawer,
   Tooltip,
@@ -55,7 +56,6 @@ export const FilterDrawer = ({
               <StyledTypography variant="h6">Fechar</StyledTypography>
               <BoxApply>
                 <Button
-                  color="info"
                   variant="contained"
                   onClick={() => {
                     applyFilter();
@@ -67,6 +67,7 @@ export const FilterDrawer = ({
               </BoxApply>
             </BoxButtons>
           </HeaderBox>
+          <Divider />
           <BoxChildren>{children}</BoxChildren>
         </StyledBox>
       </MuiDrawer>

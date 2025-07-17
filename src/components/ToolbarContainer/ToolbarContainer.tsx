@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { BoxContainer, StyledBox, StyledContainer } from "./styles";
 import { ISeachBar } from "../../interfaces/ISearchBar";
 import ArrowBackIosTwoToneIcon from "@mui/icons-material/ArrowBackIosTwoTone";
@@ -25,7 +25,7 @@ interface IToolbarContainerProps {
   contrastTextColor?: string;
 }
 
-export const ToolbarContainer: React.FC<IToolbarContainerProps> = ({
+const ToolbarContainer: React.FC<IToolbarContainerProps> = ({
   title,
   buttons,
   backButton,
@@ -108,3 +108,5 @@ export const ToolbarContainer: React.FC<IToolbarContainerProps> = ({
     </StyledContainer>
   );
 };
+
+export default memo(ToolbarContainer);
