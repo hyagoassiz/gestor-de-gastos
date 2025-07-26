@@ -10,6 +10,11 @@ export async function getOperacoes(
     const currentUser = getCurrentUserOrThrow();
 
     const conditions = [where("usuario", "==", currentUser.uid)];
+
+    if (payload?.ativoIds && payload.ativoIds.length > 0) {
+      conditions.push(where("ativoId", "in", payload.ativoIds));
+    }
+
     const operacaoQuery = query(collection(db, "operacao"), ...conditions);
     const operacaoSnapshot = await getDocs(operacaoQuery);
 

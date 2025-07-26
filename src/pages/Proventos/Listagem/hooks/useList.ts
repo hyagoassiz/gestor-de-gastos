@@ -1,14 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IModalProventoState } from "../interfaces";
+import { IFilterForm, IModalProventoState } from "../interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { getQueryOptionsGetProventos } from "../../../../api/Proventos/utils/getQueryOptionsGetProventos";
 import { useLoading } from "../../../../hooks/useLoading";
+import { getQueryOptionsGetAtivos } from "../../../../api/Ativos/utils/getQueryOptionsGetAtivos";
 
 interface IUseList {
+  ativos: IAtivoResponseApi[] | undefined;
   proventos: IProventoResponseApi[] | undefined;
   modalProventoState: IModalProventoState;
-  filterForm: UseFormReturn<IProventoListPayloadApi>;
+  filterForm: UseFormReturn<IFilterForm>;
   filterCount: number;
   closeModalProvento(): void;
   handleDuplicarProvento(provento: IProventoResponseApi): void;
@@ -27,19 +29,25 @@ export const useList = (): IUseList => {
     });
 
   const [proventoListPayload, setProventosListPayload] =
-    useState<IProventoListPayloadApi>({ ativoId: "" });
+    useState<IProventoListPayloadApi>({ ativoIds: [] });
 
-  const filterForm = useForm<IProventoListPayloadApi>({
-    defaultValues: { ativoId: proventoListPayload.ativoId },
-  });
+  const filterForm = useForm<IFilterForm>();
 
   const { setLoading } = useLoading();
+
+  const queryGetAtivos = useQuery({
+    ...getQueryOptionsGetAtivos({ ativo: true }),
+  });
 
   const querygetProventos = useQuery({
     ...getQueryOptionsGetProventos(proventoListPayload),
   });
 
-  const filterCount: number = proventoListPayload.ativoId === "" ? 0 : 1;
+  const filterCount: number = proventoListPayload?.ativoIds?.length ?? 0;
+
+  const ativos = useMemo(() => {
+    return queryGetAtivos.data;
+  }, [queryGetAtivos.data]);
 
   const proventos = useMemo(() => {
     return querygetProventos.data;
@@ -72,11 +80,14 @@ export const useList = (): IUseList => {
 
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
-      setProventosListPayload({ ativoId: data.ativoId });
+      const ativoIds = data.ativos.map((ativo) => ativo.id);
+
+      setProventosListPayload({ ativoIds });
     })();
   }
 
   return {
+    ativos,
     proventos,
     modalProventoState,
     filterForm,

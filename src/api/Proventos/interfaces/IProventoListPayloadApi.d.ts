@@ -1,3 +1,3 @@
 interface IProventoListPayloadApi {
-  ativoId?: string;
+  ativoIds?: string[];
 }

@@ -10,6 +10,11 @@ export async function getProventos(
     const currentUser = getCurrentUserOrThrow();
 
     const conditions = [where("usuario", "==", currentUser.uid)];
+
+    if (payload?.ativoIds && payload.ativoIds.length > 0) {
+      conditions.push(where("ativoId", "in", payload.ativoIds));
+    }
+
     const proventosQuery = query(collection(db, "provento"), ...conditions);
     const proventosSnapshot = await getDocs(proventosQuery);
 

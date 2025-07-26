@@ -1,14 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IModalOperacaoState } from "../interfaces";
+import { IFilterForm, IModalOperacaoState } from "../interfaces";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { getQueryOptionsGetOperacoes } from "../../../../api/Operacoes/utils/getQueryOptionsGetOperacoes";
 import { useLoading } from "../../../../hooks/useLoading";
+import { getQueryOptionsGetAtivos } from "../../../../api/Ativos/utils/getQueryOptionsGetAtivos";
 
 interface IUseListagem {
+  ativos: IAtivoResponseApi[] | undefined;
   operacoes: IOperacaoResponseApi[] | undefined;
   operacaoModalState: IModalOperacaoState;
-  filterForm: UseFormReturn<IProventoListPayloadApi>;
+  filterForm: UseFormReturn<IFilterForm>;
   filterCount: number;
   closeOperacaoModal(): void;
   handleEditarOperacao(operacao: IOperacaoResponseApi): void;
@@ -27,19 +29,25 @@ export const useListagem = (): IUseListagem => {
     });
 
   const [operacaoListPayload, setOperacaoListPayload] =
-    useState<IProventoListPayloadApi>({ ativoId: "" });
+    useState<IProventoListPayloadApi>({ ativoIds: [] });
 
-  const filterForm = useForm<IProventoListPayloadApi>({
-    defaultValues: { ativoId: operacaoListPayload.ativoId },
-  });
+  const filterForm = useForm<IFilterForm>();
 
   const { setLoading } = useLoading();
+
+  const queryGetAtivos = useQuery({
+    ...getQueryOptionsGetAtivos({ ativo: true }),
+  });
 
   const queryGetOperacoes = useQuery({
     ...getQueryOptionsGetOperacoes(operacaoListPayload),
   });
 
-  const filterCount: number = operacaoListPayload.ativoId === "" ? 0 : 1;
+  const filterCount: number = operacaoListPayload.ativoIds?.length ?? 0;
+
+  const ativos = useMemo(() => {
+    return queryGetAtivos.data;
+  }, [queryGetAtivos.data]);
 
   const operacoes = useMemo(() => {
     return queryGetOperacoes.data;
@@ -72,11 +80,14 @@ export const useListagem = (): IUseListagem => {
 
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
-      setOperacaoListPayload({ ativoId: data.ativoId });
+      const ativoIds = data.ativos.map((ativo) => ativo.id);
+
+      setOperacaoListPayload({ ativoIds });
     })();
   }
 
   return {
+    ativos,
     operacoes,
     operacaoModalState,
     filterForm,
