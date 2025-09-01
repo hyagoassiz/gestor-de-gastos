@@ -27,19 +27,6 @@ export function mountData({
           secondaryTypographyProps={{ fontSize: "12px" }}
         />
       ),
-      precoUnitario: (
-        <Typography variant="body2">
-          <NumericFormat
-            value={provento.precoUnitario}
-            prefix={"R$ "}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            decimalSeparator=","
-            thousandSeparator="."
-            displayType="text"
-          />
-        </Typography>
-      ),
       total: (
         <Typography variant="body2">
           <NumericFormat

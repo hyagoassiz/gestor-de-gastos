@@ -34,8 +34,8 @@ export async function getProducts(
         valor: produtoData.valor,
         ativo: produtoData.ativo,
         quantidade: produtoData.quantidade,
-        createdAt: produtoData.createdAt,
-        updatedAt: produtoData.updatedAt,
+        criadoEm: produtoData.criadoEm,
+        atualizadoEm: produtoData.atualizadoEm,
       });
     });
 

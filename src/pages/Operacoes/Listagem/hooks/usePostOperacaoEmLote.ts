@@ -93,8 +93,8 @@ const usePostOperacaoEmLote = (): IUsePostOperacaoEmLote => {
           precoUnitario: Number(row["Preço Unitário"]),
           total: Number(row["Total"]),
           observacao: row["Observação"] ?? "",
-          createdAt: now,
-          updatedAt: "",
+          criadoEm: now,
+          atualizadoEm: "",
         });
       }
 

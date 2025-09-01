@@ -17,7 +17,7 @@ export async function postAtivo(
 
     const usuario = currentUser.uid;
 
-    const { id, ...updateData } = payload;
+    const { id, ...atualizadoEma } = payload;
 
     if (id) {
       const contaRef = doc(db, "ativo", id);
@@ -31,7 +31,7 @@ export async function postAtivo(
       const currentData = existingDoc.data();
 
       await updateDoc(contaRef, {
-        ...updateData,
+        ...atualizadoEma,
         ativo: currentData.ativo,
       });
 
@@ -39,7 +39,7 @@ export async function postAtivo(
     }
 
     const newDocRef = await addDoc(collection(db, "ativo"), {
-      ...updateData,
+      ...atualizadoEma,
       ativo: true,
       usuario,
     });

@@ -73,8 +73,8 @@ export const useModalProvento = ({
             precoUnitario: data.precoUnitario,
             total: data.total,
             observacao: data.observacao ?? "",
-            createdAt: data.createdAt ?? now,
-            updatedAt: data.id ? now : "",
+            criadoEm: data.criadoEm ?? now,
+            atualizadoEm: data.id ? now : "",
           };
 
           await postProvento(payload);

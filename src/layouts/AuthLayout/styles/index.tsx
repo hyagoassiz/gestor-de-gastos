@@ -16,10 +16,12 @@ export const BoxContainer = styled(Box)(({ theme }) => ({
   height: "auto",
   width: "350px",
   boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.3)",
+  backgroundColor: theme.palette.primary.contrastText,
   padding: theme.spacing(4),
 }));
 
-export const TitleStyled = styled(Typography)<TypographyProps>(() => ({
+export const TitleStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
   fontWeight: 600,
   alignSelf: "flex-start",
+  color: theme.palette.text.primary,
 }));

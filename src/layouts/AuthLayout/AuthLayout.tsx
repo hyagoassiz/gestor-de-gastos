@@ -1,7 +1,7 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 import { BoxContainer, BoxMain, TitleStyled } from "./styles";
-import coreUIImage from "../../assets/images/core-ui-illustration-2.png";
+import gestorImage from "../../assets/images/gestor-ilustration2.png";
 
 interface IAuthLayout {
   children: ReactNode;
@@ -24,7 +24,7 @@ export const AuthLayout: React.FC<IAuthLayout> = ({
           item
           md={6}
           sx={{
-            backgroundImage: `url(${coreUIImage})`,
+            backgroundImage: `url(${gestorImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -38,6 +38,7 @@ export const AuthLayout: React.FC<IAuthLayout> = ({
         display="flex"
         alignItems="center"
         justifyContent="center"
+        bgcolor={theme.palette.primary.dark}
       >
         <BoxMain onKeyDown={onKeyDown}>
           <BoxContainer>

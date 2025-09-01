@@ -9,7 +9,6 @@ import { PersonalInfoRoute } from "../pages/Auth/PersonalInfo";
 import { DashboardRoute } from "../pages/Dashboard/List";
 import { AboutRoute } from "../pages/About/List";
 import { SettingsRoute } from "../pages/Settings/List";
-import { SalesRegisterRoute, SalesRoute } from "../pages/Sales";
 import { AtivosListagemRoute } from "../pages/Ativos";
 import { ProventosListagemRoute } from "../pages/Proventos";
 import { OperacoesListagemRoute } from "../pages/Operacoes";
@@ -78,33 +77,6 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <AtivosListagemRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.SALES.LIST}
-            element={
-              <ProtectedRoute permission="">
-                <SalesRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.SALES.REGISTER}
-            element={
-              <ProtectedRoute permission="">
-                <SalesRegisterRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.SALES.EDIT}
-            element={
-              <ProtectedRoute permission="">
-                <SalesRegisterRoute />
               </ProtectedRoute>
             }
           />

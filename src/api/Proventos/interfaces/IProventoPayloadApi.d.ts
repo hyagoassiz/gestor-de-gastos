@@ -3,8 +3,6 @@ interface IProventoPayloadApi extends ITimestampableApi {
   dataPagamento: string;
   ativoId: string;
   tipoProventoId: IProventoTypeApi["id"];
-  quantidade: number;
-  precoUnitario: number;
   total: number;
   observacao: string;
 }

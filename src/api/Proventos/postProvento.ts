@@ -17,7 +17,7 @@ export async function postProvento(
 
     const usuario = currentUser.uid;
 
-    const { id, ...updateData } = payload;
+    const { id, ...atualizadoEma } = payload;
 
     if (id) {
       const proventoRef = doc(db, "provento", id);
@@ -29,14 +29,14 @@ export async function postProvento(
       }
 
       await updateDoc(proventoRef, {
-        ...updateData,
+        ...atualizadoEma,
       });
 
       return proventoRef;
     }
 
     const newDocRef = await addDoc(collection(db, "provento"), {
-      ...updateData,
+      ...atualizadoEma,
       usuario,
     });
 

@@ -20,7 +20,7 @@ export async function postProduct(
   }
 
   const usuario = currentUser.uid;
-  const { id, ...updateData } = payload;
+  const { id, ...atualizadoEma } = payload;
 
   try {
     if (id) {
@@ -33,14 +33,14 @@ export async function postProduct(
 
       const currentData = existingDoc.data();
       await updateDoc(contaRef, {
-        ...updateData,
+        ...atualizadoEma,
         ativo: currentData.ativo,
       });
 
       return contaRef;
     } else {
       const newDocRef = await addDoc(collection(db, "produto"), {
-        ...updateData,
+        ...atualizadoEma,
         ativo: true,
         usuario,
       });

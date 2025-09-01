@@ -30,8 +30,8 @@ export async function getAtivos(
         tipo: ativoData.tipo,
         ativo: ativoData.ativo,
         observacao: ativoData.observacao,
-        createdAt: ativoData.createdAt,
-        updatedAt: ativoData.updatedAt,
+        criadoEm: ativoData.criadoEm,
+        atualizadoEm: ativoData.atualizadoEm,
       });
     });
 

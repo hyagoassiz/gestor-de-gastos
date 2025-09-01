@@ -17,7 +17,7 @@ export async function postOperacao(
 
     const usuario = currentUser.uid;
 
-    const { id, ...updateData } = payload;
+    const { id, ...atualizadoEma } = payload;
 
     if (id) {
       const operacaoRef = doc(db, "operacao", id);
@@ -29,14 +29,14 @@ export async function postOperacao(
       }
 
       await updateDoc(operacaoRef, {
-        ...updateData,
+        ...atualizadoEma,
       });
 
       return operacaoRef;
     }
 
     const newDocRef = await addDoc(collection(db, "operacao"), {
-      ...updateData,
+      ...atualizadoEma,
       usuario,
     });
 

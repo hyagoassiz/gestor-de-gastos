@@ -47,8 +47,8 @@ export async function getOperacoes(
         precoUnitario: operacaoData.precoUnitario,
         total: operacaoData.total,
         observacao: operacaoData.observacao,
-        createdAt: operacaoData.createdAt ?? "",
-        updatedAt: operacaoData.updatedAt ?? "",
+        criadoEm: operacaoData.criadoEm ?? "",
+        atualizadoEm: operacaoData.atualizadoEm ?? "",
       });
     }
 
@@ -57,7 +57,7 @@ export async function getOperacoes(
       const dateB = b.dataOperacao;
 
       if (dateA === dateB) {
-        return b.createdAt.localeCompare(a.createdAt);
+        return b.criadoEm.localeCompare(a.criadoEm);
       }
 
       return b.dataOperacao.localeCompare(a.dataOperacao);

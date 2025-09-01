@@ -25,12 +25,6 @@ export const OPERACOES = {
   LIST: "/operacoes",
 };
 
-export const SALES = {
-  LIST: `/vendas`,
-  REGISTER: `/vendas/nova`,
-  EDIT: `/vendas/venda/:id`,
-};
-
 export const ABOUT = {
   LIST: `/sobre`,
 };

@@ -53,8 +53,8 @@ export const useModalAtivo = ({
             ...data,
             id: data.id ?? undefined,
             observacao: data.observacao ?? "",
-            createdAt: data.createdAt ?? now,
-            updatedAt: data.id ? now : "",
+            criadoEm: data.criadoEm ?? now,
+            atualizadoEm: data.id ? now : "",
           };
 
           await postAtivo(payload);

@@ -57,8 +57,6 @@ export const Listagem: React.FC = () => {
     "Data Pagamento": string;
     "Tipo Provento": IProventoTypeApi["id"];
     Ativo: string;
-    Quantidade: number;
-    "Preço Unitário": number;
     Total: number;
     Observação?: string;
   }
@@ -94,12 +92,10 @@ export const Listagem: React.FC = () => {
             dataPagamento: dataFormatada,
             tipoProventoId: row["Tipo Provento"],
             ativoId: ativoEncontrado?.id ?? row["Ativo"],
-            quantidade: Number(row["Quantidade"]),
-            precoUnitario: Number(row["Preço Unitário"]),
             total: Number(row["Total"]),
             observacao: row["Observação"] ?? "",
-            createdAt: now,
-            updatedAt: "",
+            criadoEm: now,
+            atualizadoEm: "",
           };
 
           await postProvento(payload);

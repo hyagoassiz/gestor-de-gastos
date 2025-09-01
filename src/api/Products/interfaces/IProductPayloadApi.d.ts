@@ -5,6 +5,6 @@ interface IProductPayloadApi {
   valor: string;
   quantidade: number;
   ativo?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  criadoEm?: string;
+  atualizadoEm?: string;
 }

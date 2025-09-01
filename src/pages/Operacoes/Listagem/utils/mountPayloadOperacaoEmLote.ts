@@ -49,8 +49,8 @@ export async function mountPayloadOperacaoEmLote(
         precoUnitario: Number(row["Preço Unitário"]),
         total: Number(row["Total"]),
         observacao: row["Observação"] ?? "",
-        createdAt: now,
-        updatedAt: "",
+        criadoEm: now,
+        atualizadoEm: "",
       });
     }
 

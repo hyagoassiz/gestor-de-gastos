@@ -3,7 +3,6 @@ import { IRotas } from "../interfaces";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { Settings } from "@mui/icons-material";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const rotas: IRotas[] = [
@@ -39,16 +38,6 @@ export const rotas: IRotas[] = [
         name: "Ativos",
         route: PATHS.ATIVOS.LIST,
         icon: <SpaceDashboardIcon />,
-      },
-    ],
-  },
-  {
-    categoria: "",
-    rotas: [
-      {
-        name: "Vendas",
-        route: PATHS.SALES.LIST,
-        icon: <PointOfSaleIcon />,
       },
     ],
   },

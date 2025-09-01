@@ -45,11 +45,9 @@ export async function getProventos(
         ) as IProventoTypeApi,
         ativo,
         observacao: proventosData.observacao,
-        quantidade: proventosData.quantidade,
-        precoUnitario: proventosData.precoUnitario,
         total: proventosData.total,
-        createdAt: proventosData.createdAt ?? "",
-        updatedAt: proventosData.updatedAt ?? "",
+        criadoEm: proventosData.criadoEm ?? "",
+        atualizadoEm: proventosData.atualizadoEm ?? "",
       });
     }
 
@@ -58,7 +56,7 @@ export async function getProventos(
       const dateB = b.dataPagamento;
 
       if (dateA === dateB) {
-        return b.createdAt.localeCompare(a.createdAt);
+        return b.criadoEm.localeCompare(a.criadoEm);
       }
 
       return b.dataPagamento.localeCompare(a.dataPagamento);

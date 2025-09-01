@@ -13,7 +13,9 @@ export const StyledLink = styled(Link)(() => ({}));
 
 export const StyledFormControlLabel = styled(FormControlLabel)(() => ({}));
 
-export const StyledTypography = styled(Typography)(() => ({}));
+export const StyledTypography = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
+}));
 
 export const StyledDivider = styled(Divider)(() => ({
   width: "100%",

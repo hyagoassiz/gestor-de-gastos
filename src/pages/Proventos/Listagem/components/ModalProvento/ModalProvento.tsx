@@ -11,7 +11,6 @@ import { Modal } from "../../../../../components/Modal";
 import { useModalProvento } from "./hooks/useModalProvento";
 import { proventosTypeOptions } from "../../../../../constants/proventosTypeOptions";
 import { NumericFormat } from "react-number-format";
-import useCalcularValores from "../../../../../hooks/useCalcularPrecos";
 
 interface IModalProventoProps {
   provento: IProventoResponseApi | null;
@@ -31,8 +30,6 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
     isDuplicating,
     onClose,
   });
-
-  const { calcularTotal, calcularPrecoUnitario } = useCalcularValores();
 
   return (
     <Modal
@@ -152,86 +149,6 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={6}>
-          <Controller
-            name="quantidade"
-            control={proventosForm.control}
-            rules={{
-              required: true,
-              validate: (value) => value > 0,
-            }}
-            render={({ field, fieldState }) => (
-              <NumericFormat
-                label="Quantidade"
-                customInput={TextField}
-                fullWidth
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                decimalScale={0}
-                fixedDecimalScale
-                value={field.value ?? null}
-                onValueChange={({ floatValue }, { event }) => {
-                  if (event?.isTrusted) {
-                    const total = calcularTotal(
-                      floatValue ?? 0,
-                      proventosForm.getValues("precoUnitario") ?? 0
-                    );
-
-                    proventosForm.setValue("total", total);
-                    field.onChange(floatValue);
-                  }
-                }}
-                decimalSeparator=","
-                thousandSeparator="."
-                required
-                color="info"
-                onFocus={(e) => e.target.select()}
-                error={!!fieldState.error}
-              />
-            )}
-          />
-        </Grid>
-
-        <Grid item xs={6}>
-          <Controller
-            name="precoUnitario"
-            control={proventosForm.control}
-            rules={{
-              required: true,
-              validate: (value) => value > 0,
-            }}
-            render={({ field, fieldState }) => (
-              <NumericFormat
-                label="Preço Unitário"
-                customInput={TextField}
-                prefix={"R$ "}
-                fullWidth
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                decimalScale={2}
-                fixedDecimalScale
-                value={field.value ?? null}
-                onValueChange={({ floatValue }, { event }) => {
-                  if (event?.isTrusted) {
-                    const total = calcularTotal(
-                      proventosForm.getValues("quantidade"),
-                      floatValue ?? 0
-                    );
-
-                    proventosForm.setValue("total", total);
-
-                    field.onChange(floatValue);
-                  }
-                }}
-                decimalSeparator=","
-                thousandSeparator="."
-                required
-                color="info"
-                onFocus={(e) => e.target.select()}
-                error={!!fieldState.error}
-              />
-            )}
-          />
-        </Grid>
-
         <Grid item xs={12}>
           <Controller
             name="total"
@@ -250,17 +167,8 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
                 decimalScale={2}
                 fixedDecimalScale
                 value={field.value ?? null}
-                onValueChange={({ floatValue }, { event }) => {
-                  if (event?.isTrusted) {
-                    const valorUnitario = calcularPrecoUnitario(
-                      floatValue ?? 0,
-                      proventosForm.getValues("quantidade")
-                    );
-
-                    proventosForm.setValue("precoUnitario", valorUnitario);
-
-                    field.onChange(floatValue);
-                  }
+                onValueChange={({ floatValue }) => {
+                  field.onChange(floatValue);
                 }}
                 decimalSeparator=","
                 thousandSeparator="."

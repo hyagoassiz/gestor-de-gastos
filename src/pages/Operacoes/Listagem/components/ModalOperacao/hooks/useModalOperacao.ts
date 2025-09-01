@@ -70,8 +70,8 @@ export const useModalOperacao = ({
             ativoId: data.ativo.id,
             tipoOperacaoId: data.tipoOperacao.id,
             observacao: data.observacao ?? "",
-            createdAt: data.createdAt ?? now,
-            updatedAt: data.id ? now : "",
+            criadoEm: data.criadoEm ?? now,
+            atualizadoEm: data.id ? now : "",
           };
 
           await postOperacao(payload);
