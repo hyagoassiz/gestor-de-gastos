@@ -1,0 +1,3 @@
+interface ICategoriaListPayloadApi {
+  ativo?: boolean;
+}

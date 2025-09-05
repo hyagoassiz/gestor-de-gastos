@@ -4,25 +4,25 @@ import { useNotification } from "../../../../../../hooks/useNotification";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { postConta } from "../../../../../../api/Contas/postConta";
-import { KEY_GET_CONTAS } from "../../../../../../api/Contas/utils/queryOptionsGetContas";
-import { IContaForm } from "../interfaces";
+import { ICategoriaForm } from "../interfaces";
+import { postCategoria } from "../../../../../../api/Categorias/postCategoria";
+import { KEY_GET_CATEGORIAS } from "../../../../../../api/Categorias/utils/queryOptionsGetCategorias";
 
-interface IUseModalContaProps {
-  conta: IContaApi | undefined;
+interface IUseModalCategoria {
+  categoria: ICategoriaApi | undefined;
   onClose(): void;
 }
 
 interface IUseModalContaReturn {
-  contaForm: UseFormReturn<IContaForm>;
+  contaForm: UseFormReturn<ICategoriaForm>;
   submitContaForm(): void;
 }
 
-export const useModalConta = ({
-  conta,
+export const useModalCategoria = ({
+  categoria,
   onClose,
-}: IUseModalContaProps): IUseModalContaReturn => {
-  const contaForm = useForm<IContaForm>();
+}: IUseModalCategoria): IUseModalContaReturn => {
+  const contaForm = useForm<ICategoriaForm>();
 
   const { setLoading } = useLoading();
 
@@ -31,16 +31,16 @@ export const useModalConta = ({
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (conta) {
-      (Object.keys(conta) as (keyof IContaApi)[]).forEach((key) => {
+    if (categoria) {
+      (Object.keys(categoria) as (keyof ICategoriaApi)[]).forEach((key) => {
         contaForm.setValue(
-          key as keyof IContaPayloadApi,
-          conta[key] as IContaApi[keyof IContaApi]
+          key as keyof ICategoriaPayloadApi,
+          categoria[key] as ICategoriaApi[keyof ICategoriaApi]
         );
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conta]);
+  }, [categoria]);
 
   function submitContaForm(): void {
     contaForm.handleSubmit(
@@ -50,26 +50,24 @@ export const useModalConta = ({
 
           const now = dayjs().toISOString();
 
-          const payload: IContaPayloadApi = {
+          const payload: ICategoriaPayloadApi = {
             ...data,
             id: data.id ?? undefined,
             tipo: data.tipo.id,
-            agencia: data.agencia ?? "",
-            conta: data.conta ?? "",
             observacao: data.observacao ?? "",
             criadoEm: data.criadoEm ?? now,
             atualizadoEm: data.id ? now : "",
             ativo: true,
           };
 
-          await postConta(payload);
+          await postCategoria(payload);
 
           showSnackBar(
-            `Conta ${payload.id ? "editada" : "adicionada"} com sucesso!`,
+            `Categoria ${payload.id ? "editada" : "adicionada"} com sucesso!`,
             "success"
           );
 
-          queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS] });
+          queryClient.invalidateQueries({ queryKey: [KEY_GET_CATEGORIAS] });
 
           onClose();
         } catch (error) {

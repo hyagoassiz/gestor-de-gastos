@@ -17,6 +17,10 @@ export const ATIVOS = {
   LIST: "/ativos",
 };
 
+export const CATEGORIAS = {
+  LISTAGEM: "/categorias",
+};
+
 export const CONTAS = {
   LISTAGEM: "/contas",
 };

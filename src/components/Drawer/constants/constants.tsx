@@ -1,11 +1,9 @@
 import * as PATHS from "../../../routes/paths";
 import { IRotas } from "../interfaces";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-import DescriptionIcon from "@mui/icons-material/Description";
-import { Settings } from "@mui/icons-material";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import ClassIcon from "@mui/icons-material/Class";
 
 export const rotas: IRotas[] = [
   {
@@ -22,30 +20,20 @@ export const rotas: IRotas[] = [
     categoria: "Movimentações",
     rotas: [
       {
-        name: "Operações",
+        name: "Transações",
         route: PATHS.OPERACOES.LIST,
         icon: <SwapVertIcon />,
       },
-      // {
-      //   name: "Proventos",
-      //   route: PATHS.PROVENTOS.LIST,
-      //   icon: <AttachMoneyIcon />,
-      // },
-      // {
-      //   name: "Resumo",
-      //   route: PATHS.RESUMO_ATIVO.LIST,
-      //   icon: <AttachMoneyIcon />,
-      // },
     ],
   },
   {
     categoria: "Sub Cadastros",
     rotas: [
-      // {
-      //   name: "Ativos",
-      //   route: PATHS.ATIVOS.LIST,
-      //   icon: <SpaceDashboardIcon />,
-      // },
+      {
+        name: "Categorias",
+        route: PATHS.CATEGORIAS.LISTAGEM,
+        icon: <ClassIcon />,
+      },
       {
         name: "Contas",
         route: PATHS.CONTAS.LISTAGEM,

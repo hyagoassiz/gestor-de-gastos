@@ -19,7 +19,6 @@ export function mountData({
   if (contas?.length) {
     return contas.map((conta) => ({
       ...conta,
-      id: conta.id,
       nome: (
         <ListItemText
           primary={conta.nome}

@@ -17,6 +17,7 @@ import {
   ResumoAtivoResumoRoute,
 } from "../pages/ResumoAtivo";
 import { ContasListagemRoute } from "../pages/Contas";
+import { CategoriasListagemRoute } from "../pages/Categorias";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -109,6 +110,15 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <ContasListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CATEGORIAS.LISTAGEM}
+            element={
+              <ProtectedRoute permission="">
+                <CategoriasListagemRoute />
               </ProtectedRoute>
             }
           />
