@@ -65,14 +65,19 @@ export const useModalOperacao = ({
           const now = dayjs().toISOString();
 
           const payload: IOperacaoPayloadApi = {
-            ...data,
             id: !isDuplicating ? data.id : undefined,
             ativoId: data.ativo.id,
             tipoOperacaoId: data.tipoOperacao.id,
+            dataOperacao: data.dataOperacao,
+            precoUnitario: data.precoUnitario,
+            quantidade: data.quantidade,
+            total: data.total,
             observacao: data.observacao ?? "",
             criadoEm: data.criadoEm ?? now,
             atualizadoEm: data.id ? now : "",
           };
+
+          console.log(payload);
 
           await postOperacao(payload);
 

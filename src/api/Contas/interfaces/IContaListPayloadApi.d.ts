@@ -1,0 +1,3 @@
+interface IContaListPayloadApi {
+  ativo?: boolean;
+}

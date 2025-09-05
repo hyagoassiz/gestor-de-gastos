@@ -12,6 +12,11 @@ import { SettingsRoute } from "../pages/Settings/List";
 import { AtivosListagemRoute } from "../pages/Ativos";
 import { ProventosListagemRoute } from "../pages/Proventos";
 import { OperacoesListagemRoute } from "../pages/Operacoes";
+import {
+  ResumoAtivoListagemRoute,
+  ResumoAtivoResumoRoute,
+} from "../pages/ResumoAtivo";
+import { ContasListagemRoute } from "../pages/Contas";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -73,10 +78,37 @@ export const AppRoutes = () => {
           />
 
           <Route
+            path={PATHS.RESUMO_ATIVO.LIST}
+            element={
+              <ProtectedRoute permission="">
+                <ResumoAtivoListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.RESUMO_ATIVO.RESUMO}
+            element={
+              <ProtectedRoute permission="">
+                <ResumoAtivoResumoRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path={PATHS.ATIVOS.LIST}
             element={
               <ProtectedRoute permission="">
                 <AtivosListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CONTAS.LISTAGEM}
+            element={
+              <ProtectedRoute permission="">
+                <ContasListagemRoute />
               </ProtectedRoute>
             }
           />

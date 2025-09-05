@@ -1,3 +1,0 @@
-interface IProductListPayloadApi {
-  ativo?: boolean;
-}

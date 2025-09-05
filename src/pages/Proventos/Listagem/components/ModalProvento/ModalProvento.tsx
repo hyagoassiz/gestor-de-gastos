@@ -159,7 +159,7 @@ export const ModalProvento: React.FC<IModalProventoProps> = ({
             }}
             render={({ field, fieldState }) => (
               <NumericFormat
-                label="Total"
+                label="Total (R$)"
                 customInput={TextField}
                 prefix={"R$ "}
                 fullWidth

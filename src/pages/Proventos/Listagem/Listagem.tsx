@@ -36,6 +36,7 @@ export const Listagem: React.FC = () => {
     filterCount,
     closeModalProvento,
     handleEditProventos,
+    handleExcluirProvento,
     handleDuplicarProvento,
     handleSubmitFilterForm,
     openModalProvento,
@@ -216,8 +217,9 @@ export const Listagem: React.FC = () => {
           columns={proventosColumns}
           data={mountData({
             proventos,
-            handleEditProventos,
             handleDuplicarProvento,
+            handleEditProventos,
+            handleExcluirProvento,
           })}
           textForEmptyData="Nenhum provento encontrado."
         />

@@ -13,15 +13,15 @@ interface IUseModalAtivoProps {
 }
 
 interface IUseModalAtivoReturn {
-  ativoForm: UseFormReturn<IAtivoPayloadApi>;
-  submitAtivoForm(): void;
+  contaForm: UseFormReturn<IAtivoPayloadApi>;
+  submitContaForm(): void;
 }
 
 export const useModalAtivo = ({
   ativo,
   onClose,
 }: IUseModalAtivoProps): IUseModalAtivoReturn => {
-  const ativoForm = useForm<IAtivoPayloadApi>();
+  const contaForm = useForm<IAtivoPayloadApi>();
 
   const { setLoading } = useLoading();
 
@@ -32,7 +32,7 @@ export const useModalAtivo = ({
   useEffect(() => {
     if (ativo) {
       (Object.keys(ativo) as (keyof IAtivoResponseApi)[]).forEach((key) => {
-        ativoForm.setValue(
+        contaForm.setValue(
           key as keyof IAtivoPayloadApi,
           ativo[key] as IAtivoResponseApi[keyof IAtivoResponseApi]
         );
@@ -41,8 +41,8 @@ export const useModalAtivo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ativo]);
 
-  function submitAtivoForm(): void {
-    ativoForm.handleSubmit(
+  function submitContaForm(): void {
+    contaForm.handleSubmit(
       async (data) => {
         try {
           setLoading(true);
@@ -80,7 +80,7 @@ export const useModalAtivo = ({
   }
 
   return {
-    ativoForm,
-    submitAtivoForm,
+    contaForm,
+    submitContaForm,
   };
 };

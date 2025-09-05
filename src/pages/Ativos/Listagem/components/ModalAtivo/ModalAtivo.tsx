@@ -15,7 +15,7 @@ export const ModalAtivo: React.FC<IAsseModalProps> = ({
   open,
   onClose,
 }) => {
-  const { ativoForm, submitAtivoForm } = useModalAtivo({ ativo, onClose });
+  const { contaForm, submitContaForm } = useModalAtivo({ ativo, onClose });
 
   return (
     <Modal
@@ -27,7 +27,7 @@ export const ModalAtivo: React.FC<IAsseModalProps> = ({
           <Button variant="text" onClick={onClose}>
             Fechar
           </Button>
-          <Button variant="contained" onClick={submitAtivoForm}>
+          <Button variant="contained" onClick={submitContaForm}>
             Salvar
           </Button>
         </>
@@ -36,7 +36,7 @@ export const ModalAtivo: React.FC<IAsseModalProps> = ({
       <Box display="flex" flexDirection="column" gap={3}>
         <Controller
           name="nome"
-          control={ativoForm.control}
+          control={contaForm.control}
           rules={{ required: true }}
           render={({ field, formState }) => (
             <TextField
@@ -53,7 +53,7 @@ export const ModalAtivo: React.FC<IAsseModalProps> = ({
         <Controller
           name="sigla"
           rules={{ required: true }}
-          control={ativoForm.control}
+          control={contaForm.control}
           render={({ field, formState }) => (
             <TextField
               {...field}
@@ -75,7 +75,7 @@ export const ModalAtivo: React.FC<IAsseModalProps> = ({
 
         <Controller
           name="tipo"
-          control={ativoForm.control}
+          control={contaForm.control}
           rules={{ required: true }}
           render={({ field, fieldState }) => (
             <Autocomplete
@@ -105,7 +105,7 @@ export const ModalAtivo: React.FC<IAsseModalProps> = ({
         <Controller
           name="observacao"
           rules={{ required: false }}
-          control={ativoForm.control}
+          control={contaForm.control}
           render={({ field, formState }) => (
             <TextField
               {...field}

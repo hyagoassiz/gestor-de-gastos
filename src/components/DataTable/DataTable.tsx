@@ -139,7 +139,12 @@ export const DataTable: React.FC<IDataTable> = ({
                 </StyledTableCellHead>
               )}
               {columns.map((column) => (
-                <StyledTableCellHead size="small" key={column.key}>
+                <StyledTableCellHead
+                  size="small"
+                  key={column.key}
+                  align={column.align ?? "left"}
+                  sx={{ ...column?.style }}
+                >
                   {column.label}
                 </StyledTableCellHead>
               ))}
@@ -156,6 +161,7 @@ export const DataTable: React.FC<IDataTable> = ({
                     "&:hover": {
                       backgroundColor: theme.palette.action.hover,
                     },
+                    ...row?.style,
                   }}
                 >
                   {isSelectable && (
@@ -170,7 +176,7 @@ export const DataTable: React.FC<IDataTable> = ({
                     <StyledTableCellBody
                       size="small"
                       key={column.key}
-                      sx={{ ...column?.style }}
+                      align={column.align ?? "left"}
                     >
                       {row[column.key]}
                     </StyledTableCellBody>

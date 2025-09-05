@@ -69,8 +69,6 @@ export const useModalProvento = ({
             dataPagamento: data.dataPagamento,
             tipoProventoId: data.tipoProvento.id,
             ativoId: data.ativo.id,
-            quantidade: data.quantidade,
-            precoUnitario: data.precoUnitario,
             total: data.total,
             observacao: data.observacao ?? "",
             criadoEm: data.criadoEm ?? now,

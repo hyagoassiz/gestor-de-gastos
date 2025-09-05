@@ -5,6 +5,8 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { getQueryOptionsGetOperacoes } from "../../../../api/Operacoes/utils/getQueryOptionsGetOperacoes";
 import { useLoading } from "../../../../hooks/useLoading";
 import { getQueryOptionsGetAtivos } from "../../../../api/Ativos/utils/getQueryOptionsGetAtivos";
+import { deleteOperacaoById } from "../../../../api/Operacoes/deleteOperacaoById";
+import { useNotification } from "../../../../hooks/useNotification";
 
 interface IUseListagem {
   ativos: IAtivoResponseApi[] | undefined;
@@ -14,6 +16,7 @@ interface IUseListagem {
   filterCount: number;
   closeOperacaoModal(): void;
   handleEditarOperacao(operacao: IOperacaoResponseApi): void;
+  handleExcluirOperacao(id: string): Promise<void>;
   handleDuplicarOperacao(operacao: IOperacaoResponseApi): void;
   handleSubmitFilterForm(): void;
   openOperacaoModal(): void;
@@ -34,6 +37,8 @@ export const useListagem = (): IUseListagem => {
   const filterForm = useForm<IFilterForm>();
 
   const { setLoading } = useLoading();
+
+  const { showSnackBar } = useNotification();
 
   const queryGetAtivos = useQuery({
     ...getQueryOptionsGetAtivos({ ativo: true }),
@@ -74,6 +79,21 @@ export const useListagem = (): IUseListagem => {
     setOperacaoModalState({ operacao, open: true, isDuplicating: false });
   }
 
+  async function handleExcluirOperacao(id: string): Promise<void> {
+    try {
+      setLoading(true);
+
+      await deleteOperacaoById(id);
+
+      showSnackBar(`Operação excluída com sucesso!`, "success");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      queryGetOperacoes.refetch();
+    }
+  }
+
   function handleDuplicarOperacao(operacao: IOperacaoResponseApi): void {
     setOperacaoModalState({ operacao, open: true, isDuplicating: true });
   }
@@ -94,6 +114,7 @@ export const useListagem = (): IUseListagem => {
     filterCount,
     closeOperacaoModal,
     handleEditarOperacao,
+    handleExcluirOperacao,
     handleDuplicarOperacao,
     handleSubmitFilterForm,
     openOperacaoModal,

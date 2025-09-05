@@ -5,6 +5,8 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { getQueryOptionsGetProventos } from "../../../../api/Proventos/utils/getQueryOptionsGetProventos";
 import { useLoading } from "../../../../hooks/useLoading";
 import { getQueryOptionsGetAtivos } from "../../../../api/Ativos/utils/getQueryOptionsGetAtivos";
+import { deleteProventoById } from "../../../../api/Proventos/deleteProventoById";
+import { useNotification } from "../../../../hooks/useNotification";
 
 interface IUseList {
   ativos: IAtivoResponseApi[] | undefined;
@@ -15,6 +17,7 @@ interface IUseList {
   closeModalProvento(): void;
   handleDuplicarProvento(provento: IProventoResponseApi): void;
   handleEditProventos(provento: IProventoResponseApi): void;
+  handleExcluirProvento(id: string): Promise<void>;
   handleSubmitFilterForm(): void;
   openModalProvento(): void;
   setProventosListPayload: Dispatch<SetStateAction<IProventoListPayloadApi>>;
@@ -34,6 +37,8 @@ export const useList = (): IUseList => {
   const filterForm = useForm<IFilterForm>();
 
   const { setLoading } = useLoading();
+
+  const { showSnackBar } = useNotification();
 
   const queryGetAtivos = useQuery({
     ...getQueryOptionsGetAtivos({ ativo: true }),
@@ -78,6 +83,21 @@ export const useList = (): IUseList => {
     setModalProventoState({ provento, open: true, isDuplicating: false });
   }
 
+  async function handleExcluirProvento(id: string): Promise<void> {
+    try {
+      setLoading(true);
+
+      await deleteProventoById(id);
+
+      showSnackBar(`Provento excluído com sucesso!`, "success");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      querygetProventos.refetch();
+    }
+  }
+
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
       const ativoIds = data.ativos.map((ativo) => ativo.id);
@@ -94,6 +114,7 @@ export const useList = (): IUseList => {
     filterCount,
     closeModalProvento,
     handleEditProventos,
+    handleExcluirProvento,
     handleDuplicarProvento,
     handleSubmitFilterForm,
     openModalProvento,

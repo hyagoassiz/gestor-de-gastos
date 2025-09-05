@@ -1,5 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  AppBar as MuiAppBar,
   Avatar,
   Box,
   IconButton,
@@ -18,9 +19,7 @@ import useAppBar from "./hooks/useAppBar";
 
 export const AppBar: React.FC = () => {
   const { drawer } = useAppBar();
-
   const dispatch = useDispatch();
-
   const theme = useTheme();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -34,7 +33,9 @@ export const AppBar: React.FC = () => {
   };
 
   return (
-    <Toolbar
+    <MuiAppBar
+      position="fixed"
+      elevation={0}
       sx={{
         width: `calc(100% - ${drawer.isOpen ? drawer.drawerWidth : 0}px)`,
         ml: `${drawer.isOpen ? drawer.drawerWidth : 0}px`,
@@ -42,60 +43,62 @@ export const AppBar: React.FC = () => {
         color: theme.palette.primary.contrastText,
       }}
     >
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        onClick={() => dispatch(setDrawerOpen(true))}
-        edge="start"
-        sx={[{ mr: 2 }, drawer.isOpen && { display: "none" }]}
-      >
-        <MenuIcon sx={{ color: theme.palette.text.primary }} />
-      </IconButton>
-
-      <Typography
-        variant="h6"
-        noWrap
-        sx={{ color: theme.palette.text.primary }}
-      >
-        Gestor de Gastos
-      </Typography>
-
-      <Box sx={{ flexGrow: 1 }} />
-
-      <Tooltip title="Configurações">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar
-            alt="user.displayName"
-            sx={{ width: 42, height: 42 }}
-            src="d"
-          />
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={() => dispatch(setDrawerOpen(true))}
+          edge="start"
+          sx={[{ mr: 2 }, drawer.isOpen && { display: "none" }]}
+        >
+          <MenuIcon sx={{ color: theme.palette.text.primary }} />
         </IconButton>
-      </Tooltip>
 
-      <Menu
-        anchorEl={anchorElUser}
-        open={!!anchorElUser}
-        onClose={handleCloseUserMenu}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        {options.map((option) => (
-          <MenuItem
-            key={option.name}
-            onClick={handleCloseUserMenu}
-            sx={{ gap: 1 }}
-          >
-            {option.icon}
-            <Typography sx={{ fontSize: "12px" }}>{option.name}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
-    </Toolbar>
+        <Typography
+          variant="h6"
+          noWrap
+          sx={{ color: theme.palette.text.primary }}
+        >
+          Gestor de Gastos
+        </Typography>
+
+        <Box sx={{ flexGrow: 1 }} />
+
+        <Tooltip title="Configurações">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar
+              alt="user.displayName"
+              sx={{ width: 42, height: 42 }}
+              src="d"
+            />
+          </IconButton>
+        </Tooltip>
+
+        <Menu
+          anchorEl={anchorElUser}
+          open={!!anchorElUser}
+          onClose={handleCloseUserMenu}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          {options.map((option) => (
+            <MenuItem
+              key={option.name}
+              onClick={handleCloseUserMenu}
+              sx={{ gap: 1 }}
+            >
+              {option.icon}
+              <Typography sx={{ fontSize: "12px" }}>{option.name}</Typography>
+            </MenuItem>
+          ))}
+        </Menu>
+      </Toolbar>
+    </MuiAppBar>
   );
 };

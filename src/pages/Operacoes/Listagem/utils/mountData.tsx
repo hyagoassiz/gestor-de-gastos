@@ -6,12 +6,14 @@ import { NumericFormat } from "react-number-format";
 interface IMountDataProps {
   operacoes: IOperacaoResponseApi[] | undefined;
   handleEditarOperacao(operacao: IOperacaoResponseApi): void;
+  handleExcluirOperacao(id: string): Promise<void>;
   handleDuplicarOperacao(operacao: IOperacaoResponseApi): void;
 }
 
 export function mountData({
   operacoes,
   handleEditarOperacao,
+  handleExcluirOperacao,
   handleDuplicarOperacao,
 }: IMountDataProps): any[] {
   if (operacoes?.length) {
@@ -73,6 +75,15 @@ export function mountData({
                 }}
               >
                 Duplicar
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  handleExcluirOperacao(operacao.id);
+                  handleClose();
+                }}
+              >
+                Excluir
               </MenuItem>
             </div>
           )}

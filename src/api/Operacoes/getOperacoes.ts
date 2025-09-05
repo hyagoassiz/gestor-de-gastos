@@ -53,14 +53,14 @@ export async function getOperacoes(
     }
 
     operacoes.sort((a, b) => {
-      const dateA = a.dataOperacao;
-      const dateB = b.dataOperacao;
+      const dateA = String(a.dataOperacao ?? "");
+      const dateB = String(b.dataOperacao ?? "");
 
       if (dateA === dateB) {
-        return b.criadoEm.localeCompare(a.criadoEm);
+        return String(b.criadoEm ?? "").localeCompare(String(a.criadoEm ?? ""));
       }
 
-      return b.dataOperacao.localeCompare(a.dataOperacao);
+      return dateB.localeCompare(dateA);
     });
 
     return operacoes;

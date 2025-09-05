@@ -7,12 +7,14 @@ interface IMountDataProps {
   proventos: IProventoResponseApi[] | undefined;
   handleDuplicarProvento(provento: IProventoResponseApi): void;
   handleEditProventos(provento: IProventoResponseApi): void;
+  handleExcluirProvento(id: string): Promise<void>;
 }
 
 export function mountData({
   proventos,
   handleDuplicarProvento,
   handleEditProventos,
+  handleExcluirProvento,
 }: IMountDataProps): any[] {
   if (proventos?.length) {
     return proventos.map((provento) => ({
@@ -60,6 +62,15 @@ export function mountData({
                 }}
               >
                 Duplicar
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  handleExcluirProvento(provento.id);
+                  handleClose();
+                }}
+              >
+                Excluir
               </MenuItem>
             </div>
           )}

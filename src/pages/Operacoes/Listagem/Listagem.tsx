@@ -27,6 +27,7 @@ export const Listagem: React.FC = () => {
     filterCount,
     closeOperacaoModal,
     handleEditarOperacao,
+    handleExcluirOperacao,
     handleDuplicarOperacao,
     handleSubmitFilterForm,
     openOperacaoModal,
@@ -138,6 +139,7 @@ export const Listagem: React.FC = () => {
           data={mountData({
             operacoes,
             handleEditarOperacao,
+            handleExcluirOperacao,
             handleDuplicarOperacao,
           })}
           textForEmptyData="Nenhum provento encontrado."
