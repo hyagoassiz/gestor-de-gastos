@@ -4,11 +4,11 @@ import { getContas } from "../getContas";
 export const KEY_GET_CONTAS = "key-get-contas" as const;
 
 export function queryOptionsGetContas(
-  payload?: IContaListPayloadApi
+  params?: IContaListPayloadApi
 ): UseQueryOptions<IContaApi[]> {
   const contas: UseQueryOptions<IContaApi[]> = {
-    queryKey: [KEY_GET_CONTAS, payload],
-    queryFn: () => getContas(payload),
+    queryKey: [KEY_GET_CONTAS, params],
+    queryFn: () => getContas(params),
     refetchOnWindowFocus: false,
     retry: false,
   };

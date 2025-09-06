@@ -1,7 +1,7 @@
 interface IContaApi extends ITimestampableApi {
-  id: string;
+  id: number;
   nome: string;
-  tipo: IContaTypeApi;
+  tipoConta: IContaTypeApi["id"];
   agencia: string;
   conta: string;
   observacao: string;

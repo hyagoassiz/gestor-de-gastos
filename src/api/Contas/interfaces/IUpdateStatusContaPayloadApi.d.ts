@@ -1,4 +1,4 @@
 interface IUpdateStatusContaPayloadApi {
-  id: string;
+  id: number;
   ativo: boolean;
 }

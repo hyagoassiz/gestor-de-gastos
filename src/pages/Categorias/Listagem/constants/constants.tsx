@@ -1,7 +1,7 @@
 import { IDataTableColumns } from "../../../../interfaces";
 
-export const contasColumns: IDataTableColumns[] = [
+export const categoriasColumns: IDataTableColumns[] = [
   { key: "nome", label: "Nome" },
-  { key: "tipo", label: "Tipo de Conta" },
+  { key: "tipoCategoria", label: "Tipo" },
   { key: "options", label: "", style: { width: "40px" } },
 ];

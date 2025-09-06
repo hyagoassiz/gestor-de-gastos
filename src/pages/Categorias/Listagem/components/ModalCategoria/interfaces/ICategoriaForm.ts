@@ -1,3 +1,3 @@
-export type ICategoriaForm = Omit<ICategoriaApi, "tipo"> & {
-  tipo: ICategoriaTypeApi;
+export type ICategoriaForm = Omit<ICategoriaApi, "tipoCategoria"> & {
+  tipoCategoria: ICategoriaTypeApi;
 };

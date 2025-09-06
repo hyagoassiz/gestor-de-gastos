@@ -1,7 +1,6 @@
 import { useForm, UseFormReturn } from "react-hook-form";
 import { useLoading } from "../../../../../../hooks/useLoading";
 import { useNotification } from "../../../../../../hooks/useNotification";
-import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { ICategoriaForm } from "../interfaces";
@@ -48,15 +47,11 @@ export const useModalCategoria = ({
         try {
           setLoading(true);
 
-          const now = dayjs().toISOString();
-
           const payload: ICategoriaPayloadApi = {
             ...data,
             id: data.id ?? undefined,
-            tipo: data.tipo.id,
+            tipoCategoria: data.tipoCategoria.id,
             observacao: data.observacao ?? "",
-            criadoEm: data.criadoEm ?? now,
-            atualizadoEm: data.id ? now : "",
             ativo: true,
           };
 

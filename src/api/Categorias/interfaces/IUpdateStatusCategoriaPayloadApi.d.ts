@@ -1,4 +1,4 @@
 interface IUpdateStatusCategoriaPayloadApi {
-  id: string;
+  id: number;
   ativo: boolean;
 }

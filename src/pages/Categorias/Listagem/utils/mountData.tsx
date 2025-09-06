@@ -4,9 +4,9 @@ import { PowerIcon } from "../../../../components/PowerIcon";
 
 interface IMountDataProps {
   categorias: ICategoriaApi[] | undefined;
-  handleAtivarCategoriaById(id: string): Promise<void>;
+  handleAtivarCategoriaById(id: number): Promise<void>;
   handleEditarCategoria(categoria: ICategoriaApi): void;
-  handleInativarCategoriaById(id: string): void;
+  handleInativarCategoriaById(id: number): void;
 }
 
 export function mountData({
@@ -18,7 +18,7 @@ export function mountData({
   if (categorias?.length) {
     return categorias.map((categoria) => ({
       ...categoria,
-      tipo: categoria.tipo.nome,
+      tipoCategoria: categoria.tipoCategoria,
       options: (
         <div>
           {categoria.ativo ? (

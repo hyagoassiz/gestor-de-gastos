@@ -1,4 +1,4 @@
-type IContaPayloadApi = Omit<IContaApi, "id" | "tipo"> & {
-  id: string | undefined;
-  tipo: IContaTypeApi["id"];
+type IContaPayloadApi = Omit<IContaApi, "id" | "criadoEm" | "atualizadoEm"> & {
+  id: number | undefined;
+  tipoConta: IContaTypeApi["id"];
 };

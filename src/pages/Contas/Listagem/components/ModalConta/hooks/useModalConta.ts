@@ -1,7 +1,6 @@
 import { useForm, UseFormReturn } from "react-hook-form";
 import { useLoading } from "../../../../../../hooks/useLoading";
 import { useNotification } from "../../../../../../hooks/useNotification";
-import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { postConta } from "../../../../../../api/Contas/postConta";
@@ -48,17 +47,13 @@ export const useModalConta = ({
         try {
           setLoading(true);
 
-          const now = dayjs().toISOString();
-
           const payload: IContaPayloadApi = {
             ...data,
             id: data.id ?? undefined,
-            tipo: data.tipo.id,
+            tipoConta: data.tipo.id,
             agencia: data.agencia ?? "",
             conta: data.conta ?? "",
             observacao: data.observacao ?? "",
-            criadoEm: data.criadoEm ?? now,
-            atualizadoEm: data.id ? now : "",
             ativo: true,
           };
 

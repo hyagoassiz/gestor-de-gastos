@@ -17,9 +17,9 @@ interface IUseListagemReturn {
   filterCount: number;
   contaListPayload: IContaListPayloadApi;
   closeModalConta(): void;
-  handleAtivarContaById(id: string): Promise<void>;
+  handleAtivarContaById(id: number): Promise<void>;
   handleEditarConta(conta: IContaApi): void;
-  handleInativarContaById(id: string): void;
+  handleInativarContaById(id: number): void;
   handleSubmitFilterForm(): void;
   openModalConta(): void;
 }
@@ -55,7 +55,7 @@ export const useListagem = (): IUseListagemReturn => {
     setModalContaState({ open: false, conta: undefined });
   }
 
-  async function handleAtivarContaById(id: string): Promise<void> {
+  async function handleAtivarContaById(id: number): Promise<void> {
     try {
       setLoading(true);
 
@@ -76,7 +76,7 @@ export const useListagem = (): IUseListagemReturn => {
     setModalContaState({ open: true, conta });
   }
 
-  async function handleInativarContaById(id: string): Promise<void> {
+  async function handleInativarContaById(id: number): Promise<void> {
     try {
       setLoading(true);
 

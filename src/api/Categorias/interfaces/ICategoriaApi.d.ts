@@ -1,7 +1,7 @@
 interface ICategoriaApi extends ITimestampableApi {
-  id: string;
+  id: number;
   nome: string;
-  tipo: ICategoriaTypeApi;
+  tipoCategoria: ICategoriaTypeApi["id"];
   observacao: string;
   ativo: boolean;
 }

@@ -1,37 +1,13 @@
-import { doc, DocumentReference, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../FirebaseConnection";
-import { getCurrentUserOrThrow } from "../getCurrentUserOrThrow";
+import { api } from "../constants/api";
 
 export async function updateStatusCategoria(
-  payload: IUpdateStatusCategoriaPayloadApi
-): Promise<DocumentReference> {
-  try {
-    const { id, ativo } = payload;
+  params: IUpdateStatusCategoriaPayloadApi
+): Promise<ICategoriaApi> {
+  const { id, ativo } = params;
 
-    const currentUser = getCurrentUserOrThrow();
+  const response = await api.patch(`/categorias/${id}`, null, {
+    params: { ativo },
+  });
 
-    const categoriaRef = doc(db, "categoria", id);
-
-    const categoriaSnap = await getDoc(categoriaRef);
-
-    if (
-      !categoriaSnap.exists() ||
-      categoriaSnap.data()?.usuario !== currentUser.uid
-    ) {
-      throw new Error("Categoria não encontrada.");
-    }
-
-    const updatedData = {
-      ...categoriaSnap.data(),
-      ativo,
-    };
-
-    await updateDoc(categoriaRef, updatedData);
-
-    return categoriaRef;
-  } catch (error) {
-    console.error("Erro ao alterar a situação da categoria:", error);
-
-    throw error;
-  }
+  return response.data;
 }

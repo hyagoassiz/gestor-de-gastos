@@ -3,7 +3,7 @@ import { Frame } from "../../../components/Frame";
 import { Add } from "@mui/icons-material";
 import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
-import { contasColumns } from "./constants/constants";
+import { categoriasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
 import Header from "../../../components/Header/Header";
@@ -59,7 +59,7 @@ export const Listagem: React.FC = () => {
         />
 
         <DataTable
-          columns={contasColumns}
+          columns={categoriasColumns}
           data={mountData({
             categorias,
             handleAtivarCategoriaById,

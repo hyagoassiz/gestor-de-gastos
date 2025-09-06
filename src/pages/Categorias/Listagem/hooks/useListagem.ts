@@ -3,12 +3,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
 import { useForm, UseFormReturn } from "react-hook-form";
+import { IModalCategoriaState } from "../interfaces";
+import { updateStatusCategoria } from "../../../../api/Categorias/updateStatusCategoria";
 import {
   KEY_GET_CATEGORIAS,
   queryOptionsGetCategorias,
 } from "../../../../api/Categorias/utils/queryOptionsGetCategorias";
-import { IModalCategoriaState } from "../interfaces";
-import { updateStatusCategoria } from "../../../../api/Categorias/updateStatusCategoria";
 
 interface IUseListagemReturn {
   categorias: ICategoriaApi[] | undefined;
@@ -17,9 +17,9 @@ interface IUseListagemReturn {
   filterCount: number;
   categoriaListPayload: ICategoriaListPayloadApi;
   closeModalCategoria(): void;
-  handleAtivarCategoriaById(id: string): Promise<void>;
+  handleAtivarCategoriaById(id: number): Promise<void>;
   handleEditarCategoria(categoria: ICategoriaApi): void;
-  handleInativarCategoriaById(id: string): void;
+  handleInativarCategoriaById(id: number): void;
   handleSubmitFilterForm(): void;
   openModalCategoria(): void;
 }
@@ -56,7 +56,7 @@ export const useListagem = (): IUseListagemReturn => {
     setModalCategoriaState({ open: false, categoria: undefined });
   }
 
-  async function handleAtivarCategoriaById(id: string): Promise<void> {
+  async function handleAtivarCategoriaById(id: number): Promise<void> {
     try {
       setLoading(true);
 
@@ -77,7 +77,7 @@ export const useListagem = (): IUseListagemReturn => {
     setModalCategoriaState({ open: true, categoria });
   }
 
-  async function handleInativarCategoriaById(id: string): Promise<void> {
+  async function handleInativarCategoriaById(id: number): Promise<void> {
     try {
       setLoading(true);
 

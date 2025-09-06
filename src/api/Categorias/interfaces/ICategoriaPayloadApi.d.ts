@@ -1,4 +1,6 @@
-type ICategoriaPayloadApi = Omit<ICategoriaApi, "id" | "tipo"> & {
-  id: string | undefined;
-  tipo: ICategoriaTypeApi["id"];
+type ICategoriaPayloadApi = Omit<
+  ICategoriaApi,
+  "id" | "criadoEm" | "atualizadoEm"
+> & {
+  id: number | undefined;
 };
