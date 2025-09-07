@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { ICategoriaForm } from "../interfaces";
 import { postCategoria } from "../../../../../../api/Categorias/postCategoria";
-import { KEY_GET_CATEGORIAS } from "../../../../../../api/Categorias/utils/queryOptionsGetCategorias";
+import { KEY_GET_CATEGORIAS_PAGINADO } from "../../../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
 
 interface IUseModalCategoria {
   categoria: ICategoriaApi | undefined;
@@ -62,7 +62,9 @@ export const useModalCategoria = ({
             "success"
           );
 
-          queryClient.invalidateQueries({ queryKey: [KEY_GET_CATEGORIAS] });
+          queryClient.invalidateQueries({
+            queryKey: [KEY_GET_CATEGORIAS_PAGINADO],
+          });
 
           onClose();
         } catch (error) {

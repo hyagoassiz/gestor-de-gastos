@@ -20,6 +20,7 @@ export const Listagem: React.FC = () => {
     categoriaListPayload,
     closeModalCategoria,
     handleAtivarCategoriaById,
+    handleChangePage,
     handleEditarCategoria,
     handleInativarCategoriaById,
     handleSubmitFilterForm,
@@ -66,6 +67,10 @@ export const Listagem: React.FC = () => {
             handleEditarCategoria,
             handleInativarCategoriaById,
           })}
+          page={categorias ? categorias.number + 1 : 1} // ⚡ aqui: soma 1
+          totalPages={categorias?.totalPages}
+          totalItems={categorias?.totalElements}
+          onPageChange={(newPage) => handleChangePage(newPage - 1)} // ⚡ aqui: subtrai 1 antes de enviar pro backend
           textForEmptyData="Nenhuma categoria encontrada."
         />
       </Frame>

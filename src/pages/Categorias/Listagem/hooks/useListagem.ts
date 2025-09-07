@@ -6,18 +6,19 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { IModalCategoriaState } from "../interfaces";
 import { updateStatusCategoria } from "../../../../api/Categorias/updateStatusCategoria";
 import {
-  KEY_GET_CATEGORIAS,
-  queryOptionsGetCategorias,
-} from "../../../../api/Categorias/utils/queryOptionsGetCategorias";
+  KEY_GET_CATEGORIAS_PAGINADO,
+  queryOptionsGetCategoriasPaginado,
+} from "../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
 
 interface IUseListagemReturn {
-  categorias: ICategoriaApi[] | undefined;
+  categorias: IPaginatedResponse<ICategoriaApi> | undefined;
   modalCategoriaState: IModalCategoriaState;
   filterForm: UseFormReturn<ICategoriaListPayloadApi>;
   filterCount: number;
   categoriaListPayload: ICategoriaListPayloadApi;
   closeModalCategoria(): void;
   handleAtivarCategoriaById(id: number): Promise<void>;
+  handleChangePage(page: number, size?: number): void;
   handleEditarCategoria(categoria: ICategoriaApi): void;
   handleInativarCategoriaById(id: number): void;
   handleSubmitFilterForm(): void;
@@ -39,10 +40,10 @@ export const useListagem = (): IUseListagemReturn => {
       open: false,
     });
   const [categoriaListPayload, setCategoriaListPayload] =
-    useState<ICategoriaListPayloadApi>({ ativo: true });
+    useState<ICategoriaListPayloadApi>({ ativo: true, page: 0, size: 10 });
 
   const { data: categorias, isFetching } = useQuery({
-    ...queryOptionsGetCategorias(categoriaListPayload),
+    ...queryOptionsGetCategoriasPaginado(categoriaListPayload),
   });
 
   const filterCount: number = categoriaListPayload.ativo === true ? 0 : 1;
@@ -62,7 +63,9 @@ export const useListagem = (): IUseListagemReturn => {
 
       await updateStatusCategoria({ id, ativo: true });
 
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CATEGORIAS] });
+      queryClient.invalidateQueries({
+        queryKey: [KEY_GET_CATEGORIAS_PAGINADO],
+      });
 
       showSnackBar("Categoria ativada com sucesso!", "success");
     } catch (error) {
@@ -71,6 +74,14 @@ export const useListagem = (): IUseListagemReturn => {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleChangePage(page: number, size?: number): void {
+    setCategoriaListPayload((prev) => ({
+      ...prev,
+      page: page,
+      size: size ?? prev.size,
+    }));
   }
 
   function handleEditarCategoria(categoria: ICategoriaApi): void {
@@ -83,7 +94,9 @@ export const useListagem = (): IUseListagemReturn => {
 
       await updateStatusCategoria({ id, ativo: false });
 
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CATEGORIAS] });
+      queryClient.invalidateQueries({
+        queryKey: [KEY_GET_CATEGORIAS_PAGINADO],
+      });
 
       showSnackBar("Categoria inativada com sucesso!", "success");
     } catch (error) {
@@ -112,6 +125,7 @@ export const useListagem = (): IUseListagemReturn => {
     categoriaListPayload,
     closeModalCategoria,
     handleAtivarCategoriaById,
+    handleChangePage,
     handleEditarCategoria,
     handleInativarCategoriaById,
     handleSubmitFilterForm,

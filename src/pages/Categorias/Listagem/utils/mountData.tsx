@@ -3,7 +3,7 @@ import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
 
 interface IMountDataProps {
-  categorias: ICategoriaApi[] | undefined;
+  categorias: IPaginatedResponse<ICategoriaApi> | undefined;
   handleAtivarCategoriaById(id: number): Promise<void>;
   handleEditarCategoria(categoria: ICategoriaApi): void;
   handleInativarCategoriaById(id: number): void;
@@ -15,8 +15,8 @@ export function mountData({
   handleEditarCategoria,
   handleInativarCategoriaById,
 }: IMountDataProps): any[] {
-  if (categorias?.length) {
-    return categorias.map((categoria) => ({
+  if (categorias?.content.length) {
+    return categorias.content.map((categoria) => ({
       ...categoria,
       tipoCategoria: categoria.tipoCategoria,
       options: (
