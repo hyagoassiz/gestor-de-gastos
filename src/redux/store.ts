@@ -2,14 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import loadingReducer from "./loadingSlice";
 import snackBarReducer from "./snackBarSlice";
 import drawerReducer from "./drawerSlice";
-import userReducer from "./userSlice";
+import usuarioReducer from "./usuarioSlice";
 
 export const store = configureStore({
   reducer: {
     loading: loadingReducer,
     snackBar: snackBarReducer,
     drawer: drawerReducer,
-    user: userReducer,
+    usuario: usuarioReducer,
   },
 });
 

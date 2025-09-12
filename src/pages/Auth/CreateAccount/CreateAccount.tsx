@@ -18,6 +18,33 @@ export const CreateAccount: React.FC = () => {
     <AuthLayout titleRoute="Criar Conta" onKeyDown={handleKeyDown}>
       <Grid item xs={12}>
         <Controller
+          name="nome"
+          control={createAccountForm.control}
+          rules={{
+            required: true,
+          }}
+          render={({ field, fieldState }) => (
+            <StyledTextField
+              label="Nome"
+              variant="outlined"
+              color="secondary"
+              onChange={field.onChange}
+              value={field.value ?? ""}
+              inputProps={{
+                maxLength: 50,
+              }}
+              required
+              disabled={isLoading}
+              fullWidth
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+            />
+          )}
+        />
+      </Grid>
+
+      <Grid item xs={12}>
+        <Controller
           name="email"
           control={createAccountForm.control}
           rules={{
@@ -45,7 +72,7 @@ export const CreateAccount: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Controller
-          name="password"
+          name="senha"
           control={createAccountForm.control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
@@ -75,7 +102,7 @@ export const CreateAccount: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Controller
-          name="confirmPassword"
+          name="confirmarSenha"
           control={createAccountForm.control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (

@@ -4,8 +4,8 @@ import { useNotification } from "../../../../../../hooks/useNotification";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { postConta } from "../../../../../../api/Contas/postConta";
-import { KEY_GET_CONTAS } from "../../../../../../api/Contas/utils/queryOptionsGetContas";
 import { IContaForm } from "../interfaces";
+import { KEY_GET_CONTAS_PAGINADO } from "../../../../../../api/Contas/utils/queryOptionsGetContasPaginado";
 
 interface IUseModalContaProps {
   conta: IContaApi | undefined;
@@ -48,12 +48,13 @@ export const useModalConta = ({
           setLoading(true);
 
           const payload: IContaPayloadApi = {
-            ...data,
             id: data.id ?? undefined,
+            nome: data.nome,
             tipoConta: data.tipo.id,
             agencia: data.agencia ?? "",
             conta: data.conta ?? "",
             observacao: data.observacao ?? "",
+            incluirEmSomas: data.incluirEmSomas,
             ativo: true,
           };
 
@@ -64,7 +65,9 @@ export const useModalConta = ({
             "success"
           );
 
-          queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS] });
+          queryClient.invalidateQueries({
+            queryKey: [KEY_GET_CONTAS_PAGINADO],
+          });
 
           onClose();
         } catch (error) {

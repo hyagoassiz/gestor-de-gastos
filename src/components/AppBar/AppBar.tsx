@@ -16,6 +16,7 @@ import { setDrawerOpen } from "../../redux/drawerSlice";
 import { useState } from "react";
 import { options } from "./constants/constants";
 import useAppBar from "./hooks/useAppBar";
+import { useNavigate } from "react-router-dom";
 
 export const AppBar: React.FC = () => {
   const { drawer } = useAppBar();
@@ -31,6 +32,8 @@ export const AppBar: React.FC = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const navigate = useNavigate();
 
   return (
     <MuiAppBar
@@ -90,7 +93,10 @@ export const AppBar: React.FC = () => {
           {options.map((option) => (
             <MenuItem
               key={option.name}
-              onClick={handleCloseUserMenu}
+              onClick={() => {
+                handleCloseUserMenu();
+                option?.action?.({ navigate });
+              }}
               sx={{ gap: 1 }}
             >
               {option.icon}

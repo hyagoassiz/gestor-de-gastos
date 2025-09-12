@@ -51,7 +51,7 @@ export const Login: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Controller
-          name="password"
+          name="senha"
           control={loginForm.control}
           rules={{ required: true }}
           render={({ field, fieldState }) => (

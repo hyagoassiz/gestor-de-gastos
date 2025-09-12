@@ -3,14 +3,11 @@ import { ICadastro } from "../interfaces";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../../routes/paths";
 import { useEffect, useState } from "react";
-import { createAccountWithEmailAndPassword } from "../../../../api/Auth/createAccountWithEmailAndPassword";
 import { useNotification } from "../../../../hooks/useNotification";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createAccountSchema } from "../schema/createAccountSchema";
-import { logoutUsuario } from "../../../../api/Auth/logoutUser";
-import { IRootState } from "../../../../redux/store";
-import { useSelector } from "react-redux";
-import { auth } from "../../../../FirebaseConnection";
+import { postRegistarUsuario } from "../../../../api/Auth/postRegistarUsuario";
+import useUsuario from "../../../../hooks/useUsuario";
 
 interface IUseCreateAccount {
   createAccountForm: UseFormReturn<ICadastro>;
@@ -23,8 +20,6 @@ interface IUseCreateAccount {
 export const useCreateAccount = (): IUseCreateAccount => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { uid } = useSelector((state: IRootState) => state.user);
-
   const createAccountForm = useForm<ICadastro>({
     resolver: zodResolver(createAccountSchema),
   });
@@ -33,22 +28,25 @@ export const useCreateAccount = (): IUseCreateAccount => {
 
   const navigate = useNavigate();
 
+  const { removerUsuario } = useUsuario();
+
   useEffect(() => {
-    if (uid) {
-      logoutUsuario();
-    }
-  }, [uid]);
+    removerUsuario();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function submitCreateAccountForm(): void {
     createAccountForm.handleSubmit(async (data) => {
       try {
         setIsLoading(true);
-        const payload: ILoginApi = {
-          auth: auth,
+
+        const payload: IUsuarioPayloadApi = {
+          nome: data.nome,
           email: data.email,
-          password: data.password,
+          senha: data.senha,
         };
 
-        await createAccountWithEmailAndPassword(payload);
+        await postRegistarUsuario(payload);
 
         navigate(PATHS.AUTH.INFO);
       } catch (error) {

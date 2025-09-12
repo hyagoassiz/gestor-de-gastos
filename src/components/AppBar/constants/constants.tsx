@@ -1,11 +1,12 @@
 import { ReactElement } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
+import * as PATHS from "../../../routes/paths";
 
-interface IOptions {
+export interface IOptions {
   icon: ReactElement;
   name: string;
   route: string;
-  function?: () => Promise<void>;
+  action?: (helpers: { navigate: (path: string) => void }) => Promise<void>;
 }
 
 export const options: IOptions[] = [
@@ -13,8 +14,8 @@ export const options: IOptions[] = [
     icon: <LogoutIcon />,
     name: "Sair",
     route: "#",
-    function: async () => {
-      console.log("clicou");
+    action: async ({ navigate }) => {
+      navigate(PATHS.AUTH.LOGIN);
     },
   },
 ];

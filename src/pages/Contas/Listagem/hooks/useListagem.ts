@@ -3,15 +3,15 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { IModalContaState } from "../interfaces";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
-import {
-  KEY_GET_CONTAS,
-  queryOptionsGetContas,
-} from "../../../../api/Contas/utils/queryOptionsGetContas";
 import { updateStatusConta } from "../../../../api/Contas/updateStatusConta";
 import { useForm, UseFormReturn } from "react-hook-form";
+import {
+  KEY_GET_CONTAS_PAGINADO,
+  queryOptionsGetContasPaginado,
+} from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
 
 interface IUseListagemReturn {
-  contas: IContaApi[] | undefined;
+  contas: IPaginatedResponse<IContaApi> | undefined;
   modalContaState: IModalContaState;
   filterForm: UseFormReturn<IContaListPayloadApi>;
   filterCount: number;
@@ -38,10 +38,10 @@ export const useListagem = (): IUseListagemReturn => {
     open: false,
   });
   const [contaListPayload, setContaListPayload] =
-    useState<IContaListPayloadApi>({ ativo: true });
+    useState<IContaListPayloadApi>({ ativo: true, page: 0, size: 10 });
 
   const { data: contas, isFetching } = useQuery({
-    ...queryOptionsGetContas(contaListPayload),
+    ...queryOptionsGetContasPaginado(contaListPayload),
   });
 
   const filterCount: number = contaListPayload.ativo === true ? 0 : 1;
@@ -61,7 +61,7 @@ export const useListagem = (): IUseListagemReturn => {
 
       await updateStatusConta({ id, ativo: true });
 
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS] });
+      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
 
       showSnackBar("Conta ativada com sucesso!", "success");
     } catch (error) {
@@ -82,7 +82,7 @@ export const useListagem = (): IUseListagemReturn => {
 
       await updateStatusConta({ id, ativo: false });
 
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS] });
+      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
 
       showSnackBar("Conta inativada com sucesso!", "success");
     } catch (error) {

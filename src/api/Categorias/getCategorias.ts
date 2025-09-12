@@ -1,9 +1,9 @@
-import { api } from "../constants/api";
+import { API } from "../constants/API";
 
 export async function getCategorias(
   params?: ICategoriaListPayloadApi
 ): Promise<ICategoriaApi[]> {
-  const response = await api.get("/categorias/listar-todos", {
+  const response = await API.get("/categorias/listar-todos", {
     params,
   });
 

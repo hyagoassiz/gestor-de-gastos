@@ -4,7 +4,6 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { INome } from "../interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { personalInfoSchema } from "../schema/personalInfoSchema";
-import { updateUserDisplayName } from "../../../../api/Auth/updateUserDisplayName";
 import { useState } from "react";
 
 interface IUsePersonalInfo {
@@ -25,10 +24,9 @@ export const usePersonalInfo = (): IUsePersonalInfo => {
   const navigate = useNavigate();
 
   function submitPersonalInfoForm(): void {
-    personalInfoForm.handleSubmit(async (data) => {
+    personalInfoForm.handleSubmit(async () => {
       try {
         setIsLoading(true);
-        await updateUserDisplayName(data.nome);
 
         navigate(PATHS.DASHBOARD.LIST);
       } catch (error) {

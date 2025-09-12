@@ -1,9 +1,9 @@
-import { api } from "../constants/api";
+import { API } from "../constants/API";
 
 export async function getCategoriasPaginado(
   params?: ICategoriaListPayloadApi
 ): Promise<IPaginatedResponse<ICategoriaApi>> {
-  const response = await api.get("/categorias/listar-paginado", {
+  const response = await API.get("/categorias/listar-paginado", {
     params,
   });
 

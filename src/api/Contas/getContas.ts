@@ -1,9 +1,9 @@
-import { api } from "../constants/api";
+import { API } from "../constants/API";
 
 export async function getContas(
   params?: IContaListPayloadApi
 ): Promise<IContaApi[]> {
-  const response = await api.get("/contas/listar-todos", {
+  const response = await API.get("/contas/listar-todos", {
     params,
   });
 

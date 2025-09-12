@@ -4,7 +4,7 @@
 
 export const AUTH = {
   LOGIN: `/login`,
-  CREATE: `/criar-conta`,
+  CREATE: `/cadastrar`,
   INFO: `/info`,
   VERIFICATION: `/verificacao`,
 };

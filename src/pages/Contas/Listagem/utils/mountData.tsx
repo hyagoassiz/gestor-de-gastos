@@ -4,7 +4,7 @@ import { PowerIcon } from "../../../../components/PowerIcon";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
 
 interface IMountDataProps {
-  contas: IContaApi[] | undefined;
+  contas: IPaginatedResponse<IContaApi> | undefined;
   handleAtivarContaById(id: number): Promise<void>;
   handleEditarConta(conta: IContaApi): void;
   handleInativarContaById(id: number): void;
@@ -16,8 +16,8 @@ export function mountData({
   handleEditarConta,
   handleInativarContaById,
 }: IMountDataProps): any[] {
-  if (contas?.length) {
-    return contas.map((conta) => ({
+  if (contas?.content.length) {
+    return contas.content.map((conta) => ({
       ...conta,
       nome:
         conta.agencia && conta.conta ? (
@@ -26,7 +26,7 @@ export function mountData({
             primaryTypographyProps={{ fontSize: "14px" }}
             secondaryTypographyProps={{ fontSize: "12px" }}
             secondary={getAgenciaContaLabel(conta.agencia, conta.conta)}
-            sx={{ my: 0, height: 48 }}
+            sx={{ my: 0, height: "auto" }}
           />
         ) : (
           conta.nome
