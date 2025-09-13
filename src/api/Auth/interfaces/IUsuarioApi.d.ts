@@ -1,6 +1,6 @@
 interface IUsuarioApi {
   nome: string;
-  email: string;
+  sub: string;
   iat: number;
   exp: number;
 }

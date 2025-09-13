@@ -21,7 +21,7 @@ export const rotas: IRotas[] = [
     rotas: [
       {
         name: "Transações",
-        route: PATHS.OPERACOES.LIST,
+        route: PATHS.TRANSACOES.LIST,
         icon: <SwapVertIcon />,
       },
     ],

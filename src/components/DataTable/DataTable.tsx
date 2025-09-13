@@ -17,7 +17,6 @@ import {
   StyledTableCellHead,
   StyledTableHead,
 } from "./styles";
-import useDataTable from "./hooks/useDataTable";
 import { ReactNode, useState } from "react";
 import { IDataTableColumns } from "../../interfaces";
 
@@ -32,9 +31,14 @@ interface IDataTable {
   rowKey?: string;
   selectedItems?: any[];
   onSelectionChange?: (selected: any[]) => void;
+
+  /** ===== NOVAS PROPS PARA PAGINAÇÃO DO BACKEND ===== */
+  totalPages?: number; // total de páginas do back
+  page?: number; // página atual (1-based)
+  onPageChange?: (page: number) => void; // dispara requisição ao back
   disablePagination?: boolean;
   tableHeight?: number | string;
-  withBorder?: boolean; // ⬅️ nova prop
+  withBorder?: boolean;
 }
 
 export const DataTable: React.FC<IDataTable> = ({
@@ -46,14 +50,14 @@ export const DataTable: React.FC<IDataTable> = ({
   rowKey = "id",
   selectedItems,
   onSelectionChange,
+  totalPages,
+  page,
+  onPageChange,
   disablePagination = false,
   tableHeight,
   withBorder,
 }) => {
-  const { paginatedData, totalPages, page, setPage } = useDataTable({ data });
   const theme = useTheme();
-
-  const displayData = disablePagination ? data : paginatedData;
 
   const isSelectable =
     selectionMode === "single" || selectionMode === "multiple";
@@ -62,34 +66,28 @@ export const DataTable: React.FC<IDataTable> = ({
 
   const isControlled =
     selectedItems !== undefined && onSelectionChange !== undefined;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [internalSelected, setInternalSelected] = useState<any[]>([]);
   const selected = isControlled ? selectedItems! : internalSelected;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   const isRowSelected = (row: any) =>
     selected.some((item) => item[rowKey] === row[rowKey]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   const handleSelectionChange = (newSelected: any[]) => {
-    if (isControlled) {
-      onSelectionChange?.(newSelected);
-    } else {
-      setInternalSelected(newSelected);
-    }
+    if (isControlled) onSelectionChange?.(newSelected);
+    else setInternalSelected(newSelected);
   };
 
   const toggleSelectAll = () => {
     if (!isMultipleSelect) return;
-    const allSelected = displayData.every((row) => isRowSelected(row));
+    const allSelected = data.every((row) => isRowSelected(row));
     const newSelected = allSelected
       ? selected.filter(
-          (item) => !displayData.some((row) => row[rowKey] === item[rowKey])
+          (item) => !data.some((row) => row[rowKey] === item[rowKey])
         )
-      : [...selected, ...displayData.filter((row) => !isRowSelected(row))];
-
+      : [...selected, ...data.filter((row) => !isRowSelected(row))];
     handleSelectionChange(newSelected);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toggleRowSelection = (row: any) => {
     if (isSingleSelect) {
       const alreadySelected = isRowSelected(row);
@@ -99,13 +97,12 @@ export const DataTable: React.FC<IDataTable> = ({
       const newSelected = alreadySelected
         ? selected.filter((item) => item[rowKey] !== row[rowKey])
         : [...selected, row];
-
       handleSelectionChange(newSelected);
     }
   };
 
   const isAllSelected =
-    displayData.length > 0 && displayData.every((row) => isRowSelected(row));
+    data.length > 0 && data.every((row) => isRowSelected(row));
 
   return (
     <Box
@@ -153,7 +150,7 @@ export const DataTable: React.FC<IDataTable> = ({
 
           {data.length ? (
             <TableBody>
-              {displayData.map((row, index) => (
+              {data.map((row, index) => (
                 <TableRow
                   key={row[rowKey] ?? index}
                   sx={{
@@ -201,7 +198,7 @@ export const DataTable: React.FC<IDataTable> = ({
         </Table>
       </TableContainer>
 
-      {!disablePagination && displayData.length > 0 && (
+      {!disablePagination && (
         <Box
           display="flex"
           justifyContent="space-between"
@@ -220,8 +217,8 @@ export const DataTable: React.FC<IDataTable> = ({
           <Pagination
             color="primary"
             count={totalPages}
-            page={page}
-            onChange={(_, value) => setPage(value)}
+            page={page ?? 1}
+            onChange={(_, value) => onPageChange?.(value)}
             shape="rounded"
           />
         </Box>

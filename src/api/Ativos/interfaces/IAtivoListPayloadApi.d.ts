@@ -1,3 +1,0 @@
-interface IAtivoListPayloadApi {
-  ativo?: boolean;
-}

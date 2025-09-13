@@ -9,15 +9,9 @@ import { PersonalInfoRoute } from "../pages/Auth/PersonalInfo";
 import { DashboardRoute } from "../pages/Dashboard/List";
 import { AboutRoute } from "../pages/About/List";
 import { SettingsRoute } from "../pages/Settings/List";
-import { AtivosListagemRoute } from "../pages/Ativos";
-import { ProventosListagemRoute } from "../pages/Proventos";
-import { OperacoesListagemRoute } from "../pages/Operacoes";
-import {
-  ResumoAtivoListagemRoute,
-  ResumoAtivoResumoRoute,
-} from "../pages/ResumoAtivo";
 import { ContasListagemRoute } from "../pages/Contas";
 import { CategoriasListagemRoute } from "../pages/Categorias";
+import { TransacoesListagemRoute } from "../pages/Transacoes";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -61,46 +55,10 @@ export const AppRoutes = () => {
           />
 
           <Route
-            path={PATHS.OPERACOES.LIST}
+            path={PATHS.TRANSACOES.LIST}
             element={
               <ProtectedRoute permission="">
-                <OperacoesListagemRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.PROVENTOS.LIST}
-            element={
-              <ProtectedRoute permission="">
-                <ProventosListagemRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.RESUMO_ATIVO.LIST}
-            element={
-              <ProtectedRoute permission="">
-                <ResumoAtivoListagemRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.RESUMO_ATIVO.RESUMO}
-            element={
-              <ProtectedRoute permission="">
-                <ResumoAtivoResumoRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.ATIVOS.LIST}
-            element={
-              <ProtectedRoute permission="">
-                <AtivosListagemRoute />
+                <TransacoesListagemRoute />
               </ProtectedRoute>
             }
           />

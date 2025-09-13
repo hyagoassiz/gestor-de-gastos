@@ -1,3 +1,0 @@
-interface IResumoAtivoListPayloadApi {
-  ativoIds?: string[];
-}

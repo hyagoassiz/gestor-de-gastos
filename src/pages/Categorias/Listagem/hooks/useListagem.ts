@@ -42,16 +42,16 @@ export const useListagem = (): IUseListagemReturn => {
   const [categoriaListPayload, setCategoriaListPayload] =
     useState<ICategoriaListPayloadApi>({ ativo: true, page: 0, size: 10 });
 
-  const { data: categorias, isFetching } = useQuery({
+  const { data: categorias, isLoading } = useQuery({
     ...queryOptionsGetCategoriasPaginado(categoriaListPayload),
   });
 
   const filterCount: number = categoriaListPayload.ativo === true ? 0 : 1;
 
   useEffect(() => {
-    setLoading(isFetching);
+    setLoading(isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetching]);
+  }, [isLoading]);
 
   function closeModalCategoria(): void {
     setModalCategoriaState({ open: false, categoria: undefined });
@@ -109,7 +109,11 @@ export const useListagem = (): IUseListagemReturn => {
 
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
-      setCategoriaListPayload({ ativo: !data.ativo });
+      setCategoriaListPayload((prevState) => ({
+        ...prevState,
+        ativo: !data.ativo,
+        page: 0,
+      }));
     })();
   }
 

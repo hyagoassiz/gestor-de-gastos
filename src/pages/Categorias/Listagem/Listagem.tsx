@@ -42,7 +42,7 @@ export const Listagem: React.FC = () => {
 
       <Frame>
         <ToolbarContainer
-          title={`Categorias`}
+          title={`Categorias (${categorias?.numberOfElements})`}
           showTitleDivider
           showDividers
           buttons={
@@ -67,10 +67,9 @@ export const Listagem: React.FC = () => {
             handleEditarCategoria,
             handleInativarCategoriaById,
           })}
-          page={categorias ? categorias.number + 1 : 1} // ⚡ aqui: soma 1
+          page={(categorias?.number ?? 0) + 1}
           totalPages={categorias?.totalPages}
-          totalItems={categorias?.totalElements}
-          onPageChange={(newPage) => handleChangePage(newPage - 1)} // ⚡ aqui: subtrai 1 antes de enviar pro backend
+          onPageChange={(newPage) => handleChangePage(newPage - 1)}
           textForEmptyData="Nenhuma categoria encontrada."
         />
       </Frame>
