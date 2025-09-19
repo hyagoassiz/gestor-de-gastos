@@ -1,6 +1,7 @@
 import { MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
+import { EnumCategoriaTypeApi } from "../../../../api/Categorias/interfaces/EnumCategoriaTypeApi";
 
 interface IMountDataProps {
   categorias: IPaginatedResponse<ICategoriaApi> | undefined;
@@ -18,7 +19,7 @@ export function mountData({
   if (categorias?.content.length) {
     return categorias.content.map((categoria) => ({
       ...categoria,
-      tipoCategoria: categoria.tipoCategoria,
+      tipoCategoria: EnumCategoriaTypeApi[categoria.tipoCategoria],
       options: (
         <div>
           {categoria.ativo ? (

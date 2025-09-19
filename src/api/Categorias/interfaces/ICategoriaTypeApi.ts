@@ -1,4 +1,4 @@
-interface ICategoriaTypeApi {
+export interface ICategoriaTypeApi {
   id: "ENTRADA" | "SAIDA";
   nome: "Entrada" | "Saída";
 }

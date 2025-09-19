@@ -1,5 +1,6 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import { getCategoriasPaginado } from "../getCategoriasPaginado";
+import { ICategoriaApi, ICategoriaListPayloadApi } from "../interfaces";
 
 export const KEY_GET_CATEGORIAS_PAGINADO =
   "key-get-categorias-paginado" as const;

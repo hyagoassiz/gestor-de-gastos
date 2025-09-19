@@ -23,9 +23,9 @@ export const useModalConta = ({
 }: IUseModalContaProps): IUseModalContaReturn => {
   const contaForm = useForm<IContaForm>();
 
-  const { setLoading } = useLoading();
+  const loading = useLoading();
 
-  const { showSnackBar } = useNotification();
+  const notification = useNotification();
 
   const queryClient = useQueryClient();
 
@@ -45,7 +45,7 @@ export const useModalConta = ({
     contaForm.handleSubmit(
       async (data) => {
         try {
-          setLoading(true);
+          loading.setLoading(true);
 
           const payload: IContaPayloadApi = {
             id: data.id ?? undefined,
@@ -60,7 +60,7 @@ export const useModalConta = ({
 
           await postConta(payload);
 
-          showSnackBar(
+          notification.showSnackBar(
             `Conta ${payload.id ? "editada" : "adicionada"} com sucesso!`,
             "success"
           );
@@ -73,11 +73,14 @@ export const useModalConta = ({
         } catch (error) {
           console.error(error);
         } finally {
-          setLoading(false);
+          loading.setLoading(false);
         }
       },
       () => {
-        showSnackBar("Existem campos obrigatórios não preenchidos!", "error");
+        notification.showSnackBar(
+          "Existem campos obrigatórios não preenchidos!",
+          "error"
+        );
       }
     )();
   }

@@ -1,5 +1,6 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import { getCategorias } from "../getCategorias";
+import { ICategoriaApi, ICategoriaListPayloadApi } from "../interfaces";
 
 export const KEY_GET_CATEGORIAS = "key-get-categorias" as const;
 

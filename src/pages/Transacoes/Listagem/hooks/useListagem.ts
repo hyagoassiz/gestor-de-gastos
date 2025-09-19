@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { IModalContaState } from "../interfaces";
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
 import { updateStatusConta } from "../../../../api/Contas/updateStatusConta";
@@ -9,20 +12,19 @@ import {
   KEY_GET_CONTAS_PAGINADO,
   queryOptionsGetContasPaginado,
 } from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
+import { useNavigate } from "react-router-dom";
+import * as PATHS from "../../../../routes/paths";
 
 interface IUseListagemReturn {
-  contas: IPaginatedResponse<IContaApi> | undefined;
-  modalContaState: IModalContaState;
+  queryGetContasPaginado: UseQueryResult<IPaginatedResponse<IContaApi>>;
   filterForm: UseFormReturn<IContaListPayloadApi>;
   filterCount: number;
   contaListPayload: IContaListPayloadApi;
-  closeModalConta(): void;
+  handleAdicionarTransacao(): void;
   handleAtivarContaById(id: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
-  handleEditarConta(conta: IContaApi): void;
   handleInativarContaById(id: number): void;
   handleSubmitFilterForm(): void;
-  openModalConta(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
@@ -30,30 +32,28 @@ export const useListagem = (): IUseListagemReturn => {
 
   const { showSnackBar } = useNotification();
 
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
 
   const filterForm = useForm<IContaListPayloadApi>();
 
-  const [modalContaState, setModalContaState] = useState<IModalContaState>({
-    conta: undefined,
-    open: false,
-  });
   const [contaListPayload, setContaListPayload] =
     useState<IContaListPayloadApi>({ ativo: true, page: 0, size: 10 });
 
-  const { data: contas, isLoading } = useQuery({
+  const queryGetContasPaginado = useQuery({
     ...queryOptionsGetContasPaginado(contaListPayload),
   });
 
   const filterCount: number = contaListPayload.ativo === true ? 0 : 1;
 
   useEffect(() => {
-    setLoading(isLoading);
+    setLoading(queryGetContasPaginado.isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [queryGetContasPaginado.isLoading]);
 
-  function closeModalConta(): void {
-    setModalContaState({ open: false, conta: undefined });
+  function handleAdicionarTransacao(): void {
+    navigate(PATHS.TRANSACOES.LIST);
   }
 
   async function handleAtivarContaById(id: number): Promise<void> {
@@ -79,10 +79,6 @@ export const useListagem = (): IUseListagemReturn => {
       page: page,
       size: size ?? prev.size,
     }));
-  }
-
-  function handleEditarConta(conta: IContaApi): void {
-    setModalContaState({ open: true, conta });
   }
 
   async function handleInativarContaById(id: number): Promise<void> {
@@ -112,22 +108,15 @@ export const useListagem = (): IUseListagemReturn => {
     })();
   }
 
-  function openModalConta(): void {
-    setModalContaState({ open: true, conta: undefined });
-  }
-
   return {
-    contas,
-    modalContaState,
+    queryGetContasPaginado,
     filterForm,
     filterCount,
     contaListPayload,
-    closeModalConta,
+    handleAdicionarTransacao,
     handleAtivarContaById,
     handleChangePage,
-    handleEditarConta,
     handleInativarContaById,
     handleSubmitFilterForm,
-    openModalConta,
   };
 };

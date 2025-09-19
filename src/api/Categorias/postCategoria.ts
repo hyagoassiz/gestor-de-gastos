@@ -1,4 +1,5 @@
 import { API } from "../constants/API";
+import { ICategoriaApi, ICategoriaPayloadApi } from "./interfaces";
 
 export async function postCategoria(
   payload: ICategoriaPayloadApi

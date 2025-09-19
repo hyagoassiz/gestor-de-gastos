@@ -1,4 +1,5 @@
 import { API } from "../constants/API";
+import { ICategoriaApi, ICategoriaListPayloadApi } from "./interfaces";
 
 export async function getCategoriasPaginado(
   params?: ICategoriaListPayloadApi

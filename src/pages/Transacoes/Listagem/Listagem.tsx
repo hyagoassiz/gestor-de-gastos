@@ -7,42 +7,30 @@ import { contasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
 import Header from "../../../components/Header/Header";
-import { ModalConta } from "./components/ModalConta";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
 
 export const Listagem: React.FC = () => {
-  const {
-    contas,
-    modalContaState,
-    filterForm,
-    filterCount,
-    contaListPayload,
-    closeModalConta,
-    handleAtivarContaById,
-    handleChangePage,
-    handleEditarConta,
-    handleInativarContaById,
-    handleSubmitFilterForm,
-    openModalConta,
-  } = useListagem();
+  const listagem = useListagem();
 
   return (
-    <FormProvider {...filterForm}>
+    <FormProvider {...listagem.filterForm}>
       <Header
         title="Contas"
         buttons={
           <Filtro
-            defaultValue={!contaListPayload.ativo}
-            filterCount={filterCount}
-            applyFilter={handleSubmitFilterForm}
+            defaultValue={!listagem.contaListPayload.ativo}
+            filterCount={listagem.filterCount}
+            applyFilter={listagem.handleSubmitFilterForm}
           />
         }
       />
 
       <Frame>
         <ToolbarContainer
-          title={`Contas (${contas?.totalElements})`}
+          title={`Contas (${
+            listagem.queryGetContasPaginado?.data?.totalElements ?? 0
+          })`}
           showTitleDivider
           showDividers
           buttons={
@@ -51,7 +39,7 @@ export const Listagem: React.FC = () => {
                 startIcon={<Add />}
                 color="primary"
                 variant="outlined"
-                onClick={openModalConta}
+                onClick={listagem.handleAdicionarTransacao}
               >
                 NOVA
               </Button>
@@ -61,26 +49,13 @@ export const Listagem: React.FC = () => {
 
         <DataTable
           columns={contasColumns}
-          data={mountData({
-            contas,
-            handleAtivarContaById,
-            handleEditarConta,
-            handleInativarContaById,
-          })}
-          page={(contas?.number ?? 0) + 1}
-          totalPages={contas?.totalPages}
-          onPageChange={(newPage) => handleChangePage(newPage - 1)}
+          data={mountData(listagem)}
+          page={(listagem.queryGetContasPaginado.data?.number ?? 0) + 1}
+          totalPages={listagem.queryGetContasPaginado.data?.totalPages}
+          onPageChange={(newPage) => listagem.handleChangePage(newPage - 1)}
           textForEmptyData="Nenhuma conta encontrada."
         />
       </Frame>
-
-      {modalContaState.open && (
-        <ModalConta
-          conta={modalContaState.conta}
-          open={modalContaState.open}
-          onClose={closeModalConta}
-        />
-      )}
     </FormProvider>
   );
 };

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import { IModalContaState } from "../interfaces";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
@@ -11,7 +15,7 @@ import {
 } from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
 
 interface IUseListagemReturn {
-  contas: IPaginatedResponse<IContaApi> | undefined;
+  queryGetContasPaginado: UseQueryResult<IPaginatedResponse<IContaApi>>;
   modalContaState: IModalContaState;
   filterForm: UseFormReturn<IContaListPayloadApi>;
   filterCount: number;
@@ -26,9 +30,9 @@ interface IUseListagemReturn {
 }
 
 export const useListagem = (): IUseListagemReturn => {
-  const { setLoading } = useLoading();
+  const loading = useLoading();
 
-  const { showSnackBar } = useNotification();
+  const notification = useNotification();
 
   const queryClient = useQueryClient();
 
@@ -38,19 +42,20 @@ export const useListagem = (): IUseListagemReturn => {
     conta: undefined,
     open: false,
   });
+
   const [contaListPayload, setContaListPayload] =
     useState<IContaListPayloadApi>({ ativo: true, page: 0, size: 10 });
 
-  const { data: contas, isLoading } = useQuery({
+  const queryGetContasPaginado = useQuery({
     ...queryOptionsGetContasPaginado(contaListPayload),
   });
 
   const filterCount: number = contaListPayload.ativo === true ? 0 : 1;
 
   useEffect(() => {
-    setLoading(isLoading);
+    loading.setLoading(queryGetContasPaginado.isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [queryGetContasPaginado.isLoading]);
 
   function closeModalConta(): void {
     setModalContaState({ open: false, conta: undefined });
@@ -58,18 +63,18 @@ export const useListagem = (): IUseListagemReturn => {
 
   async function handleAtivarContaById(id: number): Promise<void> {
     try {
-      setLoading(true);
+      loading.setLoading(true);
 
       await updateStatusConta({ id, ativo: true });
 
       queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
 
-      showSnackBar("Conta ativada com sucesso!", "success");
+      notification.showSnackBar("Conta ativada com sucesso!", "success");
     } catch (error) {
       console.error(error);
-      showSnackBar(String(error), "error");
+      notification.showSnackBar(String(error), "error");
     } finally {
-      setLoading(false);
+      loading.setLoading(false);
     }
   }
 
@@ -87,18 +92,18 @@ export const useListagem = (): IUseListagemReturn => {
 
   async function handleInativarContaById(id: number): Promise<void> {
     try {
-      setLoading(true);
+      loading.setLoading(true);
 
       await updateStatusConta({ id, ativo: false });
 
       queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
 
-      showSnackBar("Conta inativada com sucesso!", "success");
+      notification.showSnackBar("Conta inativada com sucesso!", "success");
     } catch (error) {
       console.error(error);
-      showSnackBar(String(error), "error");
+      notification.showSnackBar(String(error), "error");
     } finally {
-      setLoading(false);
+      loading.setLoading(false);
     }
   }
 
@@ -117,7 +122,7 @@ export const useListagem = (): IUseListagemReturn => {
   }
 
   return {
-    contas,
+    queryGetContasPaginado,
     modalContaState,
     filterForm,
     filterCount,

@@ -23,7 +23,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
   open,
   onClose,
 }) => {
-  const { contaForm, submitContaForm } = useModalConta({ conta, onClose });
+  const modalConta = useModalConta({ conta, onClose });
 
   return (
     <Modal
@@ -35,7 +35,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           <Button variant="text" onClick={onClose}>
             Fechar
           </Button>
-          <Button variant="contained" onClick={submitContaForm}>
+          <Button variant="contained" onClick={modalConta.submitContaForm}>
             Salvar
           </Button>
         </>
@@ -45,7 +45,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
         <Grid item xs={12}>
           <Controller
             name="nome"
-            control={contaForm.control}
+            control={modalConta.contaForm.control}
             rules={{ required: true }}
             render={({ field, formState }) => (
               <TextField
@@ -63,7 +63,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
         <Grid item xs={12}>
           <Controller
             name="tipo"
-            control={contaForm.control}
+            control={modalConta.contaForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
@@ -95,7 +95,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           <Controller
             name="agencia"
             rules={{ required: false }}
-            control={contaForm.control}
+            control={modalConta.contaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
@@ -119,7 +119,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           <Controller
             name="conta"
             rules={{ required: false }}
-            control={contaForm.control}
+            control={modalConta.contaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
@@ -143,7 +143,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           <Controller
             name="observacao"
             rules={{ required: false }}
-            control={contaForm.control}
+            control={modalConta.contaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
@@ -161,7 +161,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
         <Grid item xs={6}>
           <Controller
             name="incluirEmSomas"
-            control={contaForm.control}
+            control={modalConta.contaForm.control}
             defaultValue={true}
             render={({ field }) => (
               <FormGroup>

@@ -2,22 +2,23 @@ import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
+import { UseQueryResult } from "@tanstack/react-query";
 
 interface IMountDataProps {
-  contas: IPaginatedResponse<IContaApi> | undefined;
+  queryGetContasPaginado: UseQueryResult<IPaginatedResponse<IContaApi>>;
   handleAtivarContaById(id: number): Promise<void>;
   handleEditarConta(conta: IContaApi): void;
   handleInativarContaById(id: number): void;
 }
 
 export function mountData({
-  contas,
+  queryGetContasPaginado,
   handleAtivarContaById,
   handleEditarConta,
   handleInativarContaById,
 }: IMountDataProps): any[] {
-  if (contas?.content.length) {
-    return contas.content.map((conta) => ({
+  if (queryGetContasPaginado.data?.content.length) {
+    return queryGetContasPaginado.data.content.map((conta) => ({
       ...conta,
       nome:
         conta.agencia && conta.conta ? (

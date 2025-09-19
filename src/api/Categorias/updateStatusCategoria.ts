@@ -1,4 +1,5 @@
 import { API } from "../constants/API";
+import { ICategoriaApi, IUpdateStatusCategoriaPayloadApi } from "./interfaces";
 
 export async function updateStatusCategoria(
   params: IUpdateStatusCategoriaPayloadApi
