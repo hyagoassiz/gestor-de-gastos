@@ -1,68 +1,68 @@
 import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
-import { PowerIcon } from "../../../../components/PowerIcon";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
-import { UseQueryResult } from "@tanstack/react-query";
+import {
+  EnumTipoMotimentacaoApi,
+  ITransacaoApi,
+} from "../../../../api/Transacao/interfaces";
 
 interface IMountDataProps {
-  queryGetContasPaginado: UseQueryResult<IPaginatedResponse<IContaApi>>;
-  handleAtivarContaById(id: number): Promise<void>;
-  handleEditarConta(conta: IContaApi): void;
-  handleInativarContaById(id: number): void;
+  transacoes: IPaginatedResponse<ITransacaoApi> | undefined;
+  handleEditarTransacao(transacao: ITransacaoApi): void;
+  handleExcluirTransacao(idTransacao: number): Promise<void>;
 }
 
 export function mountData({
-  queryGetContasPaginado,
-  handleAtivarContaById,
-  handleEditarConta,
-  handleInativarContaById,
+  transacoes,
+  handleEditarTransacao,
+  handleExcluirTransacao,
 }: IMountDataProps): any[] {
-  if (queryGetContasPaginado.data?.content.length) {
-    return queryGetContasPaginado.data.content.map((conta) => ({
-      ...conta,
-      nome:
-        conta.agencia && conta.conta ? (
+  if (transacoes?.content.length) {
+    return transacoes.content.map((transacao) => ({
+      ...transacao,
+      tipoMovimentacao: EnumTipoMotimentacaoApi[transacao.tipoMovimentacao],
+      conta:
+        transacao.conta.agencia && transacao.conta.agencia ? (
           <ListItemText
-            primary={conta.nome}
+            primary={transacao.conta.nome}
             primaryTypographyProps={{ fontSize: "14px" }}
             secondaryTypographyProps={{ fontSize: "12px" }}
-            secondary={getAgenciaContaLabel(conta.agencia, conta.conta)}
+            secondary={getAgenciaContaLabel(
+              transacao.conta.agencia,
+              transacao.conta.conta
+            )}
             sx={{ my: 0, height: "auto" }}
           />
         ) : (
-          conta.nome
+          transacao.conta.nome
         ),
-      tipo: conta.tipoConta,
-      incluirEmSomas: conta.incluirEmSomas ? "Sim" : "Não",
+      categoria: transacao.categoria.nome,
+      pago: transacao.pago ? "Sim" : "Não",
       options: (
         <div>
-          {conta.ativo ? (
-            <MoreOptions>
-              {({ handleClose }) => (
-                <div>
-                  <MenuItem
-                    onClick={() => {
-                      handleEditarConta(conta);
-                      handleClose();
-                    }}
-                  >
-                    Editar
-                  </MenuItem>
+          <MoreOptions>
+            {({ handleClose }) => (
+              <div>
+                <MenuItem
+                  onClick={() => {
+                    handleEditarTransacao(transacao);
+                    handleClose();
+                  }}
+                >
+                  Editar
+                </MenuItem>
 
-                  <MenuItem
-                    onClick={() => {
-                      handleInativarContaById(conta.id);
-                      handleClose();
-                    }}
-                  >
-                    Inativar
-                  </MenuItem>
-                </div>
-              )}
-            </MoreOptions>
-          ) : (
-            <PowerIcon onClick={() => handleAtivarContaById(conta.id)} />
-          )}
+                <MenuItem
+                  onClick={() => {
+                    handleExcluirTransacao(transacao.id);
+                    handleClose();
+                  }}
+                >
+                  Excluir
+                </MenuItem>
+              </div>
+            )}
+          </MoreOptions>
         </div>
       ),
       style: { height: "48px" },

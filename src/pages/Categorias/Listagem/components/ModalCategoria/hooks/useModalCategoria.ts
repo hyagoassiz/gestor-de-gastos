@@ -6,6 +6,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ICategoriaForm } from "../interfaces";
 import { postCategoria } from "../../../../../../api/Categorias/postCategoria";
 import { KEY_GET_CATEGORIAS_PAGINADO } from "../../../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
+import {
+  ICategoriaApi,
+  ICategoriaPayloadApi,
+} from "../../../../../../api/Categorias/interfaces";
 
 interface IUseModalCategoria {
   categoria: ICategoriaApi | undefined;
@@ -50,7 +54,7 @@ export const useModalCategoria = ({
           const payload: ICategoriaPayloadApi = {
             ...data,
             id: data.id ?? undefined,
-            tipoCategoria: data.tipoCategoria.id,
+            tipoMovimentacao: data.tipoMovimentacao.id,
             observacao: data.observacao ?? "",
             ativo: true,
           };

@@ -9,6 +9,7 @@ import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContai
 import Header from "../../../components/Header/Header";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
+import { ModalTransacao } from "./components/ModalTransacao";
 
 export const Listagem: React.FC = () => {
   const listagem = useListagem();
@@ -16,10 +17,10 @@ export const Listagem: React.FC = () => {
   return (
     <FormProvider {...listagem.filterForm}>
       <Header
-        title="Contas"
+        title="Transações"
         buttons={
           <Filtro
-            defaultValue={!listagem.contaListPayload.ativo}
+            defaultValue={!listagem.transacaoListPayload.pago}
             filterCount={listagem.filterCount}
             applyFilter={listagem.handleSubmitFilterForm}
           />
@@ -28,9 +29,7 @@ export const Listagem: React.FC = () => {
 
       <Frame>
         <ToolbarContainer
-          title={`Contas (${
-            listagem.queryGetContasPaginado?.data?.totalElements ?? 0
-          })`}
+          title={`Registros (${listagem.transacoes?.totalElements ?? 0})`}
           showTitleDivider
           showDividers
           buttons={
@@ -50,12 +49,20 @@ export const Listagem: React.FC = () => {
         <DataTable
           columns={contasColumns}
           data={mountData(listagem)}
-          page={(listagem.queryGetContasPaginado.data?.number ?? 0) + 1}
-          totalPages={listagem.queryGetContasPaginado.data?.totalPages}
+          page={(listagem.transacoes?.number ?? 0) + 1}
+          totalPages={listagem.transacoes?.totalPages}
           onPageChange={(newPage) => listagem.handleChangePage(newPage - 1)}
           textForEmptyData="Nenhuma conta encontrada."
         />
       </Frame>
+
+      {listagem.modalTransacaoState.open && (
+        <ModalTransacao
+          transacao={listagem.modalTransacaoState.transacao}
+          open={listagem.modalTransacaoState.open}
+          onClose={listagem.closeModalTransacao}
+        />
+      )}
     </FormProvider>
   );
 };

@@ -9,6 +9,10 @@ import {
   KEY_GET_CATEGORIAS_PAGINADO,
   queryOptionsGetCategoriasPaginado,
 } from "../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
+import {
+  ICategoriaApi,
+  ICategoriaListPayloadApi,
+} from "../../../../api/Categorias/interfaces";
 
 interface IUseListagemReturn {
   categorias: IPaginatedResponse<ICategoriaApi> | undefined;

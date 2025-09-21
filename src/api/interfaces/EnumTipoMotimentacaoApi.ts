@@ -1,4 +1,4 @@
-export enum EnumCategoriaTypeApi {
+export enum EnumTipoMotimentacaoApi {
   ENTRADA = "Entrada",
   SAIDA = "Saída",
 }

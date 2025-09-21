@@ -5,25 +5,31 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
-import { useNotification } from "../../../../hooks/useNotification";
-import { updateStatusConta } from "../../../../api/Contas/updateStatusConta";
 import { useForm, UseFormReturn } from "react-hook-form";
 import {
-  KEY_GET_CONTAS_PAGINADO,
-  queryOptionsGetContasPaginado,
-} from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
-import { useNavigate } from "react-router-dom";
-import * as PATHS from "../../../../routes/paths";
+  ITransacaoApi,
+  ITransacaoListPayloadApi,
+} from "../../../../api/Transacao/interfaces";
+import {
+  KEY_GET_TRANSACOES_PAGINADO,
+  queryOptionsGetTransacoesPaginado,
+} from "../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
+import { IModalTransacaoState } from "../interfaces";
+import { useNotification } from "../../../../hooks/useNotification";
+import { deleteTransacao } from "../../../../api/Transacao/deleteTransacao";
 
 interface IUseListagemReturn {
-  queryGetContasPaginado: UseQueryResult<IPaginatedResponse<IContaApi>>;
-  filterForm: UseFormReturn<IContaListPayloadApi>;
+  transacoes: IPaginatedResponse<ITransacaoApi> | undefined;
+  queryGetTransacoesPaginado: UseQueryResult<IPaginatedResponse<ITransacaoApi>>;
+  filterForm: UseFormReturn<ITransacaoListPayloadApi>;
   filterCount: number;
-  contaListPayload: IContaListPayloadApi;
+  transacaoListPayload: ITransacaoListPayloadApi;
+  modalTransacaoState: IModalTransacaoState;
+  closeModalTransacao(): void;
   handleAdicionarTransacao(): void;
-  handleAtivarContaById(id: number): Promise<void>;
+  handleEditarTransacao(transacao: ITransacaoApi): void;
+  handleExcluirTransacao(idTransacao: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
-  handleInativarContaById(id: number): void;
   handleSubmitFilterForm(): void;
 }
 
@@ -32,91 +38,89 @@ export const useListagem = (): IUseListagemReturn => {
 
   const { showSnackBar } = useNotification();
 
-  const navigate = useNavigate();
-
   const queryClient = useQueryClient();
 
-  const filterForm = useForm<IContaListPayloadApi>();
+  const filterForm = useForm<ITransacaoListPayloadApi>();
 
-  const [contaListPayload, setContaListPayload] =
-    useState<IContaListPayloadApi>({ ativo: true, page: 0, size: 10 });
+  const [transacaoListPayload, setTransacaoListPayload] =
+    useState<ITransacaoListPayloadApi>({ page: 0, size: 10 });
 
-  const queryGetContasPaginado = useQuery({
-    ...queryOptionsGetContasPaginado(contaListPayload),
+  const [modalTransacaoState, setModalTransacaoState] =
+    useState<IModalTransacaoState>({ open: false, transacao: null });
+
+  const queryGetTransacoesPaginado = useQuery({
+    ...queryOptionsGetTransacoesPaginado(transacaoListPayload),
   });
 
-  const filterCount: number = contaListPayload.ativo === true ? 0 : 1;
+  const filterCount: number = transacaoListPayload.pago === true ? 0 : 1;
+
+  const transacoes = queryGetTransacoesPaginado.data;
 
   useEffect(() => {
-    setLoading(queryGetContasPaginado.isLoading);
+    setLoading(queryGetTransacoesPaginado.isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryGetContasPaginado.isLoading]);
+  }, [queryGetTransacoesPaginado.isLoading]);
 
-  function handleAdicionarTransacao(): void {
-    navigate(PATHS.TRANSACOES.LIST);
+  function closeModalTransacao(): void {
+    setModalTransacaoState({ open: false, transacao: null });
   }
 
-  async function handleAtivarContaById(id: number): Promise<void> {
+  function handleAdicionarTransacao(): void {
+    setModalTransacaoState({ open: true, transacao: null });
+  }
+
+  function handleEditarTransacao(transacao: ITransacaoApi): void {
+    setModalTransacaoState({ open: true, transacao });
+  }
+
+  async function handleExcluirTransacao(idTransacao: number): Promise<void> {
     try {
       setLoading(true);
 
-      await updateStatusConta({ id, ativo: true });
+      await deleteTransacao(idTransacao);
 
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
+      showSnackBar(`Transação excluída com sucesso!`, "success");
 
-      showSnackBar("Conta ativada com sucesso!", "success");
+      queryClient.invalidateQueries({
+        queryKey: [KEY_GET_TRANSACOES_PAGINADO],
+      });
     } catch (error) {
       console.error(error);
-      showSnackBar(String(error), "error");
     } finally {
       setLoading(false);
     }
   }
 
   function handleChangePage(page: number, size?: number): void {
-    setContaListPayload((prev) => ({
+    setTransacaoListPayload((prev) => ({
       ...prev,
       page: page,
       size: size ?? prev.size,
     }));
   }
 
-  async function handleInativarContaById(id: number): Promise<void> {
-    try {
-      setLoading(true);
-
-      await updateStatusConta({ id, ativo: false });
-
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
-
-      showSnackBar("Conta inativada com sucesso!", "success");
-    } catch (error) {
-      console.error(error);
-      showSnackBar(String(error), "error");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
-      setContaListPayload((prevState) => ({
+      setTransacaoListPayload((prevState) => ({
         ...prevState,
-        ativo: !data.ativo,
+        pago: !data.pago,
         page: 0,
       }));
     })();
   }
 
   return {
-    queryGetContasPaginado,
+    transacoes,
+    queryGetTransacoesPaginado,
     filterForm,
     filterCount,
-    contaListPayload,
+    transacaoListPayload,
+    modalTransacaoState,
+    handleEditarTransacao,
+    handleExcluirTransacao,
+    closeModalTransacao,
     handleAdicionarTransacao,
-    handleAtivarContaById,
     handleChangePage,
-    handleInativarContaById,
     handleSubmitFilterForm,
   };
 };

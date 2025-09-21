@@ -2,7 +2,8 @@ import { Controller } from "react-hook-form";
 import { TextField, Button, Autocomplete, Grid } from "@mui/material";
 import { Modal } from "../../../../../components/Modal";
 import { useModalCategoria } from "./hooks/useModalCategoria";
-import { tipoCategoriaOptions } from "../../../../../constants/tipoCategoriaOptions";
+import { tipoMovimentacaoOptions } from "../../../../../constants/tipoMovimentacaoOptions";
+import { ICategoriaApi } from "../../../../../api/Categorias/interfaces";
 
 interface IModalCategoriaProps {
   categoria: ICategoriaApi | undefined;
@@ -57,14 +58,14 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
 
         <Grid item xs={12}>
           <Controller
-            name="tipoCategoria"
+            name="tipoMovimentacao"
             control={contaForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
-                id="tipoCategoria"
-                options={tipoCategoriaOptions ?? []}
+                id="tipoMovimentacao"
+                options={tipoMovimentacaoOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue);
