@@ -2,7 +2,7 @@ import { ICategoriaApi } from "./ICategoriaApi";
 
 export type ICategoriaPayloadApi = Omit<
   ICategoriaApi,
-  "id" | "criadoEm" | "atualizadoEm"
+  "id" | "dataHoraCriacao" | "dataHoraAtualizacao"
 > & {
   id: number | undefined;
 };

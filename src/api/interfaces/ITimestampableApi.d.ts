@@ -1,4 +1,4 @@
 interface ITimestampableApi {
-  criadoEm: string;
-  atualizadoEm: string;
+  dataHoraCriacao: string;
+  dataHoraAtualizacao: string;
 }
