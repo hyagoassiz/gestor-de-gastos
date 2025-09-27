@@ -2,7 +2,7 @@ import { API } from "../constants/API";
 
 export async function updateStatusConta(
   params: IUpdateStatusContaPayloadApi
-): Promise<ICategoriaApi> {
+): Promise<IContaApi> {
   const { id, ativo } = params;
 
   const response = await API.patch(`/contas/${id}`, null, {

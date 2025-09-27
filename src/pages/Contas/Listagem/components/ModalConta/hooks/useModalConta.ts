@@ -50,7 +50,7 @@ export const useModalConta = ({
           const payload: IContaPayloadApi = {
             id: data.id ?? undefined,
             nome: data.nome,
-            tipoConta: data.tipo.id,
+            tipoConta: data.tipoConta.id,
             agencia: data.agencia ?? "",
             conta: data.conta ?? "",
             observacao: data.observacao ?? "",

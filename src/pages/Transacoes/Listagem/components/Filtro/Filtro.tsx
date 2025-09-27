@@ -1,6 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { FilterDrawer } from "../../../../../components/FilterDrawer";
+import { IContaListPayloadApi } from "../../../../../api/Contas/interfaces/IContaListPayloadApi";
 
 interface IFiltroProps {
   defaultValue: boolean;

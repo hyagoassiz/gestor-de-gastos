@@ -18,6 +18,7 @@ export const Listagem: React.FC = () => {
     <FormProvider {...listagem.filterForm}>
       <Header
         title="Contas"
+        searchBar={listagem.searchBar}
         buttons={
           <Filtro
             defaultValue={!listagem.contaListPayload.ativo}

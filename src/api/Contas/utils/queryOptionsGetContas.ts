@@ -1,5 +1,6 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import { getContas } from "../getContas";
+import { IContaListPayloadApi } from "../interfaces/IContaListPayloadApi";
 
 export const KEY_GET_CONTAS = "key-get-contas" as const;
 

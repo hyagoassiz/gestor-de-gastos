@@ -1,3 +1,5 @@
+import { IContaTypeApi } from "../api/Contas/interfaces/IContaTypeApi";
+
 export const tipoContaOptions: IContaTypeApi[] = [
   {
     id: "CONTA_CORRENTE",

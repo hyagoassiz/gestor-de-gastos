@@ -1,4 +1,5 @@
 import { API } from "../constants/API";
+import { IContaListPayloadApi } from "./interfaces/IContaListPayloadApi";
 
 export async function getContasPaginado(
   params?: IContaListPayloadApi
