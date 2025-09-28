@@ -11,6 +11,7 @@ import {
 import { Modal } from "../../../../../components/Modal";
 import { useModalConta } from "./hooks/useModalConta";
 import { tipoContaOptions } from "../../../../../constants/tipoContaOptions";
+import { IContaApi } from "../../../../../api/Contas/interfaces/IContaApi";
 
 interface IModalContaProps {
   conta: IContaApi | undefined;
@@ -62,13 +63,13 @@ export const ModalConta: React.FC<IModalContaProps> = ({
 
         <Grid item xs={12}>
           <Controller
-            name="tipo"
+            name="tipoConta"
             control={modalConta.contaForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
-                id="tipo"
+                id="tipoConta"
                 options={tipoContaOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {

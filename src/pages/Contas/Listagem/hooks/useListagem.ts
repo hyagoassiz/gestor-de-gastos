@@ -16,8 +16,10 @@ import {
 import { IContaListPayloadApi } from "../../../../api/Contas/interfaces/IContaListPayloadApi";
 import useSearchBar from "../../../../hooks/useSearchBar";
 import { ISeachBar } from "../../../../interfaces/ISearchBar";
+import { IContaApi } from "../../../../api/Contas/interfaces/IContaApi";
 
 interface IUseListagemReturn {
+  contas: IPaginatedResponse<IContaApi> | undefined;
   queryGetContasPaginado: UseQueryResult<IPaginatedResponse<IContaApi>>;
   modalContaState: IModalContaState;
   filterForm: UseFormReturn<IContaListPayloadApi>;
@@ -60,6 +62,8 @@ export const useListagem = (): IUseListagemReturn => {
   });
 
   const filterCount: number = contaListPayload.ativo === true ? 0 : 1;
+
+  const contas = queryGetContasPaginado.data;
 
   useEffect(() => {
     loading.setLoading(queryGetContasPaginado.isLoading);
@@ -132,6 +136,7 @@ export const useListagem = (): IUseListagemReturn => {
   }
 
   return {
+    contas,
     queryGetContasPaginado,
     modalContaState,
     filterForm,

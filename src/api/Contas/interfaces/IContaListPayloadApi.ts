@@ -1,9 +1,9 @@
-import { IContaTypeApi } from "./IContaTypeApi";
+import { EnumTipoContaApi } from "./EnumTipoContaApi";
 
 export interface IContaListPayloadApi {
   ativo?: boolean;
   incluirEmSomas?: boolean;
-  tipoConta?: IContaTypeApi["id"];
+  tipoConta?: keyof typeof EnumTipoContaApi;
   textoBusca?: string;
   page?: number;
   size?: number;

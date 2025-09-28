@@ -1,6 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { FilterDrawer } from "../../../../../components/FilterDrawer";
+import { ICategoriaListPayloadApi } from "../../../../../api/Categorias/interfaces";
 
 interface IFiltroProps {
   defaultValue: boolean;

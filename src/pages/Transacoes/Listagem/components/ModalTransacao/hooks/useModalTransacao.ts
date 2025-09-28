@@ -13,6 +13,7 @@ import { KEY_GET_TRANSACOES_PAGINADO } from "../../../../../../api/Transacao/uti
 import { queryOptionsGetContas } from "../../../../../../api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "../../../../../../api/Categorias/utils/queryOptionsGetCategorias";
 import { ICategoriaApi } from "../../../../../../api/Categorias/interfaces";
+import { IContaApi } from "../../../../../../api/Contas/interfaces/IContaApi";
 
 interface IUseModalTransacao {
   transacao: ITransacaoApi | null;

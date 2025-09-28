@@ -1,7 +1,9 @@
-interface IContaApi extends ITimestampableApi {
+import { EnumTipoContaApi } from "./EnumTipoContaApi";
+
+export interface IContaApi {
   id: number;
   nome: string;
-  tipoConta: IContaTypeApi["id"];
+  tipoConta: keyof typeof EnumTipoContaApi;
   agencia: string;
   conta: string;
   observacao: string;

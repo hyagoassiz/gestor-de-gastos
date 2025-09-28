@@ -6,6 +6,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { postConta } from "../../../../../../api/Contas/postConta";
 import { IContaForm } from "../interfaces";
 import { KEY_GET_CONTAS_PAGINADO } from "../../../../../../api/Contas/utils/queryOptionsGetContasPaginado";
+import { IContaApi } from "../../../../../../api/Contas/interfaces/IContaApi";
+import { IContaPayloadApi } from "../../../../../../api/Contas/interfaces/IContaPayloadApi";
 
 interface IUseModalContaProps {
   conta: IContaApi | undefined;
@@ -50,7 +52,7 @@ export const useModalConta = ({
           const payload: IContaPayloadApi = {
             id: data.id ?? undefined,
             nome: data.nome,
-            tipoConta: data.tipoConta.id,
+            tipoConta: data.tipoConta,
             agencia: data.agencia ?? "",
             conta: data.conta ?? "",
             observacao: data.observacao ?? "",

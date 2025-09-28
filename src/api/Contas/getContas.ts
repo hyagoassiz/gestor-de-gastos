@@ -1,4 +1,5 @@
 import { API } from "../constants/API";
+import { IContaApi } from "./interfaces/IContaApi";
 import { IContaListPayloadApi } from "./interfaces/IContaListPayloadApi";
 
 export async function getContas(

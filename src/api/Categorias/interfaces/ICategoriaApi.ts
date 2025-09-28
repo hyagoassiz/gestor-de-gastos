@@ -1,6 +1,6 @@
 import { EnumTipoMotimentacaoApi } from "../../interfaces/EnumTipoMotimentacaoApi";
 
-export interface ICategoriaApi extends ITimestampableApi {
+export interface ICategoriaApi {
   id: number;
   nome: string;
   tipoMovimentacao: keyof typeof EnumTipoMotimentacaoApi;
