@@ -1,6 +1,6 @@
-import { IContaApi } from "../../../../api/Contas/interfaces/IContaApi";
+import { Conta } from "@/types";
 
 export interface IModalContaState {
   open: boolean;
-  conta: IContaApi | undefined;
+  conta: Conta | undefined;
 }

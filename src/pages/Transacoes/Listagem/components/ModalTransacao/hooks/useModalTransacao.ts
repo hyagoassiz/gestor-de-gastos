@@ -13,7 +13,7 @@ import { KEY_GET_TRANSACOES_PAGINADO } from "../../../../../../api/Transacao/uti
 import { queryOptionsGetContas } from "../../../../../../api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "../../../../../../api/Categorias/utils/queryOptionsGetCategorias";
 import { ICategoriaApi } from "../../../../../../api/Categorias/interfaces";
-import { IContaApi } from "../../../../../../api/Contas/interfaces/IContaApi";
+import { Conta } from "@/types";
 
 interface IUseModalTransacao {
   transacao: ITransacaoApi | null;
@@ -21,7 +21,7 @@ interface IUseModalTransacao {
 }
 
 interface IUseModalContaReturn {
-  contas: IContaApi[] | undefined;
+  contas: Conta[] | undefined;
   categorias: ICategoriaApi[] | undefined;
   transacaoForm: UseFormReturn<ITransacaoForm>;
   submitContaForm(): void;

@@ -6,11 +6,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { postConta } from "../../../../../../api/Contas/postConta";
 import { IContaForm } from "../interfaces";
 import { KEY_GET_CONTAS_PAGINADO } from "../../../../../../api/Contas/utils/queryOptionsGetContasPaginado";
-import { IContaApi } from "../../../../../../api/Contas/interfaces/IContaApi";
-import { IContaPayloadApi } from "../../../../../../api/Contas/interfaces/IContaPayloadApi";
+import { Conta, ContaCreateAndUpdatePayload } from "@/types";
 
 interface IUseModalContaProps {
-  conta: IContaApi | undefined;
+  conta: Conta | undefined;
   onClose(): void;
 }
 
@@ -33,10 +32,10 @@ export const useModalConta = ({
 
   useEffect(() => {
     if (conta) {
-      (Object.keys(conta) as (keyof IContaApi)[]).forEach((key) => {
+      (Object.keys(conta) as (keyof Conta)[]).forEach((key) => {
         contaForm.setValue(
-          key as keyof IContaPayloadApi,
-          conta[key] as IContaApi[keyof IContaApi]
+          key as keyof ContaCreateAndUpdatePayload,
+          conta[key] as Conta[keyof Conta]
         );
       });
     }
@@ -49,7 +48,7 @@ export const useModalConta = ({
         try {
           loading.setLoading(true);
 
-          const payload: IContaPayloadApi = {
+          const payload: ContaCreateAndUpdatePayload = {
             id: data.id ?? undefined,
             nome: data.nome,
             tipoConta: data.tipoConta,

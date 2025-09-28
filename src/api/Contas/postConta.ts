@@ -1,7 +1,9 @@
+import { Conta, ContaCreateAndUpdatePayload } from "@/types";
 import { API } from "../constants/API";
-import { IContaApi } from "./interfaces/IContaApi";
 
-export async function postConta(payload: IContaPayloadApi): Promise<IContaApi> {
+export async function postConta(
+  payload: ContaCreateAndUpdatePayload
+): Promise<Conta> {
   const response = await API.post("/contas", payload);
 
   return response.data;

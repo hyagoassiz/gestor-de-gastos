@@ -13,23 +13,22 @@ import {
   KEY_GET_CONTAS_PAGINADO,
   queryOptionsGetContasPaginado,
 } from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
-import { IContaListPayloadApi } from "../../../../api/Contas/interfaces/IContaListPayloadApi";
 import useSearchBar from "../../../../hooks/useSearchBar";
 import { ISeachBar } from "../../../../interfaces/ISearchBar";
-import { IContaApi } from "../../../../api/Contas/interfaces/IContaApi";
+import { Conta, ContaCreateAndUpdatePayload, ContaParams } from "@/types";
 
 interface IUseListagemReturn {
-  contas: IPaginatedResponse<IContaApi> | undefined;
-  queryGetContasPaginado: UseQueryResult<IPaginatedResponse<IContaApi>>;
+  contas: IPaginatedResponse<Conta> | undefined;
+  queryGetContasPaginado: UseQueryResult<IPaginatedResponse<Conta>>;
   modalContaState: IModalContaState;
-  filterForm: UseFormReturn<IContaListPayloadApi>;
+  filterForm: UseFormReturn<ContaCreateAndUpdatePayload>;
   filterCount: number;
-  contaListPayload: IContaListPayloadApi;
+  contaListPayload: ContaParams;
   searchBar: ISeachBar;
   closeModalConta(): void;
   handleAtivarContaById(id: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
-  handleEditarConta(conta: IContaApi): void;
+  handleEditarConta(conta: Conta): void;
   handleInativarContaById(id: number): void;
   handleSubmitFilterForm(): void;
   openModalConta(): void;
@@ -42,7 +41,7 @@ export const useListagem = (): IUseListagemReturn => {
 
   const queryClient = useQueryClient();
 
-  const filterForm = useForm<IContaListPayloadApi>();
+  const filterForm = useForm<ContaCreateAndUpdatePayload>();
 
   const { textoBusca, searchBar } = useSearchBar({
     placeHolder: "Pesquisar",
@@ -54,8 +53,11 @@ export const useListagem = (): IUseListagemReturn => {
     open: false,
   });
 
-  const [contaListPayload, setContaListPayload] =
-    useState<IContaListPayloadApi>({ ativo: true, page: 0, size: 10 });
+  const [contaListPayload, setContaListPayload] = useState<ContaParams>({
+    ativo: true,
+    page: 0,
+    size: 10,
+  });
 
   const queryGetContasPaginado = useQuery({
     ...queryOptionsGetContasPaginado({ ...contaListPayload, textoBusca }),
@@ -99,7 +101,7 @@ export const useListagem = (): IUseListagemReturn => {
     }));
   }
 
-  function handleEditarConta(conta: IContaApi): void {
+  function handleEditarConta(conta: Conta): void {
     setModalContaState({ open: true, conta });
   }
 

@@ -2,12 +2,12 @@ import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
-import { IContaApi } from "../../../../api/Contas/interfaces/IContaApi";
+import { Conta } from "@/types";
 
 interface IMountDataProps {
-  contas: IPaginatedResponse<IContaApi> | undefined;
+  contas: IPaginatedResponse<Conta> | undefined;
   handleAtivarContaById(id: number): Promise<void>;
-  handleEditarConta(conta: IContaApi): void;
+  handleEditarConta(conta: Conta): void;
   handleInativarContaById(id: number): void;
 }
 

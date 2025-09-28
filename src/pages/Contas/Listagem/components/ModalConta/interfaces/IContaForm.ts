@@ -1,6 +1,6 @@
-import { EnumTipoContaApi } from "../../../../../../api/Contas/interfaces/EnumTipoContaApi";
-import { IContaPayloadApi } from "../../../../../../api/Contas/interfaces/IContaPayloadApi";
+import { ContaCreateAndUpdatePayload } from "@/types";
+import { EnumTipoConta } from "@/types/enums";
 
-export type IContaForm = Omit<IContaPayloadApi, "tipoConta"> & {
-  tipoConta: keyof typeof EnumTipoContaApi;
+export type IContaForm = Omit<ContaCreateAndUpdatePayload, "tipoConta"> & {
+  tipoConta: keyof typeof EnumTipoConta;
 };

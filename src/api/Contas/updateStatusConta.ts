@@ -1,10 +1,9 @@
+import { Conta, ContaAtualizarAtivoParams } from "@/types";
 import { API } from "../constants/API";
-import { IContaApi } from "./interfaces/IContaApi";
-import { IUpdateStatusContaPayloadApi } from "./interfaces/IUpdateStatusContaPayloadApi";
 
 export async function updateStatusConta(
-  params: IUpdateStatusContaPayloadApi
-): Promise<IContaApi> {
+  params: ContaAtualizarAtivoParams
+): Promise<Conta> {
   const { id, ativo } = params;
 
   const response = await API.patch(`/contas/${id}`, null, {

@@ -1,10 +1,7 @@
+import { Conta, ContaParams } from "@/types";
 import { API } from "../constants/API";
-import { IContaApi } from "./interfaces/IContaApi";
-import { IContaListPayloadApi } from "./interfaces/IContaListPayloadApi";
 
-export async function getContas(
-  params?: IContaListPayloadApi
-): Promise<IContaApi[]> {
+export async function getContas(params?: ContaParams): Promise<Conta[]> {
   const response = await API.get("/contas", {
     params,
   });
