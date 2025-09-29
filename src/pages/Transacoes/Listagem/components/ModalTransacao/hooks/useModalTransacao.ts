@@ -39,15 +39,19 @@ export const useModalTransacao = ({
 
   const queryClient = useQueryClient();
 
-  const useQueryGetContas = useQuery({
+  const queryGetContas = useQuery({
     ...queryOptionsGetContas({ ativo: true }),
   });
 
   const useQueryGetCategorias = useQuery({
-    ...queryOptionsGetCategorias({ ativo: true }),
+    enabled: Boolean(transacaoForm.watch("tipoMovimentacao")?.id),
+    ...queryOptionsGetCategorias({
+      ativo: true,
+      tipoMovimentacao: transacaoForm.watch("tipoMovimentacao")?.id,
+    }),
   });
 
-  const contas = useQueryGetContas.data;
+  const contas = queryGetContas.data;
 
   const categorias = useQueryGetCategorias.data;
 
