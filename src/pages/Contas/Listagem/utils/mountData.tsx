@@ -3,6 +3,7 @@ import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
 import { Conta } from "@/types";
+import { EnumTipoConta } from "@/types/enums";
 
 interface IMountDataProps {
   contas: IPaginatedResponse<Conta> | undefined;
@@ -32,7 +33,7 @@ export function mountData({
         ) : (
           conta.nome
         ),
-      tipo: conta.tipoConta,
+      tipo: EnumTipoConta[conta.tipoConta],
       incluirEmSomas: conta.incluirEmSomas ? "Sim" : "Não",
       options: (
         <div>

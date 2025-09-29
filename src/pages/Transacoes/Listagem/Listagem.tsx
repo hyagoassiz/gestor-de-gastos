@@ -8,7 +8,6 @@ import { mountData } from "./utils/mountData";
 import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
 import Header from "../../../components/Header/Header";
 import { FormProvider } from "react-hook-form";
-import { Filtro } from "./components/Filtro";
 import { ModalTransacao } from "./components/ModalTransacao";
 
 export const Listagem: React.FC = () => {
@@ -16,16 +15,7 @@ export const Listagem: React.FC = () => {
 
   return (
     <FormProvider {...listagem.filterForm}>
-      <Header
-        title="Transações"
-        buttons={
-          <Filtro
-            defaultValue={!listagem.transacaoListPayload.pago}
-            filterCount={listagem.filterCount}
-            applyFilter={listagem.handleSubmitFilterForm}
-          />
-        }
-      />
+      <Header title="Transações" />
 
       <Frame>
         <ToolbarContainer

@@ -30,7 +30,7 @@ export const Listagem: React.FC = () => {
 
       <Frame>
         <ToolbarContainer
-          title={`Contas (${
+          title={`Registros (${
             listagem.queryGetContasPaginado.data?.totalElements ?? 0
           })`}
           showTitleDivider

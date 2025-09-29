@@ -51,7 +51,7 @@ export const useModalConta = ({
           const payload: ContaCreateAndUpdatePayload = {
             id: data.id ?? undefined,
             nome: data.nome,
-            tipoConta: data.tipoConta,
+            tipoConta: data.tipoConta.id,
             agencia: data.agencia ?? "",
             conta: data.conta ?? "",
             observacao: data.observacao ?? "",

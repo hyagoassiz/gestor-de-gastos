@@ -42,7 +42,7 @@ export const Listagem: React.FC = () => {
 
       <Frame>
         <ToolbarContainer
-          title={`Categorias (${categorias?.numberOfElements ?? 0})`}
+          title={`Registros (${categorias?.numberOfElements ?? 0})`}
           showTitleDivider
           showDividers
           buttons={

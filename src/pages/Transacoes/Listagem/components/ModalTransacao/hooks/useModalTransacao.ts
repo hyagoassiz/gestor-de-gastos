@@ -39,9 +39,13 @@ export const useModalTransacao = ({
 
   const queryClient = useQueryClient();
 
-  const useQueryGetContas = useQuery({ ...queryOptionsGetContas() });
+  const useQueryGetContas = useQuery({
+    ...queryOptionsGetContas({ ativo: true }),
+  });
 
-  const useQueryGetCategorias = useQuery({ ...queryOptionsGetCategorias() });
+  const useQueryGetCategorias = useQuery({
+    ...queryOptionsGetCategorias({ ativo: true }),
+  });
 
   const contas = useQueryGetContas.data;
 

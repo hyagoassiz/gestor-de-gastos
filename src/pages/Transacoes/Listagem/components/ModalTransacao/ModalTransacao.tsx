@@ -31,7 +31,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
     <Modal
       open={open}
       style={{ width: "auto", height: "auto", minWidth: 480, maxWidth: 600 }}
-      title={`${transacao ? "Editar " : "Nova "}Conta`}
+      title={`${transacao ? "Editar " : "Nova "}Transação`}
       buttons={
         <>
           <Button variant="text" onClick={onClose}>
@@ -44,7 +44,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
       }
     >
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Controller
             name="tipoMovimentacao"
             control={modalTransacao.transacaoForm.control}
@@ -75,7 +75,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Controller
             name="data"
             control={modalTransacao.transacaoForm.control}
@@ -94,7 +94,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Controller
             name="valor"
             control={modalTransacao.transacaoForm.control}
@@ -120,7 +120,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Controller
             name="categoria"
             control={modalTransacao.transacaoForm.control}
@@ -151,7 +151,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Controller
             name="conta"
             control={modalTransacao.transacaoForm.control}
