@@ -1,9 +1,9 @@
+import { Transacao, TransacaoParams } from "@/types";
 import { API } from "../constants/API";
-import { ITransacaoApi, ITransacaoListPayloadApi } from "./interfaces";
 
 export async function getTransacoes(
-  params?: ITransacaoListPayloadApi
-): Promise<ITransacaoApi[]> {
+  params?: TransacaoParams
+): Promise<Transacao[]> {
   const response = await API.get("/transacoes/listar-todos", {
     params,
   });

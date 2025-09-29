@@ -1,9 +1,9 @@
+import { Transacao, TransacaoCreateAndUpdatePayload } from "@/types";
 import { API } from "../constants/API";
-import { ITransacaoApi, ITransacaoPayloadApi } from "./interfaces";
 
 export async function postTransacao(
-  payload: ITransacaoPayloadApi
-): Promise<ITransacaoApi> {
+  payload: TransacaoCreateAndUpdatePayload
+): Promise<Transacao> {
   const response = await API.post("/transacoes/salvar", payload);
 
   return response.data;

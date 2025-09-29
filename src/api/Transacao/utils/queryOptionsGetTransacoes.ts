@@ -1,13 +1,13 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 import { getTransacoes } from "../getTransacoes";
-import { ITransacaoApi, ITransacaoListPayloadApi } from "../interfaces";
+import { Transacao, TransacaoParams } from "@/types";
 
 export const KEY_GET_TRANSACOES = "key-get-transacoes" as const;
 
 export function queryOptionsGetTransacoes(
-  params?: ITransacaoListPayloadApi
-): UseQueryOptions<ITransacaoApi[]> {
-  const transacoes: UseQueryOptions<ITransacaoApi[]> = {
+  params?: TransacaoParams
+): UseQueryOptions<Transacao[]> {
+  const transacoes: UseQueryOptions<Transacao[]> = {
     queryKey: [KEY_GET_TRANSACOES, params],
     queryFn: () => getTransacoes(params),
     refetchOnWindowFocus: false,

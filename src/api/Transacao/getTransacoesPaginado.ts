@@ -1,9 +1,9 @@
+import { Transacao, TransacaoParamsPaginado } from "@/types";
 import { API } from "../constants/API";
-import { ITransacaoApi, ITransacaoListPayloadApi } from "./interfaces";
 
 export async function getTransacoesPaginado(
-  params?: ITransacaoListPayloadApi
-): Promise<IPaginatedResponse<ITransacaoApi>> {
+  params?: TransacaoParamsPaginado
+): Promise<IPaginatedResponse<Transacao>> {
   const response = await API.get("/transacoes/listar-paginado", {
     params,
   });

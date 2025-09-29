@@ -1,9 +1,9 @@
+import { Transacao, TransacaoAtualizarPagoParams } from "@/types";
 import { API } from "../constants/API";
-import { ITransacaoApi, IUpdatePagoTransacaoPayloadApi } from "./interfaces";
 
 export async function updatePagoTransacao(
-  params: IUpdatePagoTransacaoPayloadApi
-): Promise<ITransacaoApi> {
+  params: TransacaoAtualizarPagoParams
+): Promise<Transacao> {
   const { id, pago } = params;
 
   const response = await API.patch(`/transacoes/${id}`, null, {

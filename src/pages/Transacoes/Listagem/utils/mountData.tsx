@@ -1,14 +1,12 @@
 import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
-import {
-  EnumTipoMotimentacaoApi,
-  ITransacaoApi,
-} from "../../../../api/Transacao/interfaces";
+import { Transacao } from "@/types";
+import { EnumTipoMovimentacao } from "@/types/enums";
 
 interface IMountDataProps {
-  transacoes: IPaginatedResponse<ITransacaoApi> | undefined;
-  handleEditarTransacao(transacao: ITransacaoApi): void;
+  transacoes: IPaginatedResponse<Transacao> | undefined;
+  handleEditarTransacao(transacao: Transacao): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
 }
 
@@ -20,7 +18,7 @@ export function mountData({
   if (transacoes?.content.length) {
     return transacoes.content.map((transacao) => ({
       ...transacao,
-      tipoMovimentacao: EnumTipoMotimentacaoApi[transacao.tipoMovimentacao],
+      tipoMovimentacao: EnumTipoMovimentacao[transacao.tipoMovimentacao],
       conta:
         transacao.conta.agencia && transacao.conta.agencia ? (
           <ListItemText

@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import { Modal } from "../../../../../components/Modal";
 import { useModalTransacao } from "./hooks/useModalTransacao";
-import { ITransacaoApi } from "../../../../../api/Transacao/interfaces";
 import { tipoMovimentacaoOptions } from "../../../../../constants/tipoMovimentacaoOptions";
 import { NumericFormat } from "react-number-format";
+import { Transacao } from "@/types";
 
 interface IModalTransacaoProps {
-  transacao: ITransacaoApi | null;
+  transacao: Transacao | null;
   open: boolean;
   onClose(): void;
 }

@@ -1,6 +1,6 @@
-import { ITransacaoApi } from "../../../../api/Transacao/interfaces";
+import { Transacao } from "@/types";
 
 export interface IModalTransacaoState {
   open: boolean;
-  transacao: ITransacaoApi | null;
+  transacao: Transacao | null;
 }

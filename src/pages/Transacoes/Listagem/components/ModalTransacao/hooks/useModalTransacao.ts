@@ -4,18 +4,19 @@ import { useNotification } from "../../../../../../hooks/useNotification";
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ITransacaoForm } from "../interfaces";
-import {
-  ITransacaoApi,
-  ITransacaoPayloadApi,
-} from "../../../../../../api/Transacao/interfaces";
 import { postTransacao } from "../../../../../../api/Transacao/postTransacao";
 import { KEY_GET_TRANSACOES_PAGINADO } from "../../../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
 import { queryOptionsGetContas } from "../../../../../../api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "../../../../../../api/Categorias/utils/queryOptionsGetCategorias";
-import { Categoria, Conta } from "@/types";
+import {
+  Categoria,
+  Conta,
+  Transacao,
+  TransacaoCreateAndUpdatePayload,
+} from "@/types";
 
 interface IUseModalTransacao {
-  transacao: ITransacaoApi | null;
+  transacao: Transacao | null;
   onClose(): void;
 }
 
@@ -48,10 +49,10 @@ export const useModalTransacao = ({
 
   useEffect(() => {
     if (transacao) {
-      (Object.keys(transacao) as (keyof ITransacaoApi)[]).forEach((key) => {
+      (Object.keys(transacao) as (keyof Transacao)[]).forEach((key) => {
         transacaoForm.setValue(
-          key as keyof ITransacaoPayloadApi,
-          transacao[key] as ITransacaoApi[keyof ITransacaoApi]
+          key as keyof TransacaoCreateAndUpdatePayload,
+          transacao[key] as Transacao[keyof Transacao]
         );
       });
     }
@@ -64,7 +65,7 @@ export const useModalTransacao = ({
         try {
           loading.setLoading(true);
 
-          const payload: ITransacaoPayloadApi = {
+          const payload: TransacaoCreateAndUpdatePayload = {
             id: data.id ?? undefined,
             tipoMovimentacao: data.tipoMovimentacao.id,
             data: data.data,

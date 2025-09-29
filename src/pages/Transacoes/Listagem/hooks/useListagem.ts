@@ -7,27 +7,24 @@ import {
 import { useLoading } from "../../../../hooks/useLoading";
 import { useForm, UseFormReturn } from "react-hook-form";
 import {
-  ITransacaoApi,
-  ITransacaoListPayloadApi,
-} from "../../../../api/Transacao/interfaces";
-import {
   KEY_GET_TRANSACOES_PAGINADO,
   queryOptionsGetTransacoesPaginado,
 } from "../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
 import { IModalTransacaoState } from "../interfaces";
 import { useNotification } from "../../../../hooks/useNotification";
 import { deleteTransacao } from "../../../../api/Transacao/deleteTransacao";
+import { Transacao, TransacaoParamsPaginado } from "@/types";
 
 interface IUseListagemReturn {
-  transacoes: IPaginatedResponse<ITransacaoApi> | undefined;
-  queryGetTransacoesPaginado: UseQueryResult<IPaginatedResponse<ITransacaoApi>>;
-  filterForm: UseFormReturn<ITransacaoListPayloadApi>;
+  transacoes: IPaginatedResponse<Transacao> | undefined;
+  queryGetTransacoesPaginado: UseQueryResult<IPaginatedResponse<Transacao>>;
+  filterForm: UseFormReturn<TransacaoParamsPaginado>;
   filterCount: number;
-  transacaoListPayload: ITransacaoListPayloadApi;
+  transacaoListPayload: TransacaoParamsPaginado;
   modalTransacaoState: IModalTransacaoState;
   closeModalTransacao(): void;
   handleAdicionarTransacao(): void;
-  handleEditarTransacao(transacao: ITransacaoApi): void;
+  handleEditarTransacao(transacao: Transacao): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
   handleSubmitFilterForm(): void;
@@ -40,10 +37,10 @@ export const useListagem = (): IUseListagemReturn => {
 
   const queryClient = useQueryClient();
 
-  const filterForm = useForm<ITransacaoListPayloadApi>();
+  const filterForm = useForm<TransacaoParamsPaginado>();
 
   const [transacaoListPayload, setTransacaoListPayload] =
-    useState<ITransacaoListPayloadApi>({ page: 0, size: 10 });
+    useState<TransacaoParamsPaginado>({ page: 0, size: 10 });
 
   const [modalTransacaoState, setModalTransacaoState] =
     useState<IModalTransacaoState>({ open: false, transacao: null });
@@ -69,7 +66,7 @@ export const useListagem = (): IUseListagemReturn => {
     setModalTransacaoState({ open: true, transacao: null });
   }
 
-  function handleEditarTransacao(transacao: ITransacaoApi): void {
+  function handleEditarTransacao(transacao: Transacao): void {
     setModalTransacaoState({ open: true, transacao });
   }
 

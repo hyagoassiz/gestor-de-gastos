@@ -1,9 +1,7 @@
+import { Transacao } from "@/types";
 import { API } from "../constants/API";
-import { ITransacaoApi } from "./interfaces";
 
-export async function deleteTransacao(
-  idTransacao: number
-): Promise<ITransacaoApi> {
+export async function deleteTransacao(idTransacao: number): Promise<Transacao> {
   const response = await API.delete(`/transacoes/${idTransacao}`);
 
   return response.data;
