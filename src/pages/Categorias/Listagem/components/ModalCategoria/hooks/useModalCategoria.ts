@@ -6,13 +6,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ICategoriaForm } from "../interfaces";
 import { postCategoria } from "../../../../../../api/Categorias/postCategoria";
 import { KEY_GET_CATEGORIAS_PAGINADO } from "../../../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
-import {
-  ICategoriaApi,
-  ICategoriaPayloadApi,
-} from "../../../../../../api/Categorias/interfaces";
+import { Categoria, CategoriaCreateAndUpdatePayload } from "@/types";
 
 interface IUseModalCategoria {
-  categoria: ICategoriaApi | undefined;
+  categoria: Categoria | undefined;
   onClose(): void;
 }
 
@@ -35,10 +32,10 @@ export const useModalCategoria = ({
 
   useEffect(() => {
     if (categoria) {
-      (Object.keys(categoria) as (keyof ICategoriaApi)[]).forEach((key) => {
+      (Object.keys(categoria) as (keyof Categoria)[]).forEach((key) => {
         contaForm.setValue(
-          key as keyof ICategoriaPayloadApi,
-          categoria[key] as ICategoriaApi[keyof ICategoriaApi]
+          key as keyof CategoriaCreateAndUpdatePayload,
+          categoria[key] as Categoria[keyof Categoria]
         );
       });
     }
@@ -51,7 +48,7 @@ export const useModalCategoria = ({
         try {
           setLoading(true);
 
-          const payload: ICategoriaPayloadApi = {
+          const payload: CategoriaCreateAndUpdatePayload = {
             ...data,
             id: data.id ?? undefined,
             tipoMovimentacao: data.tipoMovimentacao.id,

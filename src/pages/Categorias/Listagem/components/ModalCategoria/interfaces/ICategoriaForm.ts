@@ -1,11 +1,9 @@
-import {
-  EnumTipoMotimentacaoApi,
-  ICategoriaApi,
-} from "../../../../../../api/Categorias/interfaces";
+import { Categoria } from "@/types";
+import { EnumTipoMovimentacao } from "@/types/enums";
 
-export type ICategoriaForm = Omit<ICategoriaApi, "tipoMovimentacao"> & {
+export type ICategoriaForm = Omit<Categoria, "tipoMovimentacao"> & {
   tipoMovimentacao: {
-    id: keyof typeof EnumTipoMotimentacaoApi;
-    nome: EnumTipoMotimentacaoApi;
+    id: keyof typeof EnumTipoMovimentacao;
+    nome: EnumTipoMovimentacao;
   };
 };

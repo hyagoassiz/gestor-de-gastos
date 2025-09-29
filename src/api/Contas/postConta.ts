@@ -2,9 +2,9 @@ import { Conta, ContaCreateAndUpdatePayload } from "@/types";
 import { API } from "../constants/API";
 
 export async function postConta(
-  payload: ContaCreateAndUpdatePayload
+  body: ContaCreateAndUpdatePayload
 ): Promise<Conta> {
-  const response = await API.post("/contas", payload);
+  const response = await API.post("/contas", body);
 
   return response.data;
 }

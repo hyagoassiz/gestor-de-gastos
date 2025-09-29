@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { FilterDrawer } from "../../../../../components/FilterDrawer";
-import { IContaListPayloadApi } from "../../../../../api/Contas/interfaces/IContaListPayloadApi";
+import { ITransacaoListPayloadApi } from "@/api/Transacao/interfaces";
 
 interface IFiltroProps {
   defaultValue: boolean;
@@ -14,7 +14,7 @@ export const Filtro: React.FC<IFiltroProps> = ({
   defaultValue,
   applyFilter,
 }) => {
-  const filterForm = useFormContext<IContaListPayloadApi>();
+  const filterForm = useFormContext<ITransacaoListPayloadApi>();
 
   return (
     <FilterDrawer applyFilter={applyFilter} filterCount={filterCount}>

@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { FilterDrawer } from "../../../../../components/FilterDrawer";
-import { ICategoriaListPayloadApi } from "../../../../../api/Categorias/interfaces";
+import { CategoriaParamsPaginado } from "@/types";
 
 interface IFiltroProps {
   defaultValue: boolean;
@@ -14,7 +14,7 @@ export const Filtro: React.FC<IFiltroProps> = ({
   defaultValue,
   applyFilter,
 }) => {
-  const filterForm = useFormContext<ICategoriaListPayloadApi>();
+  const filterForm = useFormContext<CategoriaParamsPaginado>();
 
   return (
     <FilterDrawer applyFilter={applyFilter} filterCount={filterCount}>

@@ -9,21 +9,18 @@ import {
   KEY_GET_CATEGORIAS_PAGINADO,
   queryOptionsGetCategoriasPaginado,
 } from "../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
-import {
-  ICategoriaApi,
-  ICategoriaListPayloadApi,
-} from "../../../../api/Categorias/interfaces";
+import { Categoria, CategoriaParamsPaginado } from "@/types";
 
 interface IUseListagemReturn {
-  categorias: IPaginatedResponse<ICategoriaApi> | undefined;
+  categorias: IPaginatedResponse<Categoria> | undefined;
   modalCategoriaState: IModalCategoriaState;
-  filterForm: UseFormReturn<ICategoriaListPayloadApi>;
+  filterForm: UseFormReturn<CategoriaParamsPaginado>;
   filterCount: number;
-  categoriaListPayload: ICategoriaListPayloadApi;
+  categoriaListPayload: CategoriaParamsPaginado;
   closeModalCategoria(): void;
   handleAtivarCategoriaById(id: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
-  handleEditarCategoria(categoria: ICategoriaApi): void;
+  handleEditarCategoria(categoria: Categoria): void;
   handleInativarCategoriaById(id: number): void;
   handleSubmitFilterForm(): void;
   openModalCategoria(): void;
@@ -36,7 +33,7 @@ export const useListagem = (): IUseListagemReturn => {
 
   const queryClient = useQueryClient();
 
-  const filterForm = useForm<ICategoriaListPayloadApi>();
+  const filterForm = useForm<CategoriaParamsPaginado>();
 
   const [modalCategoriaState, setModalCategoriaState] =
     useState<IModalCategoriaState>({
@@ -44,7 +41,7 @@ export const useListagem = (): IUseListagemReturn => {
       open: false,
     });
   const [categoriaListPayload, setCategoriaListPayload] =
-    useState<ICategoriaListPayloadApi>({ ativo: true, page: 0, size: 10 });
+    useState<CategoriaParamsPaginado>({ ativo: true, page: 0, size: 10 });
 
   const { data: categorias, isLoading } = useQuery({
     ...queryOptionsGetCategoriasPaginado(categoriaListPayload),
@@ -88,7 +85,7 @@ export const useListagem = (): IUseListagemReturn => {
     }));
   }
 
-  function handleEditarCategoria(categoria: ICategoriaApi): void {
+  function handleEditarCategoria(categoria: Categoria): void {
     setModalCategoriaState({ open: true, categoria });
   }
 

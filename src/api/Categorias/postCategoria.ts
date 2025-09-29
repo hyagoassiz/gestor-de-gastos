@@ -1,10 +1,10 @@
+import { Categoria, CategoriaCreateAndUpdatePayload } from "@/types";
 import { API } from "../constants/API";
-import { ICategoriaApi, ICategoriaPayloadApi } from "./interfaces";
 
 export async function postCategoria(
-  payload: ICategoriaPayloadApi
-): Promise<ICategoriaApi> {
-  const response = await API.post("/categorias/salvar", payload);
+  body: CategoriaCreateAndUpdatePayload
+): Promise<Categoria> {
+  const response = await API.post("/categorias/salvar", body);
 
   return response.data;
 }

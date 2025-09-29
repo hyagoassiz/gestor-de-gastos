@@ -12,8 +12,7 @@ import { postTransacao } from "../../../../../../api/Transacao/postTransacao";
 import { KEY_GET_TRANSACOES_PAGINADO } from "../../../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
 import { queryOptionsGetContas } from "../../../../../../api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "../../../../../../api/Categorias/utils/queryOptionsGetCategorias";
-import { ICategoriaApi } from "../../../../../../api/Categorias/interfaces";
-import { Conta } from "@/types";
+import { Categoria, Conta } from "@/types";
 
 interface IUseModalTransacao {
   transacao: ITransacaoApi | null;
@@ -22,7 +21,7 @@ interface IUseModalTransacao {
 
 interface IUseModalContaReturn {
   contas: Conta[] | undefined;
-  categorias: ICategoriaApi[] | undefined;
+  categorias: Categoria[] | undefined;
   transacaoForm: UseFormReturn<ITransacaoForm>;
   submitContaForm(): void;
 }

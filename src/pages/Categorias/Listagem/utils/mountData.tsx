@@ -1,13 +1,13 @@
 import { MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
-import { EnumTipoMotimentacaoApi } from "../../../../api/interfaces/EnumTipoMotimentacaoApi";
-import { ICategoriaApi } from "../../../../api/Categorias/interfaces";
+import { Categoria } from "@/types";
+import { EnumTipoMovimentacao } from "@/types/enums";
 
 interface IMountDataProps {
-  categorias: IPaginatedResponse<ICategoriaApi> | undefined;
+  categorias: IPaginatedResponse<Categoria> | undefined;
   handleAtivarCategoriaById(id: number): Promise<void>;
-  handleEditarCategoria(categoria: ICategoriaApi): void;
+  handleEditarCategoria(categoria: Categoria): void;
   handleInativarCategoriaById(id: number): void;
 }
 
@@ -20,7 +20,7 @@ export function mountData({
   if (categorias?.content.length) {
     return categorias.content.map((categoria) => ({
       ...categoria,
-      tipoMovimentacao: EnumTipoMotimentacaoApi[categoria.tipoMovimentacao],
+      tipoMovimentacao: EnumTipoMovimentacao[categoria.tipoMovimentacao],
       options: (
         <div>
           {categoria.ativo ? (

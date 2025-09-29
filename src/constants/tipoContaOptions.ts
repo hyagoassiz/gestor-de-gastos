@@ -1,11 +1,11 @@
-import { EnumTipoContaApi } from "../api/Contas/interfaces/EnumTipoContaApi";
+import { EnumTipoConta } from "@/types/enums";
 
 export const tipoContaOptions: {
-  id: keyof typeof EnumTipoContaApi;
+  id: keyof typeof EnumTipoConta;
   nome: string;
 }[] = [
-  { id: "CONTA_CORRENTE", nome: EnumTipoContaApi.CONTA_CORRENTE },
-  { id: "INVESTIMENTO", nome: EnumTipoContaApi.INVESTIMENTO },
-  { id: "OUTROS", nome: EnumTipoContaApi.OUTROS },
-  { id: "POUPANCA", nome: EnumTipoContaApi.POUPANCA },
+  { id: "CONTA_CORRENTE", nome: EnumTipoConta.CONTA_CORRENTE },
+  { id: "INVESTIMENTO", nome: EnumTipoConta.INVESTIMENTO },
+  { id: "OUTROS", nome: EnumTipoConta.OUTROS },
+  { id: "POUPANCA", nome: EnumTipoConta.POUPANCA },
 ];

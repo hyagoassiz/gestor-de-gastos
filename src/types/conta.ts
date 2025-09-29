@@ -16,10 +16,12 @@ export type ContaCreateAndUpdatePayload = Omit<Conta, "id"> & {
   id: number | undefined;
 };
 
-export interface ContaParams
-  extends Pagination,
-    Partial<Pick<Conta, "ativo" | "incluirEmSomas" | "tipoConta">> {
+export type ContaParams = Partial<
+  Pick<Conta, "tipoConta" | "incluirEmSomas" | "ativo">
+> & {
   textoBusca?: string;
-}
+};
+
+export type ContaParamsPaginado = ContaParams & Pagination;
 
 export type ContaAtualizarAtivoParams = Pick<Conta, "id" | "ativo">;

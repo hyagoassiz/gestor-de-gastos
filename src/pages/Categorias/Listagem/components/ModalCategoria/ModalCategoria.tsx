@@ -3,10 +3,9 @@ import { TextField, Button, Autocomplete, Grid } from "@mui/material";
 import { Modal } from "../../../../../components/Modal";
 import { useModalCategoria } from "./hooks/useModalCategoria";
 import { tipoMovimentacaoOptions } from "../../../../../constants/tipoMovimentacaoOptions";
-import { ICategoriaApi } from "../../../../../api/Categorias/interfaces";
-
+import { Categoria } from "@/types";
 interface IModalCategoriaProps {
-  categoria: ICategoriaApi | undefined;
+  categoria: Categoria | undefined;
   open: boolean;
   onClose(): void;
 }

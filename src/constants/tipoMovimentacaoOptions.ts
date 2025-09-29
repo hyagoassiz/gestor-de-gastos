@@ -1,9 +1,9 @@
-import { EnumTipoMotimentacaoApi } from "../api/interfaces";
+import { EnumTipoMovimentacao } from "@/types/enums";
 
 export const tipoMovimentacaoOptions: {
-  id: keyof typeof EnumTipoMotimentacaoApi;
+  id: keyof typeof EnumTipoMovimentacao;
   nome: string;
 }[] = [
-  { id: "ENTRADA", nome: EnumTipoMotimentacaoApi.ENTRADA },
-  { id: "SAIDA", nome: EnumTipoMotimentacaoApi.SAIDA },
+  { id: "ENTRADA", nome: EnumTipoMovimentacao.ENTRADA },
+  { id: "SAIDA", nome: EnumTipoMovimentacao.SAIDA },
 ];

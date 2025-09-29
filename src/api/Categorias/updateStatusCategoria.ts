@@ -1,9 +1,9 @@
+import { Categoria, CategoriaAtualizarAtivoParams } from "@/types";
 import { API } from "../constants/API";
-import { ICategoriaApi, IUpdateStatusCategoriaPayloadApi } from "./interfaces";
 
 export async function updateStatusCategoria(
-  params: IUpdateStatusCategoriaPayloadApi
-): Promise<ICategoriaApi> {
+  params: CategoriaAtualizarAtivoParams
+): Promise<Categoria> {
   const { id, ativo } = params;
 
   const response = await API.patch(`/categorias/${id}`, null, {
