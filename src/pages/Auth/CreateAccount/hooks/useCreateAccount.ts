@@ -3,7 +3,6 @@ import { ICadastro } from "../interfaces";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../../routes/paths";
 import { useEffect, useState } from "react";
-import { useNotification } from "../../../../hooks/useNotification";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createAccountSchema } from "../schema/createAccountSchema";
 import { postRegistarUsuario } from "../../../../api/Auth/postRegistarUsuario";
@@ -23,8 +22,6 @@ export const useCreateAccount = (): IUseCreateAccount => {
   const createAccountForm = useForm<ICadastro>({
     resolver: zodResolver(createAccountSchema),
   });
-
-  const { showSnackBar } = useNotification();
 
   const navigate = useNavigate();
 
@@ -51,7 +48,6 @@ export const useCreateAccount = (): IUseCreateAccount => {
         navigate(PATHS.AUTH.INFO);
       } catch (error) {
         console.error(error);
-        showSnackBar(String(error), "error");
       } finally {
         setIsLoading(false);
       }

@@ -87,7 +87,6 @@ export const useListagem = (): IUseListagemReturn => {
       notification.showSnackBar("Conta ativada com sucesso!", "success");
     } catch (error) {
       console.error(error);
-      notification.showSnackBar(String(error), "error");
     } finally {
       loading.setLoading(false);
     }
@@ -116,7 +115,6 @@ export const useListagem = (): IUseListagemReturn => {
       notification.showSnackBar("Conta inativada com sucesso!", "success");
     } catch (error) {
       console.error(error);
-      notification.showSnackBar(String(error), "error");
     } finally {
       loading.setLoading(false);
     }

@@ -2,7 +2,6 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../../routes/paths";
 import { useEffect, useState } from "react";
-import { useNotification } from "../../../../hooks/useNotification";
 import { postLoginUsuario } from "../../../../api/Auth/postLoginUsuario";
 import { ILoginForm } from "../interfaces";
 import useUsuario from "../../../../hooks/useUsuario";
@@ -21,8 +20,6 @@ export const useLogin = (): IUseLogin => {
   const loginForm = useForm<ILoginForm>();
 
   const navigate = useNavigate();
-
-  const { showSnackBar } = useNotification();
 
   const { salvarUsuario, removerUsuario } = useUsuario();
 
@@ -55,7 +52,6 @@ export const useLogin = (): IUseLogin => {
         navigate(PATHS.AUTH.VERIFICATION);
       } catch (error) {
         console.error(error);
-        showSnackBar(String(error), "error");
       } finally {
         setIsLoading(false);
       }

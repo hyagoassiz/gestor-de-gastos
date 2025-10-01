@@ -71,7 +71,6 @@ export const useListagem = (): IUseListagemReturn => {
       showSnackBar("Categoria ativada com sucesso!", "success");
     } catch (error) {
       console.error(error);
-      showSnackBar(String(error), "error");
     } finally {
       setLoading(false);
     }
@@ -102,7 +101,6 @@ export const useListagem = (): IUseListagemReturn => {
       showSnackBar("Categoria inativada com sucesso!", "success");
     } catch (error) {
       console.error(error);
-      showSnackBar(String(error), "error");
     } finally {
       setLoading(false);
     }
