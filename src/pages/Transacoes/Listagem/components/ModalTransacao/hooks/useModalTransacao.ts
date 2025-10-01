@@ -3,7 +3,6 @@ import { useLoading } from "../../../../../../hooks/useLoading";
 import { useNotification } from "../../../../../../hooks/useNotification";
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ITransacaoForm } from "../interfaces";
 import { postTransacao } from "../../../../../../api/Transacao/postTransacao";
 import { KEY_GET_TRANSACOES_PAGINADO } from "../../../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
 import { queryOptionsGetContas } from "../../../../../../api/Contas/utils/queryOptionsGetContas";
@@ -23,7 +22,7 @@ interface IUseModalTransacao {
 interface IUseModalContaReturn {
   contas: Conta[] | undefined;
   categorias: Categoria[] | undefined;
-  transacaoForm: UseFormReturn<ITransacaoForm>;
+  transacaoForm: UseFormReturn<TransacaoCreateAndUpdatePayload>;
   submitContaForm(): void;
 }
 
@@ -31,7 +30,7 @@ export const useModalTransacao = ({
   transacao,
   onClose,
 }: IUseModalTransacao): IUseModalContaReturn => {
-  const transacaoForm = useForm<ITransacaoForm>();
+  const transacaoForm = useForm<TransacaoCreateAndUpdatePayload>();
 
   const loading = useLoading();
 
@@ -44,10 +43,10 @@ export const useModalTransacao = ({
   });
 
   const useQueryGetCategorias = useQuery({
-    enabled: Boolean(transacaoForm.watch("tipoMovimentacao")?.id),
+    enabled: Boolean(transacaoForm.watch("tipoMovimentacao")),
     ...queryOptionsGetCategorias({
       ativo: true,
-      tipoMovimentacao: transacaoForm.watch("tipoMovimentacao")?.id,
+      tipoMovimentacao: transacaoForm.watch("tipoMovimentacao"),
     }),
   });
 
@@ -75,11 +74,11 @@ export const useModalTransacao = ({
 
           const payload: TransacaoCreateAndUpdatePayload = {
             id: data.id ?? undefined,
-            tipoMovimentacao: data.tipoMovimentacao.id,
+            tipoMovimentacao: data.tipoMovimentacao,
             data: data.data,
             valor: data.valor,
-            categoria: { id: data.categoria.id },
-            conta: { id: data.conta.id },
+            categoria: data.categoria,
+            conta: data.conta,
             observacao: data.observacao,
             pago: data.pago,
           };

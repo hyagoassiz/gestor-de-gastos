@@ -14,13 +14,8 @@ export interface Transacao {
   pago: boolean;
 }
 
-export type TransacaoCreateAndUpdatePayload = Omit<
-  Transacao,
-  "id" | "categoria" | "conta"
-> & {
+export type TransacaoCreateAndUpdatePayload = Omit<Transacao, "id"> & {
   id: number | undefined;
-  categoria: { id: number };
-  conta: { id: number };
 };
 
 export type TransacaoParams = Partial<Pick<Transacao, "pago">>;

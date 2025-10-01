@@ -55,10 +55,11 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                 id="tipoMovimentacao"
                 options={tipoMovimentacaoOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
-                onChange={(_, newValue) => {
-                  field.onChange(newValue);
-                }}
-                value={field.value ?? null}
+                onChange={(_, newValue) => field.onChange(newValue?.id ?? null)}
+                value={
+                  tipoMovimentacaoOptions.find((o) => o.id === field.value) ??
+                  null
+                }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
