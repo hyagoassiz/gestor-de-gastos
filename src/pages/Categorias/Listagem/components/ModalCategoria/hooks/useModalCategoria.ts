@@ -3,7 +3,6 @@ import { useLoading } from "../../../../../../hooks/useLoading";
 import { useNotification } from "../../../../../../hooks/useNotification";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { ICategoriaForm } from "../interfaces";
 import { postCategoria } from "../../../../../../api/Categorias/postCategoria";
 import { KEY_GET_CATEGORIAS_PAGINADO } from "../../../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
 import { Categoria, CategoriaCreateAndUpdatePayload } from "@/types";
@@ -14,7 +13,7 @@ interface IUseModalCategoria {
 }
 
 interface IUseModalContaReturn {
-  contaForm: UseFormReturn<ICategoriaForm>;
+  contaForm: UseFormReturn<CategoriaCreateAndUpdatePayload>;
   submitContaForm(): void;
 }
 
@@ -22,7 +21,7 @@ export const useModalCategoria = ({
   categoria,
   onClose,
 }: IUseModalCategoria): IUseModalContaReturn => {
-  const contaForm = useForm<ICategoriaForm>();
+  const contaForm = useForm<CategoriaCreateAndUpdatePayload>();
 
   const { setLoading } = useLoading();
 
@@ -51,7 +50,7 @@ export const useModalCategoria = ({
           const payload: CategoriaCreateAndUpdatePayload = {
             ...data,
             id: data.id ?? undefined,
-            tipoMovimentacao: data.tipoMovimentacao.id,
+            tipoMovimentacao: data.tipoMovimentacao,
             observacao: data.observacao ?? "",
             ativo: true,
           };

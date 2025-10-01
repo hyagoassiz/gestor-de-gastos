@@ -10,11 +10,11 @@ import {
 } from "@mui/material";
 import { Modal } from "../../../../../components/Modal";
 import { useModalConta } from "./hooks/useModalConta";
+import { Conta } from "@/types";
 import { tipoContaOptions } from "../../../../../constants/tipoContaOptions";
-import { IContaApi } from "../../../../../api/Contas/interfaces/IContaApi";
 
 interface IModalContaProps {
-  conta: IContaApi | undefined;
+  conta: Conta | undefined;
   open: boolean;
   onClose(): void;
 }
@@ -72,16 +72,16 @@ export const ModalConta: React.FC<IModalContaProps> = ({
                 id="tipoConta"
                 options={tipoContaOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
-                onChange={(_, newValue) => {
-                  field.onChange(newValue);
-                }}
-                value={field.value ?? null}
+                onChange={(_, newValue) => field.onChange(newValue?.id ?? null)}
+                value={
+                  tipoContaOptions.find((o) => o.id === field.value) ?? null
+                }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Tipo de Conta"
+                    label="Tipo"
                     required
                     error={!!fieldState.error}
                   />
