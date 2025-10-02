@@ -6,6 +6,6 @@ export const contasColumns: IDataTableColumns[] = [
   { key: "valor", label: "Valor" },
   { key: "categoria", label: "Categoria" },
   { key: "conta", label: "Conta" },
-  { key: "pago", label: "Pago" },
+  { key: "pago", label: "Situação" },
   { key: "options", label: "", style: { width: "40px" } },
 ];

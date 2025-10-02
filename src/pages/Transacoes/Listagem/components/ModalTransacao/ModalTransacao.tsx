@@ -13,6 +13,7 @@ import { useModalTransacao } from "./hooks/useModalTransacao";
 import { tipoMovimentacaoOptions } from "../../../../../constants/tipoMovimentacaoOptions";
 import { NumericFormat } from "react-number-format";
 import { Transacao } from "@/types";
+import { getSituacaoTransacao } from "../../utils/getSituacaoTransacao";
 
 interface IModalTransacaoProps {
   transacao: Transacao | null;
@@ -55,7 +56,12 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                 id="tipoMovimentacao"
                 options={tipoMovimentacaoOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
-                onChange={(_, newValue) => field.onChange(newValue?.id ?? null)}
+                onChange={(_, newValue) => {
+                  field.onChange(newValue?.id ?? null);
+                  if (modalTransacao.transacaoForm.getValues("categoria")?.id) {
+                    modalTransacao.transacaoForm.setValue("categoria", null);
+                  }
+                }}
                 value={
                   tipoMovimentacaoOptions.find((o) => o.id === field.value) ??
                   null
@@ -216,7 +222,10 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                       onChange={(e) => field.onChange(e.target.checked)}
                     />
                   }
-                  label="Pago"
+                  label={getSituacaoTransacao(
+                    modalTransacao.transacaoForm.watch("tipoMovimentacao"),
+                    modalTransacao.transacaoForm.watch("pago")
+                  )}
                 />
               </FormGroup>
             )}

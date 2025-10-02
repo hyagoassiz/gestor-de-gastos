@@ -3,6 +3,10 @@ import { MoreOptions } from "../../../../components/MoreOptions";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
 import { Transacao } from "@/types";
 import { EnumTipoMovimentacao } from "@/types/enums";
+import dayjs from "dayjs";
+import { data } from "react-router-dom";
+import { NumericFormat } from "react-number-format";
+import { getSituacaoTransacao } from "./getSituacaoTransacao";
 
 interface IMountDataProps {
   transacoes: IPaginatedResponse<Transacao> | undefined;
@@ -19,6 +23,18 @@ export function mountData({
     return transacoes.content.map((transacao) => ({
       ...transacao,
       tipoMovimentacao: EnumTipoMovimentacao[transacao.tipoMovimentacao],
+      data: dayjs(transacao.data).format("DD/MM/YYYY"),
+      valor: (
+        <NumericFormat
+          value={transacao.valor}
+          displayType="text"
+          thousandSeparator="."
+          decimalSeparator=","
+          prefix="R$ "
+          decimalScale={2}
+          fixedDecimalScale
+        />
+      ),
       conta:
         transacao.conta.agencia && transacao.conta.agencia ? (
           <ListItemText
@@ -35,7 +51,7 @@ export function mountData({
           transacao.conta.nome
         ),
       categoria: transacao.categoria.nome,
-      pago: transacao.pago ? "Sim" : "Não",
+      pago: getSituacaoTransacao(transacao.tipoMovimentacao, transacao.pago),
       options: (
         <div>
           <MoreOptions>
