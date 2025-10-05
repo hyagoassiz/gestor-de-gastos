@@ -18,7 +18,9 @@ export type TransacaoCreateAndUpdatePayload = Omit<Transacao, "id"> & {
   id: number | undefined;
 };
 
-export type TransacaoParams = Partial<Pick<Transacao, "pago">>;
+export type TransacaoParams = Partial<
+  Pick<Transacao, "pago" | "tipoMovimentacao">
+>;
 
 export type TransacaoParamsPaginado = TransacaoParams & Pagination;
 

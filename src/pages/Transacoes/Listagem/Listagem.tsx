@@ -9,13 +9,22 @@ import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContai
 import Header from "../../../components/Header/Header";
 import { FormProvider } from "react-hook-form";
 import { ModalTransacao } from "./components/ModalTransacao";
+import { Filtro } from "./components/Filtro";
 
 export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
     <FormProvider {...listagem.filterForm}>
-      <Header title="Transações" />
+      <Header
+        title="Transações"
+        buttons={
+          <Filtro
+            filterCount={0}
+            applyFilter={listagem.handleSubmitFilterForm}
+          />
+        }
+      />
 
       <Frame>
         <ToolbarContainer

@@ -100,7 +100,7 @@ export const useListagem = (): IUseListagemReturn => {
     filterForm.handleSubmit((data) => {
       setTransacaoListPayload((prevState) => ({
         ...prevState,
-        pago: !data.pago,
+        tipoMovimentacao: data.tipoMovimentacao,
         page: 0,
       }));
     })();

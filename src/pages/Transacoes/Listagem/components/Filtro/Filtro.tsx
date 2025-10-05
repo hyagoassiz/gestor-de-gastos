@@ -1,17 +1,16 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { FilterDrawer } from "../../../../../components/FilterDrawer";
 import { TransacaoParamsPaginado } from "@/types";
+import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
 
 interface IFiltroProps {
-  defaultValue: boolean;
   filterCount: number;
   applyFilter(): void;
 }
 
 export const Filtro: React.FC<IFiltroProps> = ({
   filterCount,
-  defaultValue,
   applyFilter,
 }) => {
   const filterForm = useFormContext<TransacaoParamsPaginado>();
@@ -19,18 +18,32 @@ export const Filtro: React.FC<IFiltroProps> = ({
   return (
     <FilterDrawer applyFilter={applyFilter} filterCount={filterCount}>
       <Controller
-        name="ativo"
+        name="tipoMovimentacao"
         control={filterForm.control}
-        defaultValue={defaultValue}
-        render={({ field }) => (
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox checked={field.value} onChange={field.onChange} />
-              }
-              label="Exibir somente inativos"
-            />
-          </FormGroup>
+        rules={{ required: false }}
+        render={({ field, fieldState }) => (
+          <Autocomplete
+            disablePortal
+            id="tipoMovimentacao"
+            options={tipoMovimentacaoOptions ?? []}
+            getOptionLabel={(option) => option.nome || ""}
+            onChange={(_, newValue) => {
+              field.onChange(newValue?.id ?? null);
+            }}
+            value={
+              tipoMovimentacaoOptions.find((o) => o.id === field.value) ?? null
+            }
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            noOptionsText="Nenhum resultado encontrado."
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Tipo de Transação"
+                error={!!fieldState.error}
+              />
+            )}
+            fullWidth
+          />
         )}
       />
     </FilterDrawer>
