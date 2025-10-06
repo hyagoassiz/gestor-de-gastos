@@ -17,16 +17,18 @@ import { getSituacaoTransacao } from "../../utils/getSituacaoTransacao";
 
 interface IModalTransacaoProps {
   transacao: Transacao | null;
+  isDuplicar: boolean;
   open: boolean;
   onClose(): void;
 }
 
 export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
   transacao,
+  isDuplicar,
   open,
   onClose,
 }) => {
-  const modalTransacao = useModalTransacao({ transacao, onClose });
+  const modalTransacao = useModalTransacao({ transacao, isDuplicar, onClose });
 
   return (
     <Modal

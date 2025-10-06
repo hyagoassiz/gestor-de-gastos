@@ -58,6 +58,7 @@ export const Listagem: React.FC = () => {
       {listagem.modalTransacaoState.open && (
         <ModalTransacao
           transacao={listagem.modalTransacaoState.transacao}
+          isDuplicar={listagem.modalTransacaoState.isDuplicar}
           open={listagem.modalTransacaoState.open}
           onClose={listagem.closeModalTransacao}
         />

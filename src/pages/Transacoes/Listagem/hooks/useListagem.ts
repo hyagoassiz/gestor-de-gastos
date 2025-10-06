@@ -27,6 +27,7 @@ interface IUseListagemReturn {
   handleEditarTransacao(transacao: Transacao): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
+  handleDuplicarTransacao(transacao: Transacao): void;
   handleSubmitFilterForm(): void;
 }
 
@@ -43,7 +44,11 @@ export const useListagem = (): IUseListagemReturn => {
     useState<TransacaoParamsPaginado>({ page: 0, size: 10 });
 
   const [modalTransacaoState, setModalTransacaoState] =
-    useState<IModalTransacaoState>({ open: false, transacao: null });
+    useState<IModalTransacaoState>({
+      open: false,
+      transacao: null,
+      isDuplicar: false,
+    });
 
   const queryGetTransacoesPaginado = useQuery({
     ...queryOptionsGetTransacoesPaginado(transacaoListPayload),
@@ -59,15 +64,15 @@ export const useListagem = (): IUseListagemReturn => {
   }, [queryGetTransacoesPaginado.isLoading]);
 
   function closeModalTransacao(): void {
-    setModalTransacaoState({ open: false, transacao: null });
+    setModalTransacaoState({ open: false, transacao: null, isDuplicar: false });
   }
 
   function handleAdicionarTransacao(): void {
-    setModalTransacaoState({ open: true, transacao: null });
+    setModalTransacaoState({ open: true, transacao: null, isDuplicar: false });
   }
 
   function handleEditarTransacao(transacao: Transacao): void {
-    setModalTransacaoState({ open: true, transacao });
+    setModalTransacaoState({ open: true, transacao, isDuplicar: false });
   }
 
   async function handleExcluirTransacao(idTransacao: number): Promise<void> {
@@ -96,6 +101,10 @@ export const useListagem = (): IUseListagemReturn => {
     }));
   }
 
+  function handleDuplicarTransacao(transacao: Transacao): void {
+    setModalTransacaoState({ open: true, transacao, isDuplicar: true });
+  }
+
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
       setTransacaoListPayload((prevState) => ({
@@ -118,6 +127,7 @@ export const useListagem = (): IUseListagemReturn => {
     closeModalTransacao,
     handleAdicionarTransacao,
     handleChangePage,
+    handleDuplicarTransacao,
     handleSubmitFilterForm,
   };
 };

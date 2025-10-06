@@ -15,6 +15,7 @@ import {
 } from "@/types";
 
 interface IUseModalTransacao {
+  isDuplicar: boolean;
   transacao: Transacao | null;
   onClose(): void;
 }
@@ -28,6 +29,7 @@ interface IUseModalContaReturn {
 
 export const useModalTransacao = ({
   transacao,
+  isDuplicar,
   onClose,
 }: IUseModalTransacao): IUseModalContaReturn => {
   const transacaoForm = useForm<TransacaoCreateAndUpdatePayload>();
@@ -73,7 +75,7 @@ export const useModalTransacao = ({
           loading.setLoading(true);
 
           const payload: TransacaoCreateAndUpdatePayload = {
-            id: data.id ?? undefined,
+            id: !isDuplicar ? data.id : undefined,
             tipoMovimentacao: data.tipoMovimentacao,
             data: data.data,
             valor: data.valor,

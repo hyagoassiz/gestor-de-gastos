@@ -4,7 +4,6 @@ import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
 import { Transacao } from "@/types";
 import { EnumTipoMovimentacao } from "@/types/enums";
 import dayjs from "dayjs";
-import { data } from "react-router-dom";
 import { NumericFormat } from "react-number-format";
 import { getSituacaoTransacao } from "./getSituacaoTransacao";
 
@@ -12,12 +11,14 @@ interface IMountDataProps {
   transacoes: IPaginatedResponse<Transacao> | undefined;
   handleEditarTransacao(transacao: Transacao): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
+  handleDuplicarTransacao(transacao: Transacao): void;
 }
 
 export function mountData({
   transacoes,
   handleEditarTransacao,
   handleExcluirTransacao,
+  handleDuplicarTransacao,
 }: IMountDataProps): any[] {
   if (transacoes?.content.length) {
     return transacoes.content.map((transacao) => ({
@@ -64,6 +65,15 @@ export function mountData({
                   }}
                 >
                   Editar
+                </MenuItem>
+
+                <MenuItem
+                  onClick={() => {
+                    handleDuplicarTransacao(transacao);
+                    handleClose();
+                  }}
+                >
+                  Duplicar
                 </MenuItem>
 
                 <MenuItem
