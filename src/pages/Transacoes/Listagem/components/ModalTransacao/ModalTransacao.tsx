@@ -34,7 +34,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
     <Modal
       open={open}
       style={{ width: "auto", height: "auto", minWidth: 480, maxWidth: 600 }}
-      title={`${transacao ? "Editar " : "Nova "}Transação`}
+      title={`${transacao && !isDuplicar ? "Editar " : "Nova "}Transação`}
       buttons={
         <>
           <Button variant="text" onClick={onClose}>
