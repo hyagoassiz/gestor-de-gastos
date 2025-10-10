@@ -17,6 +17,10 @@ export const TRANSACOES = {
   LIST: `/transacoes`,
 };
 
+export const SALDOS = {
+  LIST: `/saldos`,
+};
+
 export const CATEGORIAS = {
   LISTAGEM: "/categorias",
 };

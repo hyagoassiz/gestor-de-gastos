@@ -4,6 +4,7 @@ import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ClassIcon from "@mui/icons-material/Class";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const rotas: IRotas[] = [
   {
@@ -23,6 +24,11 @@ export const rotas: IRotas[] = [
         name: "Transações",
         route: PATHS.TRANSACOES.LIST,
         icon: <SwapVertIcon />,
+      },
+      {
+        name: "Saldos",
+        route: PATHS.SALDOS.LIST,
+        icon: <AttachMoneyIcon />,
       },
     ],
   },

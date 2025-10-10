@@ -12,6 +12,7 @@ import { SettingsRoute } from "../pages/Settings/List";
 import { ContasListagemRoute } from "../pages/Contas";
 import { CategoriasListagemRoute } from "../pages/Categorias";
 import { TransacoesListagemRoute } from "../pages/Transacoes";
+import { SaldosListagemRoute } from "@/pages/Saldos";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -59,6 +60,15 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <TransacoesListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.SALDOS.LIST}
+            element={
+              <ProtectedRoute permission="">
+                <SaldosListagemRoute />
               </ProtectedRoute>
             }
           />
