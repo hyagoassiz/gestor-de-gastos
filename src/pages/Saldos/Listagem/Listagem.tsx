@@ -15,6 +15,7 @@ export const Listagem: React.FC = () => {
     <FormProvider {...listagem.filterForm}>
       <Header
         title="Saldos"
+        searchBar={listagem.searchBar}
         buttons={
           <Filtro
             filterCount={0}

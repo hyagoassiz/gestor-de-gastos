@@ -4,6 +4,8 @@ import { useLoading } from "../../../../hooks/useLoading";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { SaldoConta, SaldoContaParams } from "@/types";
 import { queryOptionsGetSaldosContas } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
+import useSearchBar from "@/hooks/useSearchBar";
+import { ISeachBar } from "@/interfaces/ISearchBar";
 
 interface IUseListagemReturn {
   saldos: SaldoConta[] | undefined;
@@ -11,6 +13,7 @@ interface IUseListagemReturn {
   filterForm: UseFormReturn<SaldoContaParams>;
   filterCount: number;
   saldosContasParams: SaldoContaParams;
+  searchBar: ISeachBar;
   handleSubmitFilterForm(): void;
 }
 
@@ -18,6 +21,10 @@ export const useListagem = (): IUseListagemReturn => {
   const { setLoading } = useLoading();
 
   const filterForm = useForm<SaldoContaParams>();
+
+  const { searchBar, textoBusca } = useSearchBar({
+    placeHolder: "Pesquisar conta",
+  });
 
   const [saldosContasParams, setSaldosContasParams] =
     useState<SaldoContaParams>({
@@ -30,7 +37,16 @@ export const useListagem = (): IUseListagemReturn => {
 
   const filterCount: number = saldosContasParams.ativo === true ? 0 : 1;
 
-  const saldos = queryGetSaldosContas.data;
+  const saldos =
+    queryGetSaldosContas.data?.filter((saldo) => {
+      if (!textoBusca) return true;
+      const termo = textoBusca.toLowerCase();
+      return (
+        saldo.nome.toLowerCase().includes(termo) ||
+        saldo.agencia.toLowerCase().includes(termo) ||
+        saldo.conta.toLowerCase().includes(termo)
+      );
+    }) ?? [];
 
   useEffect(() => {
     setLoading(queryGetSaldosContas.isLoading);
@@ -52,6 +68,7 @@ export const useListagem = (): IUseListagemReturn => {
     filterForm,
     filterCount,
     saldosContasParams,
+    searchBar,
     handleSubmitFilterForm,
   };
 };
