@@ -6,13 +6,13 @@ import { LoginRoute } from "../pages/Auth/Login";
 import { CreateAccountRoute } from "../pages/Auth/CreateAccount";
 import { VerificationRoute } from "../pages/Auth/Verification";
 import { PersonalInfoRoute } from "../pages/Auth/PersonalInfo";
-import { DashboardRoute } from "../pages/Dashboard/List";
 import { AboutRoute } from "../pages/About/List";
 import { SettingsRoute } from "../pages/Settings/List";
 import { ContasListagemRoute } from "../pages/Contas";
 import { CategoriasListagemRoute } from "../pages/Categorias";
 import { TransacoesListagemRoute } from "../pages/Transacoes";
 import { SaldosListagemRoute } from "@/pages/Saldos";
+import { DashboardListagemRoute } from "@/pages/Dashboard/Listagem";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -50,7 +50,7 @@ export const AppRoutes = () => {
             path={PATHS.DASHBOARD.LIST}
             element={
               <ProtectedRoute permission="">
-                <DashboardRoute />
+                <DashboardListagemRoute />
               </ProtectedRoute>
             }
           />

@@ -1,11 +1,14 @@
-import { Card } from "@/components/Card";
 import { PageTitle } from "../../../components/PageTitle";
 import { Stack } from "@mui/material";
 import dayjs from "dayjs";
 import { BarChartCard } from "@/components/BarChartCard";
 import { PieChartCard } from "@/components/PieChartCard";
+import { Totalizador } from "@/components/Totalizador";
+import { useListagem } from "./hooks/useListagem";
 
-export const Dashboard: React.FC = () => {
+export const Listagem: React.FC = () => {
+  const listagem = useListagem();
+
   const data = [
     {
       mes: dayjs("2025-10-01").format("DD/MM/YYYY"),
@@ -24,12 +27,6 @@ export const Dashboard: React.FC = () => {
     },
   ];
 
-  const receitasPorCategoria = [
-    { categoria: "Salário", valor: 5000 },
-    { categoria: "Investimentos", valor: 1200 },
-    { categoria: "Freelance", valor: 800 },
-  ];
-
   const despesasPorCategoria = [
     { categoria: "Aluguel", valor: 1500 },
     { categoria: "Alimentação", valor: 800 },
@@ -39,17 +36,20 @@ export const Dashboard: React.FC = () => {
 
   return (
     <>
-      <PageTitle
-        title="Dashboard"
-        subTitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"
-      />
+      <PageTitle title="Dashboard" subTitle="Resumo" />
 
       <Stack direction="row" spacing={2}>
-        <Card title={300} subTitle="Entradas" />
-        <Card title={300} subTitle="Saídas" />
-        <Card title={300} subTitle="Saldo" />
-        <Card title={300} subTitle="À Receber" />
-        <Card title={300} subTitle="À Pagar" />
+        <Totalizador
+          value={listagem.resumo?.entradas ?? 0}
+          subTitle="Entradas"
+        />
+        <Totalizador value={listagem.resumo?.saidas ?? 0} subTitle="Saídas" />
+        <Totalizador value={listagem.resumo?.saldo ?? 0} subTitle="Saldo" />
+        <Totalizador
+          value={listagem.resumo?.aReceber ?? 0}
+          subTitle="Receber"
+        />
+        <Totalizador value={listagem.resumo?.aPagar ?? 0} subTitle="À Pagar" />
       </Stack>
 
       <Stack direction="row" spacing={2} m="16px 0px">

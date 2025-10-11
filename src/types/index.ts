@@ -3,3 +3,4 @@ export * from "./conta";
 export * from "./pagination";
 export * from "./transacao";
 export * from "./saldoConta";
+export * from "./dashboard";

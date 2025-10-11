@@ -1,7 +1,8 @@
 import { Box, Card as MuiCard, CardContent, Typography } from "@mui/material";
+import { ReactNode } from "react";
 
 interface ICardProps {
-  title: string | number;
+  title: string | number | ReactNode;
   subTitle: string | number;
 }
 
