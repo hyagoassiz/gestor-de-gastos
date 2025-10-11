@@ -1,30 +1,50 @@
 import { useEffect } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
-import { ResumoDashboard } from "@/types";
-import { queryOptionsGetResumoDashboard } from "@/api/Dashboard/utils/queryOptionsGetSaldosContas";
+import { DespesaPorCategoria, Totais, TransacaoMensal } from "@/types";
+import { queryOptionsGetTotais } from "@/api/Dashboard/utils/queryOptionsGetTotais";
+import { queryOptionsGetTransacaoMensal } from "@/api/Dashboard/utils/queryOptionsGetTransacaoMensal";
+import { queryOptionsGetDespesasPorCategoria } from "@/api/Dashboard/utils/queryOptionsGetDespesasPorCategoria";
 
 interface IUseListagemReturn {
-  resumo: ResumoDashboard | undefined;
-  queryGetResumoDashboard: UseQueryResult<ResumoDashboard>;
+  despesasPorCategoria: DespesaPorCategoria[] | undefined;
+  totais: Totais | undefined;
+  transacoesMensais: TransacaoMensal[] | undefined;
+  queryGetTotais: UseQueryResult<Totais>;
+  queryGetTransacaoMensal: UseQueryResult<TransacaoMensal[]>;
 }
 
 export const useListagem = (): IUseListagemReturn => {
   const { setLoading } = useLoading();
 
-  const queryGetResumoDashboard = useQuery({
-    ...queryOptionsGetResumoDashboard(),
+  const queryGetDespesasPorCategoria = useQuery({
+    ...queryOptionsGetDespesasPorCategoria(),
   });
 
-  const resumo = queryGetResumoDashboard.data;
+  const queryGetTotais = useQuery({
+    ...queryOptionsGetTotais(),
+  });
+
+  const queryGetTransacaoMensal = useQuery({
+    ...queryOptionsGetTransacaoMensal(),
+  });
+
+  const despesasPorCategoria = queryGetDespesasPorCategoria.data;
+
+  const totais = queryGetTotais.data;
+
+  const transacoesMensais = queryGetTransacaoMensal.data;
 
   useEffect(() => {
-    setLoading(queryGetResumoDashboard.isLoading);
+    setLoading(queryGetTotais.isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryGetResumoDashboard.isLoading]);
+  }, [queryGetTotais.isLoading]);
 
   return {
-    resumo,
-    queryGetResumoDashboard,
+    despesasPorCategoria,
+    totais,
+    transacoesMensais,
+    queryGetTotais,
+    queryGetTransacaoMensal,
   };
 };
