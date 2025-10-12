@@ -4,6 +4,9 @@ interface IUseLocalStorageReturn {
   obterToken(): string | null;
   removerToken(): void;
   salvarToken(token: string): void;
+  obterDarkMode(): boolean;
+  salvarDarkMode(value: boolean): void;
+  removerDarkMode(): void;
 }
 
 const useLocalStorage = (): IUseLocalStorageReturn => {
@@ -19,7 +22,28 @@ const useLocalStorage = (): IUseLocalStorageReturn => {
     localStorage.setItem("token", token);
   }, []);
 
-  return { salvarToken, removerToken, obterToken };
+  const obterDarkMode = useCallback((): boolean => {
+    const value = localStorage.getItem("darkMode");
+    if (value === null) return true;
+    return value === "true";
+  }, []);
+
+  const salvarDarkMode = useCallback((value: boolean): void => {
+    localStorage.setItem("darkMode", String(value));
+  }, []);
+
+  const removerDarkMode = useCallback((): void => {
+    localStorage.removeItem("darkMode");
+  }, []);
+
+  return {
+    salvarToken,
+    removerToken,
+    obterToken,
+    obterDarkMode,
+    salvarDarkMode,
+    removerDarkMode,
+  };
 };
 
 export default useLocalStorage;

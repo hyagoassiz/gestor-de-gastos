@@ -1,4 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import {
   AppBar as MuiAppBar,
   Avatar,
@@ -17,14 +19,15 @@ import { useState } from "react";
 import { options } from "./constants/constants";
 import useAppBar from "./hooks/useAppBar";
 import { useNavigate } from "react-router-dom";
+import { useGlobalTheme } from "@/hooks/useGlobalTheme";
 
 export const AppBar: React.FC = () => {
   const { drawer } = useAppBar();
   const dispatch = useDispatch();
   const theme = useTheme();
+  const { darkMode, toggleDarkMode } = useGlobalTheme();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -67,16 +70,22 @@ export const AppBar: React.FC = () => {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Tooltip title="Configurações">
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar
-              alt="user.displayName"
-              sx={{ width: 42, height: 42 }}
-              src="d"
-            />
+        <Tooltip title={darkMode ? "Modo Claro" : "Modo Escuro"}>
+          <IconButton
+            onClick={() => toggleDarkMode(!darkMode)}
+            sx={{ color: theme.palette.text.primary, mr: 1 }}
+          >
+            {!darkMode ? <LightModeIcon /> : <DarkModeIcon />}
           </IconButton>
         </Tooltip>
 
+        <Tooltip title="Configurações">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="user.displayName" sx={{ width: 42, height: 42 }} />
+          </IconButton>
+        </Tooltip>
+
+        {/* Menu do usuário */}
         <Menu
           anchorEl={anchorElUser}
           open={!!anchorElUser}

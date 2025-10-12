@@ -3,6 +3,7 @@ import loadingReducer from "./loadingSlice";
 import snackBarReducer from "./snackBarSlice";
 import drawerReducer from "./drawerSlice";
 import usuarioReducer from "./usuarioSlice";
+import globalThemeSlice from "./globalThemeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     snackBar: snackBarReducer,
     drawer: drawerReducer,
     usuario: usuarioReducer,
+    theme: globalThemeSlice,
   },
 });
 
