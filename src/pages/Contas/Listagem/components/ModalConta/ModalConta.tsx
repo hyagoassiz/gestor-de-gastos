@@ -171,6 +171,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
                     <Switch
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
+                      disabled
                     />
                   }
                   label="Incluir em somas"

@@ -2,7 +2,7 @@ import { Box, styled, TableCell, TableHead } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 
 export const StyledTableHead = styled(TableHead)(({ theme }) => ({
-  height: theme.spacing(5),
+  height: theme.spacing(7),
 }));
 
 export const StyledTableCellHead = styled(TableCell)(({ theme }) => ({

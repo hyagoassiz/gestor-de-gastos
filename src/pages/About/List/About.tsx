@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
-import { PageTitle } from "../../../components/PageTitle";
+import { PageHeader } from "@/components/PageHeader";
 
 export const About: React.FC = () => (
   <>
-    <PageTitle title="Sobre" subTitle="O que é o CoreUI?" />
+    <PageHeader title="Sobre" subTitle="O que é o CoreUI?" />
 
     <Typography variant="body1" paragraph sx={{ textAlign: "justify" }}>
       O <strong>CoreUI</strong> é um projeto base desenvolvido em React com o

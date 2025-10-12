@@ -5,50 +5,33 @@ import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { contasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
-import Header from "../../../components/Header/Header";
 import { ModalConta } from "./components/ModalConta";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
+import { PageHeader } from "@/components/PageHeader";
+import SearchBar from "@/components/SearchBar/SearchBar";
 
 export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
     <FormProvider {...listagem.filterForm}>
-      <Header
+      <PageHeader
         title="Contas"
-        searchBar={listagem.searchBar}
-        buttons={
-          <Filtro
-            defaultValue={!listagem.contaListPayload.ativo}
-            filterCount={listagem.filterCount}
-            applyFilter={listagem.handleSubmitFilterForm}
-          />
+        subTitle="Gerencie suas contas"
+        rightContent={
+          <Button
+            startIcon={<Add />}
+            color="primary"
+            variant="outlined"
+            onClick={listagem.openModalConta}
+          >
+            Adicionar Conta
+          </Button>
         }
       />
 
       <Frame>
-        <ToolbarContainer
-          title={`Registros (${
-            listagem.queryGetContasPaginado.data?.totalElements ?? 0
-          })`}
-          showTitleDivider
-          showDividers
-          buttons={
-            <>
-              <Button
-                startIcon={<Add />}
-                color="primary"
-                variant="outlined"
-                onClick={listagem.openModalConta}
-              >
-                NOVA
-              </Button>
-            </>
-          }
-        />
-
         {!listagem.queryGetContasPaginado.isLoading && (
           <DataTable
             columns={contasColumns}
@@ -57,6 +40,17 @@ export const Listagem: React.FC = () => {
             totalPages={listagem.queryGetContasPaginado.data?.totalPages}
             onPageChange={(newPage) => listagem.handleChangePage(newPage - 1)}
             textForEmptyData="Nenhuma conta encontrada."
+            toolbar={
+              <>
+                <SearchBar searchBar={listagem.searchBar} />
+
+                <Filtro
+                  defaultValue={!listagem.contaListPayload.ativo}
+                  filterCount={listagem.filterCount}
+                  applyFilter={listagem.handleSubmitFilterForm}
+                />
+              </>
+            }
           />
         )}
       </Frame>

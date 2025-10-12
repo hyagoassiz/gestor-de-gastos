@@ -43,7 +43,7 @@ const Main = ({
           duration: theme.transitions.duration.leavingScreen,
         }),
         marginLeft: !isMobile && open ? 0 : !isMobile ? `-${240}px` : 0,
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: theme.palette.primary.contrastText,
         minHeight: "100vh",
       }}
     >

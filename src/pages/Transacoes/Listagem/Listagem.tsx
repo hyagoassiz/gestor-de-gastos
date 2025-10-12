@@ -5,46 +5,32 @@ import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { contasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
-import Header from "../../../components/Header/Header";
 import { FormProvider } from "react-hook-form";
 import { ModalTransacao } from "./components/ModalTransacao";
 import { Filtro } from "./components/Filtro";
+import { PageHeader } from "@/components/PageHeader";
 
 export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
     <FormProvider {...listagem.filterForm}>
-      <Header
+      <PageHeader
         title="Transações"
-        buttons={
-          <Filtro
-            filterCount={0}
-            applyFilter={listagem.handleSubmitFilterForm}
-          />
+        subTitle="Registre entradas e saídas"
+        rightContent={
+          <Button
+            startIcon={<Add />}
+            color="primary"
+            variant="outlined"
+            onClick={listagem.handleAdicionarTransacao}
+          >
+            Registrar Transação
+          </Button>
         }
       />
 
       <Frame>
-        <ToolbarContainer
-          title={`Registros (${listagem.transacoes?.totalElements ?? 0})`}
-          showTitleDivider
-          showDividers
-          buttons={
-            <>
-              <Button
-                startIcon={<Add />}
-                color="primary"
-                variant="outlined"
-                onClick={listagem.handleAdicionarTransacao}
-              >
-                NOVA
-              </Button>
-            </>
-          }
-        />
-
         <DataTable
           columns={contasColumns}
           data={mountData(listagem)}
@@ -52,6 +38,12 @@ export const Listagem: React.FC = () => {
           totalPages={listagem.transacoes?.totalPages}
           onPageChange={(newPage) => listagem.handleChangePage(newPage - 1)}
           textForEmptyData="Nenhuma conta encontrada."
+          toolbar={
+            <Filtro
+              filterCount={0}
+              applyFilter={listagem.handleSubmitFilterForm}
+            />
+          }
         />
       </Frame>
 

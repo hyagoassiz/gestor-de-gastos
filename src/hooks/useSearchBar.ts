@@ -17,22 +17,38 @@ const useSearchBar = ({
 }: IUseSearchBarProps): IUseSearchBar => {
   const [value, setValue] = useState<string>("");
   const [textoBusca, setTextoBusca] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
+  const onChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const newValue = event.target.value;
+    setValue(newValue);
 
-    if (debounceTimeout.current) {
-      clearTimeout(debounceTimeout.current);
-    }
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
     debounceTimeout.current = setTimeout(() => {
-      setTextoBusca(event.target.value);
+      setTextoBusca(newValue);
     }, debounceTime);
   };
 
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setValue("");
+    setTextoBusca("");
+  };
+
   return {
-    searchBar: { onChange, placeholder: placeHolder, value },
+    searchBar: {
+      placeholder: placeHolder,
+      value,
+      open,
+      onChange,
+      handleOpen,
+      handleClose,
+    },
     textoBusca,
   };
 };

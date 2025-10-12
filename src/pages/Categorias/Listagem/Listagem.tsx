@@ -5,11 +5,10 @@ import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { categoriasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import ToolbarContainer from "../../../components/ToolbarContainer/ToolbarContainer";
-import Header from "../../../components/Header/Header";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
 import { ModalCategoria } from "./components/ModalCategoria";
+import { PageHeader } from "@/components/PageHeader";
 
 export const Listagem: React.FC = () => {
   const {
@@ -29,36 +28,22 @@ export const Listagem: React.FC = () => {
 
   return (
     <FormProvider {...filterForm}>
-      <Header
+      <PageHeader
         title="Categorias"
-        buttons={
-          <Filtro
-            defaultValue={!categoriaListPayload.ativo}
-            filterCount={filterCount}
-            applyFilter={handleSubmitFilterForm}
-          />
+        subTitle="Gerencie suas categorias"
+        rightContent={
+          <Button
+            startIcon={<Add />}
+            color="primary"
+            variant="outlined"
+            onClick={openModalCategoria}
+          >
+            Adicionar Categoria
+          </Button>
         }
       />
 
       <Frame>
-        <ToolbarContainer
-          title={`Registros (${categorias?.numberOfElements ?? 0})`}
-          showTitleDivider
-          showDividers
-          buttons={
-            <>
-              <Button
-                startIcon={<Add />}
-                color="primary"
-                variant="outlined"
-                onClick={openModalCategoria}
-              >
-                NOVA
-              </Button>
-            </>
-          }
-        />
-
         <DataTable
           columns={categoriasColumns}
           data={mountData({
@@ -71,6 +56,13 @@ export const Listagem: React.FC = () => {
           totalPages={categorias?.totalPages}
           onPageChange={(newPage) => handleChangePage(newPage - 1)}
           textForEmptyData="Nenhuma categoria encontrada."
+          toolbar={
+            <Filtro
+              defaultValue={!categoriaListPayload.ativo}
+              filterCount={filterCount}
+              applyFilter={handleSubmitFilterForm}
+            />
+          }
         />
       </Frame>
 

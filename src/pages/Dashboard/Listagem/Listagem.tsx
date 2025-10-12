@@ -1,16 +1,16 @@
-import { PageTitle } from "../../../components/PageTitle";
 import { Stack } from "@mui/material";
 import { BarChartCard } from "@/components/BarChartCard";
 import { HorizontalBarChartCard } from "@/components/HorizontalBarChartCard";
 import { Totalizador } from "@/components/Totalizador";
 import { useListagem } from "./hooks/useListagem";
+import { PageHeader } from "@/components/PageHeader";
 
 export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
     <>
-      <PageTitle title="Dashboard" subTitle="Resumo" />
+      <PageHeader title="Dashboard" subTitle="Resumo" />
 
       <Stack direction="row" spacing={2}>
         <Totalizador
