@@ -7,7 +7,7 @@ export const StyledTableHead = styled(TableHead)(({ theme }) => ({
 
 export const StyledTableCellHead = styled(TableCell)(({ theme }) => ({
   fontWeight: 600,
-  backgroundColor: theme.palette.background.paper,
+  borderBottom: `1px solid ${theme.palette.divider}`,
 }));
 
 export const StyledTableCellBody = styled(TableCell)(({ theme }) => ({

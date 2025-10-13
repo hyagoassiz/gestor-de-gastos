@@ -39,7 +39,7 @@ export const FilterDrawer = ({
       <Tooltip title="Filtrar">
         <IconButton onClick={handleOpen}>
           <Badge badgeContent={filterCount} color="secondary">
-            <FilterListIcon sx={{ color: "white" }} />
+            <FilterListIcon />
           </Badge>
         </IconButton>
       </Tooltip>
@@ -50,7 +50,7 @@ export const FilterDrawer = ({
             <BoxButtons>
               <Tooltip title="Fechar" placement="bottom">
                 <IconButton onClick={handleClose}>
-                  <Icon />
+                  <Icon sx={{ color: "inherit" }} />
                 </IconButton>
               </Tooltip>
               <StyledTypography variant="h6">Fechar</StyledTypography>

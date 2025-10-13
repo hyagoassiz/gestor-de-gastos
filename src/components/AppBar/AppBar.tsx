@@ -45,8 +45,9 @@ export const AppBar: React.FC = () => {
       sx={{
         width: `calc(100% - ${drawer.isOpen ? drawer.drawerWidth : 0}px)`,
         ml: `${drawer.isOpen ? drawer.drawerWidth : 0}px`,
-        backgroundColor: theme.palette.primary.contrastText,
-        color: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        borderBottom: `1px solid ${theme.palette.divider}`,
       }}
     >
       <Toolbar>
@@ -70,7 +71,7 @@ export const AppBar: React.FC = () => {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Tooltip title={darkMode ? "Modo Claro" : "Modo Escuro"}>
+        <Tooltip title={!darkMode ? "Modo Claro" : "Modo Escuro"}>
           <IconButton
             onClick={() => toggleDarkMode(!darkMode)}
             sx={{ color: theme.palette.text.primary, mr: 1 }}
@@ -85,7 +86,6 @@ export const AppBar: React.FC = () => {
           </IconButton>
         </Tooltip>
 
-        {/* Menu do usuário */}
         <Menu
           anchorEl={anchorElUser}
           open={!!anchorElUser}
