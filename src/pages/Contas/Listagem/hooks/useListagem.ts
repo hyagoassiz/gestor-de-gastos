@@ -4,7 +4,6 @@ import {
   useQueryClient,
   UseQueryResult,
 } from "@tanstack/react-query";
-import { IModalContaState } from "../interfaces";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
 import { updateStatusConta } from "../../../../api/Contas/updateStatusConta";
@@ -16,22 +15,22 @@ import {
 import useSearchBar from "../../../../hooks/useSearchBar";
 import { ISeachBar } from "../../../../interfaces/ISearchBar";
 import { Conta, ContaCreateAndUpdatePayload, ContaParams } from "@/types";
+import { useNavigate } from "react-router-dom";
+import * as PATHS from "@/routes/paths";
 
 interface IUseListagemReturn {
   contas: IPaginatedResponse<Conta> | undefined;
   queryGetContasPaginado: UseQueryResult<IPaginatedResponse<Conta>>;
-  modalContaState: IModalContaState;
   filterForm: UseFormReturn<ContaCreateAndUpdatePayload>;
   filterCount: number;
   contaListPayload: ContaParams;
   searchBar: ISeachBar;
-  closeModalConta(): void;
+  handleAdicionarConta(): void;
   handleAtivarContaById(id: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
-  handleEditarConta(conta: Conta): void;
+  handleEditarConta(contaId: string): void;
   handleInativarContaById(id: number): void;
   handleSubmitFilterForm(): void;
-  openModalConta(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
@@ -41,16 +40,13 @@ export const useListagem = (): IUseListagemReturn => {
 
   const queryClient = useQueryClient();
 
+  const navigate = useNavigate();
+
   const filterForm = useForm<ContaCreateAndUpdatePayload>();
 
   const { textoBusca, searchBar } = useSearchBar({
     placeHolder: "Pesquisar",
     debounceTime: 500,
-  });
-
-  const [modalContaState, setModalContaState] = useState<IModalContaState>({
-    conta: undefined,
-    open: false,
   });
 
   const [contaListPayload, setContaListPayload] = useState<ContaParams>({
@@ -71,10 +67,6 @@ export const useListagem = (): IUseListagemReturn => {
     loading.setLoading(queryGetContasPaginado.isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryGetContasPaginado.isLoading]);
-
-  function closeModalConta(): void {
-    setModalContaState({ open: false, conta: undefined });
-  }
 
   async function handleAtivarContaById(id: number): Promise<void> {
     try {
@@ -100,8 +92,12 @@ export const useListagem = (): IUseListagemReturn => {
     }));
   }
 
-  function handleEditarConta(conta: Conta): void {
-    setModalContaState({ open: true, conta });
+  function handleEditarConta(contaId: string): void {
+    navigate(PATHS.CONTAS.EDIT.replace(":id", contaId));
+  }
+
+  function handleAdicionarConta(): void {
+    navigate(PATHS.CONTAS.CREATE);
   }
 
   async function handleInativarContaById(id: number): Promise<void> {
@@ -131,24 +127,18 @@ export const useListagem = (): IUseListagemReturn => {
     })();
   }
 
-  function openModalConta(): void {
-    setModalContaState({ open: true, conta: undefined });
-  }
-
   return {
     contas,
     queryGetContasPaginado,
-    modalContaState,
     filterForm,
     filterCount,
     contaListPayload,
     searchBar,
-    closeModalConta,
+    handleAdicionarConta,
     handleAtivarContaById,
     handleChangePage,
     handleEditarConta,
     handleInativarContaById,
     handleSubmitFilterForm,
-    openModalConta,
   };
 };

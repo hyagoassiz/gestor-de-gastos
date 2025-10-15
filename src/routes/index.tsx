@@ -13,6 +13,8 @@ import { CategoriasListagemRoute } from "../pages/Categorias";
 import { TransacoesListagemRoute } from "../pages/Transacoes";
 import { SaldosListagemRoute } from "@/pages/Saldos";
 import { DashboardListagemRoute } from "@/pages/Dashboard/Listagem";
+import { ContasCadastroRoute } from "@/pages/Contas/Cadastro";
+import { TransacoesCadastroRoute } from "@/pages/Transacoes/Cadastro";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -65,6 +67,33 @@ export const AppRoutes = () => {
           />
 
           <Route
+            path={PATHS.TRANSACOES.CREATE}
+            element={
+              <ProtectedRoute permission="">
+                <TransacoesCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.TRANSACOES.EDIT}
+            element={
+              <ProtectedRoute permission="">
+                <TransacoesCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.TRANSACOES.VIEW}
+            element={
+              <ProtectedRoute permission="">
+                <TransacoesCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path={PATHS.SALDOS.LIST}
             element={
               <ProtectedRoute permission="">
@@ -78,6 +107,33 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <ContasListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CONTAS.CREATE}
+            element={
+              <ProtectedRoute permission="">
+                <ContasCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CONTAS.EDIT}
+            element={
+              <ProtectedRoute permission="">
+                <ContasCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CONTAS.VIEW}
+            element={
+              <ProtectedRoute permission="">
+                <ContasCadastroRoute />
               </ProtectedRoute>
             }
           />

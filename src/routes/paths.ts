@@ -15,6 +15,9 @@ export const DASHBOARD = {
 
 export const TRANSACOES = {
   LIST: `/transacoes`,
+  CREATE: "/transacoes/nova",
+  EDIT: "/transacoes/:id/editar",
+  VIEW: "/transacoes/:id",
 };
 
 export const SALDOS = {
@@ -27,6 +30,9 @@ export const CATEGORIAS = {
 
 export const CONTAS = {
   LISTAGEM: "/contas",
+  CREATE: "/contas/nova",
+  EDIT: "/contas/:id/editar",
+  VIEW: "/contas/:id",
 };
 
 export const ABOUT = {

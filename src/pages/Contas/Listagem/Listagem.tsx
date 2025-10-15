@@ -5,7 +5,6 @@ import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { contasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import { ModalConta } from "./components/ModalConta";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
 import { PageHeader } from "@/components/PageHeader";
@@ -18,13 +17,13 @@ export const Listagem: React.FC = () => {
     <FormProvider {...listagem.filterForm}>
       <PageHeader
         title="Contas"
-        subTitle="Gerencie suas contas"
+        breadcrumbs={[{ label: "Contas" }]}
         rightContent={
           <Button
             startIcon={<Add />}
             color="primary"
             variant="outlined"
-            onClick={listagem.openModalConta}
+            onClick={listagem.handleAdicionarConta}
           >
             Adicionar Conta
           </Button>
@@ -54,14 +53,6 @@ export const Listagem: React.FC = () => {
           />
         )}
       </Frame>
-
-      {listagem.modalContaState.open && (
-        <ModalConta
-          conta={listagem.modalContaState.conta}
-          open={listagem.modalContaState.open}
-          onClose={listagem.closeModalConta}
-        />
-      )}
     </FormProvider>
   );
 };

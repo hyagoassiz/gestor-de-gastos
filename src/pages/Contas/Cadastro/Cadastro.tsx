@@ -1,61 +1,55 @@
-import { Controller } from "react-hook-form";
+import { PageHeader } from "@/components/PageHeader";
+import { tipoContaOptions } from "@/constants/tipoContaOptions";
 import {
-  TextField,
-  Button,
   Autocomplete,
-  FormGroup,
+  Button,
   FormControlLabel,
-  Switch,
+  FormGroup,
   Grid,
+  Switch,
+  TextField,
 } from "@mui/material";
-import { Modal } from "../../../../../components/Modal";
-import { useModalConta } from "./hooks/useModalConta";
-import { Conta } from "@/types";
-import { tipoContaOptions } from "../../../../../constants/tipoContaOptions";
+import { Controller } from "react-hook-form";
+import { useCadastro } from "./hooks/useCadastro";
 
-interface IModalContaProps {
-  conta: Conta | undefined;
-  open: boolean;
-  onClose(): void;
-}
-
-export const ModalConta: React.FC<IModalContaProps> = ({
-  conta,
-  open,
-  onClose,
-}) => {
-  const modalConta = useModalConta({ conta, onClose });
+export const Cadastro: React.FC = () => {
+  const cadastro = useCadastro();
 
   return (
-    <Modal
-      open={open}
-      style={{ width: "auto", height: "auto", minWidth: 480, maxWidth: 600 }}
-      title={`${conta ? "Editar " : "Nova "}Conta`}
-      buttons={
-        <>
-          <Button variant="text" onClick={onClose}>
-            Fechar
-          </Button>
-          <Button variant="contained" onClick={modalConta.submitContaForm}>
-            Salvar
-          </Button>
-        </>
-      }
-    >
+    <>
+      <PageHeader
+        title={cadastro.pageTitle}
+        breadcrumbs={cadastro.breadcrumbs}
+        rightContent={
+          <>
+            <Button variant="text" onClick={cadastro.handleBack}>
+              Voltar
+            </Button>
+            {!cadastro.isDisabledForm && (
+              <Button variant="outlined" onClick={cadastro.submitContaForm}>
+                Salvar
+              </Button>
+            )}
+          </>
+        }
+      />
+
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
             name="nome"
-            control={modalConta.contaForm.control}
             rules={{ required: true }}
+            control={cadastro.contaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
                 label="Nome"
                 fullWidth
+                value={field.value ?? ""}
                 required
+                inputProps={{ maxLength: 100 }}
+                disabled={cadastro.isDisabledForm}
                 error={!!formState.errors.nome}
-                inputProps={{ maxLength: 50 }}
               />
             )}
           />
@@ -64,7 +58,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
         <Grid item xs={12}>
           <Controller
             name="tipoConta"
-            control={modalConta.contaForm.control}
+            control={cadastro.contaForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
@@ -83,6 +77,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
                     {...params}
                     label="Tipo"
                     required
+                    disabled={cadastro.isDisabledForm}
                     error={!!fieldState.error}
                   />
                 )}
@@ -96,7 +91,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           <Controller
             name="agencia"
             rules={{ required: false }}
-            control={modalConta.contaForm.control}
+            control={cadastro.contaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
@@ -110,6 +105,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
                 }}
                 value={field.value?.toUpperCase() || ""}
                 error={!!formState.errors.agencia}
+                disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 10 }}
               />
             )}
@@ -120,7 +116,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           <Controller
             name="conta"
             rules={{ required: false }}
-            control={modalConta.contaForm.control}
+            control={cadastro.contaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
@@ -134,6 +130,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
                 }}
                 value={field.value?.toUpperCase() || ""}
                 error={!!formState.errors.conta}
+                disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 10 }}
               />
             )}
@@ -144,7 +141,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           <Controller
             name="observacao"
             rules={{ required: false }}
-            control={modalConta.contaForm.control}
+            control={cadastro.contaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
@@ -152,7 +149,9 @@ export const ModalConta: React.FC<IModalContaProps> = ({
                 fullWidth
                 multiline
                 rows={2}
+                value={field.value ?? ""}
                 error={!!formState.errors.observacao}
+                disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 100 }}
               />
             )}
@@ -162,7 +161,7 @@ export const ModalConta: React.FC<IModalContaProps> = ({
         <Grid item xs={6}>
           <Controller
             name="incluirEmSomas"
-            control={modalConta.contaForm.control}
+            control={cadastro.contaForm.control}
             defaultValue={true}
             render={({ field }) => (
               <FormGroup>
@@ -181,6 +180,6 @@ export const ModalConta: React.FC<IModalContaProps> = ({
           />
         </Grid>
       </Grid>
-    </Modal>
+    </>
   );
 };

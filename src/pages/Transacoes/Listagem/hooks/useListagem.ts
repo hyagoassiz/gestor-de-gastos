@@ -10,10 +10,11 @@ import {
   KEY_GET_TRANSACOES_PAGINADO,
   queryOptionsGetTransacoesPaginado,
 } from "../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
-import { IModalTransacaoState } from "../interfaces";
 import { useNotification } from "../../../../hooks/useNotification";
 import { deleteTransacao } from "../../../../api/Transacao/deleteTransacao";
 import { Transacao, TransacaoParamsPaginado } from "@/types";
+import { useNavigate } from "react-router-dom";
+import * as PATHS from "@/routes/paths";
 
 interface IUseListagemReturn {
   transacoes: IPaginatedResponse<Transacao> | undefined;
@@ -21,13 +22,10 @@ interface IUseListagemReturn {
   filterForm: UseFormReturn<TransacaoParamsPaginado>;
   filterCount: number;
   transacaoListPayload: TransacaoParamsPaginado;
-  modalTransacaoState: IModalTransacaoState;
-  closeModalTransacao(): void;
   handleAdicionarTransacao(): void;
-  handleEditarTransacao(transacao: Transacao): void;
+  handleEditarTransacao(transacaoId: string): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
-  handleDuplicarTransacao(transacao: Transacao): void;
   handleSubmitFilterForm(): void;
 }
 
@@ -38,17 +36,12 @@ export const useListagem = (): IUseListagemReturn => {
 
   const queryClient = useQueryClient();
 
+  const navigate = useNavigate();
+
   const filterForm = useForm<TransacaoParamsPaginado>();
 
   const [transacaoListPayload, setTransacaoListPayload] =
     useState<TransacaoParamsPaginado>({ page: 0, size: 10 });
-
-  const [modalTransacaoState, setModalTransacaoState] =
-    useState<IModalTransacaoState>({
-      open: false,
-      transacao: null,
-      isDuplicar: false,
-    });
 
   const queryGetTransacoesPaginado = useQuery({
     ...queryOptionsGetTransacoesPaginado(transacaoListPayload),
@@ -63,16 +56,12 @@ export const useListagem = (): IUseListagemReturn => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryGetTransacoesPaginado.isLoading]);
 
-  function closeModalTransacao(): void {
-    setModalTransacaoState({ open: false, transacao: null, isDuplicar: false });
-  }
-
   function handleAdicionarTransacao(): void {
-    setModalTransacaoState({ open: true, transacao: null, isDuplicar: false });
+    navigate(PATHS.TRANSACOES.CREATE);
   }
 
-  function handleEditarTransacao(transacao: Transacao): void {
-    setModalTransacaoState({ open: true, transacao, isDuplicar: false });
+  function handleEditarTransacao(transacaoId: string): void {
+    navigate(PATHS.TRANSACOES.EDIT.replace(":id", transacaoId));
   }
 
   async function handleExcluirTransacao(idTransacao: number): Promise<void> {
@@ -101,10 +90,6 @@ export const useListagem = (): IUseListagemReturn => {
     }));
   }
 
-  function handleDuplicarTransacao(transacao: Transacao): void {
-    setModalTransacaoState({ open: true, transacao, isDuplicar: true });
-  }
-
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
       setTransacaoListPayload((prevState) => ({
@@ -121,13 +106,10 @@ export const useListagem = (): IUseListagemReturn => {
     filterForm,
     filterCount,
     transacaoListPayload,
-    modalTransacaoState,
     handleEditarTransacao,
     handleExcluirTransacao,
-    closeModalTransacao,
     handleAdicionarTransacao,
     handleChangePage,
-    handleDuplicarTransacao,
     handleSubmitFilterForm,
   };
 };

@@ -8,7 +8,7 @@ import { EnumTipoConta } from "@/types/enums";
 interface IMountDataProps {
   contas: IPaginatedResponse<Conta> | undefined;
   handleAtivarContaById(id: number): Promise<void>;
-  handleEditarConta(conta: Conta): void;
+  handleEditarConta(contaId: string): void;
   handleInativarContaById(id: number): void;
 }
 
@@ -43,7 +43,7 @@ export function mountData({
                 <div>
                   <MenuItem
                     onClick={() => {
-                      handleEditarConta(conta);
+                      handleEditarConta(String(conta.id));
                       handleClose();
                     }}
                   >

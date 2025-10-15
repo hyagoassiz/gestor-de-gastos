@@ -6,7 +6,6 @@ import { DataTable } from "../../../components/DataTable/DataTable";
 import { contasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import { FormProvider } from "react-hook-form";
-import { ModalTransacao } from "./components/ModalTransacao";
 import { Filtro } from "./components/Filtro";
 import { PageHeader } from "@/components/PageHeader";
 
@@ -17,7 +16,7 @@ export const Listagem: React.FC = () => {
     <FormProvider {...listagem.filterForm}>
       <PageHeader
         title="Transações"
-        subTitle="Registre entradas e saídas"
+        breadcrumbs={[{ label: "Transações" }]}
         rightContent={
           <Button
             startIcon={<Add />}
@@ -46,15 +45,6 @@ export const Listagem: React.FC = () => {
           }
         />
       </Frame>
-
-      {listagem.modalTransacaoState.open && (
-        <ModalTransacao
-          transacao={listagem.modalTransacaoState.transacao}
-          isDuplicar={listagem.modalTransacaoState.isDuplicar}
-          open={listagem.modalTransacaoState.open}
-          onClose={listagem.closeModalTransacao}
-        />
-      )}
     </FormProvider>
   );
 };

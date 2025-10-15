@@ -1,56 +1,46 @@
-import { Controller } from "react-hook-form";
+import { PageHeader } from "@/components/PageHeader";
 import {
-  TextField,
-  Button,
   Autocomplete,
-  FormGroup,
+  Button,
   FormControlLabel,
-  Switch,
+  FormGroup,
   Grid,
+  Switch,
+  TextField,
 } from "@mui/material";
-import { Modal } from "../../../../../components/Modal";
-import { useModalTransacao } from "./hooks/useModalTransacao";
-import { tipoMovimentacaoOptions } from "../../../../../constants/tipoMovimentacaoOptions";
+import { Controller } from "react-hook-form";
+import { useCadastro } from "./hooks/useCadastro";
+import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
 import { NumericFormat } from "react-number-format";
-import { Transacao } from "@/types";
-import { getSituacaoTransacao } from "../../utils/getSituacaoTransacao";
+import { getSituacaoTransacao } from "@/utils/getSituacaoTransacao";
 
-interface IModalTransacaoProps {
-  transacao: Transacao | null;
-  isDuplicar: boolean;
-  open: boolean;
-  onClose(): void;
-}
-
-export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
-  transacao,
-  isDuplicar,
-  open,
-  onClose,
-}) => {
-  const modalTransacao = useModalTransacao({ transacao, isDuplicar, onClose });
+export const Cadastro: React.FC = () => {
+  const cadastro = useCadastro();
 
   return (
-    <Modal
-      open={open}
-      style={{ width: "auto", height: "auto", minWidth: 480, maxWidth: 600 }}
-      title={`${transacao && !isDuplicar ? "Editar " : "Nova "}Transação`}
-      buttons={
-        <>
-          <Button variant="text" onClick={onClose}>
-            Fechar
-          </Button>
-          <Button variant="contained" onClick={modalTransacao.submitContaForm}>
-            Salvar
-          </Button>
-        </>
-      }
-    >
+    <>
+      <PageHeader
+        title={cadastro.pageTitle}
+        breadcrumbs={cadastro.breadcrumbs}
+        rightContent={
+          <>
+            <Button variant="text" onClick={cadastro.handleBack}>
+              Voltar
+            </Button>
+            {!cadastro.isDisabledForm && (
+              <Button variant="outlined" onClick={cadastro.submitTransacaoForm}>
+                Salvar
+              </Button>
+            )}
+          </>
+        }
+      />
+
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Controller
             name="tipoMovimentacao"
-            control={modalTransacao.transacaoForm.control}
+            control={cadastro.transacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
@@ -60,8 +50,8 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue?.id ?? null);
-                  if (modalTransacao.transacaoForm.getValues("categoria")?.id) {
-                    modalTransacao.transacaoForm.setValue("categoria", null);
+                  if (cadastro.transacaoForm.getValues("categoria")?.id) {
+                    cadastro.transacaoForm.setValue("categoria", null);
                   }
                 }}
                 value={
@@ -75,6 +65,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                     {...params}
                     label="Tipo"
                     required
+                    disabled={cadastro.isDisabledForm}
                     error={!!fieldState.error}
                   />
                 )}
@@ -87,7 +78,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
         <Grid item xs={6}>
           <Controller
             name="data"
-            control={modalTransacao.transacaoForm.control}
+            control={cadastro.transacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <TextField
@@ -97,6 +88,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                 fullWidth
                 required
                 error={!!fieldState.error}
+                disabled={cadastro.isDisabledForm}
                 InputLabelProps={{ shrink: true }}
               />
             )}
@@ -106,7 +98,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
         <Grid item xs={12}>
           <Controller
             name="valor"
-            control={modalTransacao.transacaoForm.control}
+            control={cadastro.transacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <NumericFormat
@@ -123,6 +115,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                 onValueChange={(values) => {
                   field.onChange(values.floatValue ?? 0);
                 }}
+                disabled={cadastro.isDisabledForm}
                 error={!!fieldState.error}
               />
             )}
@@ -132,13 +125,13 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
         <Grid item xs={12}>
           <Controller
             name="categoria"
-            control={modalTransacao.transacaoForm.control}
+            control={cadastro.transacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
                 id="tipo"
-                options={modalTransacao.categorias ?? []}
+                options={cadastro.categorias ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue);
@@ -151,6 +144,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                     {...params}
                     label="Categoria"
                     required
+                    disabled={cadastro.isDisabledForm}
                     error={!!fieldState.error}
                   />
                 )}
@@ -163,13 +157,13 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
         <Grid item xs={12}>
           <Controller
             name="conta"
-            control={modalTransacao.transacaoForm.control}
+            control={cadastro.transacaoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
                 id="tipo"
-                options={modalTransacao.contas ?? []}
+                options={cadastro.contas ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue);
@@ -182,6 +176,7 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
                     {...params}
                     label="Conta"
                     required
+                    disabled={cadastro.isDisabledForm}
                     error={!!fieldState.error}
                   />
                 )}
@@ -195,15 +190,17 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
           <Controller
             name="observacao"
             rules={{ required: false }}
-            control={modalTransacao.transacaoForm.control}
+            control={cadastro.transacaoForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
                 label="Observação"
                 fullWidth
                 multiline
+                value={field.value ?? ""}
                 rows={2}
                 error={!!formState.errors.observacao}
+                disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 100 }}
               />
             )}
@@ -213,20 +210,21 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
         <Grid item xs={6}>
           <Controller
             name="pago"
-            control={modalTransacao.transacaoForm.control}
+            control={cadastro.transacaoForm.control}
             defaultValue={true}
             render={({ field }) => (
               <FormGroup>
                 <FormControlLabel
                   control={
                     <Switch
+                      disabled={cadastro.isDisabledForm}
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
                     />
                   }
                   label={getSituacaoTransacao(
-                    modalTransacao.transacaoForm.watch("tipoMovimentacao"),
-                    modalTransacao.transacaoForm.watch("pago")
+                    cadastro.transacaoForm.watch("tipoMovimentacao"),
+                    cadastro.transacaoForm.watch("pago")
                   )}
                 />
               </FormGroup>
@@ -234,6 +232,6 @@ export const ModalTransacao: React.FC<IModalTransacaoProps> = ({
           />
         </Grid>
       </Grid>
-    </Modal>
+    </>
   );
 };

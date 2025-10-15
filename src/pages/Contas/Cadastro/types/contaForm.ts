@@ -1,6 +1,6 @@
 import { ContaCreateAndUpdatePayload } from "@/types";
 import { EnumTipoConta } from "@/types/enums";
 
-export type IContaForm = Omit<ContaCreateAndUpdatePayload, "tipoConta"> & {
+export type ContaForm = Omit<ContaCreateAndUpdatePayload, "tipoConta"> & {
   tipoConta: keyof typeof EnumTipoConta;
 };
