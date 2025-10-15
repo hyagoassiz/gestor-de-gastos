@@ -26,6 +26,9 @@ export const SALDOS = {
 
 export const CATEGORIAS = {
   LISTAGEM: "/categorias",
+  CREATE: "/categorias/nova",
+  EDIT: "/categorias/:id/editar",
+  VIEW: "/categorias/:id",
 };
 
 export const CONTAS = {

@@ -7,7 +7,7 @@ import { EnumTipoMovimentacao } from "@/types/enums";
 interface IMountDataProps {
   categorias: IPaginatedResponse<Categoria> | undefined;
   handleAtivarCategoriaById(id: number): Promise<void>;
-  handleEditarCategoria(categoria: Categoria): void;
+  handleEditarCategoria(categoriaId: string): void;
   handleInativarCategoriaById(id: number): void;
 }
 
@@ -29,7 +29,7 @@ export function mountData({
                 <div>
                   <MenuItem
                     onClick={() => {
-                      handleEditarCategoria(categoria);
+                      handleEditarCategoria(String(categoria.id));
                       handleClose();
                     }}
                   >

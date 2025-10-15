@@ -3,27 +3,26 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { IModalCategoriaState } from "../interfaces";
 import { updateStatusCategoria } from "../../../../api/Categorias/updateStatusCategoria";
 import {
   KEY_GET_CATEGORIAS_PAGINADO,
   queryOptionsGetCategoriasPaginado,
 } from "../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
 import { Categoria, CategoriaParamsPaginado } from "@/types";
+import { useNavigate } from "react-router-dom";
+import * as PATHS from "@/routes/paths";
 
 interface IUseListagemReturn {
   categorias: IPaginatedResponse<Categoria> | undefined;
-  modalCategoriaState: IModalCategoriaState;
   filterForm: UseFormReturn<CategoriaParamsPaginado>;
   filterCount: number;
   categoriaListPayload: CategoriaParamsPaginado;
-  closeModalCategoria(): void;
+  handleAdicionarCategoria(): void;
   handleAtivarCategoriaById(id: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
-  handleEditarCategoria(categoria: Categoria): void;
+  handleEditarCategoria(categoriaId: string): void;
   handleInativarCategoriaById(id: number): void;
   handleSubmitFilterForm(): void;
-  openModalCategoria(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
@@ -35,11 +34,8 @@ export const useListagem = (): IUseListagemReturn => {
 
   const filterForm = useForm<CategoriaParamsPaginado>();
 
-  const [modalCategoriaState, setModalCategoriaState] =
-    useState<IModalCategoriaState>({
-      categoria: undefined,
-      open: false,
-    });
+  const navigate = useNavigate();
+
   const [categoriaListPayload, setCategoriaListPayload] =
     useState<CategoriaParamsPaginado>({ ativo: true, page: 0, size: 10 });
 
@@ -54,8 +50,8 @@ export const useListagem = (): IUseListagemReturn => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
-  function closeModalCategoria(): void {
-    setModalCategoriaState({ open: false, categoria: undefined });
+  function handleAdicionarCategoria(): void {
+    navigate(PATHS.CATEGORIAS.CREATE);
   }
 
   async function handleAtivarCategoriaById(id: number): Promise<void> {
@@ -84,8 +80,8 @@ export const useListagem = (): IUseListagemReturn => {
     }));
   }
 
-  function handleEditarCategoria(categoria: Categoria): void {
-    setModalCategoriaState({ open: true, categoria });
+  function handleEditarCategoria(categoriaId: string): void {
+    navigate(PATHS.CATEGORIAS.EDIT.replace(":id", categoriaId));
   }
 
   async function handleInativarCategoriaById(id: number): Promise<void> {
@@ -116,22 +112,16 @@ export const useListagem = (): IUseListagemReturn => {
     })();
   }
 
-  function openModalCategoria(): void {
-    setModalCategoriaState({ open: true, categoria: undefined });
-  }
-
   return {
     categorias,
-    modalCategoriaState,
     filterForm,
     filterCount,
     categoriaListPayload,
-    closeModalCategoria,
+    handleAdicionarCategoria,
     handleAtivarCategoriaById,
     handleChangePage,
     handleEditarCategoria,
     handleInativarCategoriaById,
     handleSubmitFilterForm,
-    openModalCategoria,
   };
 };

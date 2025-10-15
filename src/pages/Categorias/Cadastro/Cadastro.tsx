@@ -1,53 +1,34 @@
+import { PageHeader } from "@/components/PageHeader";
+import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
-import { TextField, Button, Autocomplete, Grid } from "@mui/material";
-import { Modal } from "../../../../../components/Modal";
-import { useModalCategoria } from "./hooks/useModalCategoria";
-import { tipoMovimentacaoOptions } from "../../../../../constants/tipoMovimentacaoOptions";
-import { Categoria } from "@/types";
-interface IModalCategoriaProps {
-  categoria: Categoria | undefined;
-  open: boolean;
-  onClose(): void;
-}
+import { useCadastro } from "./hooks/useCadastro";
+import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
 
-export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
-  categoria,
-  open,
-  onClose,
-}) => {
-  const { contaForm, submitContaForm } = useModalCategoria({
-    categoria,
-    onClose,
-  });
+export const Cadastro: React.FC = () => {
+  const cadastro = useCadastro();
 
   return (
-    <Modal
-      open={open}
-      style={{ width: "auto", height: "auto", minWidth: 480, maxWidth: 600 }}
-      title={`${categoria ? "Editar " : "Nova "}Categoria`}
-      buttons={
-        <>
-          <Button variant="text" onClick={onClose}>
-            Fechar
-          </Button>
-          <Button variant="contained" onClick={submitContaForm}>
-            Salvar
-          </Button>
-        </>
-      }
-    >
+    <>
+      <PageHeader
+        title={cadastro.pageTitle}
+        breadcrumbs={cadastro.breadcrumbs}
+      />
+
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={7}>
           <Controller
             name="nome"
-            control={contaForm.control}
+            control={cadastro.categoriaForm.control}
             rules={{ required: true }}
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Nome"
                 fullWidth
+                value={field.value ?? ""}
                 required
+                disabled={cadastro.isDisabledForm}
                 error={!!formState.errors.nome}
                 inputProps={{ maxLength: 50 }}
               />
@@ -55,10 +36,10 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={5}>
           <Controller
             name="tipoMovimentacao"
-            control={contaForm.control}
+            control={cadastro.categoriaForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
@@ -76,6 +57,7 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    size="small"
                     label="Tipo"
                     required
                     error={!!fieldState.error}
@@ -91,14 +73,17 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
           <Controller
             name="observacao"
             rules={{ required: false }}
-            control={contaForm.control}
+            control={cadastro.categoriaForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Observação"
                 fullWidth
                 multiline
+                value={field.value ?? ""}
                 rows={2}
+                disabled={cadastro.isDisabledForm}
                 error={!!formState.errors.observacao}
                 inputProps={{ maxLength: 100 }}
               />
@@ -106,6 +91,23 @@ export const ModalCategoria: React.FC<IModalCategoriaProps> = ({
           />
         </Grid>
       </Grid>
-    </Modal>
+
+      <Box
+        mt={4}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Button variant="outlined" onClick={cadastro.handleBack}>
+          Voltar
+        </Button>
+
+        {!cadastro.isDisabledForm && (
+          <Button variant="contained" onClick={cadastro.submitCategoriaForm}>
+            Salvar
+          </Button>
+        )}
+      </Box>
+    </>
   );
 };

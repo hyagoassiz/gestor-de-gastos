@@ -1,20 +1,24 @@
 import { HashRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import * as PATHS from "./paths";
-import { PageLayout } from "../layouts/PageLayout/PageLayout";
-import { ProtectedRoute } from "../components/ProtectedRoute";
-import { LoginRoute } from "../pages/Auth/Login";
-import { CreateAccountRoute } from "../pages/Auth/CreateAccount";
-import { VerificationRoute } from "../pages/Auth/Verification";
-import { PersonalInfoRoute } from "../pages/Auth/PersonalInfo";
-import { AboutRoute } from "../pages/About/List";
-import { SettingsRoute } from "../pages/Settings/List";
-import { ContasListagemRoute } from "../pages/Contas";
-import { CategoriasListagemRoute } from "../pages/Categorias";
-import { TransacoesListagemRoute } from "../pages/Transacoes";
 import { SaldosListagemRoute } from "@/pages/Saldos";
-import { DashboardListagemRoute } from "@/pages/Dashboard/Listagem";
-import { ContasCadastroRoute } from "@/pages/Contas/Cadastro";
-import { TransacoesCadastroRoute } from "@/pages/Transacoes/Cadastro";
+import { DashboardListagemRoute } from "@/pages/Dashboard";
+import { ContasCadastroRoute, ContasListagemRoute } from "@/pages/Contas";
+import {
+  TransacoesCadastroRoute,
+  TransacoesListagemRoute,
+} from "@/pages/Transacoes";
+import { PageLayout } from "@/layouts/PageLayout";
+import {
+  CreateAccountRoute,
+  LoginRoute,
+  PersonalInfoRoute,
+  VerificationRoute,
+} from "@/pages/Auth";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { SettingsRoute } from "@/pages/Settings";
+import { AboutRoute } from "@/pages/About";
+import { CategoriasListagemRoute } from "@/pages/Categorias";
+import { CategoriasCadastroRoute } from "@/pages/Categorias/Cadastro";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -143,6 +147,33 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <CategoriasListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CATEGORIAS.CREATE}
+            element={
+              <ProtectedRoute permission="">
+                <CategoriasCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CATEGORIAS.EDIT}
+            element={
+              <ProtectedRoute permission="">
+                <CategoriasCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CATEGORIAS.VIEW}
+            element={
+              <ProtectedRoute permission="">
+                <CategoriasCadastroRoute />
               </ProtectedRoute>
             }
           />

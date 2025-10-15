@@ -1,6 +1,7 @@
 import { IDataTableColumns } from "../../../../interfaces";
 
-export const contasColumns: IDataTableColumns[] = [
+export const TRANSACOES_COLUMNS: IDataTableColumns[] = [
+  { key: "id", label: "ID" },
   { key: "tipoMovimentacao", label: "Tipo" },
   { key: "data", label: "Data" },
   { key: "valor", label: "Valor", align: "right" },

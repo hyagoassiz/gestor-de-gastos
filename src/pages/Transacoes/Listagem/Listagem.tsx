@@ -3,7 +3,7 @@ import { Frame } from "../../../components/Frame";
 import { Add } from "@mui/icons-material";
 import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
-import { contasColumns } from "./constants/constants";
+import { TRANSACOES_COLUMNS } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
@@ -31,7 +31,7 @@ export const Listagem: React.FC = () => {
 
       <Frame>
         <DataTable
-          columns={contasColumns}
+          columns={TRANSACOES_COLUMNS}
           data={mountData(listagem)}
           page={(listagem.transacoes?.number ?? 0) + 1}
           totalPages={listagem.transacoes?.totalPages}

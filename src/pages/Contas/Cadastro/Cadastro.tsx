@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { tipoContaOptions } from "@/constants/tipoContaOptions";
 import {
   Autocomplete,
+  Box,
   Button,
   FormControlLabel,
   FormGroup,
@@ -20,22 +21,10 @@ export const Cadastro: React.FC = () => {
       <PageHeader
         title={cadastro.pageTitle}
         breadcrumbs={cadastro.breadcrumbs}
-        rightContent={
-          <>
-            <Button variant="text" onClick={cadastro.handleBack}>
-              Voltar
-            </Button>
-            {!cadastro.isDisabledForm && (
-              <Button variant="outlined" onClick={cadastro.submitContaForm}>
-                Salvar
-              </Button>
-            )}
-          </>
-        }
       />
 
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={7}>
           <Controller
             name="nome"
             rules={{ required: true }}
@@ -43,6 +32,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Nome"
                 fullWidth
                 value={field.value ?? ""}
@@ -55,7 +45,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={5}>
           <Controller
             name="tipoConta"
             control={cadastro.contaForm.control}
@@ -75,6 +65,7 @@ export const Cadastro: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    size="small"
                     label="Tipo"
                     required
                     disabled={cadastro.isDisabledForm}
@@ -95,6 +86,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Agência"
                 fullWidth
                 onChange={(e) => {
@@ -120,6 +112,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Conta"
                 fullWidth
                 onChange={(e) => {
@@ -145,6 +138,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Observação"
                 fullWidth
                 multiline
@@ -180,6 +174,23 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
       </Grid>
+
+      <Box
+        mt={4}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Button variant="outlined" onClick={cadastro.handleBack}>
+          Voltar
+        </Button>
+
+        {!cadastro.isDisabledForm && (
+          <Button variant="contained" onClick={cadastro.submitContaForm}>
+            Salvar
+          </Button>
+        )}
+      </Box>
     </>
   );
 };

@@ -7,36 +7,33 @@ import { categoriasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
-import { ModalCategoria } from "./components/ModalCategoria";
 import { PageHeader } from "@/components/PageHeader";
 
 export const Listagem: React.FC = () => {
   const {
     categorias,
-    modalCategoriaState,
     filterForm,
     filterCount,
     categoriaListPayload,
-    closeModalCategoria,
+    handleAdicionarCategoria,
     handleAtivarCategoriaById,
     handleChangePage,
     handleEditarCategoria,
     handleInativarCategoriaById,
     handleSubmitFilterForm,
-    openModalCategoria,
   } = useListagem();
 
   return (
     <FormProvider {...filterForm}>
       <PageHeader
         title="Categorias"
-        subTitle="Gerencie suas categorias"
+        breadcrumbs={[{ label: "Categorias" }]}
         rightContent={
           <Button
             startIcon={<Add />}
             color="primary"
             variant="outlined"
-            onClick={openModalCategoria}
+            onClick={handleAdicionarCategoria}
           >
             Adicionar Categoria
           </Button>
@@ -65,14 +62,6 @@ export const Listagem: React.FC = () => {
           }
         />
       </Frame>
-
-      {modalCategoriaState.open && (
-        <ModalCategoria
-          categoria={modalCategoriaState.categoria}
-          open={modalCategoriaState.open}
-          onClose={closeModalCategoria}
-        />
-      )}
     </FormProvider>
   );
 };

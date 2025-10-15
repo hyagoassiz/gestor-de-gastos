@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/PageHeader";
 import {
   Autocomplete,
+  Box,
   Button,
   FormControlLabel,
   FormGroup,
@@ -22,18 +23,6 @@ export const Cadastro: React.FC = () => {
       <PageHeader
         title={cadastro.pageTitle}
         breadcrumbs={cadastro.breadcrumbs}
-        rightContent={
-          <>
-            <Button variant="text" onClick={cadastro.handleBack}>
-              Voltar
-            </Button>
-            {!cadastro.isDisabledForm && (
-              <Button variant="outlined" onClick={cadastro.submitTransacaoForm}>
-                Salvar
-              </Button>
-            )}
-          </>
-        }
       />
 
       <Grid container spacing={3}>
@@ -63,6 +52,7 @@ export const Cadastro: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    size="small"
                     label="Tipo"
                     required
                     disabled={cadastro.isDisabledForm}
@@ -83,6 +73,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Data"
                 type="date"
                 fullWidth
@@ -115,6 +106,7 @@ export const Cadastro: React.FC = () => {
                 onValueChange={(values) => {
                   field.onChange(values.floatValue ?? 0);
                 }}
+                size="small"
                 disabled={cadastro.isDisabledForm}
                 error={!!fieldState.error}
               />
@@ -142,6 +134,7 @@ export const Cadastro: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    size="small"
                     label="Categoria"
                     required
                     disabled={cadastro.isDisabledForm}
@@ -174,6 +167,7 @@ export const Cadastro: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    size="small"
                     label="Conta"
                     required
                     disabled={cadastro.isDisabledForm}
@@ -194,6 +188,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Observação"
                 fullWidth
                 multiline
@@ -232,6 +227,23 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
       </Grid>
+
+      <Box
+        mt={4}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Button variant="outlined" onClick={cadastro.handleBack}>
+          Voltar
+        </Button>
+
+        {!cadastro.isDisabledForm && (
+          <Button variant="contained" onClick={cadastro.submitTransacaoForm}>
+            Salvar
+          </Button>
+        )}
+      </Box>
     </>
   );
 };

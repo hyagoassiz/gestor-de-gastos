@@ -20,6 +20,8 @@ export type ContaParams = Partial<
   Pick<Conta, "tipoConta" | "incluirEmSomas" | "ativo">
 > & {
   textoBusca?: string;
+  page?: number;
+  size?: number;
 };
 
 export type ContaParamsPaginado = ContaParams & Pagination;
