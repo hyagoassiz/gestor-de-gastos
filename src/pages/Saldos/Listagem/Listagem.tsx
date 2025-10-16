@@ -12,7 +12,7 @@ export const Listagem: React.FC = () => {
 
   return (
     <FormProvider {...listagem.filterForm}>
-      <PageHeader title="Saldos" subTitle="Visualize o saldo de suas contas" />
+      <PageHeader title="Saldos" />
 
       <Frame>
         <DataTable

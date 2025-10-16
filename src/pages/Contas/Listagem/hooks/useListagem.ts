@@ -15,7 +15,7 @@ import {
 import useSearchBar from "../../../../hooks/useSearchBar";
 import { ISeachBar } from "../../../../interfaces/ISearchBar";
 import { Conta, ContaCreateAndUpdatePayload, ContaParams } from "@/types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 
 interface IUseListagemReturn {
@@ -40,14 +40,13 @@ export const useListagem = (): IUseListagemReturn => {
 
   const queryClient = useQueryClient();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const navigate = useNavigate();
 
   const filterForm = useForm<ContaCreateAndUpdatePayload>();
 
-  const { textoBusca, searchBar } = useSearchBar({
-    placeHolder: "Pesquisar",
-    debounceTime: 500,
-  });
+  const { textoBusca, searchBar } = useSearchBar({});
 
   const [contaListPayload, setContaListPayload] = useState<ContaParams>({
     ativo: true,
@@ -122,7 +121,6 @@ export const useListagem = (): IUseListagemReturn => {
         ...prevState,
         ativo: !data.ativo,
         page: 0,
-        // tipoConta: data.tipoConta.id,
       }));
     })();
   }

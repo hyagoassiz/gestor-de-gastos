@@ -8,23 +8,13 @@ import { mountData } from "./utils/mountData";
 import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
 import { PageHeader } from "@/components/PageHeader";
+import SearchBar from "@/components/SearchBar/SearchBar";
 
 export const Listagem: React.FC = () => {
-  const {
-    categorias,
-    filterForm,
-    filterCount,
-    categoriaListPayload,
-    handleAdicionarCategoria,
-    handleAtivarCategoriaById,
-    handleChangePage,
-    handleEditarCategoria,
-    handleInativarCategoriaById,
-    handleSubmitFilterForm,
-  } = useListagem();
+  const listagem = useListagem();
 
   return (
-    <FormProvider {...filterForm}>
+    <FormProvider {...listagem.filterForm}>
       <PageHeader
         title="Categorias"
         breadcrumbs={[{ label: "Categorias" }]}
@@ -33,7 +23,7 @@ export const Listagem: React.FC = () => {
             startIcon={<Add />}
             color="primary"
             variant="outlined"
-            onClick={handleAdicionarCategoria}
+            onClick={listagem.handleAdicionarCategoria}
           >
             Adicionar Categoria
           </Button>
@@ -41,26 +31,27 @@ export const Listagem: React.FC = () => {
       />
 
       <Frame>
-        <DataTable
-          columns={categoriasColumns}
-          data={mountData({
-            categorias,
-            handleAtivarCategoriaById,
-            handleEditarCategoria,
-            handleInativarCategoriaById,
-          })}
-          page={(categorias?.number ?? 0) + 1}
-          totalPages={categorias?.totalPages}
-          onPageChange={(newPage) => handleChangePage(newPage - 1)}
-          textForEmptyData="Nenhuma categoria encontrada."
-          toolbar={
-            <Filtro
-              defaultValue={!categoriaListPayload.ativo}
-              filterCount={filterCount}
-              applyFilter={handleSubmitFilterForm}
-            />
-          }
-        />
+        {!listagem.queryGetCategoriasPaginado.isLoading && (
+          <DataTable
+            columns={categoriasColumns}
+            data={mountData(listagem)}
+            page={(listagem.categorias?.number ?? 0) + 1}
+            totalPages={listagem.categorias?.totalPages}
+            onPageChange={(newPage) => listagem.handleChangePage(newPage - 1)}
+            textForEmptyData="Nenhuma categoria encontrada."
+            toolbar={
+              <>
+                <SearchBar searchBar={listagem.searchBar} />
+
+                <Filtro
+                  defaultValue={!listagem.categoriaListPayload.ativo}
+                  filterCount={listagem.filterCount}
+                  applyFilter={listagem.handleSubmitFilterForm}
+                />
+              </>
+            }
+          />
+        )}
       </Frame>
     </FormProvider>
   );

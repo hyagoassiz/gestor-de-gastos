@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Button,
   Divider,
   IconButton,
@@ -8,15 +9,7 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { ReactNode, useState } from "react";
-import {
-  Icon,
-  BoxApply,
-  BoxButtons,
-  BoxChildren,
-  HeaderBox,
-  StyledBox,
-  StyledTypography,
-} from "./styles";
+import { BoxChildren, StyledBox } from "./styles";
 
 interface IFilterDrawer {
   children: ReactNode;
@@ -46,28 +39,28 @@ export const FilterDrawer = ({
 
       <MuiDrawer open={open} anchor="right" onClose={handleClose}>
         <StyledBox>
-          <HeaderBox>
-            <BoxButtons>
-              <Tooltip title="Fechar" placement="bottom">
-                <IconButton onClick={handleClose}>
-                  <Icon sx={{ color: "inherit" }} />
-                </IconButton>
-              </Tooltip>
-              <StyledTypography variant="h6">Fechar</StyledTypography>
-              <BoxApply>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    applyFilter();
-                    handleClose();
-                  }}
-                >
-                  Aplicar Filtros
-                </Button>
-              </BoxApply>
-            </BoxButtons>
-          </HeaderBox>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            padding="8px 16px"
+          >
+            <Button variant="outlined" onClick={handleClose}>
+              Fechar
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                applyFilter();
+                handleClose();
+              }}
+            >
+              Filtrar
+            </Button>
+          </Box>
+
           <Divider />
+
           <BoxChildren>{children}</BoxChildren>
         </StyledBox>
       </MuiDrawer>

@@ -24,7 +24,7 @@ export const Cadastro: React.FC = () => {
       />
 
       <Grid container spacing={3}>
-        <Grid item xs={7}>
+        <Grid item xs={6}>
           <Controller
             name="nome"
             rules={{ required: true }}
@@ -45,7 +45,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Controller
             name="tipoConta"
             control={cadastro.contaForm.control}

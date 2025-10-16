@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useRef } from "react";
 import { ISeachBar } from "../interfaces/ISearchBar";
 
 interface IUseSearchBarProps {
-  placeHolder: string;
+  placeHolder?: string;
   debounceTime?: number;
 }
 
@@ -12,7 +12,7 @@ interface IUseSearchBar {
 }
 
 const useSearchBar = ({
-  placeHolder,
+  placeHolder = "Pesquisar...",
   debounceTime = 500,
 }: IUseSearchBarProps): IUseSearchBar => {
   const [value, setValue] = useState<string>("");

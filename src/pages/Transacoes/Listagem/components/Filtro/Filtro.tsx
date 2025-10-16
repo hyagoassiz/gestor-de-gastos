@@ -38,6 +38,7 @@ export const Filtro: React.FC<IFiltroProps> = ({
             renderInput={(params) => (
               <TextField
                 {...params}
+                size="small"
                 label="Tipo de Transação"
                 error={!!fieldState.error}
               />

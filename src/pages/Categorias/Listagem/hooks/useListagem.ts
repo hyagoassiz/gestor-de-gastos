@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
 import { useForm, UseFormReturn } from "react-hook-form";
@@ -11,12 +15,16 @@ import {
 import { Categoria, CategoriaParamsPaginado } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
+import useSearchBar from "@/hooks/useSearchBar";
+import { ISeachBar } from "@/interfaces/ISearchBar";
 
 interface IUseListagemReturn {
   categorias: IPaginatedResponse<Categoria> | undefined;
   filterForm: UseFormReturn<CategoriaParamsPaginado>;
   filterCount: number;
   categoriaListPayload: CategoriaParamsPaginado;
+  queryGetCategoriasPaginado: UseQueryResult<IPaginatedResponse<Categoria>>;
+  searchBar: ISeachBar;
   handleAdicionarCategoria(): void;
   handleAtivarCategoriaById(id: number): Promise<void>;
   handleChangePage(page: number, size?: number): void;
@@ -36,19 +44,26 @@ export const useListagem = (): IUseListagemReturn => {
 
   const navigate = useNavigate();
 
+  const { textoBusca, searchBar } = useSearchBar({});
+
   const [categoriaListPayload, setCategoriaListPayload] =
     useState<CategoriaParamsPaginado>({ ativo: true, page: 0, size: 10 });
 
-  const { data: categorias, isLoading } = useQuery({
-    ...queryOptionsGetCategoriasPaginado(categoriaListPayload),
+  const queryGetCategoriasPaginado = useQuery({
+    ...queryOptionsGetCategoriasPaginado({
+      ...categoriaListPayload,
+      textoBusca,
+    }),
   });
 
   const filterCount: number = categoriaListPayload.ativo === true ? 0 : 1;
 
+  const categorias = queryGetCategoriasPaginado.data;
+
   useEffect(() => {
-    setLoading(isLoading);
+    setLoading(queryGetCategoriasPaginado.isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [queryGetCategoriasPaginado.isLoading]);
 
   function handleAdicionarCategoria(): void {
     navigate(PATHS.CATEGORIAS.CREATE);
@@ -117,6 +132,8 @@ export const useListagem = (): IUseListagemReturn => {
     filterForm,
     filterCount,
     categoriaListPayload,
+    queryGetCategoriasPaginado,
+    searchBar,
     handleAdicionarCategoria,
     handleAtivarCategoriaById,
     handleChangePage,
