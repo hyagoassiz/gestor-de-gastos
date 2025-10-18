@@ -30,7 +30,6 @@ interface DataTableProps {
   selectedItems?: any[];
   onSelectionChange?: (selected: any[]) => void;
   totalPages?: number;
-  page?: number;
   disablePagination?: boolean;
   tableHeight?: number | string;
   toolbar?: React.ReactNode;
@@ -45,14 +44,13 @@ export const DataTable: React.FC<DataTableProps> = ({
   selectedItems,
   onSelectionChange,
   totalPages,
-  page,
   disablePagination = false,
   tableHeight,
   toolbar,
 }) => {
   const theme = useTheme();
 
-  const { setParams } = useUrlParams();
+  const { setParams, getBackendPage } = useUrlParams();
 
   const isSelectable =
     selectionMode === "single" || selectionMode === "multiple";
@@ -211,7 +209,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             <Pagination
               color="primary"
               count={totalPages}
-              page={(page ?? 0) + 1}
+              page={getBackendPage() + 1}
               onChange={(_, value) => {
                 setParams({ pagina: value });
               }}

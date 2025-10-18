@@ -35,7 +35,6 @@ export const Listagem: React.FC = () => {
           <DataTable
             columns={categoriasColumns}
             data={mountData(listagem)}
-            page={listagem.categorias?.number ?? 0}
             totalPages={listagem.categorias?.totalPages}
             textForEmptyData="Nenhuma categoria encontrada."
             toolbar={
