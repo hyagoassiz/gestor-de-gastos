@@ -24,6 +24,6 @@ export type ContaParams = Partial<
   size?: number;
 };
 
-export type ContaParamsPaginado = ContaParams & Pagination;
+export type ContaParamsPaginado = Partial<ContaParams> & Partial<Pagination>;
 
 export type ContaAtualizarAtivoParams = Pick<Conta, "id" | "ativo">;

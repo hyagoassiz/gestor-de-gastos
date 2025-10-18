@@ -30,20 +30,21 @@ export const Listagem: React.FC = () => {
       />
 
       <Frame>
-        <DataTable
-          columns={TRANSACOES_COLUMNS}
-          data={mountData(listagem)}
-          page={(listagem.transacoes?.number ?? 0) + 1}
-          totalPages={listagem.transacoes?.totalPages}
-          onPageChange={(newPage) => listagem.handleChangePage(newPage - 1)}
-          textForEmptyData="Nenhuma conta encontrada."
-          toolbar={
-            <Filtro
-              filterCount={0}
-              applyFilter={listagem.handleSubmitFilterForm}
-            />
-          }
-        />
+        {!listagem.queryGetTransacoesPaginado.isLoading && (
+          <DataTable
+            columns={TRANSACOES_COLUMNS}
+            data={mountData(listagem)}
+            page={listagem.transacoes?.number ?? 0}
+            totalPages={listagem.transacoes?.totalPages}
+            textForEmptyData="Nenhuma conta encontrada."
+            toolbar={
+              <Filtro
+                filterCount={0}
+                applyFilter={listagem.handleSubmitFilterForm}
+              />
+            }
+          />
+        )}
       </Frame>
     </FormProvider>
   );

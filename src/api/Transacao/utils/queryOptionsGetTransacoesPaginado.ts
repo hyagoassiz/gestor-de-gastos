@@ -1,4 +1,4 @@
-import { UseQueryOptions } from "@tanstack/react-query";
+import { keepPreviousData, UseQueryOptions } from "@tanstack/react-query";
 import { getTransacoesPaginado } from "../getTransacoesPaginado";
 import { Transacao, TransacaoParamsPaginado } from "@/types";
 
@@ -13,6 +13,7 @@ export function queryOptionsGetTransacoesPaginado(
     queryFn: () => getTransacoesPaginado(params),
     refetchOnWindowFocus: false,
     retry: false,
+    placeholderData: keepPreviousData,
   };
 
   return transacoes;

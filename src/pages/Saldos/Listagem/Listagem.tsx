@@ -15,19 +15,20 @@ export const Listagem: React.FC = () => {
       <PageHeader title="Saldos" />
 
       <Frame>
-        <DataTable
-          columns={CONTAS_COLUMNS}
-          data={mountData(listagem)}
-          disablePagination
-          textForEmptyData="Nenhuma conta encontrada."
-          toolbar={
-            <Filtro
-              filterCount={0}
-              applyFilter={listagem.handleSubmitFilterForm}
-              defaultValue={!listagem.saldosContasParams.ativo}
-            />
-          }
-        />
+        {!listagem.queryGetSaldosContas.isLoading && (
+          <DataTable
+            columns={CONTAS_COLUMNS}
+            data={mountData(listagem)}
+            disablePagination
+            textForEmptyData="Nenhuma conta encontrada."
+            toolbar={
+              <Filtro
+                filterCount={0}
+                applyFilter={listagem.handleSubmitFilterForm}
+              />
+            }
+          />
+        )}
       </Frame>
     </FormProvider>
   );

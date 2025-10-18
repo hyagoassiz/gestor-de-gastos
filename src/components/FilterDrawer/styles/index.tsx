@@ -5,6 +5,6 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   width: theme.spacing(45),
 }));
 
-export const BoxChildren = styled(Box)(({ theme }) => ({
-  margin: theme.spacing(2),
+export const BoxChildren = styled(Box)(() => ({
+  margin: "24px 16px",
 }));

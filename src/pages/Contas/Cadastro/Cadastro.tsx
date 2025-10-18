@@ -66,7 +66,7 @@ export const Cadastro: React.FC = () => {
                   <TextField
                     {...params}
                     size="small"
-                    label="Tipo"
+                    label="Tipo de Conta"
                     required
                     disabled={cadastro.isDisabledForm}
                     error={!!fieldState.error}

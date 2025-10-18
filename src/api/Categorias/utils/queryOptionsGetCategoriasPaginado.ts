@@ -1,4 +1,4 @@
-import { UseQueryOptions } from "@tanstack/react-query";
+import { keepPreviousData, UseQueryOptions } from "@tanstack/react-query";
 import { getCategoriasPaginado } from "../getCategoriasPaginado";
 import { Categoria, CategoriaParamsPaginado } from "@/types";
 
@@ -13,6 +13,7 @@ export function queryOptionsGetCategoriasPaginado(
     queryFn: () => getCategoriasPaginado(params),
     refetchOnWindowFocus: false,
     retry: false,
+    placeholderData: keepPreviousData,
   };
 
   return categorias;

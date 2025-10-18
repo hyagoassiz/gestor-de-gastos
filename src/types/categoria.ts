@@ -19,6 +19,7 @@ export type CategoriaParams = Partial<
   textoBusca?: string;
 };
 
-export type CategoriaParamsPaginado = CategoriaParams & Pagination;
+export type CategoriaParamsPaginado = Partial<CategoriaParams> &
+  Partial<Pagination>;
 
 export type CategoriaAtualizarAtivoParams = Pick<Categoria, "id" | "ativo">;

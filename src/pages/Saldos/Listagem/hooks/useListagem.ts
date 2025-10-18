@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useForm, UseFormReturn } from "react-hook-form";
@@ -6,13 +6,12 @@ import { SaldoConta, SaldoContaParams } from "@/types";
 import { queryOptionsGetSaldosContas } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
 import useSearchBar from "@/hooks/useSearchBar";
 import { ISeachBar } from "@/interfaces/ISearchBar";
+import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseListagemReturn {
   saldos: SaldoConta[] | undefined;
   queryGetSaldosContas: UseQueryResult<SaldoConta[]>;
   filterForm: UseFormReturn<SaldoContaParams>;
-  filterCount: number;
-  saldosContasParams: SaldoContaParams;
   searchBar: ISeachBar;
   handleSubmitFilterForm(): void;
 }
@@ -22,20 +21,13 @@ export const useListagem = (): IUseListagemReturn => {
 
   const filterForm = useForm<SaldoContaParams>();
 
-  const { searchBar, textoBusca } = useSearchBar({
-    placeHolder: "Pesquisar conta",
-  });
+  const { searchBar, textoBusca } = useSearchBar({});
 
-  const [saldosContasParams, setSaldosContasParams] =
-    useState<SaldoContaParams>({
-      ativo: true,
-    });
+  const { setParams, getParam } = useUrlParams();
 
   const queryGetSaldosContas = useQuery({
-    ...queryOptionsGetSaldosContas(saldosContasParams),
+    ...queryOptionsGetSaldosContas({ ativo: getParam("ativo", true) }),
   });
-
-  const filterCount: number = saldosContasParams.ativo === true ? 0 : 1;
 
   const saldos =
     queryGetSaldosContas.data?.filter((saldo) => {
@@ -55,10 +47,9 @@ export const useListagem = (): IUseListagemReturn => {
 
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
-      setSaldosContasParams((prevState) => ({
-        ...prevState,
+      setParams({
         ativo: !data.ativo,
-      }));
+      });
     })();
   }
 
@@ -66,8 +57,6 @@ export const useListagem = (): IUseListagemReturn => {
     saldos,
     queryGetSaldosContas,
     filterForm,
-    filterCount,
-    saldosContasParams,
     searchBar,
     handleSubmitFilterForm,
   };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   useQuery,
   useQueryClient,
@@ -17,17 +17,15 @@ import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import useSearchBar from "@/hooks/useSearchBar";
 import { ISeachBar } from "@/interfaces/ISearchBar";
+import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseListagemReturn {
   categorias: IPaginatedResponse<Categoria> | undefined;
   filterForm: UseFormReturn<CategoriaParamsPaginado>;
-  filterCount: number;
-  categoriaListPayload: CategoriaParamsPaginado;
   queryGetCategoriasPaginado: UseQueryResult<IPaginatedResponse<Categoria>>;
   searchBar: ISeachBar;
   handleAdicionarCategoria(): void;
   handleAtivarCategoriaById(id: number): Promise<void>;
-  handleChangePage(page: number, size?: number): void;
   handleEditarCategoria(categoriaId: string): void;
   handleInativarCategoriaById(id: number): void;
   handleSubmitFilterForm(): void;
@@ -44,19 +42,19 @@ export const useListagem = (): IUseListagemReturn => {
 
   const navigate = useNavigate();
 
-  const { textoBusca, searchBar } = useSearchBar({});
+  const { searchBar } = useSearchBar({});
 
-  const [categoriaListPayload, setCategoriaListPayload] =
-    useState<CategoriaParamsPaginado>({ ativo: true, page: 0, size: 10 });
+  const { getBackendPage, setParams, getParam } = useUrlParams();
 
   const queryGetCategoriasPaginado = useQuery({
     ...queryOptionsGetCategoriasPaginado({
-      ...categoriaListPayload,
-      textoBusca,
+      page: getBackendPage(),
+      tipoMovimentacao: getParam("tipoMovimentacao"),
+      ativo: getParam("ativo", true),
+      textoBusca: getParam("textoBusca"),
+      size: 10,
     }),
   });
-
-  const filterCount: number = categoriaListPayload.ativo === true ? 0 : 1;
 
   const categorias = queryGetCategoriasPaginado.data;
 
@@ -87,14 +85,6 @@ export const useListagem = (): IUseListagemReturn => {
     }
   }
 
-  function handleChangePage(page: number, size?: number): void {
-    setCategoriaListPayload((prev) => ({
-      ...prev,
-      page: page,
-      size: size ?? prev.size,
-    }));
-  }
-
   function handleEditarCategoria(categoriaId: string): void {
     navigate(PATHS.CATEGORIAS.EDIT.replace(":id", categoriaId));
   }
@@ -119,24 +109,21 @@ export const useListagem = (): IUseListagemReturn => {
 
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
-      setCategoriaListPayload((prevState) => ({
-        ...prevState,
+      setParams({
+        pagina: 0,
+        tipoMovimentacao: data.tipoMovimentacao,
         ativo: !data.ativo,
-        page: 0,
-      }));
+      });
     })();
   }
 
   return {
     categorias,
     filterForm,
-    filterCount,
-    categoriaListPayload,
     queryGetCategoriasPaginado,
     searchBar,
     handleAdicionarCategoria,
     handleAtivarCategoriaById,
-    handleChangePage,
     handleEditarCategoria,
     handleInativarCategoriaById,
     handleSubmitFilterForm,

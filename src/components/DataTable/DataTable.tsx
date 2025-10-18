@@ -19,6 +19,7 @@ import {
 } from "./styles";
 import { useState } from "react";
 import { IDataTableColumns } from "../../interfaces";
+import { useSearchParams } from "react-router-dom";
 
 interface DataTableProps {
   columns: IDataTableColumns[];
@@ -30,7 +31,6 @@ interface DataTableProps {
   onSelectionChange?: (selected: any[]) => void;
   totalPages?: number;
   page?: number;
-  onPageChange?: (page: number) => void;
   disablePagination?: boolean;
   tableHeight?: number | string;
   toolbar?: React.ReactNode;
@@ -46,7 +46,6 @@ export const DataTable: React.FC<DataTableProps> = ({
   onSelectionChange,
   totalPages,
   page,
-  onPageChange,
   disablePagination = false,
   tableHeight,
   toolbar,
@@ -62,7 +61,7 @@ export const DataTable: React.FC<DataTableProps> = ({
     selectedItems !== undefined && onSelectionChange !== undefined;
   const [internalSelected, setInternalSelected] = useState<any[]>([]);
   const selected = isControlled ? selectedItems! : internalSelected;
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const isRowSelected = (row: any) =>
     selected.some((item) => item[rowKey] === row[rowKey]);
 
@@ -211,8 +210,11 @@ export const DataTable: React.FC<DataTableProps> = ({
             <Pagination
               color="primary"
               count={totalPages}
-              page={page ?? 1}
-              onChange={(_, value) => onPageChange?.(value)}
+              page={(page ?? 0) + 1}
+              onChange={(_, value) => {
+                searchParams.set("pagina", String(value));
+                setSearchParams(searchParams);
+              }}
               shape="rounded"
             />
           </Box>

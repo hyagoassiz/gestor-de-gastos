@@ -35,17 +35,15 @@ export const Listagem: React.FC = () => {
           <DataTable
             columns={categoriasColumns}
             data={mountData(listagem)}
-            page={(listagem.categorias?.number ?? 0) + 1}
+            page={listagem.categorias?.number ?? 0}
             totalPages={listagem.categorias?.totalPages}
-            onPageChange={(newPage) => listagem.handleChangePage(newPage - 1)}
             textForEmptyData="Nenhuma categoria encontrada."
             toolbar={
               <>
                 <SearchBar searchBar={listagem.searchBar} />
 
                 <Filtro
-                  defaultValue={!listagem.categoriaListPayload.ativo}
-                  filterCount={listagem.filterCount}
+                  filterCount={0}
                   applyFilter={listagem.handleSubmitFilterForm}
                 />
               </>

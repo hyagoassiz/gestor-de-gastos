@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useRef } from "react";
 import { ISeachBar } from "../interfaces/ISearchBar";
+import { useUrlParams } from "./useUrlParams";
 
 interface IUseSearchBarProps {
   placeHolder?: string;
@@ -8,15 +9,17 @@ interface IUseSearchBarProps {
 
 interface IUseSearchBar {
   searchBar: ISeachBar;
-  textoBusca: string;
+  textoBusca: string | undefined;
 }
 
 const useSearchBar = ({
   placeHolder = "Pesquisar...",
   debounceTime = 500,
 }: IUseSearchBarProps): IUseSearchBar => {
+  const { setParams } = useUrlParams();
+
   const [value, setValue] = useState<string>("");
-  const [textoBusca, setTextoBusca] = useState<string>("");
+  const [textoBusca, setTextoBusca] = useState<string | undefined>(undefined);
   const [open, setOpen] = useState<boolean>(false);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -30,14 +33,19 @@ const useSearchBar = ({
 
     debounceTimeout.current = setTimeout(() => {
       setTextoBusca(newValue);
+
+      setParams({ textoBusca: newValue, pagina: 1 });
     }, debounceTime);
   };
 
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => {
     setOpen(false);
     setValue("");
-    setTextoBusca("");
+    setTextoBusca(undefined);
+
+    setParams({ textoBusca: undefined });
   };
 
   return {
