@@ -44,7 +44,8 @@ export const useListagem = (): IUseListagemReturn => {
 
   const { searchBar } = useSearchBar({});
 
-  const { getBackendPage, setParams, getParam } = useUrlParams();
+  const { getBackendPage, setParams, getParam, getSearchString } =
+    useUrlParams();
 
   const queryGetCategoriasPaginado = useQuery({
     ...queryOptionsGetCategoriasPaginado({
@@ -86,7 +87,8 @@ export const useListagem = (): IUseListagemReturn => {
   }
 
   function handleEditarCategoria(categoriaId: string): void {
-    navigate(PATHS.CATEGORIAS.EDIT.replace(":id", categoriaId));
+    const search = getSearchString();
+    navigate(`${PATHS.CATEGORIAS.EDIT.replace(":id", categoriaId)}${search}`);
   }
 
   async function handleInativarCategoriaById(id: number): Promise<void> {

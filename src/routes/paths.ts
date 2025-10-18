@@ -1,7 +1,3 @@
-// const PROJETO = {
-//   LIST: "/core-ui",
-// };
-
 export const AUTH = {
   LOGIN: `/login`,
   CREATE: `/criar-conta`,

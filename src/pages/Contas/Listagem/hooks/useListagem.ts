@@ -42,7 +42,8 @@ export const useListagem = (): IUseListagemReturn => {
 
   const { searchBar } = useSearchBar({});
 
-  const { getBackendPage, setParams, getParam } = useUrlParams();
+  const { getBackendPage, setParams, getParam, getSearchString } =
+    useUrlParams();
 
   const filterForm = useForm<ContaCreateAndUpdatePayload>();
 
@@ -77,7 +78,8 @@ export const useListagem = (): IUseListagemReturn => {
   }
 
   function handleEditarConta(contaId: string): void {
-    navigate(PATHS.CONTAS.EDIT.replace(":id", contaId));
+    const search = getSearchString();
+    navigate(`${PATHS.CONTAS.EDIT.replace(":id", contaId)}${search}`);
   }
 
   function handleAdicionarConta(): void {

@@ -10,6 +10,7 @@ import { queryOptionsGetContaById } from "@/api/Contas/utils/queryOptionsGetCont
 import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { ContaForm } from "../types";
+import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
@@ -32,6 +33,8 @@ export const useCadastro = (): IUseCadastroReturn => {
   const { id } = useParams<{ id: string }>();
 
   const { mode } = usePageMode();
+
+  const { getSearchString } = useUrlParams();
 
   const queryGetContaById = useQuery({
     ...queryOptionsGetContaById(id as string),
@@ -93,7 +96,8 @@ export const useCadastro = (): IUseCadastroReturn => {
   }
 
   function handleBack(): void {
-    navigate(PATHS.CONTAS.LISTAGEM);
+    const search = getSearchString();
+    navigate(`${PATHS.CONTAS.LISTAGEM}${search}`);
   }
 
   function submitContaForm(): void {

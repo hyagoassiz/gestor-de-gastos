@@ -1,14 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path"; // 👈 importa o path
+import path from "path";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/gestor-de-gastos/",
+  base: "/",
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"), // 👈 cria o alias "@"
+      "@": path.resolve(__dirname, "src"),
     },
   },
 });

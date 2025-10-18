@@ -1,4 +1,10 @@
-import { HashRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Outlet,
+  Navigate,
+  BrowserRouter,
+} from "react-router-dom";
 import * as PATHS from "./paths";
 import { SaldosListagemRoute } from "@/pages/Saldos";
 import { DashboardListagemRoute } from "@/pages/Dashboard";
@@ -28,7 +34,7 @@ const LayoutWrapper = () => (
 
 export const AppRoutes = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path={PATHS.AUTH.LOGIN} element={<LoginRoute />} />
 
@@ -199,6 +205,6 @@ export const AppRoutes = () => {
           <Route path="*" element={<Navigate to={PATHS.DASHBOARD.LIST} />} />
         </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 };

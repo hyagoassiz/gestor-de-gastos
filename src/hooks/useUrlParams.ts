@@ -9,6 +9,7 @@ export interface UseUrlParamsReturn {
     key: string,
     defaultValue?: T
   ) => T | undefined;
+  getSearchString: () => string;
 }
 
 export function useUrlParams(): UseUrlParamsReturn {
@@ -49,5 +50,11 @@ export function useUrlParams(): UseUrlParamsReturn {
     return value as T;
   }
 
-  return { getBackendPage, setParams, getParam };
+  function getSearchString(): string {
+    const params = new URLSearchParams(searchParams);
+    const str = params.toString();
+    return str ? `?${str}` : "";
+  }
+
+  return { getBackendPage, setParams, getParam, getSearchString };
 }

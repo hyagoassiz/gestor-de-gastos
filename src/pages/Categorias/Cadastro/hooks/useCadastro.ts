@@ -11,9 +11,9 @@ import * as PATHS from "@/routes/paths";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
-import { CategoriaForm } from "../types/categoriaForm";
 import { queryOptionsGetCategoriaById } from "@/api/Categorias/utils/queryOptionsGetCategoriaById";
 import { postCategoria } from "@/api/Categorias/postCategoria";
+import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
@@ -36,6 +36,8 @@ export const useCadastro = (): IUseCadastroReturn => {
   const { id } = useParams<{ id: string }>();
 
   const { mode } = usePageMode();
+
+  const { getSearchString } = useUrlParams();
 
   const queryGetCategoriaById = useQuery({
     ...queryOptionsGetCategoriaById(id as string),
@@ -100,7 +102,8 @@ export const useCadastro = (): IUseCadastroReturn => {
   }
 
   function handleBack(): void {
-    navigate(PATHS.CATEGORIAS.LISTAGEM);
+    const search = getSearchString();
+    navigate(`${PATHS.CATEGORIAS.LISTAGEM}${search}`);
   }
 
   function submitCategoriaForm(): void {

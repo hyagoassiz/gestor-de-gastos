@@ -38,7 +38,8 @@ export const useListagem = (): IUseListagemReturn => {
 
   const filterForm = useForm<TransacaoParamsPaginado>();
 
-  const { getBackendPage, setParams, getParam } = useUrlParams();
+  const { getBackendPage, setParams, getParam, getSearchString } =
+    useUrlParams();
 
   const queryGetTransacoesPaginado = useQuery({
     ...queryOptionsGetTransacoesPaginado({
@@ -60,7 +61,8 @@ export const useListagem = (): IUseListagemReturn => {
   }
 
   function handleEditarTransacao(transacaoId: string): void {
-    navigate(PATHS.TRANSACOES.EDIT.replace(":id", transacaoId));
+    const search = getSearchString();
+    navigate(`${PATHS.TRANSACOES.EDIT.replace(":id", transacaoId)}${search}`);
   }
 
   async function handleExcluirTransacao(idTransacao: number): Promise<void> {

@@ -17,6 +17,7 @@ import { queryOptionsGetTransacaoById } from "@/api/Transacao/utils/queryOptions
 import { postTransacao } from "@/api/Transacao/postTransacao";
 import { queryOptionsGetContas } from "@/api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "@/api/Categorias/utils/queryOptionsGetCategorias";
+import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
@@ -41,6 +42,8 @@ export const useCadastro = (): IUseCadastroReturn => {
   const { id } = useParams<{ id: string }>();
 
   const { mode } = usePageMode();
+
+  const { getSearchString } = useUrlParams();
 
   const queryGetTransacaoById = useQuery({
     ...queryOptionsGetTransacaoById(Number(id)),
@@ -121,7 +124,8 @@ export const useCadastro = (): IUseCadastroReturn => {
   }
 
   function handleBack(): void {
-    navigate(PATHS.TRANSACOES.LIST);
+    const search = getSearchString();
+    navigate(`${PATHS.TRANSACOES.LIST}${search}`);
   }
 
   function submitTransacaoForm(): void {

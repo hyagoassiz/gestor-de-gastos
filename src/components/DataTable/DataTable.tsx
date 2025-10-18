@@ -19,7 +19,7 @@ import {
 } from "./styles";
 import { useState } from "react";
 import { IDataTableColumns } from "../../interfaces";
-import { useSearchParams } from "react-router-dom";
+import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface DataTableProps {
   columns: IDataTableColumns[];
@@ -52,6 +52,8 @@ export const DataTable: React.FC<DataTableProps> = ({
 }) => {
   const theme = useTheme();
 
+  const { setParams } = useUrlParams();
+
   const isSelectable =
     selectionMode === "single" || selectionMode === "multiple";
   const isSingleSelect = selectionMode === "single";
@@ -61,7 +63,6 @@ export const DataTable: React.FC<DataTableProps> = ({
     selectedItems !== undefined && onSelectionChange !== undefined;
   const [internalSelected, setInternalSelected] = useState<any[]>([]);
   const selected = isControlled ? selectedItems! : internalSelected;
-  const [searchParams, setSearchParams] = useSearchParams();
   const isRowSelected = (row: any) =>
     selected.some((item) => item[rowKey] === row[rowKey]);
 
@@ -212,8 +213,7 @@ export const DataTable: React.FC<DataTableProps> = ({
               count={totalPages}
               page={(page ?? 0) + 1}
               onChange={(_, value) => {
-                searchParams.set("pagina", String(value));
-                setSearchParams(searchParams);
+                setParams({ pagina: value });
               }}
               shape="rounded"
             />
