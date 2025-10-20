@@ -86,6 +86,7 @@ export const useListagem = (): IUseListagemReturn => {
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
       setParams({
+        pagina: 1,
         tipoMovimentacao: data.tipoMovimentacao,
       });
     })();

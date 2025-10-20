@@ -3,6 +3,7 @@ import {
   BreadcrumbItem,
   Categoria,
   CategoriaCreateAndUpdatePayload,
+  PageMode,
 } from "@/types";
 import { useLoading } from "@/hooks/useLoading";
 import { useNotification } from "@/hooks/useNotification";
@@ -19,6 +20,7 @@ interface IUseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
   categoriaForm: UseFormReturn<CategoriaCreateAndUpdatePayload>;
   isDisabledForm: boolean;
+  mode: PageMode;
   pageTitle: string;
   handleBack(): void;
   submitCategoriaForm(): void;
@@ -147,6 +149,7 @@ export const useCadastro = (): IUseCadastroReturn => {
     breadcrumbs,
     categoriaForm,
     pageTitle,
+    mode,
     isDisabledForm,
     handleBack,
     submitCategoriaForm,

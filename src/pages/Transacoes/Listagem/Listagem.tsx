@@ -35,7 +35,7 @@ export const Listagem: React.FC = () => {
             columns={TRANSACOES_COLUMNS}
             data={mountData(listagem)}
             totalPages={listagem.transacoes?.totalPages}
-            textForEmptyData="Nenhuma conta encontrada."
+            textForEmptyData="Nenhuma transação encontrada."
             toolbar={
               <Filtro
                 filterCount={0}

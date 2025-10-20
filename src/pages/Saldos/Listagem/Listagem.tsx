@@ -20,7 +20,7 @@ export const Listagem: React.FC = () => {
             columns={CONTAS_COLUMNS}
             data={mountData(listagem)}
             disablePagination
-            textForEmptyData="Nenhuma conta encontrada."
+            textForEmptyData="Nenhuma saldo de conta encontrado."
             toolbar={
               <Filtro
                 filterCount={0}

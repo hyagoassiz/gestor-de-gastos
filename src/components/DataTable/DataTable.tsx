@@ -181,7 +181,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                     colSpan={columns.length + (isSelectable ? 1 : 0)}
                   >
                     <StyledBox>
-                      <Icon color="warning" />
+                      <Icon color="error" />
                       <Typography variant="body2">
                         {textForEmptyData}
                       </Typography>

@@ -50,7 +50,7 @@ export const useListagem = (): IUseListagemReturn => {
   const queryGetContasPaginado = useQuery({
     ...queryOptionsGetContasPaginado({
       page: getBackendPage(),
-      ativo: getParam("ativo"),
+      ativo: getParam("ativo", true),
       incluirEmSomas: getParam("incluirEmSomas"),
       textoBusca: getParam("textoBusca"),
       tipoConta: getParam("tipoConta"),
@@ -102,7 +102,7 @@ export const useListagem = (): IUseListagemReturn => {
   function handleSubmitFilterForm(): void {
     filterForm.handleSubmit((data) => {
       setParams({
-        pagina: 0,
+        pagina: 1,
         tipoConta: data.tipoConta,
         incluirEmSomas: data.incluirEmSomas,
         ativo: !data.ativo,

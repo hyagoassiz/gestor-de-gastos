@@ -54,12 +54,16 @@ export const Cadastro: React.FC = () => {
                 }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
+                disabled={cadastro.isDisabledForm || cadastro.mode === "edit"}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     size="small"
                     label="Tipo"
                     required
+                    disabled={
+                      cadastro.isDisabledForm || cadastro.mode === "edit"
+                    }
                     error={!!fieldState.error}
                   />
                 )}

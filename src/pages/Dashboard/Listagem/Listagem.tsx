@@ -10,7 +10,7 @@ export const Listagem: React.FC = () => {
 
   return (
     <>
-      <PageHeader title="Dashboard" subTitle="Resumo" />
+      <PageHeader title="Dashboard" />
 
       <Stack direction="row" spacing={2}>
         <Totalizador
@@ -21,7 +21,7 @@ export const Listagem: React.FC = () => {
         <Totalizador value={listagem.totais?.saldo ?? 0} subTitle="Saldo" />
         <Totalizador
           value={listagem.totais?.aReceber ?? 0}
-          subTitle="Receber"
+          subTitle="À Receber"
         />
         <Totalizador value={listagem.totais?.aPagar ?? 0} subTitle="À Pagar" />
       </Stack>
