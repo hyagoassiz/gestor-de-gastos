@@ -41,10 +41,7 @@ export const Listagem: React.FC = () => {
               <>
                 <SearchBar searchBar={listagem.searchBar} />
 
-                <Filtro
-                  filterCount={0}
-                  applyFilter={listagem.handleSubmitFilterForm}
-                />
+                <Filtro filterCount={0} />
               </>
             }
           />

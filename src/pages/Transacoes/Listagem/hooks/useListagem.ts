@@ -5,14 +5,13 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
-import { useForm, UseFormReturn } from "react-hook-form";
 import {
   KEY_GET_TRANSACOES_PAGINADO,
   queryOptionsGetTransacoesPaginado,
 } from "../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
 import { useNotification } from "../../../../hooks/useNotification";
 import { deleteTransacao } from "../../../../api/Transacao/deleteTransacao";
-import { Transacao, TransacaoParamsPaginado } from "@/types";
+import { Transacao } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
@@ -20,11 +19,9 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 interface IUseListagemReturn {
   transacoes: IPaginatedResponse<Transacao> | undefined;
   queryGetTransacoesPaginado: UseQueryResult<IPaginatedResponse<Transacao>>;
-  filterForm: UseFormReturn<TransacaoParamsPaginado>;
   handleAdicionarTransacao(): void;
   handleEditarTransacao(transacaoId: string): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
-  handleSubmitFilterForm(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
@@ -36,10 +33,7 @@ export const useListagem = (): IUseListagemReturn => {
 
   const navigate = useNavigate();
 
-  const filterForm = useForm<TransacaoParamsPaginado>();
-
-  const { getBackendPage, setParams, getParam, getSearchString } =
-    useUrlParams();
+  const { getBackendPage, getParam, getSearchString } = useUrlParams();
 
   const queryGetTransacoesPaginado = useQuery({
     ...queryOptionsGetTransacoesPaginado({
@@ -83,22 +77,11 @@ export const useListagem = (): IUseListagemReturn => {
     }
   }
 
-  function handleSubmitFilterForm(): void {
-    filterForm.handleSubmit((data) => {
-      setParams({
-        pagina: 1,
-        tipoMovimentacao: data.tipoMovimentacao,
-      });
-    })();
-  }
-
   return {
     transacoes,
     queryGetTransacoesPaginado,
-    filterForm,
     handleEditarTransacao,
     handleExcluirTransacao,
     handleAdicionarTransacao,
-    handleSubmitFilterForm,
   };
 };

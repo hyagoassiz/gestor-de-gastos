@@ -1,25 +1,24 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { FilterDrawer } from "../../../../../components/FilterDrawer";
-import { TransacaoParamsPaginado } from "@/types";
 import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
+import useFiltro from "./hooks/useFiltro";
 
 interface IFiltroProps {
   filterCount: number;
-  applyFilter(): void;
 }
 
-export const Filtro: React.FC<IFiltroProps> = ({
-  filterCount,
-  applyFilter,
-}) => {
-  const filterForm = useFormContext<TransacaoParamsPaginado>();
+export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
+  const { filtroForm, handleSubmitFiltroForm } = useFiltro();
 
   return (
-    <FilterDrawer applyFilter={applyFilter} filterCount={filterCount}>
+    <FilterDrawer
+      applyFilter={handleSubmitFiltroForm}
+      filterCount={filterCount}
+    >
       <Controller
         name="tipoMovimentacao"
-        control={filterForm.control}
+        control={filtroForm.control}
         rules={{ required: false }}
         render={({ field, fieldState }) => (
           <Autocomplete

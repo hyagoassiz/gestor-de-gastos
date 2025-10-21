@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
-import { useForm, UseFormReturn } from "react-hook-form";
-import { SaldoConta, SaldoContaParams } from "@/types";
+import { SaldoConta } from "@/types";
 import { queryOptionsGetSaldosContas } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
 import useSearchBar from "@/hooks/useSearchBar";
 import { ISeachBar } from "@/interfaces/ISearchBar";
@@ -11,19 +10,15 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 interface IUseListagemReturn {
   saldos: SaldoConta[] | undefined;
   queryGetSaldosContas: UseQueryResult<SaldoConta[]>;
-  filterForm: UseFormReturn<SaldoContaParams>;
   searchBar: ISeachBar;
-  handleSubmitFilterForm(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
   const { setLoading } = useLoading();
 
-  const filterForm = useForm<SaldoContaParams>();
-
   const { searchBar, textoBusca } = useSearchBar({});
 
-  const { setParams, getParam } = useUrlParams();
+  const { getParam } = useUrlParams();
 
   const queryGetSaldosContas = useQuery({
     ...queryOptionsGetSaldosContas({ ativo: getParam("ativo", true) }),
@@ -45,19 +40,9 @@ export const useListagem = (): IUseListagemReturn => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryGetSaldosContas.isLoading]);
 
-  function handleSubmitFilterForm(): void {
-    filterForm.handleSubmit((data) => {
-      setParams({
-        ativo: !data.ativo,
-      });
-    })();
-  }
-
   return {
     saldos,
     queryGetSaldosContas,
-    filterForm,
     searchBar,
-    handleSubmitFilterForm,
   };
 };

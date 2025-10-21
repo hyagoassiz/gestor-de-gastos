@@ -28,7 +28,6 @@ interface IUseListagemReturn {
   handleAtivarCategoriaById(id: number): Promise<void>;
   handleEditarCategoria(categoriaId: string): void;
   handleInativarCategoriaById(id: number): void;
-  handleSubmitFilterForm(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
@@ -44,14 +43,13 @@ export const useListagem = (): IUseListagemReturn => {
 
   const { searchBar } = useSearchBar({});
 
-  const { getBackendPage, setParams, getParam, getSearchString } =
-    useUrlParams();
+  const { getBackendPage, getParam, getSearchString } = useUrlParams();
 
   const queryGetCategoriasPaginado = useQuery({
     ...queryOptionsGetCategoriasPaginado({
       page: getBackendPage(),
       tipoMovimentacao: getParam("tipoMovimentacao"),
-      ativo: getParam("ativo", true),
+      ativo: getParam("ativo"),
       textoBusca: getParam("textoBusca"),
       size: 10,
     }),
@@ -109,16 +107,6 @@ export const useListagem = (): IUseListagemReturn => {
     }
   }
 
-  function handleSubmitFilterForm(): void {
-    filterForm.handleSubmit((data) => {
-      setParams({
-        pagina: 1,
-        tipoMovimentacao: data.tipoMovimentacao,
-        ativo: !data.ativo,
-      });
-    })();
-  }
-
   return {
     categorias,
     filterForm,
@@ -128,6 +116,5 @@ export const useListagem = (): IUseListagemReturn => {
     handleAtivarCategoriaById,
     handleEditarCategoria,
     handleInativarCategoriaById,
-    handleSubmitFilterForm,
   };
 };

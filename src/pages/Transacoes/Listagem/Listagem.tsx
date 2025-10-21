@@ -5,7 +5,6 @@ import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { TRANSACOES_COLUMNS } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
 import { PageHeader } from "@/components/PageHeader";
 
@@ -13,7 +12,7 @@ export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
-    <FormProvider {...listagem.filterForm}>
+    <>
       <PageHeader
         title="Transações"
         breadcrumbs={[{ label: "Transações" }]}
@@ -36,15 +35,10 @@ export const Listagem: React.FC = () => {
             data={mountData(listagem)}
             totalPages={listagem.transacoes?.totalPages}
             textForEmptyData="Nenhuma transação encontrada."
-            toolbar={
-              <Filtro
-                filterCount={0}
-                applyFilter={listagem.handleSubmitFilterForm}
-              />
-            }
+            toolbar={<Filtro filterCount={0} />}
           />
         )}
       </Frame>
-    </FormProvider>
+    </>
   );
 };

@@ -3,7 +3,6 @@ import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { CONTAS_COLUMNS } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
 import { PageHeader } from "@/components/PageHeader";
 
@@ -11,7 +10,7 @@ export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
-    <FormProvider {...listagem.filterForm}>
+    <>
       <PageHeader title="Saldos" />
 
       <Frame>
@@ -21,15 +20,10 @@ export const Listagem: React.FC = () => {
             data={mountData(listagem)}
             disablePagination
             textForEmptyData="Nenhuma saldo de conta encontrado."
-            toolbar={
-              <Filtro
-                filterCount={0}
-                applyFilter={listagem.handleSubmitFilterForm}
-              />
-            }
+            toolbar={<Filtro filterCount={0} />}
           />
         )}
       </Frame>
-    </FormProvider>
+    </>
   );
 };
