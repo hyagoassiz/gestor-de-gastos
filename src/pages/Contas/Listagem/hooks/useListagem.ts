@@ -7,14 +7,13 @@ import {
 import { useLoading } from "../../../../hooks/useLoading";
 import { useNotification } from "../../../../hooks/useNotification";
 import { updateStatusConta } from "../../../../api/Contas/updateStatusConta";
-import { useForm, UseFormReturn } from "react-hook-form";
 import {
   KEY_GET_CONTAS_PAGINADO,
   queryOptionsGetContasPaginado,
 } from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
 import useSearchBar from "../../../../hooks/useSearchBar";
 import { ISeachBar } from "../../../../interfaces/ISearchBar";
-import { Conta, ContaCreateAndUpdatePayload } from "@/types";
+import { Conta } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
@@ -22,13 +21,11 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 interface IUseListagemReturn {
   contas: IPaginatedResponse<Conta> | undefined;
   queryGetContasPaginado: UseQueryResult<IPaginatedResponse<Conta>>;
-  filterForm: UseFormReturn<ContaCreateAndUpdatePayload>;
   searchBar: ISeachBar;
   handleAdicionarConta(): void;
   handleAtivarContaById(id: number): Promise<void>;
   handleEditarConta(contaId: string): void;
   handleInativarContaById(id: number): void;
-  handleSubmitFilterForm(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
@@ -42,10 +39,7 @@ export const useListagem = (): IUseListagemReturn => {
 
   const { searchBar } = useSearchBar({});
 
-  const { getBackendPage, setParams, getParam, getSearchString } =
-    useUrlParams();
-
-  const filterForm = useForm<ContaCreateAndUpdatePayload>();
+  const { getBackendPage, getParam, getSearchString } = useUrlParams();
 
   const queryGetContasPaginado = useQuery({
     ...queryOptionsGetContasPaginado({
@@ -89,8 +83,11 @@ export const useListagem = (): IUseListagemReturn => {
   async function handleInativarContaById(id: number): Promise<void> {
     try {
       loading.setLoading(true);
+
       await updateStatusConta({ id, ativo: false });
+
       queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
+
       notification.showSnackBar("Conta inativada com sucesso!", "success");
     } catch (error) {
       console.error(error);
@@ -99,26 +96,13 @@ export const useListagem = (): IUseListagemReturn => {
     }
   }
 
-  function handleSubmitFilterForm(): void {
-    filterForm.handleSubmit((data) => {
-      setParams({
-        pagina: 1,
-        tipoConta: data.tipoConta,
-        incluirEmSomas: data.incluirEmSomas,
-        ativo: !data.ativo,
-      });
-    })();
-  }
-
   return {
     contas,
     queryGetContasPaginado,
-    filterForm,
     searchBar,
     handleAdicionarConta,
     handleAtivarContaById,
     handleEditarConta,
     handleInativarContaById,
-    handleSubmitFilterForm,
   };
 };

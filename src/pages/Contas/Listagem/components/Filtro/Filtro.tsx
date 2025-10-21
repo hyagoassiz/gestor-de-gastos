@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
   FormGroup,
   FormControlLabel,
@@ -9,30 +9,26 @@ import {
   MenuItem,
 } from "@mui/material";
 import { FilterDrawer } from "../../../../../components/FilterDrawer";
-import { ContaParams } from "@/types";
 import { tipoContaOptions } from "@/constants/tipoContaOptions";
-import { useUrlParams } from "@/hooks/useUrlParams";
+import useFiltro from "./hooks/useFiltro";
 
 interface IFiltroProps {
   filterCount: number;
-  applyFilter(): void;
 }
 
-export const Filtro: React.FC<IFiltroProps> = ({
-  filterCount,
-  applyFilter,
-}) => {
-  const filterForm = useFormContext<ContaParams>();
-
-  const { getParam } = useUrlParams();
+export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
+  const { filtroForm, handleSubmitFiltroForm } = useFiltro();
 
   return (
-    <FilterDrawer applyFilter={applyFilter} filterCount={filterCount}>
+    <FilterDrawer
+      applyFilter={handleSubmitFiltroForm}
+      filterCount={filterCount}
+    >
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
             name="tipoConta"
-            control={filterForm.control}
+            control={filtroForm.control}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
@@ -62,7 +58,7 @@ export const Filtro: React.FC<IFiltroProps> = ({
         <Grid item xs={12}>
           <Controller
             name="incluirEmSomas"
-            control={filterForm.control}
+            control={filtroForm.control}
             defaultValue={null}
             render={({ field }) => (
               <TextField
@@ -89,8 +85,7 @@ export const Filtro: React.FC<IFiltroProps> = ({
         <Grid item xs={12}>
           <Controller
             name="ativo"
-            control={filterForm.control}
-            defaultValue={getParam("ativo", false)}
+            control={filtroForm.control}
             render={({ field }) => (
               <FormGroup>
                 <FormControlLabel

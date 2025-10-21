@@ -5,7 +5,6 @@ import { useListagem } from "./hooks/useListagem";
 import { DataTable } from "../../../components/DataTable/DataTable";
 import { contasColumns } from "./constants/constants";
 import { mountData } from "./utils/mountData";
-import { FormProvider } from "react-hook-form";
 import { Filtro } from "./components/Filtro";
 import { PageHeader } from "@/components/PageHeader";
 import SearchBar from "@/components/SearchBar/SearchBar";
@@ -14,7 +13,7 @@ export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
-    <FormProvider {...listagem.filterForm}>
+    <>
       <PageHeader
         title="Contas"
         breadcrumbs={[{ label: "Contas" }]}
@@ -41,15 +40,12 @@ export const Listagem: React.FC = () => {
               <>
                 <SearchBar searchBar={listagem.searchBar} />
 
-                <Filtro
-                  filterCount={0}
-                  applyFilter={listagem.handleSubmitFilterForm}
-                />
+                <Filtro filterCount={0} />
               </>
             }
           />
         )}
       </Frame>
-    </FormProvider>
+    </>
   );
 };
