@@ -12,7 +12,7 @@ const useFiltro = (): IUseFiltroReturn => {
 
   const filtroForm = useForm<CategoriaParamsPaginado>({
     defaultValues: {
-      ativo: getParam("ativo"),
+      ativo: !(getParam("ativo") === "false" ? false : true),
       tipoMovimentacao: getParam("tipoMovimentacao"),
     },
   });

@@ -12,7 +12,7 @@ const useFiltro = (): IUseFiltroReturn => {
 
   const filtroForm = useForm<ContaParams>({
     defaultValues: {
-      ativo: Boolean(getParam("ativo")),
+      ativo: !(getParam("ativo") === "false" ? false : true),
       tipoConta: getParam("tipoConta"),
       incluirEmSomas: getParam("incluirEmSomas") ?? null,
     },

@@ -59,7 +59,6 @@ export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
           <Controller
             name="incluirEmSomas"
             control={filtroForm.control}
-            defaultValue={null}
             render={({ field }) => (
               <TextField
                 select

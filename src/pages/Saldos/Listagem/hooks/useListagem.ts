@@ -21,7 +21,9 @@ export const useListagem = (): IUseListagemReturn => {
   const { getParam } = useUrlParams();
 
   const queryGetSaldosContas = useQuery({
-    ...queryOptionsGetSaldosContas({ ativo: getParam("ativo", true) }),
+    ...queryOptionsGetSaldosContas({
+      ativo: getParam("ativo") === "false" ? false : true,
+    }),
   });
 
   const saldos =

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
-interface IUseListagemReturn {
+interface UseListagemReturn {
   contas: IPaginatedResponse<Conta> | undefined;
   queryGetContasPaginado: UseQueryResult<IPaginatedResponse<Conta>>;
   searchBar: ISeachBar;
@@ -28,7 +28,7 @@ interface IUseListagemReturn {
   handleInativarContaById(id: number): void;
 }
 
-export const useListagem = (): IUseListagemReturn => {
+export const useListagem = (): UseListagemReturn => {
   const loading = useLoading();
 
   const notification = useNotification();
@@ -44,7 +44,7 @@ export const useListagem = (): IUseListagemReturn => {
   const queryGetContasPaginado = useQuery({
     ...queryOptionsGetContasPaginado({
       page: getBackendPage(),
-      ativo: getParam("ativo", true),
+      ativo: getParam("ativo") === "false" ? false : true,
       incluirEmSomas: getParam("incluirEmSomas"),
       textoBusca: getParam("textoBusca"),
       tipoConta: getParam("tipoConta"),

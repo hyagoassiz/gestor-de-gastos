@@ -12,7 +12,7 @@ const useFiltro = (): IUseFiltroReturn => {
 
   const filtroForm = useForm<SaldoContaParams>({
     defaultValues: {
-      ativo: Boolean(getParam("ativo")),
+      ativo: !(getParam("ativo") === "false" ? false : true),
     },
   });
 

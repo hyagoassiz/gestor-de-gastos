@@ -49,7 +49,7 @@ export const useListagem = (): IUseListagemReturn => {
     ...queryOptionsGetCategoriasPaginado({
       page: getBackendPage(),
       tipoMovimentacao: getParam("tipoMovimentacao"),
-      ativo: getParam("ativo"),
+      ativo: getParam("ativo") === "false" ? false : true,
       textoBusca: getParam("textoBusca"),
       size: 10,
     }),

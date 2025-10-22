@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useRef } from "react";
+import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { ISeachBar } from "../interfaces/ISearchBar";
 import { useUrlParams } from "./useUrlParams";
 
@@ -16,12 +16,20 @@ const useSearchBar = ({
   placeHolder = "Pesquisar...",
   debounceTime = 500,
 }: IUseSearchBarProps): IUseSearchBar => {
-  const { setParams } = useUrlParams();
+  const { setParams, getParam } = useUrlParams();
 
   const [value, setValue] = useState<string>("");
   const [textoBusca, setTextoBusca] = useState<string | undefined>(undefined);
   const [open, setOpen] = useState<boolean>(false);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const textoBusca = getParam("textoBusca") ?? "";
+    if (textoBusca) {
+      setValue(String(textoBusca));
+      handleOpen();
+    }
+  }, []);
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
