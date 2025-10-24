@@ -52,6 +52,7 @@ export const useListagem = (): IUseListagemReturn => {
       ativo: getParam("ativo") === "false" ? false : true,
       textoBusca: getParam("textoBusca"),
       size: 10,
+      padrao: false,
     }),
   });
 

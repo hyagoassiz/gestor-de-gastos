@@ -59,6 +59,7 @@ export const useCadastro = (): IUseCadastroReturn => {
     ...queryOptionsGetCategorias({
       ativo: true,
       tipoMovimentacao: transacaoForm.watch("tipoMovimentacao"),
+      padrao: false,
     }),
   });
 

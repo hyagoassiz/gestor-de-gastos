@@ -7,14 +7,18 @@ export interface Categoria {
   tipoMovimentacao: keyof typeof EnumTipoMovimentacao;
   observacao: string;
   ativo: boolean;
+  padrao: boolean;
 }
 
-export type CategoriaCreateAndUpdatePayload = Omit<Categoria, "id"> & {
+export type CategoriaCreateAndUpdatePayload = Omit<
+  Categoria,
+  "id" | "padrao"
+> & {
   id: number | undefined;
 };
 
 export type CategoriaParams = Partial<
-  Pick<Categoria, "tipoMovimentacao" | "ativo">
+  Pick<Categoria, "tipoMovimentacao" | "ativo" | "padrao">
 > & {
   textoBusca?: string;
 };
