@@ -7,6 +7,6 @@ export const TRANSACOES_COLUMNS: IDataTableColumns[] = [
   { key: "valor", label: "Valor", align: "right" },
   { key: "categoria", label: "Categoria" },
   { key: "conta", label: "Conta" },
-  { key: "pago", label: "Situação", align: "right" },
+  { key: "situacao", label: "Situação", align: "right" },
   { key: "options", label: "", style: { width: "40px" } },
 ];

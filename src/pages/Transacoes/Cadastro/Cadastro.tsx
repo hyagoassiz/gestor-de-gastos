@@ -1,19 +1,10 @@
 import { PageHeader } from "@/components/PageHeader";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCadastro } from "./hooks/useCadastro";
 import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
 import { NumericFormat } from "react-number-format";
-import { getSituacaoTransacao } from "@/utils/getSituacaoTransacao";
+import { situacaoOptions } from "@/constants/situacaoOptions";
 
 export const Cadastro: React.FC = () => {
   const cadastro = useCadastro();
@@ -41,6 +32,10 @@ export const Cadastro: React.FC = () => {
                   field.onChange(newValue?.id ?? null);
                   if (cadastro.transacaoForm.getValues("categoria")?.id) {
                     cadastro.transacaoForm.setValue("categoria", null);
+                  }
+
+                  if (cadastro.transacaoForm.getValues("situacao")) {
+                    cadastro.transacaoForm.setValue("situacao", null);
                   }
                 }}
                 value={
@@ -86,7 +81,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Controller
             name="valor"
             control={cadastro.transacaoForm.control}
@@ -108,7 +103,41 @@ export const Cadastro: React.FC = () => {
                 }}
                 size="small"
                 disabled={cadastro.isDisabledForm}
+                required
                 error={!!fieldState.error}
+              />
+            )}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <Controller
+            name="situacao"
+            control={cadastro.transacaoForm.control}
+            rules={{ required: true }}
+            render={({ field, fieldState }) => (
+              <Autocomplete
+                disablePortal
+                id="situacao"
+                options={situacaoOptions ?? []}
+                getOptionLabel={(option) => option.nome || ""}
+                onChange={(_, newValue) => field.onChange(newValue?.id ?? null)}
+                value={
+                  situacaoOptions.find((o) => o.id === field.value) ?? null
+                }
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                noOptionsText="Nenhum resultado encontrado."
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    size="small"
+                    label="Situação"
+                    required
+                    disabled={cadastro.isDisabledForm}
+                    error={!!fieldState.error}
+                  />
+                )}
+                fullWidth
               />
             )}
           />
@@ -198,31 +227,6 @@ export const Cadastro: React.FC = () => {
                 disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 100 }}
               />
-            )}
-          />
-        </Grid>
-
-        <Grid item xs={6}>
-          <Controller
-            name="pago"
-            control={cadastro.transacaoForm.control}
-            defaultValue={true}
-            render={({ field }) => (
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      disabled={cadastro.isDisabledForm}
-                      checked={field.value}
-                      onChange={(e) => field.onChange(e.target.checked)}
-                    />
-                  }
-                  label={getSituacaoTransacao(
-                    cadastro.transacaoForm.watch("tipoMovimentacao"),
-                    cadastro.transacaoForm.watch("pago")
-                  )}
-                />
-              </FormGroup>
             )}
           />
         </Grid>

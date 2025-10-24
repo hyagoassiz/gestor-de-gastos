@@ -58,7 +58,7 @@ export const useCadastro = (): IUseCadastroReturn => {
       (Object.keys(queryGetCategoriaById.data) as (keyof Categoria)[]).forEach(
         (key) => {
           categoriaForm.setValue(
-            key as keyof CategoriaForm,
+            key as keyof CategoriaCreateAndUpdatePayload,
             queryGetCategoriaById.data[key] as Categoria[keyof Categoria]
           );
         }

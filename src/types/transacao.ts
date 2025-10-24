@@ -2,6 +2,7 @@ import { EnumTipoMovimentacao } from "@/types/enums/tipoMovimentacao.enum";
 import { Categoria } from "@/types/categoria";
 import { Conta } from "@/types/conta";
 import { Pagination } from "@/types/pagination";
+import { EnumSituacao } from "./enums";
 
 export interface Transacao {
   id: number;
@@ -11,7 +12,7 @@ export interface Transacao {
   categoria: Categoria;
   conta: Conta;
   observacao: string;
-  pago: boolean;
+  situacao: keyof typeof EnumSituacao;
 }
 
 export type TransacaoCreateAndUpdatePayload = Omit<Transacao, "id"> & {
@@ -19,9 +20,9 @@ export type TransacaoCreateAndUpdatePayload = Omit<Transacao, "id"> & {
 };
 
 export type TransacaoParams = Partial<
-  Pick<Transacao, "pago" | "tipoMovimentacao">
+  Pick<Transacao, "situacao" | "tipoMovimentacao">
 >;
 
 export type TransacaoParamsPaginado = TransacaoParams & Partial<Pagination>;
 
-export type TransacaoAtualizarPagoParams = Pick<Transacao, "id" | "pago">;
+export type TransacaoAtualizarPagoParams = Pick<Transacao, "id" | "situacao">;

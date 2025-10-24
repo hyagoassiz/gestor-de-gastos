@@ -11,13 +11,14 @@ import { useNotification } from "@/hooks/useNotification";
 import { useNavigate, useParams } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { queryOptionsGetTransacaoById } from "@/api/Transacao/utils/queryOptionsGetTransacaoById";
 import { postTransacao } from "@/api/Transacao/postTransacao";
 import { queryOptionsGetContas } from "@/api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "@/api/Categorias/utils/queryOptionsGetCategorias";
 import { useUrlParams } from "@/hooks/useUrlParams";
+import { situacaoOptions } from "@/constants/situacaoOptions";
 
 interface IUseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
@@ -143,7 +144,7 @@ export const useCadastro = (): IUseCadastroReturn => {
             categoria: data.categoria,
             conta: data.conta,
             observacao: data.observacao,
-            pago: data.pago,
+            situacao: data.situacao,
           };
 
           await postTransacao(payload);

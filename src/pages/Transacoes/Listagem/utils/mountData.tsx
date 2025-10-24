@@ -2,10 +2,9 @@ import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
 import { Transacao } from "@/types";
-import { EnumTipoMovimentacao } from "@/types/enums";
+import { EnumSituacao, EnumTipoMovimentacao } from "@/types/enums";
 import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
-import { getSituacaoTransacao } from "../../../../utils/getSituacaoTransacao";
 
 interface IMountDataProps {
   transacoes: IPaginatedResponse<Transacao> | undefined;
@@ -50,7 +49,7 @@ export function mountData({
           transacao.conta.nome
         ),
       categoria: transacao.categoria.nome,
-      pago: getSituacaoTransacao(transacao.tipoMovimentacao, transacao.pago),
+      situacao: EnumSituacao[transacao.situacao],
       options: (
         <div>
           <MoreOptions>
