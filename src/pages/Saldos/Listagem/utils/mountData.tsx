@@ -1,7 +1,8 @@
-import { ListItemText } from "@mui/material";
+import { ListItemText, MenuItem } from "@mui/material";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
 import { NumericFormat } from "react-number-format";
 import { SaldoConta } from "@/types";
+import { MoreOptions } from "@/components/MoreOptions";
 
 interface IMountDataProps {
   saldos: SaldoConta[] | undefined;
@@ -34,6 +35,23 @@ export function mountData({ saldos }: IMountDataProps): any[] {
           decimalScale={2}
           fixedDecimalScale
         />
+      ),
+      options: (
+        <div>
+          <MoreOptions>
+            {({ handleClose }) => (
+              <div>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                  }}
+                >
+                  Transferir para outra conta
+                </MenuItem>
+              </div>
+            )}
+          </MoreOptions>
+        </div>
       ),
       style: { height: "48px" },
     }));

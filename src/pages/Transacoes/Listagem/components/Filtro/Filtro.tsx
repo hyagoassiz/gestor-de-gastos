@@ -46,6 +46,43 @@ export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
           />
         )}
       />
+
+      {/* <Controller
+        name="tipoMovimentacao"
+        control={filtroForm.control}
+        rules={{ required: false }}
+        render={({ field, fieldState }) => (
+          <Autocomplete
+            multiple
+            id="checkboxes-tags-demo"
+            options={[]}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.title}
+            renderOption={(props, option, { selected }) => {
+              const { key, ...optionProps } = props;
+              return (
+                <li key={key} {...optionProps}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.title}
+                </li>
+              );
+            }}
+            style={{ width: 500 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Categorias"
+                placeholder="Favorites"
+              />
+            )}
+          />
+        )}
+      /> */}
     </FilterDrawer>
   );
 };
