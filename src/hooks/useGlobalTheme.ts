@@ -17,8 +17,7 @@ export const useGlobalTheme = (): IUseGlobalThemeReturn => {
   const { obter, salvar } = useLocalStorage();
 
   useEffect(() => {
-    const darkMode = obter("darkMode");
-    const isDarkMode = darkMode === "true";
+    const isDarkMode = Boolean(obter("darkMode"));
     dispatch(setDarkMode(isDarkMode));
   }, [darkMode]);
 
