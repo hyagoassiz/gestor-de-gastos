@@ -39,6 +39,7 @@ export const useListagem = (): IUseListagemReturn => {
     ...queryOptionsGetTransacoesPaginado({
       page: getBackendPage(),
       tipoMovimentacao: getParam("tipoMovimentacao"),
+      situacao: getParam("situacao"),
       size: 10,
     }),
   });

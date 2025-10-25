@@ -21,6 +21,7 @@ const useFiltro = (): IUseFiltroReturn => {
       setParams({
         pagina: 1,
         tipoMovimentacao: data.tipoMovimentacao,
+        situacao: data.situacao,
       });
     })();
   }

@@ -91,7 +91,7 @@ export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
                   control={
                     <Checkbox checked={field.value} onChange={field.onChange} />
                   }
-                  label="Exibir somente inativos"
+                  label="Exibir somente contas inativas"
                 />
               </FormGroup>
             )}

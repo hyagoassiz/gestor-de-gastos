@@ -25,7 +25,7 @@ export const Listagem: React.FC = () => {
             variant="outlined"
             onClick={listagem.handleAdicionarCategoria}
           >
-            Adicionar Categoria
+            Nova Categoria
           </Button>
         }
       />

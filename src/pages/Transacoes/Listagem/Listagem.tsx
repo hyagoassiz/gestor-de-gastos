@@ -23,7 +23,7 @@ export const Listagem: React.FC = () => {
             variant="outlined"
             onClick={listagem.handleAdicionarTransacao}
           >
-            Registrar Transação
+            Nova Transação
           </Button>
         }
       />

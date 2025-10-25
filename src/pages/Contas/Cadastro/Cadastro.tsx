@@ -182,7 +182,7 @@ export const Cadastro: React.FC = () => {
         alignItems="center"
       >
         <Button variant="outlined" onClick={cadastro.handleBack}>
-          Voltar
+          Cancelar
         </Button>
 
         {!cadastro.isDisabledForm && (
