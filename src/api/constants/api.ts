@@ -1,7 +1,7 @@
 import axios from "axios";
 import { showSnackBar } from "@/redux/snackBarSlice";
 import { store } from "@/redux/store";
-import { AUTH } from "@/routes/paths";
+import { AUTENTICACAO } from "@/routes/paths";
 
 export const API = axios.create({
   baseURL: "http://localhost:8080",
@@ -26,7 +26,7 @@ API.interceptors.response.use(
     store.dispatch(showSnackBar({ message, type: "error" }));
 
     if (status === 401) {
-      window.location.href = AUTH.LOGIN;
+      window.location.href = AUTENTICACAO.LOGIN;
     }
 
     return Promise.reject(error);

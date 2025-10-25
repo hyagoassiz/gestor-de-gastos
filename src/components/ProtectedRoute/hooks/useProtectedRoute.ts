@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as PATHS from "../../../routes/paths";
 import { usePermission } from "../../../hooks/usePermission";
 import useUsuario from "../../../hooks/useUsuario";
+import { Usuario } from "@/types/usuario";
 
 interface IUseLoginProps {
   permission: string;
@@ -40,11 +41,11 @@ export const useProtectedRoute = ({
     return exp < agora;
   }
 
-  function handleNavigate(user: IUsuarioApi | null): void {
+  function handleNavigate(usuario: Usuario | null): void {
     setSigned(false);
 
-    if (!user || !checkPermission(permission) || tokenExpirou(user.exp)) {
-      navigate(PATHS.AUTH.LOGIN);
+    if (!usuario || !checkPermission(permission) || tokenExpirou(usuario.exp)) {
+      navigate(PATHS.AUTENTICACAO.LOGIN);
 
       setSigned(false);
 
@@ -53,15 +54,9 @@ export const useProtectedRoute = ({
 
     setSigned(true);
 
-    if (!user.nome) {
-      navigate(PATHS.AUTH.INFO);
-
-      return;
-    }
-
     const { pathname } = location;
 
-    if (pathname === PATHS.AUTH.VERIFICATION || pathname === PATHS.AUTH.INFO) {
+    if (pathname === PATHS.AUTENTICACAO.VERIFICATION) {
       navigate(PATHS.DASHBOARD.LIST);
     }
   }

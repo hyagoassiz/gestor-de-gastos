@@ -1,8 +1,7 @@
-export const AUTH = {
+export const AUTENTICACAO = {
   LOGIN: `/login`,
   CREATE: `/criar-conta`,
-  INFO: `/info`,
-  VERIFICATION: `/verificacao`,
+  VERIFICATION: `/verificar-conta`,
 };
 
 export const DASHBOARD = {
@@ -32,12 +31,4 @@ export const CONTAS = {
   CREATE: "/contas/nova",
   EDIT: "/contas/:id/editar",
   VIEW: "/contas/:id",
-};
-
-export const ABOUT = {
-  LIST: `/sobre`,
-};
-
-export const SETTINGS = {
-  LIST: `/configuracoes`,
 };

@@ -15,7 +15,7 @@ export const options: IOptions[] = [
     name: "Sair",
     route: "#",
     action: async ({ navigate }) => {
-      navigate(PATHS.AUTH.LOGIN);
+      navigate(PATHS.AUTENTICACAO.LOGIN);
     },
   },
 ];

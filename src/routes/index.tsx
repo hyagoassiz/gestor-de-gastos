@@ -14,17 +14,14 @@ import {
   TransacoesListagemRoute,
 } from "@/pages/Transacoes";
 import { PageLayout } from "@/layouts/PageLayout";
-import {
-  CreateAccountRoute,
-  LoginRoute,
-  PersonalInfoRoute,
-  VerificationRoute,
-} from "@/pages/Auth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { SettingsRoute } from "@/pages/Settings";
-import { AboutRoute } from "@/pages/About";
 import { CategoriasListagemRoute } from "@/pages/Categorias";
 import { CategoriasCadastroRoute } from "@/pages/Categorias/Cadastro";
+import {
+  CriarContaRoute,
+  LoginRoute,
+  VerificarContaRoute,
+} from "@/pages/Autenticacao";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -36,23 +33,15 @@ export const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={PATHS.AUTH.LOGIN} element={<LoginRoute />} />
+        <Route path={PATHS.AUTENTICACAO.LOGIN} element={<LoginRoute />} />
 
-        <Route path={PATHS.AUTH.CREATE} element={<CreateAccountRoute />} />
+        <Route path={PATHS.AUTENTICACAO.CREATE} element={<CriarContaRoute />} />
 
         <Route
-          path={PATHS.AUTH.VERIFICATION}
+          path={PATHS.AUTENTICACAO.VERIFICATION}
           element={
             <ProtectedRoute permission="">
-              <VerificationRoute />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path={PATHS.AUTH.INFO}
-          element={
-            <ProtectedRoute permission="">
-              <PersonalInfoRoute />
+              <VerificarContaRoute />
             </ProtectedRoute>
           }
         />
@@ -180,24 +169,6 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <CategoriasCadastroRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.ABOUT.LIST}
-            element={
-              <ProtectedRoute permission="">
-                <AboutRoute />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={PATHS.SETTINGS.LIST}
-            element={
-              <ProtectedRoute permission="">
-                <SettingsRoute />
               </ProtectedRoute>
             }
           />
