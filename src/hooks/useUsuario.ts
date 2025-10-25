@@ -1,19 +1,19 @@
 import { useCallback } from "react";
-import useLocalStorage from "./useLocalStorage";
 import { jwtDecode } from "jwt-decode";
-import { clearUsuario } from "../redux/usuarioSlice";
+import { useLocalStorage } from "./useLocalStorage";
+import { Usuario } from "@/types";
 
 interface IUseUsuarioReturn {
-  obterUsuario(): IUsuarioApi | null;
+  obterUsuario(): Usuario | null;
   removerUsuario(): void;
   salvarUsuario(token: string): void;
 }
 
 const useUsuario = (): IUseUsuarioReturn => {
-  const { removerToken, obterToken, salvarToken } = useLocalStorage();
+  const localStorage = useLocalStorage();
 
-  const obterUsuario = useCallback((): IUsuarioApi | null => {
-    const token = obterToken();
+  const obterUsuario = useCallback((): Usuario | null => {
+    const token = localStorage.obter("token");
 
     if (token) {
       return jwtDecode(token);
@@ -24,13 +24,12 @@ const useUsuario = (): IUseUsuarioReturn => {
   }, []);
 
   const removerUsuario = useCallback((): void => {
-    removerToken();
-    clearUsuario();
+    localStorage.remover("token");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const salvarUsuario = useCallback((token: string): void => {
-    salvarToken(token);
+    localStorage.salvar("token", token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

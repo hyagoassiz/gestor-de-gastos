@@ -1,4 +1,4 @@
-import { UsuarioLoginPayload, UsuarioToken } from "@/types/usuario";
+import { UsuarioLoginPayload, UsuarioToken } from "@/types";
 import { API } from "../constants/API";
 
 export async function postLogin(

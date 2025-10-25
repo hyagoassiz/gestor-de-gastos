@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as PATHS from "../../../routes/paths";
 import { usePermission } from "../../../hooks/usePermission";
 import useUsuario from "../../../hooks/useUsuario";
-import { Usuario } from "@/types/usuario";
+import { Usuario } from "@/types";
 
 interface IUseLoginProps {
   permission: string;

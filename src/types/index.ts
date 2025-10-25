@@ -6,3 +6,4 @@ export * from "./saldoConta";
 export * from "./dashboard";
 export * from "./pageMode";
 export * from "./breadcrumbItem";
+export * from "./usuario";

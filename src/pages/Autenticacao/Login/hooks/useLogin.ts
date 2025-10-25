@@ -4,8 +4,8 @@ import * as PATHS from "../../../../routes/paths";
 import { useEffect } from "react";
 import useUsuario from "../../../../hooks/useUsuario";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { UsuarioLoginPayload, UsuarioToken } from "@/types/usuario";
 import { postLogin } from "@/api/Autenticacao/postLogin";
+import { UsuarioLoginPayload, UsuarioToken } from "@/types";
 
 interface UseLoginReturn {
   loginForm: UseFormReturn<UsuarioLoginPayload>;
@@ -52,7 +52,7 @@ export const useLogin = (): UseLoginReturn => {
 
         salvarUsuario(response.token);
 
-        navigate(PATHS.AUTENTICACAO.VERIFICATION);
+        navigate(PATHS.DASHBOARD.LIST);
       } catch (error) {
         console.error(error);
       }

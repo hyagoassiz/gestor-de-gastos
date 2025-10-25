@@ -7,7 +7,8 @@ import { createAccountSchema } from "../schema/createAccountSchema";
 import useUsuario from "../../../../hooks/useUsuario";
 import { postCriarConta } from "@/api/Autenticacao/postCriarConta";
 import { CriarContaForm } from "../types";
-import { UsuarioCreatePayload } from "@/types/usuario";
+import { UsuarioCreatePayload } from "@/types";
+import { useNotification } from "@/hooks/useNotification";
 
 interface UseCriarContaReturn {
   createAccountForm: UseFormReturn<CriarContaForm>;
@@ -28,6 +29,8 @@ export const useCriarConta = (): UseCriarContaReturn => {
 
   const { removerUsuario } = useUsuario();
 
+  const { showSnackBar } = useNotification();
+
   useEffect(() => {
     removerUsuario();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,6 +50,8 @@ export const useCriarConta = (): UseCriarContaReturn => {
         await postCriarConta(payload);
 
         navigate(PATHS.AUTENTICACAO.LOGIN);
+
+        showSnackBar("Conta criada com sucesso!", "success");
       } catch (error) {
         console.error(error);
       } finally {

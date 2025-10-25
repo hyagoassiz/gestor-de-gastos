@@ -3,11 +3,14 @@ import { useVerificarConta } from "./hooks/useVerificarConta";
 import EmailIcon from "@mui/icons-material/Email";
 import { StyledDivider, StyledLink, StyledTypography } from "../styles";
 import { AuthLayout } from "../../../layouts/AuthLayout";
+import useUsuario from "@/hooks/useUsuario";
 
 export const VerificarConta: React.FC = () => {
-  const { email, handleNavigate } = useVerificarConta();
+  const { handleNavigate } = useVerificarConta();
 
   const theme = useTheme();
+
+  const { obterUsuario } = useUsuario();
 
   return (
     <AuthLayout titleRoute="E-mail de verificação enviado">
@@ -38,8 +41,8 @@ export const VerificarConta: React.FC = () => {
       <Grid item xs={12}>
         <Box textAlign="justify">
           <StyledTypography>
-            Foi enviado um e-mail para <strong>{email}</strong> para que você
-            possa fazer a verificação do seu usuário.
+            Foi enviado um e-mail para <strong>{obterUsuario()?.email}</strong>{" "}
+            para que você possa fazer a verificação do seu usuário.
           </StyledTypography>
         </Box>
       </Grid>

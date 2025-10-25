@@ -1,49 +1,32 @@
 import { useCallback } from "react";
 
-interface IUseLocalStorageReturn {
-  obterToken(): string | null;
-  removerToken(): void;
-  salvarToken(token: string): void;
-  obterDarkMode(): boolean;
-  salvarDarkMode(value: boolean): void;
-  removerDarkMode(): void;
+interface UseLocalStorageReturn {
+  obter<T = string>(key: string): T | null;
+  salvar<T = string>(key: string, value: T): void;
+  remover(key: string): void;
 }
 
-const useLocalStorage = (): IUseLocalStorageReturn => {
-  const obterToken = useCallback((): string | null => {
-    return localStorage.getItem("token");
+export function useLocalStorage(): UseLocalStorageReturn {
+  const obter = useCallback(<T = string>(key: string): T | null => {
+    const item = localStorage.getItem(key);
+    if (item === null) return null;
+
+    try {
+      return JSON.parse(item) as T;
+    } catch {
+      return item as unknown as T;
+    }
   }, []);
 
-  const removerToken = useCallback((): void => {
-    localStorage.removeItem("token");
+  const salvar = useCallback(<T = string>(key: string, value: T): void => {
+    const valueToStore =
+      typeof value === "string" ? value : JSON.stringify(value);
+    localStorage.setItem(key, valueToStore);
   }, []);
 
-  const salvarToken = useCallback((token: string): void => {
-    localStorage.setItem("token", token);
+  const remover = useCallback((key: string): void => {
+    localStorage.removeItem(key);
   }, []);
 
-  const obterDarkMode = useCallback((): boolean => {
-    const value = localStorage.getItem("darkMode");
-    if (value === null) return true;
-    return value === "true";
-  }, []);
-
-  const salvarDarkMode = useCallback((value: boolean): void => {
-    localStorage.setItem("darkMode", String(value));
-  }, []);
-
-  const removerDarkMode = useCallback((): void => {
-    localStorage.removeItem("darkMode");
-  }, []);
-
-  return {
-    salvarToken,
-    removerToken,
-    obterToken,
-    obterDarkMode,
-    salvarDarkMode,
-    removerDarkMode,
-  };
-};
-
-export default useLocalStorage;
+  return { obter, salvar, remover };
+}

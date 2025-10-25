@@ -1,4 +1,4 @@
-import { Usuario, UsuarioCreatePayload } from "@/types/usuario";
+import { Usuario, UsuarioCreatePayload } from "@/types";
 import { API } from "../constants/API";
 
 export async function postCriarConta(

@@ -10,8 +10,6 @@ function App() {
 
   const { darkMode } = useGlobalTheme();
 
-  console.log(darkMode);
-
   return (
     <>
       <CssBaseline />

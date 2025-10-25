@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useLocalStorage from "./useLocalStorage";
 import { IRootState } from "@/redux/store";
 import { setDarkMode } from "@/redux/globalThemeSlice";
+import { useLocalStorage } from "./useLocalStorage";
 
 interface IUseGlobalThemeReturn {
   darkMode: boolean;
@@ -14,15 +14,16 @@ export const useGlobalTheme = (): IUseGlobalThemeReturn => {
 
   const darkMode = useSelector((state: IRootState) => state.theme.darkMode);
 
-  const { obterDarkMode, salvarDarkMode } = useLocalStorage();
+  const { obter, salvar } = useLocalStorage();
 
   useEffect(() => {
-    const isDarkMode = obterDarkMode();
+    const darkMode = obter("darkMode");
+    const isDarkMode = darkMode === "true";
     dispatch(setDarkMode(isDarkMode));
   }, [darkMode]);
 
   const toggleDarkMode = useCallback((value: boolean) => {
-    salvarDarkMode(value);
+    salvar("darkMode", value);
     dispatch(setDarkMode(value));
   }, []);
 
