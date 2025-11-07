@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { IRootState } from "../../../redux/store";
-import { IDrawerProps } from "../../../interfaces";
+import { DrawerProps } from "@/types";
 
 interface IUseAppBar {
-  drawer: IDrawerProps;
+  drawer: DrawerProps;
 }
 
 const useAppBar = (): IUseAppBar => {

@@ -3,13 +3,13 @@ import { jwtDecode } from "jwt-decode";
 import { useLocalStorage } from "./useLocalStorage";
 import { Usuario } from "@/types";
 
-interface IUseUsuarioReturn {
+interface UseUsuarioReturn {
   obterUsuario(): Usuario | null;
   removerUsuario(): void;
   salvarUsuario(token: string): void;
 }
 
-const useUsuario = (): IUseUsuarioReturn => {
+const useUsuario = (): UseUsuarioReturn => {
   const localStorage = useLocalStorage();
 
   const obterUsuario = useCallback((): Usuario | null => {

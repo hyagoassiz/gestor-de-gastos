@@ -18,11 +18,11 @@ import {
   StyledTableHead,
 } from "./styles";
 import { useState } from "react";
-import { IDataTableColumns } from "../../interfaces";
 import { useUrlParams } from "@/hooks/useUrlParams";
+import { DataTableColumn } from "@/types";
 
 interface DataTableProps {
-  columns: IDataTableColumns[];
+  columns: DataTableColumn[];
   data: any[];
   textForEmptyData: string;
   selectionMode?: "single" | "multiple";

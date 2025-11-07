@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode } from "react";
 
-export interface IDataTableColumns {
+export interface DataTableColumn {
   key: string;
   label: string | ReactNode;
   style?: CSSProperties;

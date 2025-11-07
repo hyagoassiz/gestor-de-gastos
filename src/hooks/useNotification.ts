@@ -1,15 +1,15 @@
 import { useDispatch } from "react-redux";
 import { showSnackBar as showSnackBarRedux } from "../redux/snackBarSlice";
-import { ISnackBar } from "../interfaces";
+import { SnackBar } from "@/types";
 
-interface IUseNotification {
-  showSnackBar(message: string, type: ISnackBar["type"]): void;
+interface UseNotificationReturn {
+  showSnackBar(message: string, type: SnackBar["type"]): void;
 }
 
-export const useNotification = (): IUseNotification => {
+export const useNotification = (): UseNotificationReturn => {
   const dispatch = useDispatch();
 
-  function showSnackBar(message: string, type: ISnackBar["type"]): void {
+  function showSnackBar(message: string, type: SnackBar["type"]): void {
     dispatch(showSnackBarRedux({ message, type }));
   }
 

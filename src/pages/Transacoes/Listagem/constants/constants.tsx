@@ -1,6 +1,6 @@
-import { IDataTableColumns } from "../../../../interfaces";
+import { DataTableColumn } from "@/types";
 
-export const TRANSACOES_COLUMNS: IDataTableColumns[] = [
+export const TRANSACOES_COLUMNS: DataTableColumn[] = [
   { key: "id", label: "ID" },
   { key: "tipoMovimentacao", label: "Tipo" },
   { key: "data", label: "Data" },

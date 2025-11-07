@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from "react";
 
-export interface ISeachBar {
+export interface SearchBar {
   placeholder: string;
   value: string | number;
   open: boolean;

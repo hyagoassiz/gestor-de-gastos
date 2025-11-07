@@ -1,21 +1,21 @@
 import { ChangeEvent, useState, useRef, useEffect } from "react";
-import { ISeachBar } from "../interfaces/ISearchBar";
 import { useUrlParams } from "./useUrlParams";
+import { SearchBar } from "@/types";
 
-interface IUseSearchBarProps {
+interface UseSearchBarProps {
   placeHolder?: string;
   debounceTime?: number;
 }
 
-interface IUseSearchBar {
-  searchBar: ISeachBar;
+interface UseSearchBarReturn {
+  searchBar: SearchBar;
   textoBusca: string | undefined;
 }
 
 const useSearchBar = ({
   placeHolder = "Pesquisar...",
   debounceTime = 500,
-}: IUseSearchBarProps): IUseSearchBar => {
+}: UseSearchBarProps): UseSearchBarReturn => {
   const { setParams, getParam } = useUrlParams();
 
   const [value, setValue] = useState<string>("");

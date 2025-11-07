@@ -1,19 +1,19 @@
+import { SnackBar } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ISnackBar } from "../interfaces";
 
-const initialState: ISnackBar = {
+const initialState: SnackBar = {
   message: "",
   type: "success",
   open: false,
 };
 
-type SnackBarPayload = Omit<ISnackBar, "open">;
+type SnackBarPayload = Omit<SnackBar, "open">;
 
 const snackBarSlice = createSlice({
   name: "snackBar",
   initialState,
   reducers: {
-    showSnackBar: (_, action: PayloadAction<SnackBarPayload>): ISnackBar => {
+    showSnackBar: (_, action: PayloadAction<SnackBarPayload>): SnackBar => {
       return {
         message: action.payload.message,
         type: action.payload.type,

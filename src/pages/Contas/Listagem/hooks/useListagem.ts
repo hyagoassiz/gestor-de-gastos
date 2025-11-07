@@ -12,8 +12,7 @@ import {
   queryOptionsGetContasPaginado,
 } from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
 import useSearchBar from "../../../../hooks/useSearchBar";
-import { ISeachBar } from "../../../../interfaces/ISearchBar";
-import { Conta } from "@/types";
+import { Conta, SearchBar } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
@@ -21,7 +20,7 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 interface UseListagemReturn {
   contas: IPaginatedResponse<Conta> | undefined;
   queryGetContasPaginado: UseQueryResult<IPaginatedResponse<Conta>>;
-  searchBar: ISeachBar;
+  searchBar: SearchBar;
   handleAdicionarConta(): void;
   handleAtivarContaById(id: number): Promise<void>;
   handleEditarConta(contaId: string): void;

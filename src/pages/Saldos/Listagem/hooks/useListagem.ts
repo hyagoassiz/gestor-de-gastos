@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
-import { SaldoConta } from "@/types";
+import { SaldoConta, SearchBar } from "@/types";
 import { queryOptionsGetSaldosContas } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
 import useSearchBar from "@/hooks/useSearchBar";
-import { ISeachBar } from "@/interfaces/ISearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseListagemReturn {
   saldos: SaldoConta[] | undefined;
   isModalTransferirSaldoOpen: boolean;
   queryGetSaldosContas: UseQueryResult<SaldoConta[]>;
-  searchBar: ISeachBar;
+  searchBar: SearchBar;
   toggleModalTransferirSaldo(): void;
 }
 

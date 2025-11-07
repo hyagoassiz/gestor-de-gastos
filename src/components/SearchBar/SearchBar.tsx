@@ -1,9 +1,9 @@
 import { IconButton, TextField, InputAdornment, Tooltip } from "@mui/material";
 import { Search, Close } from "@mui/icons-material";
-import { ISeachBar } from "@/interfaces/ISearchBar";
+import { SearchBar as ISearchBar } from "@/types";
 
 interface SearchBarProps {
-  searchBar: ISeachBar;
+  searchBar: ISearchBar;
 }
 
 const SearchBar = ({ searchBar }: SearchBarProps) => {

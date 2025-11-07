@@ -2,7 +2,7 @@ import { Box, BoxProps, Modal as MuiModal } from "@mui/material";
 import { ReactNode } from "react";
 import { StyledBox, Title } from "./styles";
 
-interface IModal {
+interface ModalProps {
   title: string;
   open: boolean;
   children: ReactNode;
@@ -10,7 +10,7 @@ interface IModal {
   style: BoxProps;
 }
 
-export const Modal: React.FC<IModal> = ({
+export const Modal: React.FC<ModalProps> = ({
   title,
   open,
   children,

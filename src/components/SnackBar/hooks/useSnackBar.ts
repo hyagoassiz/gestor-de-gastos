@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { IRootState } from "../../../redux/store";
-import { ISnackBar } from "../../../interfaces";
 import { closeSnackBar } from "../../../redux/snackBarSlice";
+import { SnackBar } from "@/types";
 
 interface IUseSnackbar {
-  snackBar: ISnackBar;
+  snackBar: SnackBar;
   handleCloseSnackBar: () => void;
 }
 

@@ -1,4 +1,4 @@
-export interface IDrawerProps {
+export interface DrawerProps {
   isOpen: boolean;
   drawerWidth: number;
 }

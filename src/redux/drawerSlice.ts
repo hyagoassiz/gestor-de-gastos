@@ -1,7 +1,7 @@
+import { DrawerProps } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDrawerProps } from "../interfaces";
 
-const initialState: IDrawerProps = {
+const initialState: DrawerProps = {
   isOpen: false,
   drawerWidth: 240,
 };

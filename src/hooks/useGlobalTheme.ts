@@ -4,12 +4,12 @@ import { IRootState } from "@/redux/store";
 import { setDarkMode } from "@/redux/globalThemeSlice";
 import { useLocalStorage } from "./useLocalStorage";
 
-interface IUseGlobalThemeReturn {
+interface UseGlobalThemeReturn {
   darkMode: boolean;
   toggleDarkMode(value: boolean): void;
 }
 
-export const useGlobalTheme = (): IUseGlobalThemeReturn => {
+export const useGlobalTheme = (): UseGlobalThemeReturn => {
   const dispatch = useDispatch();
 
   const darkMode = useSelector((state: IRootState) => state.theme.darkMode);
