@@ -5,13 +5,28 @@ import { CONTAS_COLUMNS } from "./constants/constants";
 import { mountData } from "./utils/mountData";
 import { Filtro } from "./components/Filtro";
 import { PageHeader } from "@/components/PageHeader";
+import { Button } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { ModalTransferirSaldo } from "./components/ModalTransferirSaldo";
 
 export const Listagem: React.FC = () => {
   const listagem = useListagem();
 
   return (
     <>
-      <PageHeader title="Saldos" />
+      <PageHeader
+        title="Saldos"
+        rightContent={
+          <Button
+            startIcon={<Add />}
+            color="primary"
+            variant="outlined"
+            onClick={listagem.toggleModalTransferirSaldo}
+          >
+            Transferir Saldo
+          </Button>
+        }
+      />
 
       <Frame>
         {!listagem.queryGetSaldosContas.isLoading && (
@@ -24,6 +39,13 @@ export const Listagem: React.FC = () => {
           />
         )}
       </Frame>
+
+      {listagem.isModalTransferirSaldoOpen && (
+        <ModalTransferirSaldo
+          onClose={listagem.toggleModalTransferirSaldo}
+          open={listagem.isModalTransferirSaldoOpen}
+        />
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { SaldoConta } from "@/types";
@@ -9,8 +9,10 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseListagemReturn {
   saldos: SaldoConta[] | undefined;
+  isModalTransferirSaldoOpen: boolean;
   queryGetSaldosContas: UseQueryResult<SaldoConta[]>;
   searchBar: ISeachBar;
+  toggleModalTransferirSaldo(): void;
 }
 
 export const useListagem = (): IUseListagemReturn => {
@@ -19,6 +21,9 @@ export const useListagem = (): IUseListagemReturn => {
   const { searchBar, textoBusca } = useSearchBar({});
 
   const { getParam } = useUrlParams();
+
+  const [isModalTransferirSaldoOpen, setIsModalTransferirSaldoOpen] =
+    useState<boolean>(false);
 
   const queryGetSaldosContas = useQuery({
     ...queryOptionsGetSaldosContas({
@@ -42,9 +47,15 @@ export const useListagem = (): IUseListagemReturn => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryGetSaldosContas.isLoading]);
 
+  function toggleModalTransferirSaldo(): void {
+    setIsModalTransferirSaldoOpen((prevState) => !prevState);
+  }
+
   return {
     saldos,
+    isModalTransferirSaldoOpen,
     queryGetSaldosContas,
     searchBar,
+    toggleModalTransferirSaldo,
   };
 };

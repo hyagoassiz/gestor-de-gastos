@@ -9,3 +9,9 @@ export interface SaldoConta {
 export interface SaldoContaParams {
   ativo?: boolean;
 }
+
+export interface TransferirSaldoPayload {
+  contaOrigemId: number;
+  contaDestinoId: number;
+  valor: number;
+}

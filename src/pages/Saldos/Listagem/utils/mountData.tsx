@@ -46,7 +46,7 @@ export function mountData({ saldos }: IMountDataProps): any[] {
                     handleClose();
                   }}
                 >
-                  Transferir para outra conta
+                  Ajustar saldo
                 </MenuItem>
               </div>
             )}
