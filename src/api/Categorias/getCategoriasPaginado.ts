@@ -1,9 +1,9 @@
-import { Categoria, CategoriaParamsPaginado } from "@/types";
+import { Categoria, CategoriaParamsPaginado, PaginatedResponse } from "@/types";
 import { API } from "../constants/API";
 
 export async function getCategoriasPaginado(
   params?: CategoriaParamsPaginado
-): Promise<IPaginatedResponse<Categoria>> {
+): Promise<PaginatedResponse<Categoria>> {
   const response = await API.get("/categorias/listar-paginado", {
     params,
   });

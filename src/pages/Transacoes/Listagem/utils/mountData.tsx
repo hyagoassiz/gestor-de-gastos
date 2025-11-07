@@ -1,13 +1,13 @@
 import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
-import { Transacao } from "@/types";
+import { PaginatedResponse, Transacao } from "@/types";
 import { EnumSituacao, EnumTipoMovimentacao } from "@/types/enums";
 import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
 
 interface IMountDataProps {
-  transacoes: IPaginatedResponse<Transacao> | undefined;
+  transacoes: PaginatedResponse<Transacao> | undefined;
   handleEditarTransacao(transacaoId: string): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
 }

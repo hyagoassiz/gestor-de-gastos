@@ -1,4 +1,4 @@
-interface IPaginatedResponse<T> {
+export interface PaginatedResponse<T> {
   content: T[];
   pageable: {
     pageNumber: number;

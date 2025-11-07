@@ -11,20 +11,20 @@ import {
 } from "../../../../api/Transacao/utils/queryOptionsGetTransacoesPaginado";
 import { useNotification } from "../../../../hooks/useNotification";
 import { deleteTransacao } from "../../../../api/Transacao/deleteTransacao";
-import { Transacao } from "@/types";
+import { PaginatedResponse, Transacao } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
-interface IUseListagemReturn {
-  transacoes: IPaginatedResponse<Transacao> | undefined;
-  queryGetTransacoesPaginado: UseQueryResult<IPaginatedResponse<Transacao>>;
+interface UseListagemReturn {
+  transacoes: PaginatedResponse<Transacao> | undefined;
+  queryGetTransacoesPaginado: UseQueryResult<PaginatedResponse<Transacao>>;
   handleAdicionarTransacao(): void;
   handleEditarTransacao(transacaoId: string): void;
   handleExcluirTransacao(idTransacao: number): Promise<void>;
 }
 
-export const useListagem = (): IUseListagemReturn => {
+export const useListagem = (): UseListagemReturn => {
   const { setLoading } = useLoading();
 
   const { showSnackBar } = useNotification();

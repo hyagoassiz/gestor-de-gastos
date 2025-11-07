@@ -2,11 +2,11 @@ import { ListItemText, MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
 import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
-import { Conta } from "@/types";
+import { Conta, PaginatedResponse } from "@/types";
 import { EnumTipoConta } from "@/types/enums";
 
 interface IMountDataProps {
-  contas: IPaginatedResponse<Conta> | undefined;
+  contas: PaginatedResponse<Conta> | undefined;
   handleAtivarContaById(id: number): Promise<void>;
   handleEditarConta(contaId: string): void;
   handleInativarContaById(id: number): void;

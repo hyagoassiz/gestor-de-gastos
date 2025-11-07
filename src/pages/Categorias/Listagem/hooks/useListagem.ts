@@ -12,16 +12,21 @@ import {
   KEY_GET_CATEGORIAS_PAGINADO,
   queryOptionsGetCategoriasPaginado,
 } from "../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
-import { Categoria, CategoriaParamsPaginado, SearchBar } from "@/types";
+import {
+  Categoria,
+  CategoriaParamsPaginado,
+  PaginatedResponse,
+  SearchBar,
+} from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import useSearchBar from "@/hooks/useSearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
 interface IUseListagemReturn {
-  categorias: IPaginatedResponse<Categoria> | undefined;
+  categorias: PaginatedResponse<Categoria> | undefined;
   filterForm: UseFormReturn<CategoriaParamsPaginado>;
-  queryGetCategoriasPaginado: UseQueryResult<IPaginatedResponse<Categoria>>;
+  queryGetCategoriasPaginado: UseQueryResult<PaginatedResponse<Categoria>>;
   searchBar: SearchBar;
   handleAdicionarCategoria(): void;
   handleAtivarCategoriaById(id: number): Promise<void>;

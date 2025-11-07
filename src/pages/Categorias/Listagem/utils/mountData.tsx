@@ -1,11 +1,11 @@
 import { MenuItem } from "@mui/material";
 import { MoreOptions } from "../../../../components/MoreOptions";
 import { PowerIcon } from "../../../../components/PowerIcon";
-import { Categoria } from "@/types";
+import { Categoria, PaginatedResponse } from "@/types";
 import { EnumTipoMovimentacao } from "@/types/enums";
 
 interface IMountDataProps {
-  categorias: IPaginatedResponse<Categoria> | undefined;
+  categorias: PaginatedResponse<Categoria> | undefined;
   handleAtivarCategoriaById(id: number): Promise<void>;
   handleEditarCategoria(categoriaId: string): void;
   handleInativarCategoriaById(id: number): void;
