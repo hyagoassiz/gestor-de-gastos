@@ -16,7 +16,7 @@ import { queryOptionsGetCategoriaById } from "@/api/Categorias/utils/queryOption
 import { postCategoria } from "@/api/Categorias/postCategoria";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
-interface IUseCadastroReturn {
+interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
   categoriaForm: UseFormReturn<CategoriaCreateAndUpdatePayload>;
   isDisabledForm: boolean;
@@ -26,7 +26,7 @@ interface IUseCadastroReturn {
   submitCategoriaForm(): void;
 }
 
-export const useCadastro = (): IUseCadastroReturn => {
+export const useCadastro = (): UseCadastroReturn => {
   const categoriaForm = useForm<CategoriaCreateAndUpdatePayload>();
 
   const loading = useLoading();

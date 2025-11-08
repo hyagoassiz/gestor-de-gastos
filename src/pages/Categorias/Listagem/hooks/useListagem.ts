@@ -23,7 +23,7 @@ import * as PATHS from "@/routes/paths";
 import useSearchBar from "@/hooks/useSearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
-interface IUseListagemReturn {
+interface UseListagemReturn {
   categorias: PaginatedResponse<Categoria> | undefined;
   filterForm: UseFormReturn<CategoriaParamsPaginado>;
   queryGetCategoriasPaginado: UseQueryResult<PaginatedResponse<Categoria>>;
@@ -34,7 +34,7 @@ interface IUseListagemReturn {
   handleInativarCategoriaById(id: number): void;
 }
 
-export const useListagem = (): IUseListagemReturn => {
+export const useListagem = (): UseListagemReturn => {
   const { setLoading } = useLoading();
 
   const { showSnackBar } = useNotification();

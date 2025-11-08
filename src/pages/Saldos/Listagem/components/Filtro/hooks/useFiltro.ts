@@ -2,29 +2,29 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 import { SaldoContaParams } from "@/types";
 import { useForm, UseFormReturn } from "react-hook-form";
 
-interface IUseFiltroReturn {
+interface UseFiltroReturn {
   filtroForm: UseFormReturn<SaldoContaParams>;
-  handleSubmitFiltroForm(): void;
+  handleFiltroFormSubmit(): void;
 }
 
-const useFiltro = (): IUseFiltroReturn => {
-  const { getParam, setParams } = useUrlParams();
+const useFiltro = (): UseFiltroReturn => {
+  const urlParms = useUrlParams();
 
   const filtroForm = useForm<SaldoContaParams>({
     defaultValues: {
-      ativo: !(getParam("ativo") === "false" ? false : true),
+      ativo: !(urlParms.getParam("ativo") === "false" ? false : true),
     },
   });
 
-  function handleSubmitFiltroForm(): void {
+  function handleFiltroFormSubmit(): void {
     filtroForm.handleSubmit((data) => {
-      setParams({
+      urlParms.setParams({
         ativo: !data.ativo,
       });
     })();
   }
 
-  return { filtroForm, handleSubmitFiltroForm };
+  return { filtroForm, handleFiltroFormSubmit };
 };
 
 export default useFiltro;

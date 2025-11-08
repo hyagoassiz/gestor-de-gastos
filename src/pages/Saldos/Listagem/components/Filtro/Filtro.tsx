@@ -8,10 +8,11 @@ interface IFiltroProps {
 }
 
 export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
-  const { filtroForm, handleSubmitFiltroForm } = useFiltro();
+  const { filtroForm, handleFiltroFormSubmit } = useFiltro();
+
   return (
     <FilterDrawer
-      applyFilter={handleSubmitFiltroForm}
+      applyFilter={handleFiltroFormSubmit}
       filterCount={filterCount}
     >
       <Controller

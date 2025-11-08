@@ -6,17 +6,17 @@ import { EnumSituacao, EnumTipoMovimentacao } from "@/types/enums";
 import dayjs from "dayjs";
 import { NumericFormat } from "react-number-format";
 
-interface IMountDataProps {
+interface MountDataProps {
   transacoes: PaginatedResponse<Transacao> | undefined;
-  handleEditarTransacao(transacaoId: string): void;
-  handleExcluirTransacao(idTransacao: number): Promise<void>;
+  handleEditarTransacao(transacaoId: number): void;
+  handleExcluirTransacao(transacaoId: number): Promise<void>;
 }
 
 export function mountData({
   transacoes,
   handleEditarTransacao,
   handleExcluirTransacao,
-}: IMountDataProps): any[] {
+}: MountDataProps): any[] {
   if (transacoes?.content.length) {
     return transacoes.content.map((transacao) => ({
       ...transacao,
@@ -57,7 +57,7 @@ export function mountData({
               <div>
                 <MenuItem
                   onClick={() => {
-                    handleEditarTransacao(String(transacao.id));
+                    handleEditarTransacao(transacao.id);
                     handleClose();
                   }}
                 >

@@ -5,6 +5,7 @@ import { useCadastro } from "./hooks/useCadastro";
 import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
 import { NumericFormat } from "react-number-format";
 import { situacaoOptions } from "@/constants/situacaoOptions";
+import { filtrarSituacaoOptions } from "@/utils/filtrarSituacaoOptions";
 
 export const Cadastro: React.FC = () => {
   const cadastro = useCadastro();
@@ -29,14 +30,7 @@ export const Cadastro: React.FC = () => {
                 options={tipoMovimentacaoOptions ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
-                  field.onChange(newValue?.id ?? null);
-                  if (cadastro.transacaoForm.getValues("categoria")?.id) {
-                    cadastro.transacaoForm.setValue("categoria", null);
-                  }
-
-                  if (cadastro.transacaoForm.getValues("situacao")) {
-                    cadastro.transacaoForm.setValue("situacao", null);
-                  }
+                  cadastro.handleTipoMovimentacaoChange(newValue?.id ?? null);
                 }}
                 value={
                   tipoMovimentacaoOptions.find((o) => o.id === field.value) ??
@@ -119,7 +113,11 @@ export const Cadastro: React.FC = () => {
               <Autocomplete
                 disablePortal
                 id="situacao"
-                options={situacaoOptions ?? []}
+                options={
+                  filtrarSituacaoOptions(
+                    cadastro.transacaoForm.getValues("tipoMovimentacao")
+                  ) ?? []
+                }
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => field.onChange(newValue?.id ?? null)}
                 value={

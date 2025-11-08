@@ -4,11 +4,11 @@ import { NumericFormat } from "react-number-format";
 import { SaldoConta } from "@/types";
 import { MoreOptions } from "@/components/MoreOptions";
 
-interface IMountDataProps {
+interface MountDataProps {
   saldos: SaldoConta[] | undefined;
 }
 
-export function mountData({ saldos }: IMountDataProps): any[] {
+export function mountData({ saldos }: MountDataProps): any[] {
   if (saldos?.length) {
     return saldos.map((saldo) => ({
       ...saldo,

@@ -18,8 +18,9 @@ import { postTransacao } from "@/api/Transacao/postTransacao";
 import { queryOptionsGetContas } from "@/api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "@/api/Categorias/utils/queryOptionsGetCategorias";
 import { useUrlParams } from "@/hooks/useUrlParams";
+import { EnumTipoMovimentacao } from "@/types/enums";
 
-interface IUseCadastroReturn {
+interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
   contas: Conta[] | undefined;
   categorias: Categoria[] | undefined;
@@ -27,10 +28,13 @@ interface IUseCadastroReturn {
   isDisabledForm: boolean;
   pageTitle: string;
   handleBack(): void;
+  handleTipoMovimentacaoChange(
+    tipoMovimentacao: keyof typeof EnumTipoMovimentacao | null
+  ): void;
   submitTransacaoForm(): void;
 }
 
-export const useCadastro = (): IUseCadastroReturn => {
+export const useCadastro = (): UseCadastroReturn => {
   const transacaoForm = useForm<TransacaoCreateAndUpdatePayload>();
 
   const loading = useLoading();
@@ -39,15 +43,15 @@ export const useCadastro = (): IUseCadastroReturn => {
 
   const navigate = useNavigate();
 
-  const { id } = useParams<{ id: string }>();
+  const { id: idTransacao } = useParams<{ id: string }>();
 
-  const { mode } = usePageMode();
+  const pageMode = usePageMode();
 
   const { getSearchString } = useUrlParams();
 
   const queryGetTransacaoById = useQuery({
-    ...queryOptionsGetTransacaoById(Number(id)),
-    enabled: Boolean(id),
+    ...queryOptionsGetTransacaoById(Number(idTransacao)),
+    enabled: Boolean(idTransacao),
   });
 
   const queryGetContas = useQuery({
@@ -63,16 +67,18 @@ export const useCadastro = (): IUseCadastroReturn => {
     }),
   });
 
-  const isDisabledForm = mode === "view";
-
-  const pageTitle =
-    mode === "create" ? "Nova" : `Conta ${queryGetTransacaoById.data?.id}`;
-
-  const breadcrumbs = buildBreadcrumbs();
-
   const contas = queryGetContas.data;
 
   const categorias = useQueryGetCategorias.data;
+
+  const isDisabledForm = pageMode.mode === "view";
+
+  const pageTitle =
+    pageMode.mode === "create"
+      ? "Nova"
+      : `Conta ${queryGetTransacaoById.data?.id}`;
+
+  const breadcrumbs = buildBreadcrumbs();
 
   useEffect(() => {
     if (queryGetTransacaoById.data && !queryGetTransacaoById.isFetching) {
@@ -90,6 +96,7 @@ export const useCadastro = (): IUseCadastroReturn => {
 
   useEffect(() => {
     loading.setLoading(queryGetTransacaoById.isFetching);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryGetTransacaoById.isFetching]);
 
   function buildBreadcrumbs(): BreadcrumbItem[] {
@@ -99,7 +106,7 @@ export const useCadastro = (): IUseCadastroReturn => {
 
     if (queryGetTransacaoById.isFetching) return breadcrumbs;
 
-    if (mode === "create") {
+    if (pageMode.mode === "create") {
       return [...breadcrumbs, { label: "Nova" }];
     }
 
@@ -113,11 +120,11 @@ export const useCadastro = (): IUseCadastroReturn => {
       ),
     };
 
-    if (mode === "edit") {
+    if (pageMode.mode === "edit") {
       return [...breadcrumbs, transacaoBreadcrumb, { label: "Editar" }];
     }
 
-    if (mode === "view") {
+    if (pageMode.mode === "view") {
       return [...breadcrumbs, { ...transacaoBreadcrumb, to: undefined }];
     }
 
@@ -127,6 +134,20 @@ export const useCadastro = (): IUseCadastroReturn => {
   function handleBack(): void {
     const search = getSearchString();
     navigate(`${PATHS.TRANSACOES.LIST}${search}`);
+  }
+
+  function handleTipoMovimentacaoChange(
+    tipoMovimentacao: keyof typeof EnumTipoMovimentacao | null
+  ): void {
+    transacaoForm.setValue("tipoMovimentacao", tipoMovimentacao);
+
+    if (transacaoForm.getValues("categoria")?.id) {
+      transacaoForm.setValue("categoria", null);
+    }
+
+    if (transacaoForm.getValues("situacao")) {
+      transacaoForm.setValue("situacao", null);
+    }
   }
 
   function submitTransacaoForm(): void {
@@ -177,6 +198,7 @@ export const useCadastro = (): IUseCadastroReturn => {
     pageTitle,
     isDisabledForm,
     handleBack,
+    handleTipoMovimentacaoChange,
     submitTransacaoForm,
   };
 };

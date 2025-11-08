@@ -5,23 +5,23 @@ import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
 import useFiltro from "./hooks/useFiltro";
 import { situacaoOptions } from "@/constants/situacaoOptions";
 
-interface IFiltroProps {
+interface FiltroProps {
   filterCount: number;
 }
 
-export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
-  const { filtroForm, handleSubmitFiltroForm } = useFiltro();
+export const Filtro: React.FC<FiltroProps> = ({ filterCount }) => {
+  const filtro = useFiltro();
 
   return (
     <FilterDrawer
-      applyFilter={handleSubmitFiltroForm}
+      applyFilter={filtro.handleSubmitFiltroForm}
       filterCount={filterCount}
     >
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
             name="tipoMovimentacao"
-            control={filtroForm.control}
+            control={filtro.filtroForm.control}
             rules={{ required: false }}
             render={({ field, fieldState }) => (
               <Autocomplete
@@ -55,7 +55,7 @@ export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
         <Grid item xs={12}>
           <Controller
             name="situacao"
-            control={filtroForm.control}
+            control={filtro.filtroForm.control}
             rules={{ required: false }}
             render={({ field, fieldState }) => (
               <Autocomplete

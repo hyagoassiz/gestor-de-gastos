@@ -2,12 +2,12 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 import { CategoriaParamsPaginado } from "@/types";
 import { useForm, UseFormReturn } from "react-hook-form";
 
-interface IUseFiltroReturn {
+interface UseFiltroReturn {
   filtroForm: UseFormReturn<CategoriaParamsPaginado>;
   handleSubmitFiltroForm(): void;
 }
 
-const useFiltro = (): IUseFiltroReturn => {
+const useFiltro = (): UseFiltroReturn => {
   const { getParam, setParams } = useUrlParams();
 
   const filtroForm = useForm<CategoriaParamsPaginado>({

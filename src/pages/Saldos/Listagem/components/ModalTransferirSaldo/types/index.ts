@@ -1,1 +1,1 @@
-export * from "./modalTransferirSaldoForm";
+export * from "./modal-transferir-saldo-form";

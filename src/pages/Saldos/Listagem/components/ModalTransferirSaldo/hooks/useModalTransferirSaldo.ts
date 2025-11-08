@@ -8,11 +8,11 @@ import { ModalTransferirSaldoForm } from "../types";
 import { KEY_GET_SALDOS_CONTAS } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
 import { useNotification } from "@/hooks/useNotification";
 
-interface IUseModalTransferirSaldoProps {
+interface UseModalTransferirSaldoProps {
   onClose(): void;
 }
 
-interface IUseModalTransferirSaldoReturn {
+interface UseModalTransferirSaldoReturn {
   contasDestino: Conta[] | undefined;
   contasOrigem: Conta[] | undefined;
   modalTransferirSaldoForm: UseFormReturn<ModalTransferirSaldoForm>;
@@ -21,7 +21,7 @@ interface IUseModalTransferirSaldoReturn {
 
 const useModalTransferirSaldo = ({
   onClose,
-}: IUseModalTransferirSaldoProps): IUseModalTransferirSaldoReturn => {
+}: UseModalTransferirSaldoProps): UseModalTransferirSaldoReturn => {
   const modalTransferirSaldoForm = useForm<ModalTransferirSaldoForm>();
 
   const loading = useLoading();

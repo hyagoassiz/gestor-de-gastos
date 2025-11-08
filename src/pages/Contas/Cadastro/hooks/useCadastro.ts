@@ -12,7 +12,7 @@ import { usePageMode } from "@/hooks/usePageMode";
 import { ContaForm } from "../types";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
-interface IUseCadastroReturn {
+interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
   contaForm: UseFormReturn<ContaForm>;
   isDisabledForm: boolean;
@@ -21,7 +21,7 @@ interface IUseCadastroReturn {
   submitContaForm(): void;
 }
 
-export const useCadastro = (): IUseCadastroReturn => {
+export const useCadastro = (): UseCadastroReturn => {
   const contaForm = useForm<ContaForm>();
 
   const loading = useLoading();

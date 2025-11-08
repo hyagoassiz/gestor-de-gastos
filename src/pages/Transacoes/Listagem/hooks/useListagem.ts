@@ -20,8 +20,8 @@ interface UseListagemReturn {
   transacoes: PaginatedResponse<Transacao> | undefined;
   queryGetTransacoesPaginado: UseQueryResult<PaginatedResponse<Transacao>>;
   handleAdicionarTransacao(): void;
-  handleEditarTransacao(transacaoId: string): void;
-  handleExcluirTransacao(idTransacao: number): Promise<void>;
+  handleEditarTransacao(transacaoId: number): void;
+  handleExcluirTransacao(transacaoId: number): Promise<void>;
 }
 
 export const useListagem = (): UseListagemReturn => {
@@ -33,13 +33,13 @@ export const useListagem = (): UseListagemReturn => {
 
   const navigate = useNavigate();
 
-  const { getBackendPage, getParam, getSearchString } = useUrlParams();
+  const urlParams = useUrlParams();
 
   const queryGetTransacoesPaginado = useQuery({
     ...queryOptionsGetTransacoesPaginado({
-      page: getBackendPage(),
-      tipoMovimentacao: getParam("tipoMovimentacao"),
-      situacao: getParam("situacao"),
+      page: urlParams.getBackendPage(),
+      tipoMovimentacao: urlParams.getParam("tipoMovimentacao"),
+      situacao: urlParams.getParam("situacao"),
       size: 10,
     }),
   });
@@ -55,16 +55,18 @@ export const useListagem = (): UseListagemReturn => {
     navigate(PATHS.TRANSACOES.CREATE);
   }
 
-  function handleEditarTransacao(transacaoId: string): void {
-    const search = getSearchString();
-    navigate(`${PATHS.TRANSACOES.EDIT.replace(":id", transacaoId)}${search}`);
+  function handleEditarTransacao(transacaoId: number): void {
+    const search = urlParams.getSearchString();
+    navigate(
+      `${PATHS.TRANSACOES.EDIT.replace(":id", String(transacaoId))}${search}`
+    );
   }
 
-  async function handleExcluirTransacao(idTransacao: number): Promise<void> {
+  async function handleExcluirTransacao(transacaoId: number): Promise<void> {
     try {
       setLoading(true);
 
-      await deleteTransacao(idTransacao);
+      await deleteTransacao(transacaoId);
 
       showSnackBar(`Transação excluída com sucesso!`, "success");
 

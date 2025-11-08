@@ -6,7 +6,7 @@ import { queryOptionsGetSaldosContas } from "@/api/Saldos/utils/queryOptionsGetS
 import useSearchBar from "@/hooks/useSearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
-interface IUseListagemReturn {
+interface UseListagemReturn {
   saldos: SaldoConta[] | undefined;
   isModalTransferirSaldoOpen: boolean;
   queryGetSaldosContas: UseQueryResult<SaldoConta[]>;
@@ -14,7 +14,7 @@ interface IUseListagemReturn {
   toggleModalTransferirSaldo(): void;
 }
 
-export const useListagem = (): IUseListagemReturn => {
+export const useListagem = (): UseListagemReturn => {
   const { setLoading } = useLoading();
 
   const { searchBar, textoBusca } = useSearchBar({});

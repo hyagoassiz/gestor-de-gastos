@@ -6,7 +6,7 @@ import { queryOptionsGetTotais } from "@/api/Dashboard/utils/queryOptionsGetTota
 import { queryOptionsGetTransacaoMensal } from "@/api/Dashboard/utils/queryOptionsGetTransacaoMensal";
 import { queryOptionsGetDespesasPorCategoria } from "@/api/Dashboard/utils/queryOptionsGetDespesasPorCategoria";
 
-interface IUseListagemReturn {
+interface UseListagemReturn {
   despesasPorCategoria: DespesaPorCategoria[] | undefined;
   totais: Totais | undefined;
   transacoesMensais: TransacaoMensal[] | undefined;
@@ -14,7 +14,7 @@ interface IUseListagemReturn {
   queryGetTransacaoMensal: UseQueryResult<TransacaoMensal[]>;
 }
 
-export const useListagem = (): IUseListagemReturn => {
+export const useListagem = (): UseListagemReturn => {
   const { setLoading } = useLoading();
 
   const queryGetDespesasPorCategoria = useQuery({
