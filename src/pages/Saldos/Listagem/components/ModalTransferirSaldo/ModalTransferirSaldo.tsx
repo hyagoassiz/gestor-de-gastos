@@ -1,8 +1,17 @@
 import { Modal } from "@/components/Modal/Modal";
-import { Autocomplete, Button, Grid, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Grid,
+  ListItemText,
+  TextField,
+} from "@mui/material";
 import { Controller } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import useModalTransferirSaldo from "./hooks/useModalTransferirSaldo";
+import { EnumTipoConta } from "@/types/enums";
+import { getAgenciaContaLabel } from "@/utils/getSecondaryText";
 
 interface ModalTransferirSaldoProps {
   open: boolean;
@@ -18,6 +27,7 @@ export const ModalTransferirSaldo: React.FC<ModalTransferirSaldoProps> = ({
     contasOrigem,
     modalTransferirSaldoForm,
     handleTransferirSaldo,
+    handleContaOrigemChange,
   } = useModalTransferirSaldo({
     onClose,
   });
@@ -49,12 +59,29 @@ export const ModalTransferirSaldo: React.FC<ModalTransferirSaldoProps> = ({
                 options={contasOrigem ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
-                  field.onChange(newValue);
-                  modalTransferirSaldoForm.setValue("contaDestino", null);
+                  handleContaOrigemChange(newValue);
                 }}
                 value={field.value ?? null}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
+                renderOption={(props, option) => (
+                  <Box component="li" {...props} key={option.id}>
+                    <ListItemText
+                      primary={option.nome}
+                      secondary={`${
+                        EnumTipoConta[option.tipoConta]
+                      } - ${getAgenciaContaLabel(
+                        option.agencia,
+                        option.conta
+                      )}`}
+                      primaryTypographyProps={{ fontSize: 14 }}
+                      secondaryTypographyProps={{
+                        fontSize: 12,
+                        color: "text.secondary",
+                      }}
+                    />
+                  </Box>
+                )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -87,6 +114,24 @@ export const ModalTransferirSaldo: React.FC<ModalTransferirSaldoProps> = ({
                 value={field.value ?? null}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
+                renderOption={(props, option) => (
+                  <Box component="li" {...props} key={option.id}>
+                    <ListItemText
+                      primary={option.nome}
+                      secondary={`${
+                        EnumTipoConta[option.tipoConta]
+                      } - ${getAgenciaContaLabel(
+                        option.agencia,
+                        option.conta
+                      )}`}
+                      primaryTypographyProps={{ fontSize: 14 }}
+                      secondaryTypographyProps={{
+                        fontSize: 12,
+                        color: "text.secondary",
+                      }}
+                    />
+                  </Box>
+                )}
                 renderInput={(params) => (
                   <TextField
                     {...params}

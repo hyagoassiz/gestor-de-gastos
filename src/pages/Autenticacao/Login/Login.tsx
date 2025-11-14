@@ -1,12 +1,7 @@
-import { Checkbox } from "@mui/material";
+import { Checkbox, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useLogin } from "./hooks/useLogin";
-import {
-  StyledDivider,
-  StyledFormControlLabel,
-  StyledLink,
-  StyledTextField,
-} from "../styles";
+import { StyledDivider, StyledFormControlLabel, StyledLink } from "../styles";
 import { AuthLayout } from "../../../layouts/AuthLayout";
 import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
@@ -25,7 +20,7 @@ export const Login: React.FC = () => {
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           }}
           render={({ field, fieldState }) => (
-            <StyledTextField
+            <TextField
               label="Email"
               type="email"
               variant="outlined"
@@ -49,7 +44,7 @@ export const Login: React.FC = () => {
           control={login.loginForm.control}
           rules={{ required: true }}
           render={({ field, fieldState }) => (
-            <StyledTextField
+            <TextField
               label="Senha"
               type="password"
               variant="outlined"
@@ -79,6 +74,7 @@ export const Login: React.FC = () => {
       <Grid item xs={12}>
         <LoadingButton
           disabled={login.mutatePostLogin.isPending}
+          loading={login.mutatePostLogin.isPending}
           size="large"
           variant="contained"
           onClick={login.submitLoginForm}

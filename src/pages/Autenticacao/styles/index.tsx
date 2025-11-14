@@ -3,11 +3,8 @@ import {
   FormControlLabel,
   Link,
   styled,
-  TextField,
   Typography,
 } from "@mui/material";
-
-export const StyledTextField = styled(TextField)(() => ({}));
 
 export const StyledLink = styled(Link)(() => ({}));
 

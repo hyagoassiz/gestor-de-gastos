@@ -49,6 +49,8 @@ export const useCadastro = (): UseCadastroReturn => {
 
   const { getSearchString } = useUrlParams();
 
+  const shouldEnableCadastroQueries = pageMode.mode !== "view";
+
   const queryGetTransacaoById = useQuery({
     ...queryOptionsGetTransacaoById(Number(idTransacao)),
     enabled: Boolean(idTransacao),
@@ -56,10 +58,13 @@ export const useCadastro = (): UseCadastroReturn => {
 
   const queryGetContas = useQuery({
     ...queryOptionsGetContas({ ativo: true }),
+    enabled: shouldEnableCadastroQueries,
   });
 
   const useQueryGetCategorias = useQuery({
-    enabled: Boolean(transacaoForm.watch("tipoMovimentacao")),
+    enabled: Boolean(
+      transacaoForm.watch("tipoMovimentacao") && shouldEnableCadastroQueries
+    ),
     ...queryOptionsGetCategorias({
       ativo: true,
       tipoMovimentacao: transacaoForm.watch("tipoMovimentacao"),

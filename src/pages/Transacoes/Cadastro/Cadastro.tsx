@@ -1,11 +1,21 @@
 import { PageHeader } from "@/components/PageHeader";
-import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Grid,
+  ListItemText,
+  TextField,
+} from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCadastro } from "./hooks/useCadastro";
 import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
 import { NumericFormat } from "react-number-format";
 import { situacaoOptions } from "@/constants/situacaoOptions";
 import { filtrarSituacaoOptions } from "@/utils/filtrarSituacaoOptions";
+import { normalizarEspacos } from "@/utils/normalizarEspacos";
+import { getAgenciaContaLabel } from "@/utils/getSecondaryText";
+import { EnumTipoConta } from "@/types/enums";
 
 export const Cadastro: React.FC = () => {
   const cadastro = useCadastro();
@@ -38,6 +48,7 @@ export const Cadastro: React.FC = () => {
                 }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
+                disabled={cadastro.isDisabledForm}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -125,6 +136,7 @@ export const Cadastro: React.FC = () => {
                 }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
+                disabled={cadastro.isDisabledForm}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -158,6 +170,7 @@ export const Cadastro: React.FC = () => {
                 value={field.value ?? null}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
+                disabled={cadastro.isDisabledForm}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -191,6 +204,25 @@ export const Cadastro: React.FC = () => {
                 value={field.value ?? null}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 noOptionsText="Nenhum resultado encontrado."
+                renderOption={(props, option) => (
+                  <Box component="li" {...props} key={option.id}>
+                    <ListItemText
+                      primary={option.nome}
+                      secondary={`${
+                        EnumTipoConta[option.tipoConta]
+                      } - ${getAgenciaContaLabel(
+                        option.agencia,
+                        option.conta
+                      )}`}
+                      primaryTypographyProps={{ fontSize: 14 }}
+                      secondaryTypographyProps={{
+                        fontSize: 12,
+                        color: "text.secondary",
+                      }}
+                    />
+                  </Box>
+                )}
+                disabled={cadastro.isDisabledForm}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -224,6 +256,9 @@ export const Cadastro: React.FC = () => {
                 error={!!formState.errors.observacao}
                 disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 100 }}
+                onBlur={(e) =>
+                  field.onChange(normalizarEspacos(e.target.value))
+                }
               />
             )}
           />
@@ -237,7 +272,7 @@ export const Cadastro: React.FC = () => {
         alignItems="center"
       >
         <Button variant="outlined" onClick={cadastro.handleBack}>
-          Cancelar
+          {cadastro.isDisabledForm ? "Voltar" : "Cancelar"}
         </Button>
 
         {!cadastro.isDisabledForm && (

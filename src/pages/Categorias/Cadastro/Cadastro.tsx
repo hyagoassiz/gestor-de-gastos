@@ -3,6 +3,7 @@ import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCadastro } from "./hooks/useCadastro";
 import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
+import { normalizarEspacos } from "@/utils/normalizarEspacos";
 
 export const Cadastro: React.FC = () => {
   const cadastro = useCadastro();
@@ -31,6 +32,9 @@ export const Cadastro: React.FC = () => {
                 disabled={cadastro.isDisabledForm}
                 error={!!formState.errors.nome}
                 inputProps={{ maxLength: 50 }}
+                onBlur={(e) =>
+                  field.onChange(normalizarEspacos(e.target.value))
+                }
               />
             )}
           />
@@ -90,6 +94,9 @@ export const Cadastro: React.FC = () => {
                 disabled={cadastro.isDisabledForm}
                 error={!!formState.errors.observacao}
                 inputProps={{ maxLength: 100 }}
+                onBlur={(e) =>
+                  field.onChange(normalizarEspacos(e.target.value))
+                }
               />
             )}
           />

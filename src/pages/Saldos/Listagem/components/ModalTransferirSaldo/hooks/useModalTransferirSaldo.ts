@@ -16,6 +16,7 @@ interface UseModalTransferirSaldoReturn {
   contasDestino: Conta[] | undefined;
   contasOrigem: Conta[] | undefined;
   modalTransferirSaldoForm: UseFormReturn<ModalTransferirSaldoForm>;
+  handleContaOrigemChange(contaOrigem: Conta): void;
   handleTransferirSaldo(): void;
 }
 
@@ -39,6 +40,16 @@ const useModalTransferirSaldo = ({
   );
 
   const contasOrigem = queryGetContas.data;
+
+  function handleContaOrigemChange(contaOrigem: Conta): void {
+    modalTransferirSaldoForm.setValue("contaOrigem", contaOrigem);
+
+    if (
+      modalTransferirSaldoForm.getValues("contaDestino")?.id === contaOrigem.id
+    ) {
+      modalTransferirSaldoForm.setValue("contaDestino", null);
+    }
+  }
 
   function handleTransferirSaldo(): void {
     modalTransferirSaldoForm.handleSubmit(async (data) => {
@@ -71,6 +82,7 @@ const useModalTransferirSaldo = ({
     contasDestino,
     contasOrigem,
     modalTransferirSaldoForm,
+    handleContaOrigemChange,
     handleTransferirSaldo,
   };
 };

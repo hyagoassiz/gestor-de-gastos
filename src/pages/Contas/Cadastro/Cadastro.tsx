@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCadastro } from "./hooks/useCadastro";
+import { normalizarEspacos } from "@/utils/normalizarEspacos";
 
 export const Cadastro: React.FC = () => {
   const cadastro = useCadastro();
@@ -40,6 +41,9 @@ export const Cadastro: React.FC = () => {
                 inputProps={{ maxLength: 100 }}
                 disabled={cadastro.isDisabledForm}
                 error={!!formState.errors.nome}
+                onBlur={(e) =>
+                  field.onChange(normalizarEspacos(e.target.value))
+                }
               />
             )}
           />
@@ -99,6 +103,9 @@ export const Cadastro: React.FC = () => {
                 error={!!formState.errors.agencia}
                 disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 10 }}
+                onBlur={(e) =>
+                  field.onChange(normalizarEspacos(e.target.value))
+                }
               />
             )}
           />
@@ -125,6 +132,9 @@ export const Cadastro: React.FC = () => {
                 error={!!formState.errors.conta}
                 disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 10 }}
+                onBlur={(e) =>
+                  field.onChange(normalizarEspacos(e.target.value))
+                }
               />
             )}
           />
@@ -147,6 +157,9 @@ export const Cadastro: React.FC = () => {
                 error={!!formState.errors.observacao}
                 disabled={cadastro.isDisabledForm}
                 inputProps={{ maxLength: 100 }}
+                onBlur={(e) =>
+                  field.onChange(normalizarEspacos(e.target.value))
+                }
               />
             )}
           />

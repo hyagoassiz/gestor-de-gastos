@@ -1,9 +1,10 @@
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCriarConta } from "./hooks/useCriarConta";
-import { StyledDivider, StyledLink, StyledTextField } from "../styles";
+import { StyledDivider, StyledLink } from "../styles";
 import { AuthLayout } from "../../../layouts/AuthLayout";
 import { LoadingButton } from "@mui/lab";
+import { normalizarEspacos } from "@/utils/normalizarEspacos";
 
 export const CriarConta: React.FC = () => {
   const criarConta = useCriarConta();
@@ -18,7 +19,7 @@ export const CriarConta: React.FC = () => {
             required: true,
           }}
           render={({ field, fieldState }) => (
-            <StyledTextField
+            <TextField
               label="Nome"
               variant="outlined"
               color="secondary"
@@ -32,6 +33,7 @@ export const CriarConta: React.FC = () => {
               fullWidth
               error={!!fieldState.error}
               helperText={fieldState.error?.message}
+              onBlur={(e) => field.onChange(normalizarEspacos(e.target.value))}
             />
           )}
         />
@@ -45,7 +47,7 @@ export const CriarConta: React.FC = () => {
             required: true,
           }}
           render={({ field, fieldState }) => (
-            <StyledTextField
+            <TextField
               label="Email"
               type="email"
               variant="outlined"
@@ -70,7 +72,7 @@ export const CriarConta: React.FC = () => {
           control={criarConta.createAccountForm.control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
-            <StyledTextField
+            <TextField
               label="Senha"
               type="password"
               variant="outlined"
@@ -100,7 +102,7 @@ export const CriarConta: React.FC = () => {
           control={criarConta.createAccountForm.control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
-            <StyledTextField
+            <TextField
               label="Confirmar senha"
               type="password"
               variant="outlined"

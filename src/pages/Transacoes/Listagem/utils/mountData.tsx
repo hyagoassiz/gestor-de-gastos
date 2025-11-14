@@ -10,12 +10,14 @@ interface MountDataProps {
   transacoes: PaginatedResponse<Transacao> | undefined;
   handleEditarTransacao(transacaoId: number): void;
   handleExcluirTransacao(transacaoId: number): Promise<void>;
+  handleVisualizarTransacao(transacaoId: number): void;
 }
 
 export function mountData({
   transacoes,
   handleEditarTransacao,
   handleExcluirTransacao,
+  handleVisualizarTransacao,
 }: MountDataProps): any[] {
   if (transacoes?.content.length) {
     return transacoes.content.map((transacao) => ({
@@ -55,23 +57,40 @@ export function mountData({
           <MoreOptions>
             {({ handleClose }) => (
               <div>
-                <MenuItem
-                  onClick={() => {
-                    handleEditarTransacao(transacao.id);
-                    handleClose();
-                  }}
-                >
-                  Editar
-                </MenuItem>
+                {!transacao.geradaAutomaticamente && (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        handleEditarTransacao(transacao.id);
+                        handleClose();
+                      }}
+                    >
+                      Editar
+                    </MenuItem>
 
-                <MenuItem
-                  onClick={() => {
-                    handleExcluirTransacao(transacao.id);
-                    handleClose();
-                  }}
-                >
-                  Excluir
-                </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleExcluirTransacao(transacao.id);
+                        handleClose();
+                      }}
+                    >
+                      Excluir
+                    </MenuItem>
+                  </>
+                )}
+
+                {transacao.geradaAutomaticamente && (
+                  <>
+                    <MenuItem
+                      onClick={() => {
+                        handleVisualizarTransacao(transacao.id);
+                        handleClose();
+                      }}
+                    >
+                      Visualizar
+                    </MenuItem>
+                  </>
+                )}
               </div>
             )}
           </MoreOptions>

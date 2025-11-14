@@ -12,10 +12,14 @@ export interface Transacao {
   categoria: Categoria;
   conta: Conta;
   observacao: string;
+  geradaAutomaticamente: boolean;
   situacao: keyof typeof EnumSituacao;
 }
 
-export type TransacaoCreateAndUpdatePayload = Omit<Transacao, "id"> & {
+export type TransacaoCreateAndUpdatePayload = Omit<
+  Transacao,
+  "id" | "geradaAutomaticamente"
+> & {
   id: number | undefined;
 };
 

@@ -22,6 +22,7 @@ interface UseListagemReturn {
   handleAdicionarTransacao(): void;
   handleEditarTransacao(transacaoId: number): void;
   handleExcluirTransacao(transacaoId: number): Promise<void>;
+  handleVisualizarTransacao(transacaoId: number): void;
 }
 
 export const useListagem = (): UseListagemReturn => {
@@ -80,11 +81,19 @@ export const useListagem = (): UseListagemReturn => {
     }
   }
 
+  function handleVisualizarTransacao(transacaoId: number): void {
+    const search = urlParams.getSearchString();
+    navigate(
+      `${PATHS.TRANSACOES.VIEW.replace(":id", String(transacaoId))}${search}`
+    );
+  }
+
   return {
     transacoes,
     queryGetTransacoesPaginado,
     handleEditarTransacao,
     handleExcluirTransacao,
     handleAdicionarTransacao,
+    handleVisualizarTransacao,
   };
 };

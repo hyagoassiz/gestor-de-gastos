@@ -5,5 +5,5 @@ export function getAgenciaContaLabel(agencia: string, conta: string): string {
     return text;
   }
 
-  return "-";
+  return "";
 }
