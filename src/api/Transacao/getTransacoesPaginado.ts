@@ -1,5 +1,5 @@
 import { PaginatedResponse, Transacao, TransacaoParamsPaginado } from "@/types";
-import { API } from "../constants/API";
+import { API } from "../constants/api";
 
 export async function getTransacoesPaginado(
   params?: TransacaoParamsPaginado

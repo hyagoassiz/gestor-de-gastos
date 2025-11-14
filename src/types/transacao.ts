@@ -29,4 +29,4 @@ export type TransacaoParams = Partial<
 
 export type TransacaoParamsPaginado = TransacaoParams & Partial<Pagination>;
 
-export type TransacaoAtualizarPagoParams = Pick<Transacao, "id" | "situacao">;
+export type TransacaoAtualizarPagoParams = Pick<Transacao, "id" | "situacao" >;
