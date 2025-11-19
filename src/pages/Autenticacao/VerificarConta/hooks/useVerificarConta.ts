@@ -2,17 +2,17 @@ import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../../routes/paths";
 
 interface UseVerificarContaReturn {
-  handleNavigate(): void;
+  handleLogin(): void;
 }
 
 export const useVerificarConta = (): UseVerificarContaReturn => {
   const navigate = useNavigate();
 
-  const handleNavigate = (): void => {
+  const handleLogin = (): void => {
     navigate(PATHS.AUTENTICACAO.LOGIN);
   };
 
   return {
-    handleNavigate,
+    handleLogin,
   };
 };

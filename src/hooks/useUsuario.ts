@@ -20,17 +20,14 @@ const useUsuario = (): UseUsuarioReturn => {
     }
 
     return null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removerUsuario = useCallback((): void => {
     localStorage.remover("token");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const salvarUsuario = useCallback((token: string): void => {
     localStorage.salvar("token", token);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { salvarUsuario, removerUsuario, obterUsuario };

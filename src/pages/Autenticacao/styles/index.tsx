@@ -1,14 +1,4 @@
-import {
-  Divider,
-  FormControlLabel,
-  Link,
-  styled,
-  Typography,
-} from "@mui/material";
-
-export const StyledLink = styled(Link)(() => ({}));
-
-export const StyledFormControlLabel = styled(FormControlLabel)(() => ({}));
+import { Divider, styled, Typography } from "@mui/material";
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,

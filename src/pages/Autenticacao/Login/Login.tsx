@@ -1,7 +1,7 @@
-import { Checkbox, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel, Link, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useLogin } from "./hooks/useLogin";
-import { StyledDivider, StyledFormControlLabel, StyledLink } from "../styles";
+import { StyledDivider } from "../styles";
 import { AuthLayout } from "../../../layouts/AuthLayout";
 import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
@@ -10,14 +10,13 @@ export const Login: React.FC = () => {
   const login = useLogin();
 
   return (
-    <AuthLayout titleRoute="Login" onKeyDown={login.handleKeyDown}>
+    <AuthLayout titleRoute="Login" onKeyDown={login.handleEnter}>
       <Grid item xs={12}>
         <Controller
           name="email"
           control={login.loginForm.control}
           rules={{
             required: true,
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           }}
           render={({ field, fieldState }) => (
             <TextField
@@ -32,12 +31,13 @@ export const Login: React.FC = () => {
               }}
               required
               fullWidth
-              disabled={login.mutatePostLogin.isPending}
+              helperText={fieldState.error?.message}
               error={!!fieldState.error}
             />
           )}
         />
       </Grid>
+
       <Grid item xs={12}>
         <Controller
           name="senha"
@@ -55,46 +55,59 @@ export const Login: React.FC = () => {
                 maxLength: 30,
               }}
               required
-              error={!!fieldState.error}
               fullWidth
-              disabled={login.mutatePostLogin.isPending}
+              helperText={fieldState.error?.message}
+              error={!!fieldState.error}
             />
           )}
         />
       </Grid>
 
       <Grid item xs={12}>
-        <StyledFormControlLabel
-          control={<Checkbox value="remember" color="secondary" />}
-          label="Lembrar de mim"
-          disabled={login.mutatePostLogin.isPending}
+        <Controller
+          name="lembrarEmail"
+          control={login.loginForm.control}
+          render={({ field }) => (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="secondary"
+                  checked={field.value ?? false}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                />
+              }
+              label="Lembrar de mim"
+            />
+          )}
         />
       </Grid>
 
       <Grid item xs={12}>
         <LoadingButton
-          disabled={login.mutatePostLogin.isPending}
-          loading={login.mutatePostLogin.isPending}
+          disabled={login.isPending}
+          loading={login.isPending}
           size="large"
           variant="contained"
-          onClick={login.submitLoginForm}
+          onClick={login.handleLogin}
           sx={{ width: "100%" }}
         >
           Entrar
         </LoadingButton>
       </Grid>
+
       <Grid item xs={12}>
         <StyledDivider />
       </Grid>
+
       <Grid item>
         <Grid item xs>
-          <StyledLink
-            onClick={login.onCreateAccount}
+          <Link
+            onClick={login.handleCriarConta}
             variant="body2"
             sx={{ cursor: "pointer" }}
           >
             Não possui conta? Clique aqui
-          </StyledLink>
+          </Link>
         </Grid>
       </Grid>
     </AuthLayout>

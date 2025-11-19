@@ -1,20 +1,20 @@
-import { Grid, TextField } from "@mui/material";
+import { Grid, Link, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCriarConta } from "./hooks/useCriarConta";
-import { StyledDivider, StyledLink } from "../styles";
-import { AuthLayout } from "../../../layouts/AuthLayout";
+import { StyledDivider } from "../styles";
 import { LoadingButton } from "@mui/lab";
 import { normalizarEspacos } from "@/utils/normalizarEspacos";
+import { AuthLayout } from "@/layouts/AuthLayout";
 
 export const CriarConta: React.FC = () => {
   const criarConta = useCriarConta();
 
   return (
-    <AuthLayout titleRoute="Criar Conta" onKeyDown={criarConta.handleKeyDown}>
+    <AuthLayout titleRoute="Criar Conta" onKeyDown={criarConta.handleEnter}>
       <Grid item xs={12}>
         <Controller
           name="nome"
-          control={criarConta.createAccountForm.control}
+          control={criarConta.criarContaForm.control}
           rules={{
             required: true,
           }}
@@ -29,11 +29,10 @@ export const CriarConta: React.FC = () => {
                 maxLength: 50,
               }}
               required
-              disabled={criarConta.isLoading}
               fullWidth
-              error={!!fieldState.error}
               helperText={fieldState.error?.message}
               onBlur={(e) => field.onChange(normalizarEspacos(e.target.value))}
+              error={!!fieldState.error}
             />
           )}
         />
@@ -42,7 +41,7 @@ export const CriarConta: React.FC = () => {
       <Grid item xs={12}>
         <Controller
           name="email"
-          control={criarConta.createAccountForm.control}
+          control={criarConta.criarContaForm.control}
           rules={{
             required: true,
           }}
@@ -58,18 +57,18 @@ export const CriarConta: React.FC = () => {
                 maxLength: 50,
               }}
               required
-              disabled={criarConta.isLoading}
               fullWidth
-              error={!!fieldState.error}
               helperText={fieldState.error?.message}
+              error={!!fieldState.error}
             />
           )}
         />
       </Grid>
+
       <Grid item xs={12}>
         <Controller
           name="senha"
-          control={criarConta.createAccountForm.control}
+          control={criarConta.criarContaForm.control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
             <TextField
@@ -88,18 +87,18 @@ export const CriarConta: React.FC = () => {
                 maxLength: 30,
               }}
               required
-              disabled={criarConta.isLoading}
               fullWidth
-              error={!!fieldState.error}
               helperText={fieldState.error?.message}
+              error={!!fieldState.error}
             />
           )}
         />
       </Grid>
+
       <Grid item xs={12}>
         <Controller
           name="confirmarSenha"
-          control={criarConta.createAccountForm.control}
+          control={criarConta.criarContaForm.control}
           rules={{ required: true, minLength: 6 }}
           render={({ field, fieldState }) => (
             <TextField
@@ -118,37 +117,40 @@ export const CriarConta: React.FC = () => {
                 maxLength: 30,
               }}
               required
-              disabled={criarConta.isLoading}
               fullWidth
-              error={!!fieldState.error}
               helperText={fieldState.error?.message}
+              error={!!fieldState.error}
             />
           )}
         />
       </Grid>
+
       <Grid item xs={12}>
         <LoadingButton
-          loading={criarConta.isLoading}
+          disabled={criarConta.isPending}
+          loading={criarConta.isPending}
           variant="contained"
           size="large"
           sx={{ width: "100%" }}
-          onClick={criarConta.submitCreateAccountForm}
+          onClick={criarConta.handleCriarConta}
         >
-          CRIAR CONTA
+          Criar Conta
         </LoadingButton>
       </Grid>
+
       <Grid item xs={12}>
         <StyledDivider />
       </Grid>
+
       <Grid item>
         <Grid item xs>
-          <StyledLink
-            onClick={criarConta.navigateToLogin}
+          <Link
+            onClick={criarConta.handleLogin}
             variant="body2"
             sx={{ cursor: "pointer" }}
           >
             Já possui conta? Clique aqui
-          </StyledLink>
+          </Link>
         </Grid>
       </Grid>
     </AuthLayout>

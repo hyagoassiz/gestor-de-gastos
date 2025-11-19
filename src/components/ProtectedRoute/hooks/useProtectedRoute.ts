@@ -5,17 +5,17 @@ import { usePermission } from "../../../hooks/usePermission";
 import useUsuario from "../../../hooks/useUsuario";
 import { Usuario } from "@/types";
 
-interface IUseLoginProps {
+interface UseLoginProps {
   permission: string;
 }
 
-interface IUseLoginReturn {
+interface UseLoginReturn {
   signed: boolean;
 }
 
 export const useProtectedRoute = ({
   permission,
-}: IUseLoginProps): IUseLoginReturn => {
+}: UseLoginProps): UseLoginReturn => {
   const [signed, setSigned] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -28,7 +28,6 @@ export const useProtectedRoute = ({
 
   useEffect(() => {
     handleNavigate(obterUsuario());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   function tokenExpirou(exp: number | null): boolean {

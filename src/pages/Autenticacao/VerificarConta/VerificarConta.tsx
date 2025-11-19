@@ -1,16 +1,16 @@
-import { Box, Grid, useTheme } from "@mui/material";
+import { Box, Grid, Link, useTheme } from "@mui/material";
 import { useVerificarConta } from "./hooks/useVerificarConta";
 import EmailIcon from "@mui/icons-material/Email";
-import { StyledDivider, StyledLink, StyledTypography } from "../styles";
+import { StyledDivider, StyledTypography } from "../styles";
 import { AuthLayout } from "../../../layouts/AuthLayout";
 import useUsuario from "@/hooks/useUsuario";
 
 export const VerificarConta: React.FC = () => {
-  const { handleNavigate } = useVerificarConta();
-
-  const theme = useTheme();
+  const verificarConta = useVerificarConta();
 
   const { obterUsuario } = useUsuario();
+
+  const theme = useTheme();
 
   return (
     <AuthLayout titleRoute="E-mail de verificação enviado">
@@ -53,13 +53,13 @@ export const VerificarConta: React.FC = () => {
 
       <Grid item>
         <Grid item xs>
-          <StyledLink
-            onClick={handleNavigate}
+          <Link
+            onClick={verificarConta.handleLogin}
             variant="body2"
             sx={{ cursor: "pointer" }}
           >
             Fazer login
-          </StyledLink>
+          </Link>
         </Grid>
       </Grid>
     </AuthLayout>
