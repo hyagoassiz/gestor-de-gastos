@@ -6,12 +6,14 @@ import {
   IconButton,
   Drawer as MuiDrawer,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { ReactNode, useState } from "react";
 import { BoxChildren, StyledBox } from "./styles";
+import CloseIcon from "@mui/icons-material/Close";
 
-interface IFilterDrawer {
+interface FilterDrawerProps {
   children: ReactNode;
   filterCount: number;
   applyFilter: () => void;
@@ -21,7 +23,7 @@ export const FilterDrawer = ({
   children,
   filterCount,
   applyFilter,
-}: IFilterDrawer) => {
+}: FilterDrawerProps) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -38,30 +40,50 @@ export const FilterDrawer = ({
       </Tooltip>
 
       <MuiDrawer open={open} anchor="right" onClose={handleClose}>
-        <StyledBox>
+        <StyledBox
+          width={360}
+          display="flex"
+          flexDirection="column"
+          height="100%"
+        >
           <Box
             display="flex"
-            justifyContent="space-between"
             alignItems="center"
-            padding="8px 16px"
+            justifyContent="space-between"
+            padding={2}
+            height="64px"
           >
-            <Button variant="outlined" onClick={handleClose}>
-              Fechar
+            <Typography fontSize="18px">Filtros</Typography>
+
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          <Divider />
+
+          <Box flex={1} overflow="auto">
+            <BoxChildren>{children}</BoxChildren>
+          </Box>
+
+          <Divider />
+
+          <Box padding={2} display="flex" gap={2}>
+            <Button fullWidth variant="outlined" onClick={handleClose}>
+              Cancelar
             </Button>
+
             <Button
+              fullWidth
               variant="contained"
               onClick={() => {
                 applyFilter();
                 handleClose();
               }}
             >
-              Filtrar
+              Aplicar
             </Button>
           </Box>
-
-          <Divider />
-
-          <BoxChildren>{children}</BoxChildren>
         </StyledBox>
       </MuiDrawer>
     </>

@@ -44,6 +44,10 @@ const useModalTransferirSaldo = ({
   function handleContaOrigemChange(contaOrigem: Conta): void {
     modalTransferirSaldoForm.setValue("contaOrigem", contaOrigem);
 
+    if (modalTransferirSaldoForm.formState.errors.contaOrigem) {
+      modalTransferirSaldoForm.clearErrors("contaOrigem");
+    }
+
     if (
       modalTransferirSaldoForm.getValues("contaDestino")?.id === contaOrigem.id
     ) {
@@ -52,30 +56,38 @@ const useModalTransferirSaldo = ({
   }
 
   function handleTransferirSaldo(): void {
-    modalTransferirSaldoForm.handleSubmit(async (data) => {
-      try {
-        loading.setLoading(true);
+    modalTransferirSaldoForm.handleSubmit(
+      async (data) => {
+        try {
+          loading.setLoading(true);
 
-        await postTransferir({
-          contaOrigemId: data.contaOrigem.id,
-          contaDestinoId: data.contaDestino.id,
-          valor: data.valor,
-        });
+          await postTransferir({
+            contaOrigemId: data.contaOrigem.id,
+            contaDestinoId: data.contaDestino.id,
+            valor: data.valor,
+          });
 
-        queryClient.invalidateQueries({ queryKey: [KEY_GET_SALDOS_CONTAS] });
+          queryClient.invalidateQueries({ queryKey: [KEY_GET_SALDOS_CONTAS] });
 
+          notification.showSnackBar(
+            "Transferência realizada com sucesso!",
+            "success"
+          );
+
+          onClose();
+        } catch (error) {
+          console.error(error);
+        } finally {
+          loading.setLoading(false);
+        }
+      },
+      () => {
         notification.showSnackBar(
-          "Transferência realizada com sucesso!",
-          "success"
+          "Existem campos obrigatórios não preenchidos!",
+          "error"
         );
-
-        onClose();
-      } catch (error) {
-        console.error(error);
-      } finally {
-        loading.setLoading(false);
       }
-    })();
+    )();
   }
 
   return {

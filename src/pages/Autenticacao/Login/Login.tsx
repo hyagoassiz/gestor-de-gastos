@@ -71,7 +71,6 @@ export const Login: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  color="secondary"
                   checked={field.value ?? false}
                   onChange={(e) => field.onChange(e.target.checked)}
                 />
