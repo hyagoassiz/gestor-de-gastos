@@ -22,6 +22,8 @@ import {
   LoginRoute,
   VerificarContaRoute,
 } from "@/pages/Autenticacao";
+import { ConfiguracoesListagemRoute } from "@/pages/Configuracoes";
+import { ObjetivosListagemRoute } from "@/pages/Objetivos/Listagem";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -102,6 +104,15 @@ export const AppRoutes = () => {
           />
 
           <Route
+            path={PATHS.OBJETIVOS.LISTAGEM}
+            element={
+              <ProtectedRoute permission="">
+                <ObjetivosListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path={PATHS.CONTAS.LISTAGEM}
             element={
               <ProtectedRoute permission="">
@@ -169,6 +180,15 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <CategoriasCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.CONFIGURACOES.LISTAGEM}
+            element={
+              <ProtectedRoute permission="">
+                <ConfiguracoesListagemRoute />
               </ProtectedRoute>
             }
           />

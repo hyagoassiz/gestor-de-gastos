@@ -13,3 +13,4 @@ export * from "./search-bar";
 export * from "./snack-bar";
 export * from "./drawer-props";
 export * from "./paginated-response";
+export * from "./tabItem";

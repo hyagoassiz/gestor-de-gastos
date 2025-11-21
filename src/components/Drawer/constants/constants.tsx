@@ -5,6 +5,8 @@ import SwapVertIcon from "@mui/icons-material/SwapVert";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ClassIcon from "@mui/icons-material/Class";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import SettingsIcon from "@mui/icons-material/Settings";
+import FlagIcon from "@mui/icons-material/Flag";
 
 export const rotas: IRotas[] = [
   {
@@ -30,6 +32,11 @@ export const rotas: IRotas[] = [
         route: PATHS.SALDOS.LIST,
         icon: <AttachMoneyIcon />,
       },
+      {
+        name: "Objetivos",
+        route: PATHS.OBJETIVOS.LISTAGEM,
+        icon: <FlagIcon />,
+      },
     ],
   },
   {
@@ -47,16 +54,14 @@ export const rotas: IRotas[] = [
       },
     ],
   },
-  // {
-  //   categoria: "",
-  //   rotas: [
-  //     { name: "Sobre", route: PATHS.ABOUT.LIST, icon: <DescriptionIcon /> },
-  //   ],
-  // },
-  // {
-  //   categoria: "",
-  //   rotas: [
-  //     { name: "Configurações", route: PATHS.SETTINGS.LIST, icon: <Settings /> },
-  //   ],
-  // },
+  {
+    categoria: "Minha Conta",
+    rotas: [
+      {
+        name: "Configurações",
+        route: PATHS.CONFIGURACOES.LISTAGEM,
+        icon: <SettingsIcon />,
+      },
+    ],
+  },
 ];

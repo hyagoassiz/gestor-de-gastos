@@ -19,6 +19,10 @@ export const SALDOS = {
   LIST: `/saldos`,
 };
 
+export const OBJETIVOS = {
+  LISTAGEM: `/objetivos`,
+};
+
 export const CATEGORIAS = {
   LISTAGEM: "/categorias",
   CREATE: "/categorias/nova",
@@ -31,4 +35,8 @@ export const CONTAS = {
   CREATE: "/contas/nova",
   EDIT: "/contas/:id/editar",
   VIEW: "/contas/:id",
+};
+
+export const CONFIGURACOES = {
+  LISTAGEM: "/configuracoes",
 };

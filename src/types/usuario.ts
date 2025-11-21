@@ -1,6 +1,6 @@
 export interface Usuario {
   nome: string;
-  email: string;
+  sub: string;
   exp: number;
 }
 
@@ -8,9 +8,12 @@ export interface UsuarioToken {
   token: string;
 }
 
-export type UsuarioCreatePayload = Omit<Usuario, "exp"> & {
+export type UsuarioCreatePayload = Omit<Usuario, "exp" | "sub"> & {
+  email: string;
   senha: string;
 };
 
-export type UsuarioLoginPayload = Pick<Usuario, "email"> &
-  Pick<UsuarioCreatePayload, "senha">;
+export interface UsuarioLoginPayload {
+  email: string;
+  senha: string;
+}
