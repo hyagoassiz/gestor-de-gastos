@@ -21,6 +21,9 @@ export const SALDOS = {
 
 export const OBJETIVOS = {
   LISTAGEM: `/objetivos`,
+  CADASTRO: "/objetivos/novo",
+  EDITAR: "/objetivos/:id/editar",
+  VIEW: "/objetivos/:id",
 };
 
 export const CATEGORIAS = {

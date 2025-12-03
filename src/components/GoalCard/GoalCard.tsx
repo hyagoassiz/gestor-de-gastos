@@ -30,6 +30,7 @@ export function GoalCard({
         display: "flex",
         flexDirection: "column",
         gap: 2,
+        mb: 2,
       }}
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -42,7 +43,7 @@ export function GoalCard({
 
       <LinearProgress
         variant="determinate"
-        value={percentual}
+        value={Math.min(percentual, 100)}
         sx={{
           height: 10,
           borderRadius: 5,
@@ -51,21 +52,23 @@ export function GoalCard({
 
       <Box display="flex" justifyContent="space-between">
         <Typography variant="body1" fontWeight={600}>
-          {
-            <NumericFormat
-              value={valorAtual}
-              displayType="text"
-              thousandSeparator="."
-              decimalSeparator=","
-              prefix="R$ "
-              decimalScale={2}
-              fixedDecimalScale
-            />
-          }
+          <NumericFormat
+            value={valorAtual}
+            displayType="text"
+            thousandSeparator="."
+            decimalSeparator=","
+            prefix="R$ "
+            decimalScale={2}
+            fixedDecimalScale
+          />
         </Typography>
 
-        <Typography variant="body1" fontWeight={600}>
-          {percentual.toFixed(0)}%
+        <Typography
+          variant="body1"
+          fontWeight={600}
+          color={percentual >= 100 ? "success.main" : "inherit"}
+        >
+          {percentual >= 100 ? "Concluído" : `${percentual.toFixed(0)}%`}
         </Typography>
       </Box>
 

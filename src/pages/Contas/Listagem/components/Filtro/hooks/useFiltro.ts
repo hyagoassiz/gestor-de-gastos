@@ -2,25 +2,25 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 import { ContaParams } from "@/types";
 import { useForm, UseFormReturn } from "react-hook-form";
 
-interface IUseFiltroReturn {
+interface UseFiltroReturn {
   filtroForm: UseFormReturn<ContaParams>;
   handleSubmitFiltroForm(): void;
 }
 
-const useFiltro = (): IUseFiltroReturn => {
-  const { getParam, setParams } = useUrlParams();
+const useFiltro = (): UseFiltroReturn => {
+  const urlParams = useUrlParams();
 
   const filtroForm = useForm<ContaParams>({
     defaultValues: {
-      ativo: !(getParam("ativo") === "false" ? false : true),
-      tipoConta: getParam("tipoConta"),
-      incluirEmSomas: getParam("incluirEmSomas") ?? null,
+      ativo: !(urlParams.getParam("ativo") === "false" ? false : true),
+      tipoConta: urlParams.getParam("tipoConta"),
+      incluirEmSomas: urlParams.getParam("incluirEmSomas"),
     },
   });
 
   function handleSubmitFiltroForm(): void {
     filtroForm.handleSubmit((data) => {
-      setParams({
+      urlParams.setParams({
         pagina: 1,
         tipoConta: data.tipoConta,
         incluirEmSomas: data.incluirEmSomas,

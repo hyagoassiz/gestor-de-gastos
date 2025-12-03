@@ -1,7 +1,4 @@
-import { Modal } from "@/components/Modal/Modal";
-import { EnumTipoConta } from "@/types/enums";
-import { getAgenciaContaLabel } from "@/utils/getSecondaryText";
-import { normalizarEspacos } from "@/utils/normalizarEspacos";
+import { PageHeader } from "@/components/PageHeader";
 import {
   Autocomplete,
   Box,
@@ -10,38 +7,30 @@ import {
   ListItemText,
   TextField,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import { useCadastro } from "./hooks/useCadastro";
 import { NumericFormat } from "react-number-format";
+import { normalizarEspacos } from "@/utils/normalizarEspacos";
+import { getAgenciaContaLabel } from "@/utils/getSecondaryText";
+import { EnumTipoConta } from "@/types/enums";
+import { ActionButtonsRow } from "@/components/ActionsButtonsRow";
 
-interface ModalObjetivoProps {
-  open: boolean;
-  onClose(): void;
-}
-
-export const ModalObjetivo: React.FC<ModalObjetivoProps> = ({
-  open,
-  onClose,
-}) => {
-  const objetivoForm = useForm<any>();
+export const Cadastro: React.FC = () => {
+  const cadastro = useCadastro();
 
   return (
-    <Modal
-      title="Novo Objetivo"
-      style={{ width: 450 }}
-      open={open}
-      buttons={
-        <>
-          <Button onClick={onClose}>Fechar</Button>
-          <Button variant="contained">Salvar</Button>
-        </>
-      }
-    >
+    <>
+      <PageHeader
+        title={cadastro.pageTitle}
+        breadcrumbs={cadastro.breadcrumbs}
+      />
+
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
             name="nome"
             rules={{ required: true }}
-            control={objetivoForm.control}
+            control={cadastro.objetivoForm.control}
             render={({ field, formState }) => (
               <TextField
                 {...field}
@@ -63,7 +52,7 @@ export const ModalObjetivo: React.FC<ModalObjetivoProps> = ({
         <Grid item xs={12}>
           <Controller
             name="valor"
-            control={objetivoForm.control}
+            control={cadastro.objetivoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <NumericFormat
@@ -91,13 +80,13 @@ export const ModalObjetivo: React.FC<ModalObjetivoProps> = ({
         <Grid item xs={12}>
           <Controller
             name="conta"
-            control={objetivoForm.control}
+            control={cadastro.objetivoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
                 id="tipo"
-                options={[]}
+                options={cadastro.contas ?? []}
                 getOptionLabel={(option) => option.nome || ""}
                 onChange={(_, newValue) => {
                   field.onChange(newValue);
@@ -140,8 +129,8 @@ export const ModalObjetivo: React.FC<ModalObjetivoProps> = ({
 
         <Grid item xs={12}>
           <Controller
-            name="data"
-            control={objetivoForm.control}
+            name="dataConclusao"
+            control={cadastro.objetivoForm.control}
             rules={{ required: true }}
             render={({ field, fieldState }) => (
               <TextField
@@ -162,7 +151,7 @@ export const ModalObjetivo: React.FC<ModalObjetivoProps> = ({
           <Controller
             name="observacao"
             rules={{ required: false }}
-            control={objetivoForm.control}
+            control={cadastro.objetivoForm.control}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -181,6 +170,19 @@ export const ModalObjetivo: React.FC<ModalObjetivoProps> = ({
           />
         </Grid>
       </Grid>
-    </Modal>
+
+      <ActionButtonsRow
+        left={
+          <Button variant="outlined" onClick={cadastro.handleBack}>
+            Cancelar
+          </Button>
+        }
+        right={
+          <Button variant="contained" onClick={cadastro.handleSalvar}>
+            Salvar
+          </Button>
+        }
+      />
+    </>
   );
 };

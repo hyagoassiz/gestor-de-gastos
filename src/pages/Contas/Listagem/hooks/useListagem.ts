@@ -1,103 +1,72 @@
 import { useEffect } from "react";
-import {
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "@tanstack/react-query";
+import { UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
-import { useNotification } from "../../../../hooks/useNotification";
-import { updateStatusConta } from "../../../../api/Contas/updateStatusConta";
-import {
-  KEY_GET_CONTAS_PAGINADO,
-  queryOptionsGetContasPaginado,
-} from "../../../../api/Contas/utils/queryOptionsGetContasPaginado";
 import useSearchBar from "../../../../hooks/useSearchBar";
 import { Conta, PaginatedResponse, SearchBar } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
+import {
+  useMutationAtualizarStatusConta,
+  useQueryListarContasPaginado,
+} from "@/services/contas/contas.hooks";
 
 interface UseListagemReturn {
   contas: PaginatedResponse<Conta> | undefined;
-  queryGetContasPaginado: UseQueryResult<PaginatedResponse<Conta>>;
+  queryListarContasPaginado: UseQueryResult<PaginatedResponse<Conta>>;
   searchBar: SearchBar;
   handleAdicionarConta(): void;
-  handleAtivarContaById(id: number): Promise<void>;
-  handleEditarConta(contaId: string): void;
+  handleAtivarContaById(id: number): void;
+  handleEditarConta(id: number): void;
   handleInativarContaById(id: number): void;
 }
 
 export const useListagem = (): UseListagemReturn => {
   const loading = useLoading();
 
-  const notification = useNotification();
-
-  const queryClient = useQueryClient();
-
-  const navigate = useNavigate();
+  const urlParams = useUrlParams();
 
   const { searchBar } = useSearchBar({});
 
-  const { getBackendPage, getParam, getSearchString } = useUrlParams();
+  const navigate = useNavigate();
 
-  const queryGetContasPaginado = useQuery({
-    ...queryOptionsGetContasPaginado({
-      page: getBackendPage(),
-      ativo: getParam("ativo") === "false" ? false : true,
-      incluirEmSomas: getParam("incluirEmSomas"),
-      textoBusca: getParam("textoBusca"),
-      tipoConta: getParam("tipoConta"),
-      size: 10,
-    }),
+  const mutationAtualizarStatusConta = useMutationAtualizarStatusConta();
+
+  const queryListarContasPaginado = useQueryListarContasPaginado({
+    page: urlParams.getBackendPage(),
+    ativo: urlParams.getParam("ativo") === "false" ? false : true,
+    incluirEmSomas: urlParams.getParam("incluirEmSomas"),
+    textoBusca: urlParams.getParam("textoBusca"),
+    tipoConta: urlParams.getParam("tipoConta"),
+    size: 10,
   });
 
-  const contas = queryGetContasPaginado.data;
+  const contas = queryListarContasPaginado.data;
 
   useEffect(() => {
-    loading.setLoading(queryGetContasPaginado.isLoading);
-  }, [queryGetContasPaginado.isLoading]);
+    loading.setLoading(queryListarContasPaginado.isLoading);
+  }, [queryListarContasPaginado.isLoading]);
 
-  async function handleAtivarContaById(id: number): Promise<void> {
-    try {
-      loading.setLoading(true);
-      await updateStatusConta({ id, ativo: true });
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
-      notification.showSnackBar("Conta ativada com sucesso!", "success");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      loading.setLoading(false);
-    }
+  function handleAtivarContaById(id: number): void {
+    mutationAtualizarStatusConta.mutate({ id: id, ativo: true });
   }
 
-  function handleEditarConta(contaId: string): void {
-    const search = getSearchString();
-    navigate(`${PATHS.CONTAS.EDIT.replace(":id", contaId)}${search}`);
+  function handleEditarConta(id: number): void {
+    const search = urlParams.getSearchString();
+    navigate(`${PATHS.CONTAS.EDIT.replace(":id", String(id))}${search}`);
   }
 
   function handleAdicionarConta(): void {
     navigate(PATHS.CONTAS.CREATE);
   }
 
-  async function handleInativarContaById(id: number): Promise<void> {
-    try {
-      loading.setLoading(true);
-
-      await updateStatusConta({ id, ativo: false });
-
-      queryClient.invalidateQueries({ queryKey: [KEY_GET_CONTAS_PAGINADO] });
-
-      notification.showSnackBar("Conta inativada com sucesso!", "success");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      loading.setLoading(false);
-    }
+  function handleInativarContaById(id: number): void {
+    mutationAtualizarStatusConta.mutate({ id: id, ativo: false });
   }
 
   return {
     contas,
-    queryGetContasPaginado,
+    queryListarContasPaginado,
     searchBar,
     handleAdicionarConta,
     handleAtivarContaById,

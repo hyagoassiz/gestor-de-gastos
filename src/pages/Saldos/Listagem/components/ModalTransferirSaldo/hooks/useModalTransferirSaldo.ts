@@ -1,12 +1,12 @@
-import { queryOptionsGetContas } from "@/api/Contas/utils/queryOptionsGetContas";
 import { postTransferir } from "@/api/Saldos/postTransferir";
 import { useLoading } from "@/hooks/useLoading";
 import { Conta } from "@/types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { ModalTransferirSaldoForm } from "../types";
 import { KEY_GET_SALDOS_CONTAS } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
 import { useNotification } from "@/hooks/useNotification";
+import { useQueryListarContas } from "@/services/contas/contas.hooks";
 
 interface UseModalTransferirSaldoProps {
   onClose(): void;
@@ -31,15 +31,13 @@ const useModalTransferirSaldo = ({
 
   const notification = useNotification();
 
-  const queryGetContas = useQuery({
-    ...queryOptionsGetContas({ ativo: true }),
-  });
+  const queryListarContas = useQueryListarContas({ ativo: true });
 
-  const contasDestino = queryGetContas.data?.filter(
+  const contasDestino = queryListarContas.data?.filter(
     (conta) => conta.id !== modalTransferirSaldoForm.watch("contaOrigem")?.id
   );
 
-  const contasOrigem = queryGetContas.data;
+  const contasOrigem = queryListarContas.data;
 
   function handleContaOrigemChange(contaOrigem: Conta): void {
     modalTransferirSaldoForm.setValue("contaOrigem", contaOrigem);

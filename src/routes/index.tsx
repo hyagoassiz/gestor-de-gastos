@@ -24,6 +24,7 @@ import {
 } from "@/pages/Autenticacao";
 import { ConfiguracoesListagemRoute } from "@/pages/Configuracoes";
 import { ObjetivosListagemRoute } from "@/pages/Objetivos/Listagem";
+import { ObjetivosCadastroRoute } from "@/pages/Objetivos";
 
 const LayoutWrapper = () => (
   <PageLayout>
@@ -108,6 +109,33 @@ export const AppRoutes = () => {
             element={
               <ProtectedRoute permission="">
                 <ObjetivosListagemRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.OBJETIVOS.CADASTRO}
+            element={
+              <ProtectedRoute permission="">
+                <ObjetivosCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.OBJETIVOS.EDITAR}
+            element={
+              <ProtectedRoute permission="">
+                <ObjetivosCadastroRoute />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path={PATHS.OBJETIVOS.VIEW}
+            element={
+              <ProtectedRoute permission="">
+                <ObjetivosCadastroRoute />
               </ProtectedRoute>
             }
           />

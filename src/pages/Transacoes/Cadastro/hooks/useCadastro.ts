@@ -15,10 +15,10 @@ import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { queryOptionsGetTransacaoById } from "@/api/Transacao/utils/queryOptionsGetTransacaoById";
 import { postTransacao } from "@/api/Transacao/postTransacao";
-import { queryOptionsGetContas } from "@/api/Contas/utils/queryOptionsGetContas";
 import { queryOptionsGetCategorias } from "@/api/Categorias/utils/queryOptionsGetCategorias";
 import { useUrlParams } from "@/hooks/useUrlParams";
 import { EnumTipoMovimentacao } from "@/types/enums";
+import { useQueryListarContas } from "@/services/contas/contas.hooks";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
@@ -56,10 +56,10 @@ export const useCadastro = (): UseCadastroReturn => {
     enabled: Boolean(idTransacao),
   });
 
-  const queryGetContas = useQuery({
-    ...queryOptionsGetContas({ ativo: true }),
-    enabled: shouldEnableCadastroQueries,
-  });
+  const queryListarContas = useQueryListarContas(
+    { ativo: true },
+    { enabled: shouldEnableCadastroQueries }
+  );
 
   const useQueryGetCategorias = useQuery({
     enabled: Boolean(
@@ -72,7 +72,7 @@ export const useCadastro = (): UseCadastroReturn => {
     }),
   });
 
-  const contas = queryGetContas.data;
+  const contas = queryListarContas.data;
 
   const categorias = useQueryGetCategorias.data;
 

@@ -12,23 +12,23 @@ import { FilterDrawer } from "../../../../../components/FilterDrawer";
 import { tipoContaOptions } from "@/constants/tipoContaOptions";
 import useFiltro from "./hooks/useFiltro";
 
-interface IFiltroProps {
+interface FiltroProps {
   filterCount: number;
 }
 
-export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
-  const { filtroForm, handleSubmitFiltroForm } = useFiltro();
+export const Filtro: React.FC<FiltroProps> = ({ filterCount }) => {
+  const filtro = useFiltro();
 
   return (
     <FilterDrawer
-      applyFilter={handleSubmitFiltroForm}
+      applyFilter={filtro.handleSubmitFiltroForm}
       filterCount={filterCount}
     >
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
             name="tipoConta"
-            control={filtroForm.control}
+            control={filtro.filtroForm.control}
             render={({ field, fieldState }) => (
               <Autocomplete
                 disablePortal
@@ -58,7 +58,7 @@ export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
         <Grid item xs={12}>
           <Controller
             name="incluirEmSomas"
-            control={filtroForm.control}
+            control={filtro.filtroForm.control}
             render={({ field }) => (
               <TextField
                 select
@@ -73,7 +73,7 @@ export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
                 }}
                 fullWidth
               >
-                <MenuItem value={null}>Todos</MenuItem>
+                <MenuItem>Todos</MenuItem>
                 <MenuItem value="true">Sim</MenuItem>
                 <MenuItem value="false">Não</MenuItem>
               </TextField>
@@ -84,7 +84,7 @@ export const Filtro: React.FC<IFiltroProps> = ({ filterCount }) => {
         <Grid item xs={12}>
           <Controller
             name="ativo"
-            control={filtroForm.control}
+            control={filtro.filtroForm.control}
             render={({ field }) => (
               <FormGroup>
                 <FormControlLabel

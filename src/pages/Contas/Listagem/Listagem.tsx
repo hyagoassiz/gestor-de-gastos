@@ -30,11 +30,11 @@ export const Listagem: React.FC = () => {
       />
 
       <Frame>
-        {!listagem.queryGetContasPaginado.isLoading && (
+        {!listagem.queryListarContasPaginado.isLoading && (
           <DataTable
             columns={contasColumns}
             data={mountData(listagem)}
-            totalPages={listagem.queryGetContasPaginado.data?.totalPages}
+            totalPages={listagem.queryListarContasPaginado.data?.totalPages}
             textForEmptyData="Nenhuma conta encontrada."
             toolbar={
               <>
