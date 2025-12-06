@@ -3,12 +3,20 @@ import { getAgenciaContaLabel } from "../../../../utils/getSecondaryText";
 import { NumericFormat } from "react-number-format";
 import { SaldoConta } from "@/types";
 import { MoreOptions } from "@/components/MoreOptions";
+import { ModalAjustarSaldoState } from "../types";
 
 interface MountDataProps {
   saldos: SaldoConta[] | undefined;
+  openModalAjustarSaldo(
+    conta: Pick<ModalAjustarSaldoState, "conta">,
+    valorAtual: number
+  ): void;
 }
 
-export function mountData({ saldos }: MountDataProps): any[] {
+export function mountData({
+  saldos,
+  openModalAjustarSaldo,
+}: MountDataProps): any[] {
   if (saldos?.length) {
     return saldos.map((saldo) => ({
       ...saldo,
@@ -42,9 +50,14 @@ export function mountData({ saldos }: MountDataProps): any[] {
             {({ handleClose }) => (
               <div>
                 <MenuItem
-                  disabled
                   onClick={() => {
                     handleClose();
+                    openModalAjustarSaldo(
+                      {
+                        conta: { id: saldo.contaId, nome: saldo.nome },
+                      },
+                      saldo.saldo
+                    );
                   }}
                 >
                   Ajustar saldo

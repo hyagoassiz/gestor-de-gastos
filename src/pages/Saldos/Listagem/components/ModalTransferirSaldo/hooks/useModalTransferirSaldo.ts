@@ -1,4 +1,4 @@
-import { Conta } from "@/types";
+import { Conta, TransferirSaldoPayload } from "@/types";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { ModalTransferirSaldoForm } from "../types";
 import { useNotification } from "@/hooks/useNotification";
@@ -30,7 +30,7 @@ const useModalTransferirSaldo = ({
 
   const mutationTransferirSaldo = useMutationTransferirSaldo({
     onSuccess: () => {
-      onClose;
+      onClose();
     },
   });
 
@@ -57,7 +57,12 @@ const useModalTransferirSaldo = ({
   function handleTransferirSaldo(): void {
     modalTransferirSaldoForm.handleSubmit(
       (data) => {
-        mutationTransferirSaldo.mutate(data);
+        const payload: TransferirSaldoPayload = {
+          contaOrigemId: data.contaOrigem.id,
+          contaDestinoId: data.contaDestino.id,
+          valor: data.valor,
+        };
+        mutationTransferirSaldo.mutate(payload);
       },
       () => {
         notification.showSnackBar(

@@ -1,4 +1,5 @@
 import {
+  AjustarSaldoContaPayload,
   Conta,
   ContaAtualizarAtivoParams,
   ContaCreateAndUpdatePayload,
@@ -40,7 +41,12 @@ export const contasApi = {
   },
 
   transferirSaldo: async (body: TransferirSaldoPayload): Promise<void> => {
-    const response = await api.post("/contas/saldos", body);
+    const response = await api.post("/contas/transferir", body);
+    return response.data;
+  },
+
+  ajustarSaldo: async (body: AjustarSaldoContaPayload): Promise<void> => {
+    const response = await api.post("/contas/ajustar-saldo", body);
     return response.data;
   },
 

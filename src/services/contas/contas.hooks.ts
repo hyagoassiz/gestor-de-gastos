@@ -154,3 +154,27 @@ export const useMutationTransferirSaldo = (
     },
   });
 };
+
+export const useMutationAjustarSaldoConta = (
+  options?: UseMutationOptions<any, any, any>
+) => {
+  const queryClient = useQueryClient();
+
+  const loading = useLoading();
+
+  const notification = useNotification();
+
+  return useMutation({
+    ...options,
+    mutationFn: contasApi.ajustarSaldo,
+    onMutate: () => loading.setLoading(true),
+    onSettled: () => loading.setLoading(false),
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: [KEY_CONTAS] });
+
+      notification.showSnackBar(`Saldo ajustado com sucesso!`, "success");
+
+      options?.onSuccess?.(data, variables, context);
+    },
+  });
+};

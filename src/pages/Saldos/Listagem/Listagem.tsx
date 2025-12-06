@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { ModalTransferirSaldo } from "./components/ModalTransferirSaldo";
+import { ModalAjustarSaldo } from "./components/ModalAjustarSaldo";
 
 export const Listagem: React.FC = () => {
   const listagem = useListagem();
@@ -44,6 +45,13 @@ export const Listagem: React.FC = () => {
         <ModalTransferirSaldo
           onClose={listagem.toggleModalTransferirSaldo}
           open={listagem.isModalTransferirSaldoOpen}
+        />
+      )}
+
+      {listagem.modalAjustarSaldoState.isModalOpen && (
+        <ModalAjustarSaldo
+          modalAjustarSaldoState={listagem.modalAjustarSaldoState}
+          onClose={listagem.closeModalAjustarSaldo}
         />
       )}
     </>

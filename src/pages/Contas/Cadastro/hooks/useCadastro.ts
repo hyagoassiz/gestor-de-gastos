@@ -112,7 +112,7 @@ export const useCadastro = (): UseCadastroReturn => {
           agencia: data.agencia ?? "",
           conta: data.conta ?? "",
           observacao: data.observacao ?? "",
-          incluirEmSomas: true,
+          incluirEmSomas: data.incluirEmSomas,
           ativo: true,
         };
 

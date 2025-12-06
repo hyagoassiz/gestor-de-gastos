@@ -34,7 +34,7 @@ export function mountData({
           conta.nome
         ),
       tipo: EnumTipoConta[conta.tipoConta],
-      // incluirEmSomas: conta.incluirEmSomas ? "Sim" : "Não",
+      incluirEmSomas: conta.incluirEmSomas ? "Sim" : "Não",
       options: (
         <div>
           {conta.ativo ? (

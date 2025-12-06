@@ -15,3 +15,8 @@ export interface TransferirSaldoPayload {
   contaDestinoId: number;
   valor: number;
 }
+
+export interface AjustarSaldoContaPayload {
+  contaId: number;
+  valor: number;
+}
