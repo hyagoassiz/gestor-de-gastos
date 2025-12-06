@@ -8,9 +8,9 @@ import { NumericFormat } from "react-number-format";
 
 interface MountDataProps {
   transacoes: PaginatedResponse<Transacao> | undefined;
-  handleEditarTransacao(transacaoId: number): void;
-  handleExcluirTransacao(transacaoId: number): Promise<void>;
-  handleVisualizarTransacao(transacaoId: number): void;
+  handleEditarTransacao(id: number): void;
+  handleExcluirTransacao(id: number): void;
+  handleVisualizarTransacao(id: number): void;
 }
 
 export function mountData({

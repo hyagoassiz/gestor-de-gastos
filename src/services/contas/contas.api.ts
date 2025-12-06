@@ -5,6 +5,9 @@ import {
   ContaParams,
   ContaParamsPaginado,
   PaginatedResponse,
+  SaldoConta,
+  SaldoContaParams,
+  TransferirSaldoPayload,
 } from "@/types";
 import { api } from "../constants/api";
 
@@ -21,13 +24,23 @@ export const contasApi = {
     return response.data;
   },
 
+  listarSaldos: async (params?: SaldoContaParams): Promise<SaldoConta[]> => {
+    const response = await api.get("/contas/saldos", { params });
+    return response.data;
+  },
+
   obterPorId: async (id: number): Promise<Conta> => {
     const response = await api.get(`/contas/${id}`);
     return response.data;
   },
 
-  criar: async (payload: ContaCreateAndUpdatePayload): Promise<Conta> => {
-    const response = await api.post("/contas", payload);
+  criar: async (body: ContaCreateAndUpdatePayload): Promise<Conta> => {
+    const response = await api.post("/contas", body);
+    return response.data;
+  },
+
+  transferirSaldo: async (body: TransferirSaldoPayload): Promise<void> => {
+    const response = await api.post("/contas/saldos", body);
     return response.data;
   },
 
@@ -35,7 +48,7 @@ export const contasApi = {
     params: ContaAtualizarAtivoParams
   ): Promise<Conta> => {
     const { id, ativo } = params;
-    const response = await api.patch(`contas/${id}`, null, {
+    const response = await api.patch(`/contas/${id}`, null, {
       params: { ativo },
     });
     return response.data;

@@ -1,17 +1,7 @@
 import { useEffect } from "react";
-import {
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "@tanstack/react-query";
+import { UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
-import { useNotification } from "../../../../hooks/useNotification";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { updateStatusCategoria } from "../../../../api/Categorias/updateStatusCategoria";
-import {
-  KEY_GET_CATEGORIAS_PAGINADO,
-  queryOptionsGetCategoriasPaginado,
-} from "../../../../api/Categorias/utils/queryOptionsGetCategoriasPaginado";
 import {
   Categoria,
   CategoriaParamsPaginado,
@@ -22,24 +12,24 @@ import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import useSearchBar from "@/hooks/useSearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
+import {
+  useMutationAtualizarStatusCategoria,
+  useQueryListarCategoriasPaginado,
+} from "@/services/categorias/categorias.hooks";
 
 interface UseListagemReturn {
   categorias: PaginatedResponse<Categoria> | undefined;
   filterForm: UseFormReturn<CategoriaParamsPaginado>;
-  queryGetCategoriasPaginado: UseQueryResult<PaginatedResponse<Categoria>>;
+  queryListarCategoriasPaginado: UseQueryResult<PaginatedResponse<Categoria>>;
   searchBar: SearchBar;
   handleAdicionarCategoria(): void;
-  handleAtivarCategoriaById(id: number): Promise<void>;
-  handleEditarCategoria(categoriaId: string): void;
+  handleAtivarCategoriaById(id: number): void;
+  handleEditarCategoria(id: number): void;
   handleInativarCategoriaById(id: number): void;
 }
 
 export const useListagem = (): UseListagemReturn => {
   const { setLoading } = useLoading();
-
-  const { showSnackBar } = useNotification();
-
-  const queryClient = useQueryClient();
 
   const filterForm = useForm<CategoriaParamsPaginado>();
 
@@ -49,73 +39,46 @@ export const useListagem = (): UseListagemReturn => {
 
   const { getBackendPage, getParam, getSearchString } = useUrlParams();
 
-  const queryGetCategoriasPaginado = useQuery({
-    ...queryOptionsGetCategoriasPaginado({
-      page: getBackendPage(),
-      tipoMovimentacao: getParam("tipoMovimentacao"),
-      ativo: getParam("ativo") === "false" ? false : true,
-      textoBusca: getParam("textoBusca"),
-      size: 10,
-      padrao: false,
-    }),
+  const mutationAtualizarStatusCategoria =
+    useMutationAtualizarStatusCategoria();
+
+  const queryListarCategoriasPaginado = useQueryListarCategoriasPaginado({
+    page: getBackendPage(),
+    tipoMovimentacao: getParam("tipoMovimentacao"),
+    ativo: getParam("ativo") === "false" ? false : true,
+    textoBusca: getParam("textoBusca"),
+    size: 10,
+    padrao: false,
   });
 
-  const categorias = queryGetCategoriasPaginado.data;
+  const categorias = queryListarCategoriasPaginado.data;
 
   useEffect(() => {
-    setLoading(queryGetCategoriasPaginado.isLoading);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryGetCategoriasPaginado.isLoading]);
+    const { isFetching, isPlaceholderData } = queryListarCategoriasPaginado;
+    setLoading(isFetching && isPlaceholderData);
+  }, [queryListarCategoriasPaginado.isLoading]);
 
   function handleAdicionarCategoria(): void {
     navigate(PATHS.CATEGORIAS.CREATE);
   }
 
-  async function handleAtivarCategoriaById(id: number): Promise<void> {
-    try {
-      setLoading(true);
-
-      await updateStatusCategoria({ id, ativo: true });
-
-      queryClient.invalidateQueries({
-        queryKey: [KEY_GET_CATEGORIAS_PAGINADO],
-      });
-
-      showSnackBar("Categoria ativada com sucesso!", "success");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+  function handleAtivarCategoriaById(id: number): void {
+    mutationAtualizarStatusCategoria.mutate({ id: id, ativo: true });
   }
 
-  function handleEditarCategoria(categoriaId: string): void {
+  function handleEditarCategoria(id: number): void {
     const search = getSearchString();
-    navigate(`${PATHS.CATEGORIAS.EDIT.replace(":id", categoriaId)}${search}`);
+    navigate(`${PATHS.CATEGORIAS.EDIT.replace(":id", String(id))}${search}`);
   }
 
-  async function handleInativarCategoriaById(id: number): Promise<void> {
-    try {
-      setLoading(true);
-
-      await updateStatusCategoria({ id, ativo: false });
-
-      queryClient.invalidateQueries({
-        queryKey: [KEY_GET_CATEGORIAS_PAGINADO],
-      });
-
-      showSnackBar("Categoria inativada com sucesso!", "success");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+  function handleInativarCategoriaById(id: number): void {
+    mutationAtualizarStatusCategoria.mutate({ id: id, ativo: false });
   }
 
   return {
     categorias,
     filterForm,
-    queryGetCategoriasPaginado,
+    queryListarCategoriasPaginado,
     searchBar,
     handleAdicionarCategoria,
     handleAtivarCategoriaById,

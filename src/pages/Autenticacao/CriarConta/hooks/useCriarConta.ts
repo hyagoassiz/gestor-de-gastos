@@ -4,12 +4,10 @@ import * as PATHS from "../../../../routes/paths";
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createAccountSchema } from "../schema/createAccountSchema";
-import { postCriarConta } from "@/api/Autenticacao/postCriarConta";
 import { CriarContaForm } from "../types";
-import { useNotification } from "@/hooks/useNotification";
-import { useMutation } from "@tanstack/react-query";
 import useUsuario from "@/hooks/useUsuario";
 import { UsuarioCreatePayload } from "@/types";
+import { useMutationCriarContaUsuario } from "@/services/usuarios/usuarios.hooks";
 
 interface UseCriarContaReturn {
   criarContaForm: UseFormReturn<CriarContaForm>;
@@ -28,15 +26,7 @@ export const useCriarConta = (): UseCriarContaReturn => {
 
   const usuario = useUsuario();
 
-  const notification = useNotification();
-
-  const mutatePostCriarConta = useMutation({
-    mutationFn: postCriarConta,
-    onSuccess: () => {
-      handleLogin();
-      notification.showSnackBar("Conta criada com sucesso!", "success");
-    },
-  });
+  const mutationCriarContaUsuario = useMutationCriarContaUsuario();
 
   useEffect(() => {
     usuario.removerUsuario();
@@ -49,12 +39,12 @@ export const useCriarConta = (): UseCriarContaReturn => {
         email: data.email,
         senha: data.senha,
       };
-      mutatePostCriarConta.mutate(payload);
+      mutationCriarContaUsuario.mutate(payload);
     })();
   }
 
   function handleEnter(event: React.KeyboardEvent<HTMLDivElement>): void {
-    if (mutatePostCriarConta.isPending) return;
+    if (mutationCriarContaUsuario.isPending) return;
 
     if (event.key === "Enter") {
       handleCriarConta();
@@ -67,7 +57,7 @@ export const useCriarConta = (): UseCriarContaReturn => {
 
   return {
     criarContaForm,
-    isPending: mutatePostCriarConta.isPending,
+    isPending: mutationCriarContaUsuario.isPending,
     handleCriarConta,
     handleEnter,
     handleLogin,

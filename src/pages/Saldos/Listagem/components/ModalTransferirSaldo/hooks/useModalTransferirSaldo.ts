@@ -1,12 +1,11 @@
-import { postTransferir } from "@/api/Saldos/postTransferir";
-import { useLoading } from "@/hooks/useLoading";
 import { Conta } from "@/types";
-import { useQueryClient } from "@tanstack/react-query";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { ModalTransferirSaldoForm } from "../types";
-import { KEY_GET_SALDOS_CONTAS } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
 import { useNotification } from "@/hooks/useNotification";
-import { useQueryListarContas } from "@/services/contas/contas.hooks";
+import {
+  useMutationTransferirSaldo,
+  useQueryListarContas,
+} from "@/services/contas/contas.hooks";
 
 interface UseModalTransferirSaldoProps {
   onClose(): void;
@@ -25,13 +24,15 @@ const useModalTransferirSaldo = ({
 }: UseModalTransferirSaldoProps): UseModalTransferirSaldoReturn => {
   const modalTransferirSaldoForm = useForm<ModalTransferirSaldoForm>();
 
-  const loading = useLoading();
-
-  const queryClient = useQueryClient();
-
   const notification = useNotification();
 
   const queryListarContas = useQueryListarContas({ ativo: true });
+
+  const mutationTransferirSaldo = useMutationTransferirSaldo({
+    onSuccess: () => {
+      onClose;
+    },
+  });
 
   const contasDestino = queryListarContas.data?.filter(
     (conta) => conta.id !== modalTransferirSaldoForm.watch("contaOrigem")?.id
@@ -55,29 +56,8 @@ const useModalTransferirSaldo = ({
 
   function handleTransferirSaldo(): void {
     modalTransferirSaldoForm.handleSubmit(
-      async (data) => {
-        try {
-          loading.setLoading(true);
-
-          await postTransferir({
-            contaOrigemId: data.contaOrigem.id,
-            contaDestinoId: data.contaDestino.id,
-            valor: data.valor,
-          });
-
-          queryClient.invalidateQueries({ queryKey: [KEY_GET_SALDOS_CONTAS] });
-
-          notification.showSnackBar(
-            "Transferência realizada com sucesso!",
-            "success"
-          );
-
-          onClose();
-        } catch (error) {
-          console.error(error);
-        } finally {
-          loading.setLoading(false);
-        }
+      (data) => {
+        mutationTransferirSaldo.mutate(data);
       },
       () => {
         notification.showSnackBar(

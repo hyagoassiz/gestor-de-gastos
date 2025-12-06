@@ -44,8 +44,12 @@ export const useListagem = (): UseListagemReturn => {
   const contas = queryListarContasPaginado.data;
 
   useEffect(() => {
-    loading.setLoading(queryListarContasPaginado.isLoading);
-  }, [queryListarContasPaginado.isLoading]);
+    const { isFetching, isPlaceholderData } = queryListarContasPaginado;
+    loading.setLoading(isFetching && isPlaceholderData);
+  }, [
+    queryListarContasPaginado.isLoading,
+    queryListarContasPaginado.isPlaceholderData,
+  ]);
 
   function handleAtivarContaById(id: number): void {
     mutationAtualizarStatusConta.mutate({ id: id, ativo: true });

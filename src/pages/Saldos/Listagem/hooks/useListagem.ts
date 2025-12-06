@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { SaldoConta, SearchBar } from "@/types";
-import { queryOptionsGetSaldosContas } from "@/api/Saldos/utils/queryOptionsGetSaldosContas";
 import useSearchBar from "@/hooks/useSearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
+import { useQueryListarSaldos } from "@/services/contas/contas.hooks";
 
 interface UseListagemReturn {
   saldos: SaldoConta[] | undefined;
   isModalTransferirSaldoOpen: boolean;
-  queryGetSaldosContas: UseQueryResult<SaldoConta[]>;
+  queryListarSaldos: UseQueryResult<SaldoConta[]>;
   searchBar: SearchBar;
   toggleModalTransferirSaldo(): void;
 }
@@ -24,14 +24,12 @@ export const useListagem = (): UseListagemReturn => {
   const [isModalTransferirSaldoOpen, setIsModalTransferirSaldoOpen] =
     useState<boolean>(false);
 
-  const queryGetSaldosContas = useQuery({
-    ...queryOptionsGetSaldosContas({
-      ativo: getParam("ativo") === "false" ? false : true,
-    }),
+  const queryListarSaldos = useQueryListarSaldos({
+    ativo: getParam("ativo") === "false" ? false : true,
   });
 
   const saldos =
-    queryGetSaldosContas.data?.filter((saldo) => {
+    queryListarSaldos.data?.filter((saldo) => {
       if (!textoBusca) return true;
       const termo = textoBusca.toLowerCase();
       return (
@@ -42,9 +40,9 @@ export const useListagem = (): UseListagemReturn => {
     }) ?? [];
 
   useEffect(() => {
-    setLoading(queryGetSaldosContas.isLoading);
+    setLoading(queryListarSaldos.isLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryGetSaldosContas.isLoading]);
+  }, [queryListarSaldos.isLoading]);
 
   function toggleModalTransferirSaldo(): void {
     setIsModalTransferirSaldoOpen((prevState) => !prevState);
@@ -53,7 +51,7 @@ export const useListagem = (): UseListagemReturn => {
   return {
     saldos,
     isModalTransferirSaldoOpen,
-    queryGetSaldosContas,
+    queryListarSaldos,
     searchBar,
     toggleModalTransferirSaldo,
   };

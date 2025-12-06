@@ -29,7 +29,7 @@ export const Listagem: React.FC = () => {
       />
 
       <Frame>
-        {!listagem.queryGetTransacoesPaginado.isLoading && (
+        {!listagem.queryListarTransacoesPaginado.isLoading && (
           <DataTable
             columns={TRANSACOES_COLUMNS}
             data={mountData(listagem)}

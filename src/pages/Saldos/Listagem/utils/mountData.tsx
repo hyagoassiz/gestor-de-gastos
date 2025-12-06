@@ -42,6 +42,7 @@ export function mountData({ saldos }: MountDataProps): any[] {
             {({ handleClose }) => (
               <div>
                 <MenuItem
+                  disabled
                   onClick={() => {
                     handleClose();
                   }}

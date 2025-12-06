@@ -31,7 +31,7 @@ export const Listagem: React.FC = () => {
       />
 
       <Frame>
-        {!listagem.queryGetCategoriasPaginado.isLoading && (
+        {!listagem.queryListarCategoriasPaginado.isLoading && (
           <DataTable
             columns={categoriasColumns}
             data={mountData(listagem)}

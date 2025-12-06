@@ -10,15 +10,16 @@ import { useLoading } from "@/hooks/useLoading";
 import { useNotification } from "@/hooks/useNotification";
 import { useNavigate, useParams } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
-import { queryOptionsGetTransacaoById } from "@/api/Transacao/utils/queryOptionsGetTransacaoById";
-import { postTransacao } from "@/api/Transacao/postTransacao";
-import { queryOptionsGetCategorias } from "@/api/Categorias/utils/queryOptionsGetCategorias";
 import { useUrlParams } from "@/hooks/useUrlParams";
 import { EnumTipoMovimentacao } from "@/types/enums";
 import { useQueryListarContas } from "@/services/contas/contas.hooks";
+import { useQueryListarCategorias } from "@/services/categorias/categorias.hooks";
+import {
+  useMutationCriarTransacao,
+  useQueryObterTransacaoById,
+} from "@/services/transacoes/transacoes.hooks";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
@@ -49,79 +50,78 @@ export const useCadastro = (): UseCadastroReturn => {
 
   const { getSearchString } = useUrlParams();
 
-  const shouldEnableCadastroQueries = pageMode.mode !== "view";
+  const shouldEnableCadastroQueries =
+    pageMode.mode !== "view" &&
+    Boolean(transacaoForm.watch("tipoMovimentacao"));
 
-  const queryGetTransacaoById = useQuery({
-    ...queryOptionsGetTransacaoById(Number(idTransacao)),
-    enabled: Boolean(idTransacao),
-  });
+  const mutationCriarTransacao = useMutationCriarTransacao();
+
+  const queryObeterTransacaoById = useQueryObterTransacaoById(
+    Number(idTransacao)
+  );
 
   const queryListarContas = useQueryListarContas(
     { ativo: true },
     { enabled: shouldEnableCadastroQueries }
   );
 
-  const useQueryGetCategorias = useQuery({
-    enabled: Boolean(
-      transacaoForm.watch("tipoMovimentacao") && shouldEnableCadastroQueries
-    ),
-    ...queryOptionsGetCategorias({
+  const queryListarCategorias = useQueryListarCategorias(
+    {
       ativo: true,
       tipoMovimentacao: transacaoForm.watch("tipoMovimentacao"),
       padrao: false,
-    }),
-  });
+    },
+    { enabled: shouldEnableCadastroQueries }
+  );
 
   const contas = queryListarContas.data;
 
-  const categorias = useQueryGetCategorias.data;
+  const categorias = queryListarCategorias.data;
 
   const isDisabledForm = pageMode.mode === "view";
 
   const pageTitle =
     pageMode.mode === "create"
       ? "Nova"
-      : `Conta ${queryGetTransacaoById.data?.id}`;
+      : `Conta ${queryObeterTransacaoById.data?.id}`;
 
   const breadcrumbs = buildBreadcrumbs();
 
   useEffect(() => {
-    if (queryGetTransacaoById.data && !queryGetTransacaoById.isFetching) {
-      (Object.keys(queryGetTransacaoById.data) as (keyof Transacao)[]).forEach(
-        (key) => {
-          transacaoForm.setValue(
-            key as keyof TransacaoCreateAndUpdatePayload,
-            queryGetTransacaoById.data[key] as Transacao[keyof Transacao]
-          );
-        }
-      );
+    if (queryObeterTransacaoById.data && !queryObeterTransacaoById.isFetching) {
+      (
+        Object.keys(queryObeterTransacaoById.data) as (keyof Transacao)[]
+      ).forEach((key) => {
+        transacaoForm.setValue(
+          key as keyof TransacaoCreateAndUpdatePayload,
+          queryObeterTransacaoById.data[key] as Transacao[keyof Transacao]
+        );
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryGetTransacaoById.data, queryGetTransacaoById.isFetching]);
+  }, [queryObeterTransacaoById.data, queryObeterTransacaoById.isFetching]);
 
   useEffect(() => {
-    loading.setLoading(queryGetTransacaoById.isFetching);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryGetTransacaoById.isFetching]);
+    loading.setLoading(queryObeterTransacaoById.isFetching);
+  }, [queryObeterTransacaoById.isFetching]);
 
   function buildBreadcrumbs(): BreadcrumbItem[] {
     const breadcrumbs: BreadcrumbItem[] = [
       { label: "Transações", to: PATHS.TRANSACOES.LIST },
     ];
 
-    if (queryGetTransacaoById.isFetching) return breadcrumbs;
+    if (queryObeterTransacaoById.isFetching) return breadcrumbs;
 
     if (pageMode.mode === "create") {
       return [...breadcrumbs, { label: "Nova" }];
     }
 
-    if (!queryGetTransacaoById.data?.id) return breadcrumbs;
+    if (!queryObeterTransacaoById.data?.id) return breadcrumbs;
 
     const transacaoBreadcrumb: BreadcrumbItem = {
-      label: `Transação ${queryGetTransacaoById.data?.id}`,
+      label: `Transação ${queryObeterTransacaoById.data?.id}`,
       to: PATHS.TRANSACOES.VIEW.replace(
         ":id",
-        String(queryGetTransacaoById.data?.id)
+        String(queryObeterTransacaoById.data?.id)
       ),
     };
 
@@ -158,33 +158,18 @@ export const useCadastro = (): UseCadastroReturn => {
   function submitTransacaoForm(): void {
     transacaoForm.handleSubmit(
       async (data) => {
-        try {
-          loading.setLoading(true);
+        const payload: TransacaoCreateAndUpdatePayload = {
+          id: data.id ?? undefined,
+          tipoMovimentacao: data.tipoMovimentacao,
+          data: data.data,
+          valor: data.valor,
+          categoria: data.categoria,
+          conta: data.conta,
+          observacao: data.observacao,
+          situacao: data.situacao,
+        };
 
-          const payload: TransacaoCreateAndUpdatePayload = {
-            id: data.id ?? undefined,
-            tipoMovimentacao: data.tipoMovimentacao,
-            data: data.data,
-            valor: data.valor,
-            categoria: data.categoria,
-            conta: data.conta,
-            observacao: data.observacao,
-            situacao: data.situacao,
-          };
-
-          await postTransacao(payload);
-
-          notification.showSnackBar(
-            `Transação ${payload.id ? "editada" : "adicionada"} com sucesso!`,
-            "success"
-          );
-
-          handleBack();
-        } catch (error) {
-          console.error(error);
-        } finally {
-          loading.setLoading(false);
-        }
+        mutationCriarTransacao.mutate(payload);
       },
       () => {
         notification.showSnackBar(

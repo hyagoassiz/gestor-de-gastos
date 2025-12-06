@@ -2,14 +2,14 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../../../../routes/paths";
 import { useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postLogin } from "@/api/Autenticacao/postLogin";
+import { useQueryClient } from "@tanstack/react-query";
 import { UsuarioLoginPayload } from "@/types";
 import useUsuario from "@/hooks/useUsuario";
 import { loginSchema } from "../schema/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { LoginForm } from "../types";
+import { useMutationLogin } from "@/services/usuarios/usuarios.hooks";
 
 interface UseLoginReturn {
   isPending: boolean;
@@ -38,12 +38,10 @@ export const useLogin = (): UseLoginReturn => {
 
   const navigate = useNavigate();
 
-  const mutatePostLogin = useMutation({
-    mutationFn: postLogin,
+  const mutationLogin = useMutationLogin({
     onSuccess: (response) => {
       usuario.salvarUsuario(response.token);
       handleLembrarEmail();
-      navigate(PATHS.DASHBOARD.LIST);
     },
   });
 
@@ -53,7 +51,7 @@ export const useLogin = (): UseLoginReturn => {
   }, []);
 
   function handleEnter(event: React.KeyboardEvent<HTMLDivElement>): void {
-    if (mutatePostLogin.isPending) {
+    if (mutationLogin.isPending) {
       return;
     }
 
@@ -84,12 +82,12 @@ export const useLogin = (): UseLoginReturn => {
         senha: data.senha,
       };
 
-      mutatePostLogin.mutate(payload);
+      mutationLogin.mutate(payload);
     })();
   }
 
   return {
-    isPending: mutatePostLogin.isPending,
+    isPending: mutationLogin.isPending,
     loginForm,
     handleEnter,
     handleCriarConta,

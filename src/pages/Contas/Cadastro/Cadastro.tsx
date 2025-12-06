@@ -165,7 +165,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Controller
             name="incluirEmSomas"
             control={cadastro.contaForm.control}
@@ -185,7 +185,7 @@ export const Cadastro: React.FC = () => {
               </FormGroup>
             )}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <Box
