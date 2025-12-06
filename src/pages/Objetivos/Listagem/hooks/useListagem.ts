@@ -1,47 +1,27 @@
-import {
-  KEY_GET_OBJETIVOS,
-  queryOptionsGetObjetivos,
-} from "@/api/Objetivos/utils/queryOptionsGetObjetivos";
 import { Objetivo } from "@/types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as PATHS from "@/routes/paths";
 import { useNavigate } from "react-router-dom";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import { deleteObjetivo } from "@/api/Objetivos/deleteObjetivo";
-import { useNotification } from "@/hooks/useNotification";
-import { useLoading } from "@/hooks/useLoading";
+import {
+  useMutationExcluirObjetivo,
+  useQueryListarObjetivos,
+} from "@/services/objetivos/objetivos.hooks";
 
 interface UseListagemReturn {
   objetivos: Objetivo[] | undefined;
   handleAdicionarObjetivo(): void;
-  handleEditarObjetivo(objetivoId: number): void;
-  handleExcluirObjetivo(idObjetivo: number): void;
+  handleEditarObjetivo(id: number): void;
+  handleExcluirObjetivo(id: number): void;
 }
 
 const useListagem = (): UseListagemReturn => {
-  const queryGetObjetivos = useQuery({ ...queryOptionsGetObjetivos() });
+  const queryGetObjetivos = useQueryListarObjetivos();
 
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
-
-  const notification = useNotification();
-
-  const loading = useLoading();
-
   const objetivos = queryGetObjetivos.data;
 
-  const mutateDeleteObjetivo = useMutation({
-    mutationFn: deleteObjetivo,
-    onMutate: () => loading.setLoading(true),
-    onSettled: () => loading.setLoading(false),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [KEY_GET_OBJETIVOS],
-      });
-      notification.showSnackBar("Objetivo excluído com sucesso!", "success");
-    },
-  });
+  const mutationExcluirObjetivo = useMutationExcluirObjetivo();
 
   const { getSearchString } = useUrlParams();
 
@@ -49,15 +29,13 @@ const useListagem = (): UseListagemReturn => {
     navigate(PATHS.OBJETIVOS.CADASTRO);
   }
 
-  function handleEditarObjetivo(objetivoId: number): void {
+  function handleEditarObjetivo(id: number): void {
     const search = getSearchString();
-    navigate(
-      `${PATHS.OBJETIVOS.EDITAR.replace(":id", String(objetivoId))}${search}`
-    );
+    navigate(`${PATHS.OBJETIVOS.EDITAR.replace(":id", String(id))}${search}`);
   }
 
-  function handleExcluirObjetivo(idObjetivo: number): void {
-    mutateDeleteObjetivo.mutate(idObjetivo);
+  function handleExcluirObjetivo(id: number): void {
+    mutationExcluirObjetivo.mutate(id);
   }
 
   return {

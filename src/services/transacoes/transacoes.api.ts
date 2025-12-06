@@ -30,7 +30,7 @@ export const transacoesApi = {
     return response.data;
   },
 
-  excluir: async (id: TransacaoCreateAndUpdatePayload): Promise<void> => {
+  excluir: async (id: number): Promise<void> => {
     const response = await api.delete(`/transacoes/${id}`);
     return response.data;
   },

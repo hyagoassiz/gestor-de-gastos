@@ -8,14 +8,15 @@ import {
 import { useLoading } from "@/hooks/useLoading";
 import { useNavigate, useParams } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import { queryOptionsGetObjetivoById } from "@/api/Objetivos/utils/queryOptionsGetObjetivoById";
 import { useNotification } from "@/hooks/useNotification";
-import { postObjetivo } from "@/api/Objetivos/postObjetivo";
 import { useQueryListarContas } from "@/services/contas/contas.hooks";
+import {
+  useMutationCriarObjetivo,
+  useQueryObterObjetivoById,
+} from "@/services/objetivos/objetivos.hooks";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
@@ -34,7 +35,7 @@ export const useCadastro = (): UseCadastroReturn => {
 
   const navigate = useNavigate();
 
-  const { id: idTransacao } = useParams<{ id: string }>();
+  const { id: idObjetivo } = useParams<{ id: string }>();
 
   const pageMode = usePageMode();
 
@@ -44,18 +45,9 @@ export const useCadastro = (): UseCadastroReturn => {
 
   const shouldEnableCadastroQueries = pageMode.mode !== "view";
 
-  const mutatePostLogin = useMutation({
-    mutationFn: postObjetivo,
-    onSuccess: () => {
-      notification.showSnackBar("Objetivo criado com sucesso", "success");
-      navigate(PATHS.OBJETIVOS.LISTAGEM);
-    },
-  });
+  const mutationCriarObjetivo = useMutationCriarObjetivo();
 
-  const queryGetObjetivoById = useQuery({
-    ...queryOptionsGetObjetivoById(Number(idTransacao)),
-    enabled: Boolean(idTransacao),
-  });
+  const queryGetObjetivoById = useQueryObterObjetivoById(Number(idObjetivo));
 
   const queryListarContas = useQueryListarContas(
     { ativo: true },
@@ -134,7 +126,7 @@ export const useCadastro = (): UseCadastroReturn => {
           ...data,
         };
 
-        mutatePostLogin.mutate(payload);
+        mutationCriarObjetivo.mutate(payload);
       },
       () => {
         notification.showSnackBar(
