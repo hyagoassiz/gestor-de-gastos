@@ -12,11 +12,9 @@ import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { useUrlParams } from "@/hooks/useUrlParams";
 import { useNotification } from "@/hooks/useNotification";
-import { useQueryListarContas } from "@/services/contas/contas.hooks";
-import {
-  useMutationCriarObjetivo,
-  useQueryObterObjetivoById,
-} from "@/services/objetivos/objetivos.hooks";
+import { useMutationCriarObjetivo } from "@/services/objetivos/objetivos.hooks";
+import { useQueryListarContas } from "@/services/contas/hooks/useQueryListarContas";
+import { useQueryObterObjetivoById } from "@/services/objetivos/hooks/useQueryObterObjetivoById";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];

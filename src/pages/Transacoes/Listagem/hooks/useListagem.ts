@@ -5,10 +5,8 @@ import { PaginatedResponse, Transacao } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import {
-  useMutationExcluirTransacao,
-  useQueryListarTransacoesPaginado,
-} from "@/services/transacoes/transacoes.hooks";
+import { useMutationExcluirTransacao } from "@/services/transacoes/transacoes.hooks";
+import { useQueryListarTransacoesPaginado } from "@/services/transacoes/hooks/useQueryListarTransacoesPaginado";
 
 interface UseListagemReturn {
   transacoes: PaginatedResponse<Transacao> | undefined;

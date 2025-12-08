@@ -2,10 +2,8 @@ import { Conta, TransferirSaldoPayload } from "@/types";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { ModalTransferirSaldoForm } from "../types";
 import { useNotification } from "@/hooks/useNotification";
-import {
-  useMutationTransferirSaldo,
-  useQueryListarContas,
-} from "@/services/contas/contas.hooks";
+import { useMutationTransferirSaldo } from "@/services/contas/contas.hooks";
+import { useQueryListarContas } from "@/services/contas/hooks/useQueryListarContas";
 
 interface UseModalTransferirSaldoProps {
   onClose(): void;

@@ -9,14 +9,11 @@ import { useLoading } from "@/hooks/useLoading";
 import { useNotification } from "@/hooks/useNotification";
 import { useNavigate, useParams } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import {
-  useMutationCriarCategoria,
-  useQueryObterCategoriaById,
-} from "@/services/categorias/categorias.hooks";
+import { useMutationCriarCategoria } from "@/services/categorias/categorias.hooks";
+import { useQueryObterCategoriaById } from "@/services/categorias/hooks/useQueryObterCategoriaById";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];

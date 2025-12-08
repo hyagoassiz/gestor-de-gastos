@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { UseQueryResult } from "@tanstack/react-query";
 import { useLoading } from "../../../../hooks/useLoading";
 import { SaldoConta, SearchBar } from "@/types";
 import useSearchBar from "@/hooks/useSearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import { useQueryListarSaldos } from "@/services/contas/contas.hooks";
 import { ModalAjustarSaldoState } from "../types";
+import { useQueryListarSaldos } from "@/services/contas/hooks/useQueryListarSaldos";
 
 interface UseListagemReturn {
   saldos: SaldoConta[] | undefined;

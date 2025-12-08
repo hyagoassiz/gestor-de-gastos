@@ -15,7 +15,7 @@ export const categoriasApi = {
   },
 
   listarPaginado: async (
-    params?: CategoriaParamsPaginado
+    params: CategoriaParamsPaginado
   ): Promise<PaginatedResponse<Categoria>> => {
     const response = await api.get("/categorias/listar-paginado", { params });
     return response.data;

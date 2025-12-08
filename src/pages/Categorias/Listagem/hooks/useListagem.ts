@@ -12,10 +12,8 @@ import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import useSearchBar from "@/hooks/useSearchBar";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import {
-  useMutationAtualizarStatusCategoria,
-  useQueryListarCategoriasPaginado,
-} from "@/services/categorias/categorias.hooks";
+import { useMutationAtualizarStatusCategoria } from "@/services/categorias/categorias.hooks";
+import { useQueryListarCategoriasPaginado } from "@/services/categorias/hooks/useQueryListarCategoriasPaginado";
 
 interface UseListagemReturn {
   categorias: PaginatedResponse<Categoria> | undefined;

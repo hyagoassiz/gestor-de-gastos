@@ -8,10 +8,8 @@ import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { ContaForm } from "../types";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import {
-  useMutationCriarConta,
-  useQueryObterContaById,
-} from "@/services/contas/contas.hooks";
+import { useMutationCriarConta } from "@/services/contas/contas.hooks";
+import { useQueryObterContaById } from "@/services/contas/hooks/useQueryObterContaById";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];

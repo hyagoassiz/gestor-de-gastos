@@ -26,14 +26,6 @@ export const useQueryListarObjetivos = (
   });
 };
 
-export const useQueryObterObjetivoById = (id: number) => {
-  return useQuery({
-    queryKey: [[KEY_OBJETIVOS, id]],
-    queryFn: () => objetivosApi.obterPorId(id),
-    enabled: !!id,
-  });
-};
-
 export const useMutationCriarObjetivo = (
   options?: UseMutationOptions<any, any, any>
 ) => {

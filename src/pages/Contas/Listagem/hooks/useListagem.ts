@@ -6,10 +6,8 @@ import { Conta, PaginatedResponse, SearchBar } from "@/types";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import {
-  useMutationAtualizarStatusConta,
-  useQueryListarContasPaginado,
-} from "@/services/contas/contas.hooks";
+import { useMutationAtualizarStatusConta } from "@/services/contas/contas.hooks";
+import { useQueryListarContasPaginado } from "@/services/contas/hooks/useQueryListarContasPaginado";
 
 interface UseListagemReturn {
   contas: PaginatedResponse<Conta> | undefined;

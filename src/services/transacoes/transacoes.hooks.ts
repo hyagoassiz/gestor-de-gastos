@@ -1,16 +1,8 @@
 import {
-  useQuery,
   useMutation,
   useQueryClient,
-  UseQueryOptions,
   UseMutationOptions,
 } from "@tanstack/react-query";
-import {
-  Transacao,
-  TransacaoParams,
-  TransacaoParamsPaginado,
-  PaginatedResponse,
-} from "@/types";
 import { useLoading } from "@/hooks/useLoading";
 import { useNotification } from "@/hooks/useNotification";
 import { useUrlParams } from "@/hooks/useUrlParams";
@@ -19,40 +11,6 @@ import * as PATHS from "@/routes/paths";
 import { transacoesApi } from "./transacoes.api";
 
 export const KEY_TRANSACOES = "key-transacoes" as const;
-
-export const useQueryListarTransacoes = (
-  params?: TransacaoParams,
-  options?: Omit<UseQueryOptions<Transacao[]>, "queryKey" | "queryFn">
-) => {
-  return useQuery({
-    queryKey: [KEY_TRANSACOES, params],
-    queryFn: () => transacoesApi.listar(params),
-    ...options,
-  });
-};
-
-export const useQueryListarTransacoesPaginado = (
-  params?: TransacaoParamsPaginado,
-  options?: Omit<
-    UseQueryOptions<PaginatedResponse<Transacao>>,
-    "queryKey" | "queryFn"
-  >
-) => {
-  return useQuery({
-    queryKey: [KEY_TRANSACOES, params],
-    queryFn: () => transacoesApi.listarPaginado(params),
-    placeholderData: (prev) => prev,
-    ...options,
-  });
-};
-
-export const useQueryObterTransacaoById = (id: number) => {
-  return useQuery({
-    queryKey: [[KEY_TRANSACOES, id]],
-    queryFn: () => transacoesApi.obterPorId(id),
-    enabled: !!id,
-  });
-};
 
 export const useMutationCriarTransacao = (
   options?: UseMutationOptions<any, any, any>

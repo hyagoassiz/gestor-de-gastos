@@ -14,12 +14,10 @@ import { useEffect } from "react";
 import { usePageMode } from "@/hooks/usePageMode";
 import { useUrlParams } from "@/hooks/useUrlParams";
 import { EnumTipoMovimentacao } from "@/types/enums";
-import { useQueryListarContas } from "@/services/contas/contas.hooks";
-import { useQueryListarCategorias } from "@/services/categorias/categorias.hooks";
-import {
-  useMutationCriarTransacao,
-  useQueryObterTransacaoById,
-} from "@/services/transacoes/transacoes.hooks";
+import { useMutationCriarTransacao } from "@/services/transacoes/transacoes.hooks";
+import { useQueryListarContas } from "@/services/contas/hooks/useQueryListarContas";
+import { useQueryListarCategorias } from "@/services/categorias/hooks/useQueryListarCategorias";
+import { useQueryObterTransacaoById } from "@/services/transacoes/hooks/useQueryObterTransacaoById";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
