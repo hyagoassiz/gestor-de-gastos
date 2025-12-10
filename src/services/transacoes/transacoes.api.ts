@@ -14,7 +14,7 @@ export const transacoesApi = {
   },
 
   listarPaginado: async (
-    params?: TransacaoParamsPaginado
+    params: TransacaoParamsPaginado
   ): Promise<PaginatedResponse<Transacao>> => {
     const response = await api.get("/transacoes/listar-paginado", { params });
     return response.data;

@@ -19,7 +19,7 @@ export const contasApi = {
   },
 
   listarPaginado: async (
-    params?: ContaParamsPaginado
+    params: ContaParamsPaginado
   ): Promise<PaginatedResponse<Conta>> => {
     const response = await api.get("/contas/listar-paginado", { params });
     return response.data;

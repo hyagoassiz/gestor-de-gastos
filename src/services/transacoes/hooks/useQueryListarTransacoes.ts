@@ -6,7 +6,7 @@ import { transacoesApi } from "../transacoes.api";
 export const KEY_LISTAR_TRANSACOES = "key-listar-transacoes" as const;
 
 export const useQueryListarTransacoes = (
-  params: TransacaoParams,
+  params?: TransacaoParams,
   options?: QueryOptions<Transacao[]>
 ) => {
   return useQuery({

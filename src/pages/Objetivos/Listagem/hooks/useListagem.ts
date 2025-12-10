@@ -2,10 +2,8 @@ import { Objetivo } from "@/types";
 import * as PATHS from "@/routes/paths";
 import { useNavigate } from "react-router-dom";
 import { useUrlParams } from "@/hooks/useUrlParams";
-import {
-  useMutationExcluirObjetivo,
-  useQueryListarObjetivos,
-} from "@/services/objetivos/objetivos.hooks";
+import { useMutationExcluirObjetivo } from "@/services/objetivos/objetivos.hooks";
+import { useQueryListarObjetivos } from "@/services/objetivos/hooks/useQueryListarObjetivos";
 
 interface UseListagemReturn {
   objetivos: Objetivo[] | undefined;

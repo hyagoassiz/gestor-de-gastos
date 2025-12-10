@@ -6,7 +6,7 @@ import { contasApi } from "../contas.api";
 export const KEY_LISTAR_SALDOS = "key-listar-saldos" as const;
 
 export const useQueryListarSaldos = (
-  params: SaldoContaParams,
+  params?: SaldoContaParams,
   options?: QueryOptions<SaldoConta[]>
 ) => {
   return useQuery({

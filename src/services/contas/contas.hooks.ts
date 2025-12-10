@@ -10,8 +10,7 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { KEY_LISTAR_CONTAS_PAGINADO } from "./hooks/useQueryListarContasPaginado";
-
-export const KEY_CONTAS = "key-contas" as const;
+import { KEY_LISTAR_SALDOS } from "./hooks/useQueryListarSaldos";
 
 export const useMutationCriarConta = (
   options?: UseMutationOptions<any, any, any>
@@ -85,7 +84,7 @@ export const useMutationTransferirSaldo = (
     onMutate: () => loading.setLoading(true),
     onSettled: () => loading.setLoading(false),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: [KEY_CONTAS] });
+      queryClient.invalidateQueries({ queryKey: [KEY_LISTAR_SALDOS] });
 
       notification.showSnackBar(
         `Transferência realizada com sucesso!`,
@@ -112,7 +111,7 @@ export const useMutationAjustarSaldoConta = (
     onMutate: () => loading.setLoading(true),
     onSettled: () => loading.setLoading(false),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: [KEY_CONTAS] });
+      queryClient.invalidateQueries({ queryKey: [KEY_LISTAR_SALDOS] });
 
       notification.showSnackBar(`Saldo ajustado com sucesso!`, "success");
 

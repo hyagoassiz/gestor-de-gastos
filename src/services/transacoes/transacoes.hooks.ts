@@ -9,14 +9,11 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { transacoesApi } from "./transacoes.api";
-
-export const KEY_TRANSACOES = "key-transacoes" as const;
+import { KEY_LISTAR_TRANSACOES_PAGINADO } from "./hooks/useQueryListarTransacoesPaginado";
 
 export const useMutationCriarTransacao = (
   options?: UseMutationOptions<any, any, any>
 ) => {
-  const queryClient = useQueryClient();
-
   const loading = useLoading();
 
   const notification = useNotification();
@@ -31,8 +28,6 @@ export const useMutationCriarTransacao = (
     onMutate: () => loading.setLoading(true),
     onSettled: () => loading.setLoading(false),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: [KEY_TRANSACOES] });
-
       const search = getSearchString();
       navigate(`${PATHS.TRANSACOES.LIST}${search}`);
 
@@ -61,7 +56,9 @@ export const useMutationExcluirTransacao = (
     onMutate: () => loading.setLoading(true),
     onSettled: () => loading.setLoading(false),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: [KEY_TRANSACOES] });
+      queryClient.invalidateQueries({
+        queryKey: [KEY_LISTAR_TRANSACOES_PAGINADO],
+      });
 
       notification.showSnackBar(`Transação excluída com sucesso!`, "success");
 

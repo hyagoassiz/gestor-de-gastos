@@ -6,7 +6,7 @@ import { contasApi } from "../contas.api";
 export const KEY_LISTAR_CONTAS = "key-listar-contas" as const;
 
 export const useQueryListarContas = (
-  params: ContaParams,
+  params?: ContaParams,
   options?: QueryOptions<Conta[]>
 ) => {
   return useQuery({

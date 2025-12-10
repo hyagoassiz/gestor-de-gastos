@@ -26,10 +26,8 @@ export const categoriasApi = {
     return response.data;
   },
 
-  criar: async (
-    payload: CategoriaCreateAndUpdatePayload
-  ): Promise<Categoria> => {
-    const response = await api.post("/categorias", payload);
+  criar: async (body: CategoriaCreateAndUpdatePayload): Promise<Categoria> => {
+    const response = await api.post("/categorias", body);
     return response.data;
   },
 

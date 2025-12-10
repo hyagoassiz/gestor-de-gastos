@@ -1,8 +1,6 @@
 import {
-  useQuery,
   useMutation,
   useQueryClient,
-  UseQueryOptions,
   UseMutationOptions,
 } from "@tanstack/react-query";
 import { useLoading } from "@/hooks/useLoading";
@@ -11,26 +9,11 @@ import { useUrlParams } from "@/hooks/useUrlParams";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "@/routes/paths";
 import { objetivosApi } from "./objetivos.api";
-import { Objetivo, ObjetivoParams } from "@/types";
-
-export const KEY_OBJETIVOS = "key-objetivos" as const;
-
-export const useQueryListarObjetivos = (
-  params?: ObjetivoParams,
-  options?: Omit<UseQueryOptions<Objetivo[]>, "queryKey" | "queryFn">
-) => {
-  return useQuery({
-    queryKey: [KEY_OBJETIVOS, params],
-    queryFn: () => objetivosApi.listar(params),
-    ...options,
-  });
-};
+import { KEY_LISTAR_OBJETIVOS } from "./hooks/useQueryListarObjetivos";
 
 export const useMutationCriarObjetivo = (
   options?: UseMutationOptions<any, any, any>
 ) => {
-  const queryClient = useQueryClient();
-
   const loading = useLoading();
 
   const notification = useNotification();
@@ -45,8 +28,6 @@ export const useMutationCriarObjetivo = (
     onMutate: () => loading.setLoading(true),
     onSettled: () => loading.setLoading(false),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: [KEY_OBJETIVOS] });
-
       const search = getSearchString();
       navigate(`${PATHS.OBJETIVOS.LISTAGEM}${search}`);
 
@@ -75,7 +56,7 @@ export const useMutationExcluirObjetivo = (
     onMutate: () => loading.setLoading(true),
     onSettled: () => loading.setLoading(false),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: [KEY_OBJETIVOS] });
+      queryClient.invalidateQueries({ queryKey: [KEY_LISTAR_OBJETIVOS] });
 
       notification.showSnackBar(`Objetivo excluído com sucesso!`, "success");
 
