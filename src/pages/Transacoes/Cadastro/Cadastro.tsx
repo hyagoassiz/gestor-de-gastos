@@ -1,12 +1,5 @@
 import { PageHeader } from "@/components/PageHeader";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Grid,
-  ListItemText,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCadastro } from "./hooks/useCadastro";
 import { tipoMovimentacaoOptions } from "@/constants/tipoMovimentacaoOptions";
@@ -14,8 +7,8 @@ import { NumericFormat } from "react-number-format";
 import { situacaoOptions } from "@/constants/situacaoOptions";
 import { filtrarSituacaoOptions } from "@/utils/filtrarSituacaoOptions";
 import { normalizarEspacos } from "@/utils/normalizarEspacos";
-import { getAgenciaContaLabel } from "@/utils/getSecondaryText";
-import { EnumTipoConta } from "@/types/enums";
+import { CategoriaAutocomplete } from "@/components/Inputs/CategoriaAutocomplete";
+import { ContaAutocomplete } from "@/components/Inputs/ContaAutocomplete";
 
 export const Cadastro: React.FC = () => {
   const cadastro = useCadastro();
@@ -154,88 +147,26 @@ export const Cadastro: React.FC = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Controller
-            name="categoria"
+          <CategoriaAutocomplete
             control={cadastro.transacaoForm.control}
-            rules={{ required: true }}
-            render={({ field, fieldState }) => (
-              <Autocomplete
-                disablePortal
-                id="tipo"
-                options={cadastro.categorias ?? []}
-                getOptionLabel={(option) => option.nome || ""}
-                onChange={(_, newValue) => {
-                  field.onChange(newValue);
-                }}
-                value={field.value ?? null}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-                noOptionsText="Nenhum resultado encontrado."
-                disabled={cadastro.isDisabledForm}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    size="small"
-                    label="Categoria"
-                    required
-                    disabled={cadastro.isDisabledForm}
-                    error={!!fieldState.error}
-                  />
-                )}
-                fullWidth
-              />
-            )}
+            enabled={cadastro.shouldEnableCadastroQueries}
+            name="categoria"
+            categoriaParams={{
+              ativo: true,
+              tipoMovimentacao:
+                cadastro.transacaoForm.watch("tipoMovimentacao"),
+              padrao: false,
+            }}
+            disabled={cadastro.isDisabledForm}
           />
         </Grid>
 
         <Grid item xs={12}>
-          <Controller
-            name="conta"
+          <ContaAutocomplete
             control={cadastro.transacaoForm.control}
-            rules={{ required: true }}
-            render={({ field, fieldState }) => (
-              <Autocomplete
-                disablePortal
-                id="tipo"
-                options={cadastro.contas ?? []}
-                getOptionLabel={(option) => option.nome || ""}
-                onChange={(_, newValue) => {
-                  field.onChange(newValue);
-                }}
-                value={field.value ?? null}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-                noOptionsText="Nenhum resultado encontrado."
-                renderOption={(props, option) => (
-                  <Box component="li" {...props} key={option.id}>
-                    <ListItemText
-                      primary={option.nome}
-                      secondary={`${
-                        EnumTipoConta[option.tipoConta]
-                      } - ${getAgenciaContaLabel(
-                        option.agencia,
-                        option.conta
-                      )}`}
-                      primaryTypographyProps={{ fontSize: 14 }}
-                      secondaryTypographyProps={{
-                        fontSize: 12,
-                        color: "text.secondary",
-                      }}
-                    />
-                  </Box>
-                )}
-                disabled={cadastro.isDisabledForm}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    size="small"
-                    label="Conta"
-                    required
-                    disabled={cadastro.isDisabledForm}
-                    error={!!fieldState.error}
-                  />
-                )}
-                fullWidth
-              />
-            )}
+            enabled={cadastro.shouldEnableCadastroQueries}
+            name="conta"
+            disabled={cadastro.isDisabledForm}
           />
         </Grid>
 

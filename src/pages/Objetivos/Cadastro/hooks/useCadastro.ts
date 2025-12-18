@@ -1,7 +1,6 @@
 import { useForm, UseFormReturn } from "react-hook-form";
 import {
   BreadcrumbItem,
-  Conta,
   Objetivo,
   ObjetivoCreateAndUpdatePayload,
 } from "@/types";
@@ -13,14 +12,11 @@ import { usePageMode } from "@/hooks/usePageMode";
 import { useUrlParams } from "@/hooks/useUrlParams";
 import { useNotification } from "@/hooks/useNotification";
 import { useMutationCriarObjetivo } from "@/services/objetivos/objetivos.hooks";
-import { useQueryListarContas } from "@/services/contas/hooks/useQueryListarContas";
 import { useQueryObterObjetivoById } from "@/services/objetivos/hooks/useQueryObterObjetivoById";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
-  contas: Conta[] | undefined;
   objetivoForm: UseFormReturn<ObjetivoCreateAndUpdatePayload>;
-  isDisabledForm: boolean;
   pageTitle: string;
   handleBack(): void;
   handleSalvar(): void;
@@ -41,20 +37,9 @@ export const useCadastro = (): UseCadastroReturn => {
 
   const { getSearchString } = useUrlParams();
 
-  const shouldEnableCadastroQueries = pageMode.mode !== "view";
-
   const mutationCriarObjetivo = useMutationCriarObjetivo();
 
   const queryGetObjetivoById = useQueryObterObjetivoById(Number(idObjetivo));
-
-  const queryListarContas = useQueryListarContas(
-    { ativo: true },
-    { enabled: shouldEnableCadastroQueries }
-  );
-
-  const contas = queryListarContas.data;
-
-  const isDisabledForm = pageMode.mode === "view";
 
   const pageTitle =
     pageMode.mode === "create"
@@ -137,10 +122,8 @@ export const useCadastro = (): UseCadastroReturn => {
 
   return {
     breadcrumbs,
-    contas,
     objetivoForm,
     pageTitle,
-    isDisabledForm,
     handleBack,
     handleSalvar,
   };

@@ -1,8 +1,6 @@
 import { useForm, UseFormReturn } from "react-hook-form";
 import {
   BreadcrumbItem,
-  Categoria,
-  Conta,
   Transacao,
   TransacaoCreateAndUpdatePayload,
 } from "@/types";
@@ -15,17 +13,14 @@ import { usePageMode } from "@/hooks/usePageMode";
 import { useUrlParams } from "@/hooks/useUrlParams";
 import { EnumTipoMovimentacao } from "@/types/enums";
 import { useMutationCriarTransacao } from "@/services/transacoes/transacoes.hooks";
-import { useQueryListarContas } from "@/services/contas/hooks/useQueryListarContas";
-import { useQueryListarCategorias } from "@/services/categorias/hooks/useQueryListarCategorias";
 import { useQueryObterTransacaoById } from "@/services/transacoes/hooks/useQueryObterTransacaoById";
 
 interface UseCadastroReturn {
   breadcrumbs: BreadcrumbItem[];
-  contas: Conta[] | undefined;
-  categorias: Categoria[] | undefined;
   transacaoForm: UseFormReturn<TransacaoCreateAndUpdatePayload>;
   isDisabledForm: boolean;
   pageTitle: string;
+  shouldEnableCadastroQueries: boolean;
   handleBack(): void;
   handleTipoMovimentacaoChange(
     tipoMovimentacao: keyof typeof EnumTipoMovimentacao | null
@@ -57,24 +52,6 @@ export const useCadastro = (): UseCadastroReturn => {
   const queryObeterTransacaoById = useQueryObterTransacaoById(
     Number(idTransacao)
   );
-
-  const queryListarContas = useQueryListarContas(
-    { ativo: true },
-    { enabled: shouldEnableCadastroQueries }
-  );
-
-  const queryListarCategorias = useQueryListarCategorias(
-    {
-      ativo: true,
-      tipoMovimentacao: transacaoForm.watch("tipoMovimentacao"),
-      padrao: false,
-    },
-    { enabled: shouldEnableCadastroQueries }
-  );
-
-  const contas = queryListarContas.data;
-
-  const categorias = queryListarCategorias.data;
 
   const isDisabledForm = pageMode.mode === "view";
 
@@ -180,10 +157,9 @@ export const useCadastro = (): UseCadastroReturn => {
 
   return {
     breadcrumbs,
-    categorias,
-    contas,
     transacaoForm,
     pageTitle,
+    shouldEnableCadastroQueries,
     isDisabledForm,
     handleBack,
     handleTipoMovimentacaoChange,
