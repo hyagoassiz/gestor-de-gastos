@@ -45,6 +45,7 @@ export const Cadastro: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                     size="small"
                     label="Tipo"
                     required
@@ -66,6 +67,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                 size="small"
                 label="Data"
                 type="date"
@@ -102,6 +104,7 @@ export const Cadastro: React.FC = () => {
                 size="small"
                 disabled={cadastro.isDisabledForm}
                 required
+                variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                 error={!!fieldState.error}
               />
             )}
@@ -133,6 +136,7 @@ export const Cadastro: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                     size="small"
                     label="Situação"
                     required
@@ -178,6 +182,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                 size="small"
                 label="Observação"
                 fullWidth

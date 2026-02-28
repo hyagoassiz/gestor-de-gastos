@@ -33,6 +33,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                 size="small"
                 label="Nome"
                 fullWidth
@@ -69,6 +70,7 @@ export const Cadastro: React.FC = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                     size="small"
                     label="Tipo de Conta"
                     required
@@ -90,6 +92,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                 size="small"
                 label="Agência"
                 fullWidth
@@ -119,6 +122,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                 size="small"
                 label="Conta"
                 fullWidth
@@ -148,6 +152,7 @@ export const Cadastro: React.FC = () => {
             render={({ field, formState }) => (
               <TextField
                 {...field}
+                variant={cadastro.isDisabledForm ? "filled" : "outlined"}
                 size="small"
                 label="Observação"
                 fullWidth
@@ -180,6 +185,7 @@ export const Cadastro: React.FC = () => {
                     />
                   }
                   label="Incluir em somas"
+                  disabled={cadastro.isDisabledForm}
                 />
               </FormGroup>
             )}
@@ -194,7 +200,7 @@ export const Cadastro: React.FC = () => {
         alignItems="center"
       >
         <Button variant="outlined" onClick={cadastro.handleBack}>
-          Cancelar
+          {cadastro.isDisabledForm ? "Voltar" : "Cancelar"}
         </Button>
 
         {!cadastro.isDisabledForm && (

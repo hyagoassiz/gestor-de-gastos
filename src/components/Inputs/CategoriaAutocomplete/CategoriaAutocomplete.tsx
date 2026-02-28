@@ -48,6 +48,7 @@ export function CategoriaAutocomplete<T extends FieldValues>({
           renderInput={(params) => (
             <TextField
               {...params}
+              variant={disabled ? "filled" : "outlined"}
               size="small"
               label={label}
               required={required}
