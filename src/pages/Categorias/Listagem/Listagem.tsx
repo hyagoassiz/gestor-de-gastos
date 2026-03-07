@@ -36,6 +36,7 @@ export const Listagem: React.FC = () => {
             columns={categoriasColumns}
             data={mountData(listagem)}
             totalPages={listagem.categorias?.totalPages}
+            totalElements={listagem.categorias?.totalElements}
             textForEmptyData="Nenhuma categoria encontrada."
             toolbar={
               <>

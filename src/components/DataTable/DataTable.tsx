@@ -30,6 +30,7 @@ interface DataTableProps {
   selectedItems?: any[];
   onSelectionChange?: (selected: any[]) => void;
   totalPages?: number;
+  totalElements?: number;
   disablePagination?: boolean;
   tableHeight?: number | string;
   toolbar?: React.ReactNode;
@@ -44,6 +45,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   selectedItems,
   onSelectionChange,
   totalPages,
+  totalElements,
   disablePagination = false,
   tableHeight,
   toolbar,
@@ -74,7 +76,7 @@ export const DataTable: React.FC<DataTableProps> = ({
     const allSelected = data.every((row) => isRowSelected(row));
     const newSelected = allSelected
       ? selected.filter(
-          (item) => !data.some((row) => row[rowKey] === item[rowKey])
+          (item) => !data.some((row) => row[rowKey] === item[rowKey]),
         )
       : [...selected, ...data.filter((row) => !isRowSelected(row))];
     handleSelectionChange(newSelected);
@@ -203,7 +205,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             sx={{ borderTop: "1px solid", borderColor: "divider" }}
           >
             <Typography variant="body2" color="text.secondary">
-              Total de resultados: {data.length}
+              Total de resultados: {totalElements ?? data.length}
             </Typography>
 
             <Pagination

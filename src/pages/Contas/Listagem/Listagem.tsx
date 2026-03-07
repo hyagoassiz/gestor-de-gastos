@@ -35,6 +35,9 @@ export const Listagem: React.FC = () => {
             columns={contasColumns}
             data={mountData(listagem)}
             totalPages={listagem.queryListarContasPaginado.data?.totalPages}
+            totalElements={
+              listagem.queryListarContasPaginado.data?.totalElements
+            }
             textForEmptyData="Nenhuma conta encontrada."
             toolbar={
               <>

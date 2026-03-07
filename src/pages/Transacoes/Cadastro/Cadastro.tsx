@@ -81,7 +81,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Controller
             name="valor"
             control={cadastro.transacaoForm.control}
@@ -111,7 +111,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Controller
             name="situacao"
             control={cadastro.transacaoForm.control}
@@ -122,7 +122,7 @@ export const Cadastro: React.FC = () => {
                 id="situacao"
                 options={
                   filtrarSituacaoOptions(
-                    cadastro.transacaoForm.getValues("tipoMovimentacao")
+                    cadastro.transacaoForm.getValues("tipoMovimentacao"),
                   ) ?? []
                 }
                 getOptionLabel={(option) => option.nome || ""}

@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { BarChartCard } from "@/components/BarChartCard";
 import { HorizontalBarChartCard } from "@/components/HorizontalBarChartCard";
 import { Totalizador } from "@/components/Totalizador";
@@ -12,7 +12,7 @@ export const Listagem: React.FC = () => {
     <>
       <PageHeader title="Dashboard" />
 
-      <Stack direction="row" spacing={2}>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
         <Totalizador
           value={listagem.totais?.entradas ?? 0}
           subTitle="Entradas"
@@ -26,24 +26,29 @@ export const Listagem: React.FC = () => {
         <Totalizador value={listagem.totais?.aPagar ?? 0} subTitle="À Pagar" />
       </Stack>
 
-      <Stack direction="row" spacing={2} m="16px 0px">
-        <BarChartCard
-          title="Entradas e Saídas por mês"
-          data={listagem.transacoesMensais ?? []}
-          xDataKey="mesAno"
-          bars={[
-            { dataKey: "totalEntradas", fill: "#4caf50", name: "Entradas" },
-            { dataKey: "totalSaidas", fill: "#f44336", name: "Saídas" },
-          ]}
-          height={400}
-        />
+      <Stack direction={{ xs: "column", md: "row" }} spacing={2} m="16px 0px">
+        <Box flex={1}>
+          <BarChartCard
+            title="Entradas e Saídas por mês"
+            data={listagem.transacoesMensais ?? []}
+            xDataKey="mesAno"
+            bars={[
+              { dataKey: "totalEntradas", fill: "#4caf50", name: "Entradas" },
+              { dataKey: "totalSaidas", fill: "#f44336", name: "Saídas" },
+            ]}
+            height={300}
+          />
+        </Box>
 
-        <HorizontalBarChartCard
-          data={listagem.despesasPorCategoria ?? []}
-          dataKey="total"
-          nameKey="categoria"
-          title="Despesas por Categoria"
-        />
+        <Box flex={1}>
+          <HorizontalBarChartCard
+            data={listagem.despesasPorCategoria ?? []}
+            dataKey="total"
+            nameKey="categoria"
+            title="Despesas por Categoria"
+            height={300}
+          />
+        </Box>
       </Stack>
     </>
   );

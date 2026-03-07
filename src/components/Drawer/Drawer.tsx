@@ -43,7 +43,7 @@ const Main = ({
           duration: theme.transitions.duration.leavingScreen,
         }),
         marginLeft: !isMobile && open ? 0 : !isMobile ? `-${240}px` : 0,
-        backgroundColor: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.background.default,
         minHeight: "100vh",
       }}
     >
@@ -86,8 +86,12 @@ export const Drawer: React.FC<IDrawer> = ({ children }) => {
           "& .MuiDrawer-paper": {
             width: isMobile ? "100vw" : drawer.drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.background.paper,
+            boxShadow: "none",
           },
+        }}
+        PaperProps={{
+          elevation: 0,
         }}
         variant={isMobile ? "temporary" : "persistent"}
         anchor="left"
@@ -107,7 +111,7 @@ export const Drawer: React.FC<IDrawer> = ({ children }) => {
         {rotas.map((categoria, index) => (
           <Box key={index}>
             <ListSubheader
-              sx={{ backgroundColor: theme.palette.primary.contrastText }}
+              sx={{ backgroundColor: theme.palette.background.paper }}
             >
               {categoria.categoria}
             </ListSubheader>

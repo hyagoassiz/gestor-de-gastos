@@ -16,7 +16,7 @@ export const Cadastro: React.FC = () => {
       />
 
       <Grid container spacing={3}>
-        <Grid item xs={7}>
+        <Grid item xs={12} sm={7}>
           <Controller
             name="nome"
             control={cadastro.categoriaForm.control}
@@ -41,7 +41,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={5}>
+        <Grid item xs={12} sm={5}>
           <Controller
             name="tipoMovimentacao"
             control={cadastro.categoriaForm.control}

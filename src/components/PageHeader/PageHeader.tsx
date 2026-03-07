@@ -29,9 +29,29 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             aria-label="breadcrumb"
             sx={{ mb: 0.5 }}
           >
-            {breadcrumbs.map((item, index) => {
-              const content = (
+            {breadcrumbs.map((item, index) =>
+              item.to ? (
+                <Link
+                  key={index}
+                  component={RouterLink}
+                  to={item.to}
+                  underline="hover"
+                  color="inherit"
+                  sx={{
+                    maxWidth: 100,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "inline-block",
+                    verticalAlign: "bottom",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {item.label}
+                </Link>
+              ) : (
                 <Typography
+                  key={index}
+                  color="text.primary"
                   noWrap
                   sx={{
                     maxWidth: 100,
@@ -43,24 +63,8 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                 >
                   {item.label}
                 </Typography>
-              );
-
-              return item.to ? (
-                <Link
-                  key={index}
-                  component={RouterLink}
-                  to={item.to}
-                  underline="hover"
-                  color="inherit"
-                >
-                  {content}
-                </Link>
-              ) : (
-                <Typography key={index} color="text.primary">
-                  {content}
-                </Typography>
-              );
-            })}
+              ),
+            )}
           </Breadcrumbs>
         )}
 

@@ -18,7 +18,7 @@ export const Cadastro: React.FC = () => {
       />
 
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <Controller
             name="nome"
             rules={{ required: true }}
@@ -41,7 +41,7 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <Controller
             name="valor"
             control={cadastro.objetivoForm.control}
@@ -69,14 +69,14 @@ export const Cadastro: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <ContaAutocomplete
             control={cadastro.objetivoForm.control}
             name="conta"
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <Controller
             name="dataConclusao"
             control={cadastro.objetivoForm.control}

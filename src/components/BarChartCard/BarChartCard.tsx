@@ -26,7 +26,7 @@ export const BarChartCard: React.FC<BarChartCardProps> = ({
   title,
 }) => {
   return (
-    <Card sx={{ p: 2, m: "16px 0", width: "70%" }}>
+    <Card sx={{ p: 2, m: "16px 0", width: "100%" }}>
       {title && (
         <Typography
           variant="h6"
