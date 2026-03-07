@@ -135,7 +135,12 @@ export const DataTable: React.FC<DataTableProps> = ({
                     size="small"
                     key={column.key}
                     align={column.align ?? "left"}
-                    sx={{ ...column?.style }}
+                    sx={{
+                      ...column?.style,
+                      ...(column.hideOnMobile && {
+                        display: { xs: "none", md: "table-cell" },
+                      }),
+                    }}
                   >
                     {column.label}
                   </StyledTableCellHead>
@@ -169,6 +174,11 @@ export const DataTable: React.FC<DataTableProps> = ({
                         size="small"
                         key={column.key}
                         align={column.align ?? "left"}
+                        sx={{
+                          ...(column.hideOnMobile && {
+                            display: { xs: "none", md: "table-cell" },
+                          }),
+                        }}
                       >
                         {row[column.key]}
                       </StyledTableCellBody>

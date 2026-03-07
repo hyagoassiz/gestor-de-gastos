@@ -5,4 +5,5 @@ export interface DataTableColumn {
   label: string | ReactNode;
   style?: CSSProperties;
   align?: "left" | "center" | "right" | "justify" | "inherit";
+  hideOnMobile?: boolean;
 }
